@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/drawer_tr"
+            android:title="Тренировки"/>
+        <item
+            android:id="@+id/drawer_stoptman"
+            android:icon="@drawable/ic_directions_run_black_24dp"
+            android:title="Спортсмены"/>
+        <item
+            android:id="@+id/drawer_group"
+            android:icon="@drawable/ic_group_black_24dp"
+            android:title="Группы"/>
+        <item
+            android:id="@+id/drawer_statistic"
+            android:icon="@drawable/ic_assessment_black_24dp"
+            android:title="Статистика"/>
+        <item
+            android:id="@+id/drawer_setting"
+            android:title="Настройки"/>
+
+    </group>
+
+</menu>
