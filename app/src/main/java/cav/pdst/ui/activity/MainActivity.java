@@ -14,12 +14,14 @@ import android.view.View;
 import android.widget.CalendarView;
 import android.widget.ListView;
 
+import com.squareup.timessquare.CalendarCellDecorator;
 import com.squareup.timessquare.CalendarPickerView;
 
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import cav.pdst.R;
 import cav.pdst.data.models.TrainingModel;
@@ -51,7 +53,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         nextYear.add(Calendar.YEAR, 1);
 
         CalendarPickerView calendar = (CalendarPickerView) findViewById(R.id.main_calendar_view);
-        calendar.init(new Date(),nextYear.getTime()).withSelectedDate(new Date());
+        Date from = new Date();
+
+        List<CalendarCellDecorator> decorators = new ArrayList<>();
+
+        calendar.init(from,nextYear.getTime()).withSelectedDate(from);
 
 
 
