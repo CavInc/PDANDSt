@@ -56,6 +56,7 @@ public class GroupActivity extends AppCompatActivity implements NavigationView.O
         model.add(new GroupModel("Сиска",0));
         //дебуг
 
+
         GroupAdapter adapter = new GroupAdapter(this,R.layout.group_item,model);
         mListView.setAdapter(adapter);
 
