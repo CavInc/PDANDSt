@@ -3,12 +3,16 @@ package cav.pdst.data.managers;
 
 import android.content.Context;
 
+import cav.pdst.data.database.DataBaseConnector;
+import cav.pdst.data.models.GroupModel;
 import cav.pdst.utils.PdStApplication;
 
 public class DataManager {
     private static DataManager INSTANCE = null;
 
     private Context mContext;
+
+    private DataBaseConnector mDB;
 
     public static DataManager getInstance() {
         if (INSTANCE==null){
@@ -19,8 +23,12 @@ public class DataManager {
 
     public DataManager(){
         this.mContext = PdStApplication.getContext();
+        mDB = new DataBaseConnector(mContext);
     }
 
     //region ======== databse ==============
 
+    public void addGroup(GroupModel data){
+        mDB.addGroup(data);
+    }
 }

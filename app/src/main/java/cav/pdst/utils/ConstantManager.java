@@ -7,4 +7,8 @@ public interface ConstantManager {
 
     String DIALOG_DATE = "Выбор даты";
 
+    String GROUP_NAME = "GROUP_NAME";
+
+    int NEW_GROUP = 0;
+    int EDIT_GROUP = 1;
 }

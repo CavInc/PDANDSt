@@ -1,5 +1,6 @@
 package cav.pdst.ui.activity;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import cav.pdst.R;
 import cav.pdst.data.models.ItemSportsmanModel;
 import cav.pdst.ui.adapters.ItemGroupAdapter;
+import cav.pdst.utils.ConstantManager;
 
 public class ItemGroupActivity extends AppCompatActivity {
 
@@ -46,6 +48,10 @@ public class ItemGroupActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        Intent answerIntent = new Intent();
+        answerIntent.putExtra(ConstantManager.GROUP_NAME,mNameGroup.getText().toString());
+        setResult(RESULT_OK,answerIntent);
+
         super.onBackPressed();
     }
 }

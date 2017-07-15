@@ -18,8 +18,10 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import cav.pdst.R;
+import cav.pdst.data.managers.DataManager;
 import cav.pdst.data.models.GroupModel;
 import cav.pdst.ui.adapters.GroupAdapter;
+import cav.pdst.utils.ConstantManager;
 
 public class GroupActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
         View.OnClickListener,AdapterView.OnItemLongClickListener{
@@ -29,11 +31,14 @@ public class GroupActivity extends AppCompatActivity implements NavigationView.O
     private FloatingActionButton mFab;
     private ListView mListView;
 
+    private DataManager mDataManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group);
+
+        mDataManager = DataManager.getInstance();
 
         mNavigationDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -107,6 +112,7 @@ public class GroupActivity extends AppCompatActivity implements NavigationView.O
         if (view.getId()==R.id.group_fab){
             Intent intent = new Intent(this,ItemGroupActivity.class);
             startActivity(intent);
+            startActivityForResult(intent, ConstantManager.NEW_GROUP);
         }
 
     }
@@ -114,5 +120,19 @@ public class GroupActivity extends AppCompatActivity implements NavigationView.O
     @Override
     public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
         return false;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case ConstantManager.NEW_GROUP:
+                if (resultCode == RESULT_OK && data !=null){
+                    mDataManager.addGroup(new GroupModel(data.getStringExtra(ConstantManager.GROUP_NAME),0));
+                }
+                break;
+            case ConstantManager.EDIT_GROUP:
+                break;
+        }
     }
 }
