@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
 import cav.pdst.R;
+import cav.pdst.ui.fragments.SpAbonementFragment;
 import cav.pdst.ui.fragments.SpInfoFragment;
 import cav.pdst.ui.fragments.SpTrainingFragment;
 
@@ -53,6 +54,8 @@ public class SportsmanDetailActivity extends AppCompatActivity {
                     return SpInfoFragment.newInstance();
                 case 1:
                     return SpTrainingFragment.newInstanse();
+                case 2:
+                    return SpAbonementFragment.newInstance();
 
             }
             return null;

@@ -14,8 +14,11 @@ import android.view.View;
 import android.widget.CalendarView;
 import android.widget.ListView;
 
+import com.squareup.timessquare.CalendarPickerView;
+
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import cav.pdst.R;
@@ -43,6 +46,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mFab = (FloatingActionButton) findViewById(R.id.main_tr_fab);
         mFab.setOnClickListener(mClickListener);
         mListView = (ListView) findViewById(R.id.tr_list_view);
+
+        Calendar nextYear = Calendar.getInstance();
+        nextYear.add(Calendar.YEAR, 1);
+
+        CalendarPickerView calendar = (CalendarPickerView) findViewById(R.id.main_calendar_view);
+        calendar.init(new Date(),nextYear.getTime()).withSelectedDate(new Date());
+
 
 
         ArrayList<TrainingModel> model = new ArrayList<>();

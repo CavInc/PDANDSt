@@ -12,6 +12,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public static final String GROUP_TABLE = "GROUP_TABLE";
     public static final String TRAINING_TABLE ="TRAINIG_TABLE";
+    public static final String REF_TABLE = "REF_TABLE";
+    public static final String SPORTSMAN_TABLE = "SPORTSMAN";
 
     public DBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -40,6 +42,18 @@ public class DBHelper extends SQLiteOpenHelper {
                     " training_name text,"+
                     " count_item integer default 0,"+
                     " date text,time text)");
+
+            db.execSQL("create table "+REF_TABLE+"("+
+                    "type_ref integer not null,"+ // 0 -spman - group 1- traning-spman
+                    "id1 integer not null,"+
+                    "id2 integer not nyll,"+
+                    "primary key(type_ref,id1,id2)");
+
+            db.execSQL("create table "+SPORTSMAN_TABLE+"("+
+                    "_id integer not null primary key AUTOINCREMENT,"+
+                    "sp_name text,"+
+                    "phone text,"+"" +
+                    "comment text)");
 
 
         }else {

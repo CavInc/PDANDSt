@@ -1,7 +1,10 @@
 package cav.pdst.data.database;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+
+import cav.pdst.data.models.GroupModel;
 
 
 public class DataBaseConnector {
@@ -21,8 +24,12 @@ public class DataBaseConnector {
         }
     }
 
-    // Training
-    public void addTraining(){
+    // Group
+    public void addGroup(GroupModel model){
+        ContentValues value = new ContentValues();
+        value.put("group_name",model.getName());
+        value.put("count_item",model.getCount());
+        database.insert(DBHelper.GROUP_TABLE,null,value);
 
     }
 

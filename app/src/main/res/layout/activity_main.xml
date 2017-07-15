@@ -31,17 +31,22 @@
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:orientation="vertical">
-            <CalendarView
+
+            <com.squareup.timessquare.CalendarPickerView
+                android:id="@+id/main_calendar_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/calendarView"
-                android:layout_weight="0.4"/>
+                android:layout_height="0dp"
+                android:layout_weight="0.5"
+                android:clipToPadding="false"
+                android:scrollbarStyle="outsideOverlay"/>
+
 
             <ListView
                 android:id="@+id/tr_list_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.6">
+                android:layout_marginTop="8dp"
+                android:layout_weight="0.5">
 
             </ListView>
         </LinearLayout>
