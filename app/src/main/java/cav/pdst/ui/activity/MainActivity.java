@@ -18,10 +18,12 @@ import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.CalendarMode;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
+
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import cav.pdst.R;
 import cav.pdst.data.models.TrainingModel;
@@ -49,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mFab.setOnClickListener(mClickListener);
         mListView = (ListView) findViewById(R.id.tr_list_view);
 
+
         Calendar newYear = Calendar.getInstance();
         newYear.add(Calendar.YEAR, 1);
 
@@ -60,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .commit();
         calendarView.setCurrentDate(new Date());
         calendarView.setDateSelected(new Date(),true);
+
 
 
         ArrayList<TrainingModel> model = new ArrayList<>();

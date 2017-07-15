@@ -25,8 +25,12 @@ public class DataBaseConnector {
         }
     }
 
-    // Training
-    public void addTraining(){
+    // Group
+    public void addGroup(GroupModel model){
+        ContentValues value = new ContentValues();
+        value.put("group_name",model.getName());
+        value.put("count_item",model.getCount());
+        database.insert(DBHelper.GROUP_TABLE,null,value);
 
     }
 

@@ -11,6 +11,7 @@ public class DataManager {
     private static DataManager INSTANCE = null;
 
     private Context mContext;
+    private DataBaseConnector mDB;
 
     private DataBaseConnector mDB;
 
@@ -27,6 +28,9 @@ public class DataManager {
     }
 
     //region ======== databse ==============
+    public void addGroup(GroupModel data){
+        mDB.addGroup(data);
+    }
 
     public void addGroup(GroupModel data){
         mDB.addGroup(data);

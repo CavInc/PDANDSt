@@ -17,9 +17,8 @@ public class SpTrainingFragment extends Fragment {
         return fragment;
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater,ViewGroup container,  Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_sp_training, container, false);
         return rootView;
        // return super.onCreateView(inflater, container, savedInstanceState);
