@@ -27,11 +27,12 @@ public class DataBaseConnector {
 
     // Group
     public void addGroup(GroupModel model){
+        open();
         ContentValues value = new ContentValues();
         value.put("group_name",model.getName());
         value.put("count_item",model.getCount());
         database.insert(DBHelper.GROUP_TABLE,null,value);
-
+        close();
     }
     public Cursor groupAll(){
         return database.query(DBHelper.GROUP_TABLE,new String[]{"group_name","count_item"},null,null,null,null,"group_name");

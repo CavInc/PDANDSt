@@ -49,12 +49,15 @@ public class GroupActivity extends AppCompatActivity implements NavigationView.O
         mListView = (ListView) findViewById(R.id.group_list_view);
         mListView.setOnItemLongClickListener(this);
 
+        /*
         ArrayList<GroupModel> model =new ArrayList<>();
 
         //дебуг
         model.add(new GroupModel("Васька",0));
         model.add(new GroupModel("Сиска",0));
         //дебуг
+        */
+        ArrayList<GroupModel> model = mDataManager.getGroup();
 
 
         GroupAdapter adapter = new GroupAdapter(this,R.layout.group_item,model);
