@@ -14,8 +14,13 @@ import android.view.View;
 import android.widget.CalendarView;
 import android.widget.ListView;
 
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.CalendarMode;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import cav.pdst.R;
@@ -43,6 +48,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mFab = (FloatingActionButton) findViewById(R.id.main_tr_fab);
         mFab.setOnClickListener(mClickListener);
         mListView = (ListView) findViewById(R.id.tr_list_view);
+
+        Calendar newYear = Calendar.getInstance();
+        newYear.add(Calendar.YEAR, 1);
+
+        MaterialCalendarView calendarView = (MaterialCalendarView) findViewById(R.id.calendarView);
+        calendarView.state().edit()
+                .setFirstDayOfWeek(Calendar.MONDAY)
+                .setMinimumDate(CalendarDay.from(2016,12,31))
+                .setMaximumDate(newYear)
+                .commit();
+        calendarView.setCurrentDate(new Date());
+        calendarView.setDateSelected(new Date(),true);
 
 
         ArrayList<TrainingModel> model = new ArrayList<>();
