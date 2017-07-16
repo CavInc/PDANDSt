@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import cav.pdst.data.models.GroupModel;
+import cav.pdst.data.models.TrainingModel;
 
 
 public class DataBaseConnector {
@@ -34,8 +35,48 @@ public class DataBaseConnector {
         database.insert(DBHelper.GROUP_TABLE,null,value);
         close();
     }
-    public Cursor groupAll(){
-        return database.query(DBHelper.GROUP_TABLE,new String[]{"group_name","count_item"},null,null,null,null,"group_name");
+
+    public void delGroup(int id){
+        open();
+        database.delete(DBHelper.GROUP_TABLE,"_id="+id,null);
+        close();
     }
+
+    public Cursor groupAll(){
+        return database.query(DBHelper.GROUP_TABLE,new String[]{"_id","group_name","count_item"},null,null,null,null,"group_name");
+    }
+
+    // training
+    public void addTraining(TrainingModel data){
+        open();
+        ContentValues value = new ContentValues();
+        value.put("training_name",data.getName());
+        value.put("count_item",data.getCount());
+        //value.put("",data.getType());
+        database.insert(DBHelper.TRAINING_TABLE,null,value);
+        close();
+    }
+
+    public void delTraining(int id){
+
+    }
+
+    public Cursor getTraining(){
+        return database.query(DBHelper.TRAINING_TABLE,new String[]{"_id","training_name"},null,null,null,null,"training_name");
+    }
+
+    // sportsman
+    public void addSportsman(){
+
+    }
+
+    public void delSportsman(int id){
+
+    }
+
+    public Cursor getSportsman(){
+        return database.query(DBHelper.SPORTSMAN_TABLE,new String[]{"_id","sp_name","phone","comment"},null,null,null,null,"sp_name");
+    }
+
 
 }

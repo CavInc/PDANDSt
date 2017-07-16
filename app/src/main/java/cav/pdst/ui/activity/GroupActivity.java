@@ -21,6 +21,7 @@ import cav.pdst.R;
 import cav.pdst.data.managers.DataManager;
 import cav.pdst.data.models.GroupModel;
 import cav.pdst.ui.adapters.GroupAdapter;
+import cav.pdst.ui.fragments.EditDeleteDialog;
 import cav.pdst.utils.ConstantManager;
 
 public class GroupActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
@@ -124,8 +125,10 @@ public class GroupActivity extends AppCompatActivity implements NavigationView.O
     }
 
     @Override
-    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-        return false;
+    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+        EditDeleteDialog dialog = new EditDeleteDialog();
+        dialog.show(getFragmentManager(),ConstantManager.DIALOG_EDIT_DEL);
+        return true;
     }
 
     @Override

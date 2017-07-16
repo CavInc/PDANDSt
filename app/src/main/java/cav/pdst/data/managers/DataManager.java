@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import cav.pdst.data.database.DataBaseConnector;
 import cav.pdst.data.models.GroupModel;
+import cav.pdst.data.models.SportsmanModel;
 import cav.pdst.utils.PdStApplication;
 
 public class DataManager {
@@ -44,6 +45,22 @@ public class DataManager {
         }
         mDB.close();
         return  rec;
+    }
+
+    public ArrayList<SportsmanModel> getSportsman(){
+        ArrayList<SportsmanModel> rec = new ArrayList<>();
+        mDB.open();
+        Cursor cursor = mDB.getSportsman();
+        while (cursor.moveToNext()){
+            rec.add(new SportsmanModel(
+                    cursor.getInt(cursor.getColumnIndex("_id")),
+                    cursor.getString(cursor.getColumnIndex("sp_name")),
+                    cursor.getString(cursor.getColumnIndex("phone")),
+                    0,0,
+                    cursor.getString(cursor.getColumnIndex("comment"))));
+        }
+        mDB.close();
+        return rec;
     }
 
 }

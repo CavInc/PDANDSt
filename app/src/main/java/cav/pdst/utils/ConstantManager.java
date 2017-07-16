@@ -6,9 +6,11 @@ public interface ConstantManager {
     int GROUP = 1;
 
     String DIALOG_DATE = "Выбор даты";
+    String DIALOG_EDIT_DEL = "DIALOG_EDIT_DEL";
 
     String GROUP_NAME = "GROUP_NAME";
 
     int NEW_GROUP = 0;
     int EDIT_GROUP = 1;
+
 }
