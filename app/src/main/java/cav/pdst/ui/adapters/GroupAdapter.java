@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cav.pdst.R;
@@ -41,6 +42,11 @@ public class GroupAdapter extends ArrayAdapter<GroupModel> {
         holder.mName.setText(record.getName());
         holder.mCount.setText(Integer.toString(record.getCount()));
         return row;
+    }
+
+    public void setData(ArrayList<GroupModel> data) {
+        this.clear();
+        this.addAll(data);
     }
 
     private class ViewHolder{

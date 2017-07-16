@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -16,6 +17,7 @@ import cav.pdst.utils.ConstantManager;
 
 public class ItemGroupActivity extends AppCompatActivity {
 
+    private static final String TAG = "ITEMGROUP";
     private EditText mNameGroup;
     private ListView mListView;
 
@@ -48,6 +50,7 @@ public class ItemGroupActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        Log.d(TAG,"BACKPRESS");
         Intent answerIntent = new Intent();
         answerIntent.putExtra(ConstantManager.GROUP_NAME,mNameGroup.getText().toString());
         setResult(RESULT_OK,answerIntent);

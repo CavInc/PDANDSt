@@ -33,6 +33,8 @@ public class GroupActivity extends AppCompatActivity implements NavigationView.O
 
     private DataManager mDataManager;
 
+    private GroupAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +62,7 @@ public class GroupActivity extends AppCompatActivity implements NavigationView.O
         ArrayList<GroupModel> model = mDataManager.getGroup();
 
 
-        GroupAdapter adapter = new GroupAdapter(this,R.layout.group_item,model);
+        adapter = new GroupAdapter(this,R.layout.group_item,model);
         mListView.setAdapter(adapter);
 
         setupToolBar();
@@ -133,10 +135,24 @@ public class GroupActivity extends AppCompatActivity implements NavigationView.O
             case ConstantManager.NEW_GROUP:
                 if (resultCode == RESULT_OK && data !=null){
                     mDataManager.addGroup(new GroupModel(data.getStringExtra(ConstantManager.GROUP_NAME),0));
+                    updateUI();
                 }
                 break;
             case ConstantManager.EDIT_GROUP:
                 break;
         }
+    }
+
+
+    private void updateUI(){
+        ArrayList<GroupModel> model = mDataManager.getGroup();
+        if (adapter == null){
+            adapter = new GroupAdapter(this,R.layout.group_item,model);
+            mListView.setAdapter(adapter);
+        }else{
+            adapter.setData(model);
+            adapter.notifyDataSetChanged();
+        }
+
     }
 }
