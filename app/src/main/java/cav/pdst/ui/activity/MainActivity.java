@@ -49,6 +49,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ListView mListView;
     private CalendarView mCalendarView;
 
+    // https://github.com/prolificinteractive/material-calendarview
+    // https://github.com/dpreussler/clean-simple-calendar
+    // https://github.com/mahendramahi/CalendarView
+    // https://github.com/square/android-times-square/blob/master/sample/src/main/res/layout/sample_calendar_picker.xml
+    // https://ru.stackoverflow.com/questions/574045/android-range-datepicker-material-design
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
