@@ -2,9 +2,9 @@ package cav.pdst.ui.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -12,16 +12,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CalendarView;
 import android.widget.ListView;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
-import com.prolificinteractive.materialcalendarview.CalendarMode;
 import com.prolificinteractive.materialcalendarview.DayViewDecorator;
 import com.prolificinteractive.materialcalendarview.DayViewFacade;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 import com.prolificinteractive.materialcalendarview.spans.DotSpan;
 
 
@@ -31,7 +32,7 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
+
 
 import cav.pdst.R;
 import cav.pdst.data.models.TrainingModel;
@@ -40,6 +41,7 @@ import cav.pdst.utils.ConstantManager;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
+    private static final String TAG = "MAIN";
     private Toolbar mToolbar;
     private FloatingActionButton mFab;
     private DrawerLayout mNavigationDrawer;
@@ -76,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         m.add(CalendarDay.from(2017,6,10));
 
         calendarView.addDecorator(new StartDayViewDecorator(m));
+        calendarView.setOnDateChangedListener(mDateSelectedListener);
 
 
 
@@ -150,6 +153,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(MainActivity.this,TrainingActivity.class);
             intent.putExtra(ConstantManager.MODE_TRAINING,ConstantManager.NEW_TRAINING);
             startActivity(intent);
+        }
+    };
+
+    OnDateSelectedListener mDateSelectedListener = new OnDateSelectedListener() {
+        @Override
+        public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
+            Log.d(TAG,"DAY SELECTED "+date.toString());
+
         }
     };
 
