@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -27,6 +28,7 @@ import cav.pdst.utils.ConstantManager;
 public class GroupActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
         View.OnClickListener,AdapterView.OnItemLongClickListener{
 
+    private static final String TAG = "GROUP";
     private Toolbar mToolbar;
     private DrawerLayout mNavigationDrawer;
     private FloatingActionButton mFab;
@@ -126,6 +128,9 @@ public class GroupActivity extends AppCompatActivity implements NavigationView.O
 
     @Override
     public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+        GroupModel data = (GroupModel) adapterView.getItemAtPosition(position);
+        Log.d(TAG, String.valueOf(data.getName()));
+
         EditDeleteDialog dialog = new EditDeleteDialog();
         dialog.show(getFragmentManager(),ConstantManager.DIALOG_EDIT_DEL);
         return true;
