@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import cav.pdst.data.database.DataBaseConnector;
 import cav.pdst.data.models.GroupModel;
 import cav.pdst.data.models.SportsmanModel;
+import cav.pdst.data.models.TrainingModel;
 import cav.pdst.utils.PdStApplication;
 
 public class DataManager {
@@ -66,6 +67,10 @@ public class DataManager {
         }
         mDB.close();
         return rec;
+    }
+
+    public void addTraining(TrainingModel data){
+        mDB.addTraining(data);
     }
 
 }

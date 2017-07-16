@@ -6,6 +6,7 @@ import android.text.format.Time;
 import java.util.Date;
 
 public class TrainingModel {
+    private int mId;
     private String mName;
     private int mType;
     private int mCount;
@@ -25,6 +26,19 @@ public class TrainingModel {
         mCount = count;
         mDate = date;
         mTime = time;
+    }
+
+    public TrainingModel(int id, String name, int type, int count, Date date, Time time) {
+        mId = id;
+        mName = name;
+        mType = type;
+        mCount = count;
+        mDate = date;
+        mTime = time;
+    }
+
+    public int getId() {
+        return mId;
     }
 
     public String getName() {

@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.text.SimpleDateFormat;
+
 import cav.pdst.data.models.GroupModel;
 import cav.pdst.data.models.TrainingModel;
 
@@ -49,9 +51,11 @@ public class DataBaseConnector {
     // training
     public void addTraining(TrainingModel data){
         open();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         ContentValues value = new ContentValues();
         value.put("training_name",data.getName());
         value.put("count_item",data.getCount());
+        value.put("date",format.format(data.getDate()));
         //value.put("",data.getType());
         database.insert(DBHelper.TRAINING_TABLE,null,value);
         close();

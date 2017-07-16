@@ -51,17 +51,20 @@ public class ItemGroupActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+        }
+        return true;
+        //return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
         Log.d(TAG,"BACKPRESS");
         Intent answerIntent = new Intent();
         answerIntent.putExtra(ConstantManager.GROUP_NAME,mNameGroup.getText().toString());
         setResult(RESULT_OK,answerIntent);
-        finish();
-
-        super.onBackPressed();
+       // finish();
     }
 }

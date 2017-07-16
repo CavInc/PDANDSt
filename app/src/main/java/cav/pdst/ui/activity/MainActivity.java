@@ -135,6 +135,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(MainActivity.this,TrainingActivity.class);
+            intent.putExtra(ConstantManager.MODE_TRAINING,ConstantManager.NEW_TRAINING);
             startActivity(intent);
         }
     };

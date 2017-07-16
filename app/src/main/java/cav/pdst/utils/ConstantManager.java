@@ -13,4 +13,8 @@ public interface ConstantManager {
     int NEW_GROUP = 0;
     int EDIT_GROUP = 1;
 
+    String MODE_TRAINING = "MODE_TRAINING";
+
+    int NEW_TRAINING = 0;
+    int EDIT_TRAINING = 1;
 }
