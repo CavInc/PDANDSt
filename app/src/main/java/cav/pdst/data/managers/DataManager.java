@@ -40,11 +40,16 @@ public class DataManager {
         mDB.open();
         Cursor cursor = mDB.groupAll();
         while (cursor.moveToNext()){
-            rec.add(new GroupModel(cursor.getString(cursor.getColumnIndex("group_name")),
+            rec.add(new GroupModel(cursor.getInt(cursor.getColumnIndex("_id")),
+                    cursor.getString(cursor.getColumnIndex("group_name")),
                     cursor.getInt(cursor.getColumnIndex("count_item"))));
         }
         mDB.close();
         return  rec;
+    }
+
+    public void delGrop(int id ){
+        mDB.delGroup(id);
     }
 
     public ArrayList<SportsmanModel> getSportsman(){

@@ -1,8 +1,10 @@
 package cav.pdst.ui.fragments;
 
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -14,6 +16,28 @@ import cav.pdst.R;
 public class EditDeleteDialog extends DialogFragment implements View.OnClickListener{
 
     private static final String TAG = "EDDIALOG";
+
+    public interface EditDeleteDialogListener {
+        public void onDialogItemClick(int selectItem);
+    }
+
+    private EditDeleteDialogListener mListener;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        Log.d(TAG,"ATTACH");
+
+        mListener = (EditDeleteDialogListener) getActivity();
+
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        Log.d(TAG,"ATTACH ACTIVITY");
+        mListener = (EditDeleteDialogListener) activity;
+    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -29,6 +53,7 @@ public class EditDeleteDialog extends DialogFragment implements View.OnClickList
     public void onClick(View view) {
         int id= view.getId();
         Log.d(TAG,String.valueOf(id));
+        mListener.onDialogItemClick(id);
         dismiss();
 
     }

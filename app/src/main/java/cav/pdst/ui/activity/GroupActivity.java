@@ -1,6 +1,7 @@
 package cav.pdst.ui.activity;
 
 
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -26,7 +27,7 @@ import cav.pdst.ui.fragments.EditDeleteDialog;
 import cav.pdst.utils.ConstantManager;
 
 public class GroupActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
-        View.OnClickListener,AdapterView.OnItemLongClickListener{
+        View.OnClickListener,AdapterView.OnItemLongClickListener,EditDeleteDialog.EditDeleteDialogListener{
 
     private static final String TAG = "GROUP";
     private Toolbar mToolbar;
@@ -37,6 +38,7 @@ public class GroupActivity extends AppCompatActivity implements NavigationView.O
     private DataManager mDataManager;
 
     private GroupAdapter adapter;
+    private int mItemId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,8 +131,7 @@ public class GroupActivity extends AppCompatActivity implements NavigationView.O
     @Override
     public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
         GroupModel data = (GroupModel) adapterView.getItemAtPosition(position);
-        Log.d(TAG, String.valueOf(data.getName()));
-
+        mItemId = data.getId();
         EditDeleteDialog dialog = new EditDeleteDialog();
         dialog.show(getFragmentManager(),ConstantManager.DIALOG_EDIT_DEL);
         return true;
@@ -162,5 +163,19 @@ public class GroupActivity extends AppCompatActivity implements NavigationView.O
             adapter.notifyDataSetChanged();
         }
 
+    }
+
+
+    @Override
+    public void onDialogItemClick(int selectItem) {
+        Log.d(TAG,"SELECT :"+String.valueOf(selectItem));
+        if (selectItem==R.id.dialog_del_item) {
+            // удаляем
+            mDataManager.delGrop(mItemId);
+            updateUI();
+        }
+        if (selectItem == R.id.dialog_edit_item){
+            // редактируем
+        }
     }
 }
