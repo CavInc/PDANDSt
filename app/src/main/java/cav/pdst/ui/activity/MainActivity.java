@@ -1,14 +1,17 @@
 package cav.pdst.ui.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.style.ForegroundColorSpan;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CalendarView;
@@ -16,13 +19,18 @@ import android.widget.ListView;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.CalendarMode;
+import com.prolificinteractive.materialcalendarview.DayViewDecorator;
+import com.prolificinteractive.materialcalendarview.DayViewFacade;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+import com.prolificinteractive.materialcalendarview.spans.DotSpan;
 
 
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 import cav.pdst.R;
@@ -63,6 +71,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .commit();
         calendarView.setCurrentDate(new Date());
         calendarView.setDateSelected(new Date(),true);
+        Collection<CalendarDay> m = new ArrayList<>();
+        m.add(CalendarDay.from(2017,6,4));
+        m.add(CalendarDay.from(2017,6,10));
+
+        calendarView.addDecorator(new StartDayViewDecorator(m));
 
 
 
@@ -139,4 +152,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(intent);
         }
     };
+
+    private class StartDayViewDecorator implements DayViewDecorator {
+
+        private final HashSet<CalendarDay> dates;
+        private final int color;
+
+        // передали список дат
+        public StartDayViewDecorator(Collection<CalendarDay> dates){
+            this.color = Color.GREEN;
+            this.dates = new HashSet<>(dates);
+        }
+
+        @Override
+        public boolean shouldDecorate(CalendarDay day) {
+            return dates.contains(day); // входит ли обрабатываемая дата в диапазон переданых и если да то вызов decorate;
+        }
+
+        @Override
+        public void decorate(DayViewFacade view) {
+            //view.setSelectionDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.calendar_day_selector_out_range_transparent));
+           // view.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.calendar_day_selector_in_range));
+
+          //  view.addSpan(new ForegroundColorSpan(Color.WHITE));
+            view.addSpan(new ForegroundColorSpan(Color.GREEN));
+            view.addSpan(new DotSpan(5, color));
+
+        }
+    }
 }
