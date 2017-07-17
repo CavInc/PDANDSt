@@ -154,9 +154,10 @@ public class SportsmanActivity extends AppCompatActivity implements NavigationVi
         }
         if (selectItem == R.id.dialog_edit_item){
             // редактируем
+            SportsmanModel model = adapter.getItem(selId);
             Intent intent = new Intent(this,SportsmanDetailActivity.class);
             intent.putExtra(ConstantManager.MODE_SP_DETAIL,ConstantManager.EDIT_SPORTSMAN);
-
+            intent.putExtra(ConstantManager.SP_DETAIL_DATA,model);
             startActivity(intent);
         }
     }

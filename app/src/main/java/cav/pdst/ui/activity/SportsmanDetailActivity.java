@@ -43,6 +43,9 @@ public class SportsmanDetailActivity extends AppCompatActivity implements SpInfo
         mDataManager = DataManager.getInstance();
 
         mode = getIntent().getIntExtra(ConstantManager.MODE_SP_DETAIL,ConstantManager.NEW_SPORTSMAN);
+        if (mode == ConstantManager.EDIT_SPORTSMAN) {
+            mSportsmanModel = getIntent().getParcelableExtra(ConstantManager.SP_DETAIL_DATA);
+        }
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 

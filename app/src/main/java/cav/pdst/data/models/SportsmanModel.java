@@ -33,6 +33,13 @@ public class SportsmanModel implements Parcelable {
 
     }
 
+    public SportsmanModel(Parcel parcel) {
+        mId = parcel.readInt();
+        mName = parcel.readString();
+        mTel = parcel.readString();
+        mComment = parcel.readString();
+    }
+
     public int getId() {
         return mId;
     }
@@ -80,6 +87,18 @@ public class SportsmanModel implements Parcelable {
     public void setComment(String comment) {
         mComment = comment;
     }
+
+    public static final Creator<SportsmanModel> CREATOR = new Creator<SportsmanModel>() {
+        @Override
+        public SportsmanModel createFromParcel(Parcel parcel) {
+            return new SportsmanModel(parcel);
+        }
+
+        @Override
+        public SportsmanModel[] newArray(int i) {
+            return new SportsmanModel[0];
+        }
+    };
 
     @Override
     public int describeContents() {
