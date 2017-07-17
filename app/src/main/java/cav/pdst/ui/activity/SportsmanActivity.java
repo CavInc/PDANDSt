@@ -3,6 +3,7 @@ package cav.pdst.ui.activity;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -80,7 +81,7 @@ public class SportsmanActivity extends AppCompatActivity implements NavigationVi
             adapter = new SportsmanAdapter(this, R.layout.sportsman_item, model);
             mListView.setAdapter(adapter);
         }else {
-
+            adapter.setData(model);
             adapter.notifyDataSetChanged();
         }
     }
@@ -94,7 +95,24 @@ public class SportsmanActivity extends AppCompatActivity implements NavigationVi
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        return false;
+        Intent intent;
+        switch (item.getItemId()){
+            case R.id.drawer_tr:
+                intent = new Intent(this,MainActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.drawer_group:
+                intent = new Intent(this,GroupActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.drawer_statistic:
+                break;
+            case R.id.drawer_setting:
+                break;
+
+        }
+        mNavigationDrawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 
     @Override
@@ -102,5 +120,13 @@ public class SportsmanActivity extends AppCompatActivity implements NavigationVi
         Intent intent = new Intent(this,SportsmanDetailActivity.class);
         intent.putExtra(ConstantManager.MODE_SP_DETAIL,ConstantManager.NEW_SPORTSMAN);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && data !=null){
+
+        }
     }
 }

@@ -1,6 +1,8 @@
 package cav.pdst.ui.fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 import cav.pdst.R;
+import cav.pdst.data.models.SportsmanModel;
 
 
 public class SpInfoFragment extends Fragment {
@@ -24,9 +27,26 @@ public class SpInfoFragment extends Fragment {
     private Button mCall;
     private Button mSendSMS;
 
+    private SportsmanModel mSportsmanModel;
+
+    private Callbacks mCallbacks;
+
+
     public static SpInfoFragment newInstance(){
         SpInfoFragment fragment = new SpInfoFragment();
         return  fragment;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mCallbacks = (Callbacks) activity;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mSportsmanModel = new SportsmanModel();
     }
 
     @Override
@@ -44,8 +64,9 @@ public class SpInfoFragment extends Fragment {
             }
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                mSportsmanModel.setName(charSequence.toString());
+                updateData();
             }
 
             @Override
@@ -61,8 +82,9 @@ public class SpInfoFragment extends Fragment {
             }
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                mSportsmanModel.setTel(charSequence.toString());
+                updateData();
             }
 
             @Override
@@ -78,8 +100,9 @@ public class SpInfoFragment extends Fragment {
             }
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+            public void onTextChanged(CharSequence charSequence,int start, int before, int count) {
+                mSportsmanModel.setComment(charSequence.toString());
+                updateData();
             }
 
             @Override
@@ -93,5 +116,14 @@ public class SpInfoFragment extends Fragment {
 
         return rootView;
         //return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    private void updateData(){
+        mCallbacks.updateData(mSportsmanModel);
+    }
+
+
+    public interface Callbacks{
+        void updateData(SportsmanModel model);
     }
 }

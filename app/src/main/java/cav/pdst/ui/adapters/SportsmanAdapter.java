@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cav.pdst.R;
@@ -40,6 +41,11 @@ public class SportsmanAdapter extends ArrayAdapter<SportsmanModel>{
         holder.mName.setText(record.getName());
         holder.mPhone.setText(record.getTel());
         return row;
+    }
+
+    public void setData(ArrayList<SportsmanModel> data) {
+        this.clear();
+        this.addAll(data);
     }
 
     private class ViewHolder{

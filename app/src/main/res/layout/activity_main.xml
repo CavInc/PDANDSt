@@ -37,8 +37,7 @@
             <com.prolificinteractive.materialcalendarview.MaterialCalendarView
                 android:id="@+id/calendarView"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:scrollbarStyle="outsideOverlay"
+                android:layout_height="@dimen/calendar_height"
                 app:mcv_selectionColor="?attr/colorAccent"
                 app:mcv_showOtherDates="all"
                 android:layout_weight="0.4"/>
