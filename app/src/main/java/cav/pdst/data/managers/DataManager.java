@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import cav.pdst.data.database.DataBaseConnector;
 import cav.pdst.data.models.GroupModel;
 import cav.pdst.data.models.SportsmanModel;
+import cav.pdst.data.models.SportsmanTrainingModel;
 import cav.pdst.data.models.TrainingModel;
 import cav.pdst.utils.ConstantManager;
 import cav.pdst.utils.PdStApplication;
@@ -109,6 +110,23 @@ public class DataManager {
         }
         mDB.close();
         return rec;
+    }
+
+    public ArrayList<SportsmanTrainingModel> getSpTraining(){
+        ArrayList<SportsmanTrainingModel> rec = new ArrayList<>();
+        mDB.open();
+        Cursor cursor = mDB.getSPTraining();
+        while (cursor.moveToNext()){
+            rec.add(new SportsmanTrainingModel(cursor.getInt(cursor.getColumnIndex("_id")),
+                    cursor.getString(cursor.getColumnIndex("sp_name")),
+                    cursor.getInt(cursor.getColumnIndex("ci"))));
+        }
+        mDB.close();
+        return  rec;
+    }
+
+    public void delTraining(int id){
+        mDB.delTraining(id);
     }
 
 }

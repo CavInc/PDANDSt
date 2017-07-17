@@ -22,6 +22,8 @@ public class ItemGroupActivity extends AppCompatActivity {
     private EditText mNameGroup;
     private ListView mListView;
 
+    private int mode;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +32,8 @@ public class ItemGroupActivity extends AppCompatActivity {
         mNameGroup = (EditText) findViewById(R.id.group_name_edit);
 
         mListView = (ListView) findViewById(R.id.item_group_list_view);
+
+        int mode = getIntent().getIntExtra(ConstantManager.MODE_GROUP,ConstantManager.NEW_GROUP);
 
         ArrayList<ItemSportsmanModel> models = new ArrayList<>();
         models.add(new ItemSportsmanModel(false,"Иванов",0,"-"));

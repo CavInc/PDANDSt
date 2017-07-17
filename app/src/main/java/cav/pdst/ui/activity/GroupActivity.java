@@ -122,6 +122,7 @@ public class GroupActivity extends AppCompatActivity implements NavigationView.O
     public void onClick(View view) {
         if (view.getId()==R.id.group_fab){
             Intent intent = new Intent(this,ItemGroupActivity.class);
+            intent.putExtra(ConstantManager.MODE_GROUP,ConstantManager.NEW_GROUP);
             startActivityForResult(intent, ConstantManager.NEW_GROUP);
         }
 

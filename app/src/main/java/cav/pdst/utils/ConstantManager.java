@@ -23,4 +23,5 @@ public interface ConstantManager {
     int NEW_SPORTSMAN = 0;
     int EDIT_SPORTSMAN = 1;
     String SP_DETAIL_DATA = "SP_DETAIL_DATA";
+    String MODE_GROUP = "MODE_GROUP";
 }

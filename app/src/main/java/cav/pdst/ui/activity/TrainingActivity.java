@@ -14,12 +14,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
 import cav.pdst.R;
 import cav.pdst.data.managers.DataManager;
+import cav.pdst.data.models.SportsmanTrainingModel;
 import cav.pdst.data.models.TrainingModel;
+import cav.pdst.ui.adapters.TrainingAdapter;
 import cav.pdst.ui.fragments.DatePickerFragment;
 import cav.pdst.utils.ConstantManager;
 
@@ -37,6 +40,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
 
     private String mTime;
 
+    private TrainingAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +58,11 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         mTimeButton = (Button) findViewById(R.id.time_button);
         mTimeButton.setOnClickListener(this);
 
+        // все спортсмены у указанием количества тренировок
+        ArrayList<SportsmanTrainingModel> model = mDataManager.getSpTraining();
 
+        mAdapter = new TrainingAdapter(this,R.layout.training_item,model);
+        mListView.setAdapter(mAdapter);
 
         setupToolBar();
     }

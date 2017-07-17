@@ -36,9 +36,11 @@ import cav.pdst.R;
 import cav.pdst.data.managers.DataManager;
 import cav.pdst.data.models.TrainingModel;
 import cav.pdst.ui.adapters.TraningMainAdapter;
+import cav.pdst.ui.fragments.EditDeleteDialog;
 import cav.pdst.utils.ConstantManager;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
+        EditDeleteDialog.EditDeleteDialogListener{
 
     private static final String TAG = "MAIN";
     private Toolbar mToolbar;
@@ -169,10 +171,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     };
 
+    private int selectID = -1;
+
     AdapterView.OnItemLongClickListener mItemLongClickListener = new AdapterView.OnItemLongClickListener() {
         @Override
         public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
-            return false;
+            TrainingModel data = (TrainingModel) adapterView.getItemAtPosition(position);
+            selectID = data.getId();
+            EditDeleteDialog dialog = new EditDeleteDialog();
+            dialog.show(getFragmentManager(),ConstantManager.DIALOG_EDIT_DEL);
+            return true;
         }
     };
 
@@ -192,6 +200,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }else {
             adapter.setData(model);
             adapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void onDialogItemClick(int selectItem) {
+        if (selectItem==R.id.dialog_del_item) {
+            // удаляем
+            mDataManager.delTraining(selectID);
+            updateUI();
+        }
+        if (selectItem == R.id.dialog_edit_item){
+            // редактируем
         }
     }
 

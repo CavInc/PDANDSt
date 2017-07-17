@@ -25,6 +25,7 @@
                 android:ellipsize="end"
                 android:inputType="textAutoCorrect"
                 android:maxLines="1"
+                android:focusable="false"
                 android:textColorHint="@android:color/holo_blue_dark"
                 android:fontFamily="sans-serif-condensed"
                 android:minLines="1"
