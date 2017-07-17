@@ -66,6 +66,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         mTimeButton = (Button) findViewById(R.id.time_button);
         mTimeButton.setOnClickListener(this);
         mTimeButton.setText(String.valueOf(hour)+":"+String.valueOf(minute));
+        mTime = String.valueOf(hour)+":"+String.valueOf(minute);
 
         // все спортсмены у указанием количества тренировок
         ArrayList<SportsmanTrainingModel> model = mDataManager.getSpTraining();

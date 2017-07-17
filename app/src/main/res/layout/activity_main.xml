@@ -25,6 +25,21 @@
                 android:background="?attr/colorPrimary"
                 app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/calendar_height"
+                android:fitsSystemWindows="true">
+                <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+                    android:id="@+id/calendarView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:mcv_selectionColor="?attr/colorAccent"
+                    app:mcv_showOtherDates="all"
+                    />
+            </FrameLayout>
+
+
+
         </android.support.design.widget.AppBarLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,15 +48,6 @@
             android:orientation="vertical"
             android:paddingLeft="16dp"
             android:paddingRight="16dp">
-
-            <com.prolificinteractive.materialcalendarview.MaterialCalendarView
-                android:id="@+id/calendarView"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/calendar_height"
-                app:mcv_selectionColor="?attr/colorAccent"
-                app:mcv_showOtherDates="all"
-                android:layout_weight="0.4"/>
-
             <ListView
                 android:id="@+id/tr_list_view"
                 android:layout_width="match_parent"
