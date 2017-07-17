@@ -165,8 +165,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     View.OnClickListener mClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            final Calendar c = Calendar.getInstance();
+            final int hour = c.get(Calendar.HOUR_OF_DAY);
+            int minute = c.get(Calendar.MINUTE);
             Intent intent = new Intent(MainActivity.this,TrainingActivity.class);
             intent.putExtra(ConstantManager.MODE_TRAINING,ConstantManager.NEW_TRAINING);
+            intent.putExtra(ConstantManager.TRAINING_HOUR,hour);
+            intent.putExtra(ConstantManager.TRAINING_MINUTE,minute);
             startActivity(intent);
         }
     };
@@ -212,6 +217,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         if (selectItem == R.id.dialog_edit_item){
             // редактируем
+            Intent intent = new Intent(MainActivity.this,TrainingActivity.class);
+            intent.putExtra(ConstantManager.MODE_TRAINING,ConstantManager.EDIT_TRAINING);
+            //TODO сюда данные передаваемые в тренировку
+            startActivity(intent);
         }
     }
 

@@ -24,4 +24,7 @@ public interface ConstantManager {
     int EDIT_SPORTSMAN = 1;
     String SP_DETAIL_DATA = "SP_DETAIL_DATA";
     String MODE_GROUP = "MODE_GROUP";
+    String TRAINING_HOUR = "TRAINING_HOUR";
+
+    String TRAINING_MINUTE = "TRAINING_MINUTE";
 }

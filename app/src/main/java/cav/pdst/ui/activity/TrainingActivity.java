@@ -41,6 +41,10 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
     private String mTime;
 
     private TrainingAdapter mAdapter;
+    private int mode;
+
+    private int hour;
+    private int minute;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +52,10 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_tren);
 
         mDataManager = DataManager.getInstance();
+        mode = getIntent().getIntExtra(ConstantManager.MODE_TRAINING,ConstantManager.NEW_TRAINING);
+        hour = getIntent().getIntExtra(ConstantManager.TRAINING_HOUR,-1);
+        minute = getIntent().getIntExtra(ConstantManager.TRAINING_MINUTE,-1);
+
 
         mListView = (ListView) findViewById(R.id.training_list_view);
         mTraining = (EditText) findViewById(R.id.training_edit);
@@ -57,6 +65,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         mDataButton.setOnClickListener(this);
         mTimeButton = (Button) findViewById(R.id.time_button);
         mTimeButton.setOnClickListener(this);
+        mTimeButton.setText(String.valueOf(hour)+":"+String.valueOf(minute));
 
         // все спортсмены у указанием количества тренировок
         ArrayList<SportsmanTrainingModel> model = mDataManager.getSpTraining();
@@ -102,9 +111,9 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
                 dialog.show(manager, ConstantManager.DIALOG_DATE);
                 break;
             case R.id.time_button:
-                final Calendar c = Calendar.getInstance();
-                final int hour = c.get(Calendar.HOUR_OF_DAY);
-                int minute = c.get(Calendar.MINUTE);
+                //final Calendar c = Calendar.getInstance();
+                //final int hour = c.get(Calendar.HOUR_OF_DAY);
+                //int minute = c.get(Calendar.MINUTE);
                 new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int hours, int minutes) {
