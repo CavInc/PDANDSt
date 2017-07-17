@@ -14,12 +14,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
 import cav.pdst.R;
 import cav.pdst.data.managers.DataManager;
+import cav.pdst.data.models.SportsmanTrainingModel;
 import cav.pdst.data.models.TrainingModel;
+import cav.pdst.ui.adapters.TrainingAdapter;
 import cav.pdst.ui.fragments.DatePickerFragment;
 import cav.pdst.utils.ConstantManager;
 
@@ -35,6 +38,13 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
 
     private DataManager mDataManager;
 
+    private String mTime;
+
+    private TrainingAdapter mAdapter;
+    private int mode;
+
+    private int hour;
+    private int minute;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +52,10 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_tren);
 
         mDataManager = DataManager.getInstance();
+        mode = getIntent().getIntExtra(ConstantManager.MODE_TRAINING,ConstantManager.NEW_TRAINING);
+        hour = getIntent().getIntExtra(ConstantManager.TRAINING_HOUR,-1);
+        minute = getIntent().getIntExtra(ConstantManager.TRAINING_MINUTE,-1);
+
 
         mListView = (ListView) findViewById(R.id.training_list_view);
         mTraining = (EditText) findViewById(R.id.training_edit);
@@ -51,6 +65,13 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         mDataButton.setOnClickListener(this);
         mTimeButton = (Button) findViewById(R.id.time_button);
         mTimeButton.setOnClickListener(this);
+        mTimeButton.setText(String.valueOf(hour)+":"+String.valueOf(minute));
+
+        // все спортсмены у указанием количества тренировок
+        ArrayList<SportsmanTrainingModel> model = mDataManager.getSpTraining();
+
+        mAdapter = new TrainingAdapter(this,R.layout.training_item,model);
+        mListView.setAdapter(mAdapter);
 
         setupToolBar();
     }
@@ -75,8 +96,10 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
     public void onBackPressed() {
         super.onBackPressed();
         Log.d(TAG,"BACKUP");
-        TrainingModel model = new TrainingModel(mTraining.getText().toString(),0,0,new Date());
-        mDataManager.addTraining(model);
+        if (mTraining.getText().toString().length()!=0) {
+            TrainingModel model = new TrainingModel(mTraining.getText().toString(), ConstantManager.ONE, 0, new Date(), mTime);
+            mDataManager.addTraining(model);
+        }
     }
 
     @Override
@@ -88,13 +111,14 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
                 dialog.show(manager, ConstantManager.DIALOG_DATE);
                 break;
             case R.id.time_button:
-                final Calendar c = Calendar.getInstance();
-                final int hour = c.get(Calendar.HOUR_OF_DAY);
-                int minute = c.get(Calendar.MINUTE);
+                //final Calendar c = Calendar.getInstance();
+                //final int hour = c.get(Calendar.HOUR_OF_DAY);
+                //int minute = c.get(Calendar.MINUTE);
                 new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
-                    public void onTimeSet(TimePicker timePicker, int hours, int minute) {
-                        mTimeButton.setText(String.valueOf(hour)+":"+String.valueOf(minute));
+                    public void onTimeSet(TimePicker timePicker, int hours, int minutes) {
+                        mTimeButton.setText(String.valueOf(hours)+":"+String.valueOf(minutes));
+                        mTime = String.valueOf(hours)+":"+String.valueOf(minutes);
                     }
                 }, hour, minute, true).show();
                 break;

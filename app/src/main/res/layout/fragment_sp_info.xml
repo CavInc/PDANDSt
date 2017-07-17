@@ -22,7 +22,8 @@
     <EditText
         android:id="@+id/info_phone"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:inputType="phone"/>
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -30,11 +31,13 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp">
         <Button
+            android:id="@+id/info_call_button"
             android:text="Звонок"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
         <Button
+            android:id="@+id/info_send_sms"
             android:text="SMS"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -46,6 +49,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <EditText
+        android:id="@+id/info_comment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

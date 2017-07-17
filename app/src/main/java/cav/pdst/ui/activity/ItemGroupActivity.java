@@ -22,6 +22,8 @@ public class ItemGroupActivity extends AppCompatActivity {
     private EditText mNameGroup;
     private ListView mListView;
 
+    private int mode;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +32,8 @@ public class ItemGroupActivity extends AppCompatActivity {
         mNameGroup = (EditText) findViewById(R.id.group_name_edit);
 
         mListView = (ListView) findViewById(R.id.item_group_list_view);
+
+        int mode = getIntent().getIntExtra(ConstantManager.MODE_GROUP,ConstantManager.NEW_GROUP);
 
         ArrayList<ItemSportsmanModel> models = new ArrayList<>();
         models.add(new ItemSportsmanModel(false,"Иванов",0,"-"));
@@ -52,7 +56,10 @@ public class ItemGroupActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
+            Log.d(TAG,"HOME BACK");
+            //saveResult();
             onBackPressed();
+            //finish();
         }
         return true;
         //return super.onOptionsItemSelected(item);
@@ -60,11 +67,17 @@ public class ItemGroupActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        saveResult();
         super.onBackPressed();
-        Log.d(TAG,"BACKPRESS");
-        Intent answerIntent = new Intent();
-        answerIntent.putExtra(ConstantManager.GROUP_NAME,mNameGroup.getText().toString());
-        setResult(RESULT_OK,answerIntent);
-        finish();
+    }
+
+
+
+    private void saveResult(){
+        if (mNameGroup.getText().length()!=0) {
+            Intent answerIntent = new Intent();
+            answerIntent.putExtra(ConstantManager.GROUP_NAME, mNameGroup.getText().toString());
+            setResult(RESULT_OK, answerIntent);
+        }
     }
 }

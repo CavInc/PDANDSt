@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cav.pdst.R;
@@ -18,6 +19,7 @@ import cav.pdst.utils.ConstantManager;
 public class TraningMainAdapter extends ArrayAdapter<TrainingModel> {
     private LayoutInflater mInflater;
     private int resLayout;
+    private ArrayList<TrainingModel> mData;
 
     public TraningMainAdapter(Context context, int resource, List<TrainingModel> objects) {
         super(context, resource, objects);
@@ -44,7 +46,7 @@ public class TraningMainAdapter extends ArrayAdapter<TrainingModel> {
         TrainingModel record = getItem(position);
         //holder.mTime.setText(record.getTitle());
         holder.mName.setText(record.getName());
-        //holder.mTime.setText(record.getTime());
+        holder.mTime.setText(record.getTime());
         if (record.getType()== ConstantManager.ONE){
             holder.mType.setText("Спортсмен");
             holder.mIcon.setImageResource(R.drawable.ic_directions_run_black_24dp);
@@ -56,6 +58,11 @@ public class TraningMainAdapter extends ArrayAdapter<TrainingModel> {
 
 
         return row;
+    }
+
+    public void setData(ArrayList<TrainingModel> data) {
+        this.clear();
+        this.addAll(data);
     }
 
     class ViewHolder {

@@ -1,39 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.design.widget.CoordinatorLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="cav.pdst.ui.activity.ItemGroupActivity">
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/ti_item_group"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp">
-        <EditText
-            android:id="@+id/group_name_edit"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context="cav.pdst.ui.activity.ItemGroupActivity">
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/ti_item_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/group_name_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Наименование группы"
+                android:scrollHorizontally="true"
+                android:ellipsize="end"
+                android:inputType="textAutoCorrect"
+                android:maxLines="1"
+                android:focusable="false"
+                android:textColorHint="@android:color/holo_blue_dark"
+                android:fontFamily="sans-serif-condensed"
+                android:minLines="1"
+                android:focusableInTouchMode="true"
+                android:textColorHighlight="@android:color/holo_blue_dark"/>
+        </android.support.design.widget.TextInputLayout>
+        <ListView
+            android:id="@+id/item_group_list_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Наименование группы"
-            android:scrollHorizontally="true"
-            android:ellipsize="end"
-            android:inputType="textAutoCorrect"
-            android:maxLines="1"
-            android:textColorHint="@android:color/holo_blue_dark"
-            android:fontFamily="sans-serif-condensed"
-            android:minLines="1"
-            android:focusableInTouchMode="true"
-            android:textColorHighlight="@android:color/holo_blue_dark"/>
-    </android.support.design.widget.TextInputLayout>
-    <ListView
-        android:id="@+id/item_group_list_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ti_item_group"/>
+            android:layout_marginTop="16dp"
+            android:layout_below="@+id/ti_item_group"/>
 
 
-</RelativeLayout>
+    </RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>
+

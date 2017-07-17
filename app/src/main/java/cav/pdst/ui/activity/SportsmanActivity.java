@@ -17,11 +17,14 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import cav.pdst.R;
+import cav.pdst.data.managers.DataManager;
 import cav.pdst.data.models.SportsmanModel;
 import cav.pdst.ui.adapters.SportsmanAdapter;
+import cav.pdst.ui.fragments.EditDeleteDialog;
+import cav.pdst.utils.ConstantManager;
 
 public class SportsmanActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,AdapterView.
-        OnItemLongClickListener,View.OnClickListener {
+        OnItemLongClickListener,View.OnClickListener,EditDeleteDialog.EditDeleteDialogListener,AdapterView.OnItemClickListener {
 
     private Toolbar mToolbar;
     private FloatingActionButton mFab;
@@ -29,10 +32,18 @@ public class SportsmanActivity extends AppCompatActivity implements NavigationVi
 
     private ListView mListView;
 
+    private DataManager mDataManager;
+
+    private SportsmanAdapter adapter;
+
+    private int selId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sportsman);
+
+        mDataManager = DataManager.getInstance();
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mNavigationDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -40,15 +51,19 @@ public class SportsmanActivity extends AppCompatActivity implements NavigationVi
         mFab.setOnClickListener(this);
 
         mListView = (ListView) findViewById(R.id.sportsman_list_view);
+        mListView.setOnItemLongClickListener(this);
+        mListView.setOnItemClickListener(this);
 
-        ArrayList<SportsmanModel> model= new ArrayList<>();
-
-
-        SportsmanAdapter adapter = new SportsmanAdapter(this,R.layout.sportsman_item,model);
-        mListView.setAdapter(adapter);
 
         setupToolBar();
         setupDrower();
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateUI();
     }
 
     private void setupDrower() {
@@ -65,9 +80,31 @@ public class SportsmanActivity extends AppCompatActivity implements NavigationVi
         }
     }
 
+    private void updateUI(){
+        ArrayList<SportsmanModel> model= mDataManager.getSportsman();
+        if (adapter == null ) {
+            adapter = new SportsmanAdapter(this, R.layout.sportsman_item, model);
+            mListView.setAdapter(adapter);
+        }else {
+            adapter.setData(model);
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+
+
     @Override
-    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-        return false;
+    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+        SportsmanModel model = (SportsmanModel) adapterView.getItemAtPosition(position);
+        selId = model.getId();
+        EditDeleteDialog dialog = new EditDeleteDialog();
+        dialog.show(getFragmentManager(),ConstantManager.DIALOG_EDIT_DEL);
+        return true;
+    }
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+        SportsmanModel model = (SportsmanModel) adapterView.getItemAtPosition(position);
+
     }
 
     @Override
@@ -95,6 +132,34 @@ public class SportsmanActivity extends AppCompatActivity implements NavigationVi
     @Override
     public void onClick(View view) {
         Intent intent = new Intent(this,SportsmanDetailActivity.class);
+        intent.putExtra(ConstantManager.MODE_SP_DETAIL,ConstantManager.NEW_SPORTSMAN);
         startActivity(intent);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && data !=null){
+
+        }
+    }
+
+    @Override
+    public void onDialogItemClick(int selectItem) {
+        if (selectItem==R.id.dialog_del_item) {
+            // удаляем
+            mDataManager.delSportsman(selId);
+            //TODO сделать удаление елемента из адаптера не трогая весь
+            updateUI();
+        }
+        if (selectItem == R.id.dialog_edit_item){
+            // редактируем
+            SportsmanModel model = adapter.getItem(selId);
+            Intent intent = new Intent(this,SportsmanDetailActivity.class);
+            intent.putExtra(ConstantManager.MODE_SP_DETAIL,ConstantManager.EDIT_SPORTSMAN);
+            intent.putExtra(ConstantManager.SP_DETAIL_DATA,model);
+            startActivity(intent);
+        }
+    }
+
 }

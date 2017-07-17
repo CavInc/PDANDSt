@@ -1,28 +1,51 @@
 package cav.pdst.ui.activity;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.MenuItem;
 
 import cav.pdst.R;
+import cav.pdst.data.managers.DataManager;
+import cav.pdst.data.models.SportsmanModel;
 import cav.pdst.ui.fragments.SpAbonementFragment;
 import cav.pdst.ui.fragments.SpInfoFragment;
 import cav.pdst.ui.fragments.SpTrainingFragment;
+import cav.pdst.utils.ConstantManager;
 
-public class SportsmanDetailActivity extends AppCompatActivity {
 
+public class SportsmanDetailActivity extends AppCompatActivity implements SpInfoFragment.Callbacks  {
+
+    private static final String TAG = "SPDETAIL";
     private ViewPager mViewPager;
     private SectionsPagerAdapter mSectionsPagerAdapter;
+
+    private SportsmanModel mSportsmanModel;
+
+    private int mode;
+
+    private DataManager mDataManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sportsman_detail);
+
+        mDataManager = DataManager.getInstance();
+
+        mode = getIntent().getIntExtra(ConstantManager.MODE_SP_DETAIL,ConstantManager.NEW_SPORTSMAN);
+        if (mode == ConstantManager.EDIT_SPORTSMAN) {
+            mSportsmanModel = getIntent().getParcelableExtra(ConstantManager.SP_DETAIL_DATA);
+        }
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
@@ -39,7 +62,38 @@ public class SportsmanDetailActivity extends AppCompatActivity {
     private void setupToolBar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar!=null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId()==android.R.id.home){
+            onBackPressed();
+        }
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        saveData();
+        super.onBackPressed();
+    }
+
+    @Override
+    public void updateData(SportsmanModel model) {
+        mSportsmanModel=model;
+    }
+
+    private void saveData(){
+        if (mSportsmanModel.getName().length()!=0){
+            mDataManager.addSportsman(mSportsmanModel);
+        }
+
+    }
+
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
