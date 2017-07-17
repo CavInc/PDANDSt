@@ -16,7 +16,7 @@ import cav.pdst.data.models.ItemSportsmanModel;
 import cav.pdst.ui.adapters.ItemGroupAdapter;
 import cav.pdst.utils.ConstantManager;
 
-public class ItemGroupActivity extends AppCompatActivity {
+public class ItemGroupActivity extends AppCompatActivity  {
 
     private static final String TAG = "ITEMGROUP";
     private EditText mNameGroup;
@@ -34,6 +34,10 @@ public class ItemGroupActivity extends AppCompatActivity {
         mListView = (ListView) findViewById(R.id.item_group_list_view);
 
         int mode = getIntent().getIntExtra(ConstantManager.MODE_GROUP,ConstantManager.NEW_GROUP);
+
+        if (mode == ConstantManager.EDIT_GROUP) {
+
+        }
 
         ArrayList<ItemSportsmanModel> models = new ArrayList<>();
         models.add(new ItemSportsmanModel(false,"Иванов",0,"-"));
@@ -69,6 +73,17 @@ public class ItemGroupActivity extends AppCompatActivity {
     public void onBackPressed() {
         saveResult();
         super.onBackPressed();
+    }
+
+    private void changeState(int mode){
+        if (mode == 1){
+            mNameGroup.setEnabled(true);
+            mNameGroup.setFocusable(true);
+            mNameGroup.requestFocus();
+        }else{
+            mNameGroup.setEnabled(false);
+            mNameGroup.setFocusable(false);
+        }
     }
 
 
