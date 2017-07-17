@@ -65,6 +65,6 @@ public class ItemGroupActivity extends AppCompatActivity {
         Intent answerIntent = new Intent();
         answerIntent.putExtra(ConstantManager.GROUP_NAME,mNameGroup.getText().toString());
         setResult(RESULT_OK,answerIntent);
-       // finish();
+        finish();
     }
 }
