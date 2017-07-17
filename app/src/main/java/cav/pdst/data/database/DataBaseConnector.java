@@ -64,7 +64,9 @@ public class DataBaseConnector {
     }
 
     public void delTraining(int id){
-
+        open();
+        database.delete(DBHelper.TRAINING_TABLE,"_id="+id,null);
+        close();
     }
 
     public Cursor getTraining(){
@@ -83,7 +85,9 @@ public class DataBaseConnector {
     }
 
     public void delSportsman(int id){
-
+        open();
+        database.delete(DBHelper.SPORTSMAN_TABLE,"_id="+id,null);
+        close();
     }
 
     public Cursor getSportsman(){

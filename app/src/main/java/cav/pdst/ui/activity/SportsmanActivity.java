@@ -20,10 +20,11 @@ import cav.pdst.R;
 import cav.pdst.data.managers.DataManager;
 import cav.pdst.data.models.SportsmanModel;
 import cav.pdst.ui.adapters.SportsmanAdapter;
+import cav.pdst.ui.fragments.EditDeleteDialog;
 import cav.pdst.utils.ConstantManager;
 
 public class SportsmanActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,AdapterView.
-        OnItemLongClickListener,View.OnClickListener {
+        OnItemLongClickListener,View.OnClickListener,EditDeleteDialog.EditDeleteDialogListener,AdapterView.OnItemClickListener {
 
     private Toolbar mToolbar;
     private FloatingActionButton mFab;
@@ -34,6 +35,8 @@ public class SportsmanActivity extends AppCompatActivity implements NavigationVi
     private DataManager mDataManager;
 
     private SportsmanAdapter adapter;
+
+    private int selId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,8 @@ public class SportsmanActivity extends AppCompatActivity implements NavigationVi
         mFab.setOnClickListener(this);
 
         mListView = (ListView) findViewById(R.id.sportsman_list_view);
+        mListView.setOnItemLongClickListener(this);
+        mListView.setOnItemClickListener(this);
 
 
         setupToolBar();
@@ -90,7 +95,16 @@ public class SportsmanActivity extends AppCompatActivity implements NavigationVi
 
     @Override
     public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
-        return false;
+        SportsmanModel model = (SportsmanModel) adapterView.getItemAtPosition(position);
+        selId = model.getId();
+        EditDeleteDialog dialog = new EditDeleteDialog();
+        dialog.show(getFragmentManager(),ConstantManager.DIALOG_EDIT_DEL);
+        return true;
+    }
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+        SportsmanModel model = (SportsmanModel) adapterView.getItemAtPosition(position);
+
     }
 
     @Override
@@ -129,4 +143,22 @@ public class SportsmanActivity extends AppCompatActivity implements NavigationVi
 
         }
     }
+
+    @Override
+    public void onDialogItemClick(int selectItem) {
+        if (selectItem==R.id.dialog_del_item) {
+            // удаляем
+            mDataManager.delSportsman(selId);
+            //TODO сделать удаление елемента из адаптера не трогая весь
+            updateUI();
+        }
+        if (selectItem == R.id.dialog_edit_item){
+            // редактируем
+            Intent intent = new Intent(this,SportsmanDetailActivity.class);
+            intent.putExtra(ConstantManager.MODE_SP_DETAIL,ConstantManager.EDIT_SPORTSMAN);
+
+            startActivity(intent);
+        }
+    }
+
 }

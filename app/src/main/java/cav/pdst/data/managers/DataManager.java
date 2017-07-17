@@ -76,6 +76,11 @@ public class DataManager {
         mDB.addSportsman(data);
     }
 
+    public void delSportsman(int id){
+        mDB.delSportsman(id);
+    }
+
+
     public void addTraining(TrainingModel data){
         mDB.addTraining(data);
     }
