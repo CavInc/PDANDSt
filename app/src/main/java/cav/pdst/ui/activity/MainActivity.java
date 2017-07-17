@@ -2,7 +2,6 @@ package cav.pdst.ui.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,7 +14,7 @@ import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.CalendarView;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
@@ -26,7 +25,6 @@ import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 import com.prolificinteractive.materialcalendarview.spans.DotSpan;
 
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -35,6 +33,7 @@ import java.util.HashSet;
 
 
 import cav.pdst.R;
+import cav.pdst.data.managers.DataManager;
 import cav.pdst.data.models.TrainingModel;
 import cav.pdst.ui.adapters.TraningMainAdapter;
 import cav.pdst.utils.ConstantManager;
@@ -47,7 +46,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout mNavigationDrawer;
 
     private ListView mListView;
-    private CalendarView mCalendarView;
+    private TraningMainAdapter adapter;
+
+    private DataManager mDataManager;
 
     // https://github.com/prolificinteractive/material-calendarview
     // https://github.com/dpreussler/clean-simple-calendar
@@ -60,11 +61,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mDataManager = DataManager.getInstance();
+
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mNavigationDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         mFab = (FloatingActionButton) findViewById(R.id.main_tr_fab);
         mFab.setOnClickListener(mClickListener);
         mListView = (ListView) findViewById(R.id.tr_list_view);
+        mListView.setOnItemLongClickListener(mItemLongClickListener);
 
 
         Calendar newYear = Calendar.getInstance();
@@ -86,13 +90,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         calendarView.setOnDateChangedListener(mDateSelectedListener);
 
 
-
+        /*
         ArrayList<TrainingModel> model = new ArrayList<>();
         model.add(new TrainingModel("Йога", ConstantManager.ONE,0, new Date()));
         model.add(new TrainingModel("Йога + пробежка", ConstantManager.GROUP,0, new Date()));
-
-        TraningMainAdapter adapter = new TraningMainAdapter(this,R.layout.main_item,model);
-        mListView.setAdapter(adapter);
+        */
 
         setupToolBar();
         setupDrower();
@@ -111,6 +113,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateUI();
     }
 
     @Override
@@ -161,13 +169,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     };
 
+    AdapterView.OnItemLongClickListener mItemLongClickListener = new AdapterView.OnItemLongClickListener() {
+        @Override
+        public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+            return false;
+        }
+    };
+
     OnDateSelectedListener mDateSelectedListener = new OnDateSelectedListener() {
         @Override
-        public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
+        public void onDateSelected(MaterialCalendarView widget,CalendarDay date, boolean selected) {
             Log.d(TAG,"DAY SELECTED "+date.toString());
 
         }
     };
+
+    private void updateUI(){
+        ArrayList<TrainingModel> model = mDataManager.getTraining();
+        if (adapter == null){
+            adapter = new TraningMainAdapter(this,R.layout.main_item,model);
+            mListView.setAdapter(adapter);
+        }else {
+            adapter.setData(model);
+            adapter.notifyDataSetChanged();
+        }
+    }
 
     private class StartDayViewDecorator implements DayViewDecorator {
 

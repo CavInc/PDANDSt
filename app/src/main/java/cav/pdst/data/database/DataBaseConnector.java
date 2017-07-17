@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import java.text.SimpleDateFormat;
 
 import cav.pdst.data.models.GroupModel;
+import cav.pdst.data.models.SportsmanModel;
 import cav.pdst.data.models.TrainingModel;
 
 
@@ -56,6 +57,7 @@ public class DataBaseConnector {
         value.put("training_name",data.getName());
         value.put("count_item",data.getCount());
         value.put("date",format.format(data.getDate()));
+        value.put("time",data.getTime());
         //value.put("",data.getType());
         database.insert(DBHelper.TRAINING_TABLE,null,value);
         close();
@@ -66,12 +68,18 @@ public class DataBaseConnector {
     }
 
     public Cursor getTraining(){
-        return database.query(DBHelper.TRAINING_TABLE,new String[]{"_id","training_name"},null,null,null,null,"training_name");
+        return database.query(DBHelper.TRAINING_TABLE,new String[]{"_id","training_name","count_item","date","time"},null,null,null,null,"training_name");
     }
 
     // sportsman
-    public void addSportsman(){
-
+    public void addSportsman(SportsmanModel data){
+        open();
+        ContentValues value = new ContentValues();
+        value.put("sp_name",data.getName());
+        value.put("phone",data.getTel());
+        value.put("comment",data.getComment());
+        database.insert(DBHelper.SPORTSMAN_TABLE,null,value);
+        close();
     }
 
     public void delSportsman(int id){

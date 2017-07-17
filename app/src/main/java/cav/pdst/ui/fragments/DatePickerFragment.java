@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import cav.pdst.R;
+import cav.pdst.utils.ConstantManager;
 
 public class DatePickerFragment extends DialogFragment {
     private DatePicker mDatePicker;
@@ -52,6 +54,11 @@ public class DatePickerFragment extends DialogFragment {
     }
 
     private void sendResult(int resultCode, Date date){
+
+        Intent intent = new Intent();
+        intent.putExtra(ConstantManager.EXTRA_DATE, date);
+
+        //getTargetFragment().onActivityResult(getTargetRequestCode(), resultCode, intent);
 
     }
 }

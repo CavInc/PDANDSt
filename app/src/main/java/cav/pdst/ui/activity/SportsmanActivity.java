@@ -16,8 +16,10 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import cav.pdst.R;
+import cav.pdst.data.managers.DataManager;
 import cav.pdst.data.models.SportsmanModel;
 import cav.pdst.ui.adapters.SportsmanAdapter;
+import cav.pdst.utils.ConstantManager;
 
 public class SportsmanActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,AdapterView.
         OnItemLongClickListener,View.OnClickListener {
@@ -28,10 +30,16 @@ public class SportsmanActivity extends AppCompatActivity implements NavigationVi
 
     private ListView mListView;
 
+    private DataManager mDataManager;
+
+    private SportsmanAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sportsman);
+
+        mDataManager = DataManager.getInstance();
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mNavigationDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -40,14 +48,16 @@ public class SportsmanActivity extends AppCompatActivity implements NavigationVi
 
         mListView = (ListView) findViewById(R.id.sportsman_list_view);
 
-        ArrayList<SportsmanModel> model= new ArrayList<>();
-
-
-        SportsmanAdapter adapter = new SportsmanAdapter(this,R.layout.sportsman_item,model);
-        mListView.setAdapter(adapter);
 
         setupToolBar();
         setupDrower();
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateUI();
     }
 
     private void setupDrower() {
@@ -64,8 +74,21 @@ public class SportsmanActivity extends AppCompatActivity implements NavigationVi
         }
     }
 
+    private void updateUI(){
+        ArrayList<SportsmanModel> model= mDataManager.getSportsman();
+        if (adapter == null ) {
+            adapter = new SportsmanAdapter(this, R.layout.sportsman_item, model);
+            mListView.setAdapter(adapter);
+        }else {
+
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+
+
     @Override
-    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
         return false;
     }
 
@@ -77,6 +100,7 @@ public class SportsmanActivity extends AppCompatActivity implements NavigationVi
     @Override
     public void onClick(View view) {
         Intent intent = new Intent(this,SportsmanDetailActivity.class);
+        intent.putExtra(ConstantManager.MODE_SP_DETAIL,ConstantManager.NEW_SPORTSMAN);
         startActivity(intent);
     }
 }

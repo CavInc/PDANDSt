@@ -35,6 +35,8 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
 
     private DataManager mDataManager;
 
+    private String mTime;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,8 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         mDataButton.setOnClickListener(this);
         mTimeButton = (Button) findViewById(R.id.time_button);
         mTimeButton.setOnClickListener(this);
+
+
 
         setupToolBar();
     }
@@ -75,8 +79,10 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
     public void onBackPressed() {
         super.onBackPressed();
         Log.d(TAG,"BACKUP");
-        TrainingModel model = new TrainingModel(mTraining.getText().toString(),0,0,new Date());
-        mDataManager.addTraining(model);
+        if (mTraining.getText().toString().length()!=0) {
+            TrainingModel model = new TrainingModel(mTraining.getText().toString(), ConstantManager.ONE, 0, new Date(), mTime);
+            mDataManager.addTraining(model);
+        }
     }
 
     @Override
@@ -93,8 +99,9 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
                 int minute = c.get(Calendar.MINUTE);
                 new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
-                    public void onTimeSet(TimePicker timePicker, int hours, int minute) {
-                        mTimeButton.setText(String.valueOf(hour)+":"+String.valueOf(minute));
+                    public void onTimeSet(TimePicker timePicker, int hours, int minutes) {
+                        mTimeButton.setText(String.valueOf(hours)+":"+String.valueOf(minutes));
+                        mTime = String.valueOf(hours)+":"+String.valueOf(minutes);
                     }
                 }, hour, minute, true).show();
                 break;

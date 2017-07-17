@@ -11,7 +11,7 @@ public class TrainingModel {
     private int mType;
     private int mCount;
     private Date mDate;
-    private Time mTime;
+    private String mTime;
 
     public TrainingModel(String name, int type, int count, Date date) {
         mName = name;
@@ -20,7 +20,7 @@ public class TrainingModel {
         mDate = date;
     }
 
-    public TrainingModel(String name, int type, int count, Date date, Time time) {
+    public TrainingModel(String name, int type, int count, Date date, String time) {
         mName = name;
         mType = type;
         mCount = count;
@@ -28,7 +28,7 @@ public class TrainingModel {
         mTime = time;
     }
 
-    public TrainingModel(int id, String name, int type, int count, Date date, Time time) {
+    public TrainingModel(int id, String name, int type, int count, Date date, String time) {
         mId = id;
         mName = name;
         mType = type;
@@ -36,6 +36,7 @@ public class TrainingModel {
         mDate = date;
         mTime = time;
     }
+
 
     public int getId() {
         return mId;
@@ -57,7 +58,7 @@ public class TrainingModel {
         return mDate;
     }
 
-    public Time getTime() {
+    public String getTime() {
         return mTime;
     }
 }
