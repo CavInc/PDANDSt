@@ -122,7 +122,6 @@ public class GroupActivity extends AppCompatActivity implements NavigationView.O
     public void onClick(View view) {
         if (view.getId()==R.id.group_fab){
             Intent intent = new Intent(this,ItemGroupActivity.class);
-            startActivity(intent);
             startActivityForResult(intent, ConstantManager.NEW_GROUP);
         }
 
@@ -140,6 +139,7 @@ public class GroupActivity extends AppCompatActivity implements NavigationView.O
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         //super.onActivityResult(requestCode, resultCode, data);
+        Log.d(TAG,"RESUL: "+String.valueOf(requestCode));
         switch (requestCode){
             case ConstantManager.NEW_GROUP:
                 if (resultCode == RESULT_OK && data !=null){
