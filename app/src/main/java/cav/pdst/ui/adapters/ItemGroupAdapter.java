@@ -38,7 +38,8 @@ public class ItemGroupAdapter extends ArrayAdapter<ItemSportsmanModel> {
             holder.mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    Log.d(TAG,"CHECK POS"+position);
+                    Log.d(TAG,"CHECK POS"+position+" boolean "+b);
+                    getItem(position).setCheckItem(b);
                 }
             });
             holder.mName = (TextView) row.findViewById(R.id.item_group_item_name);
@@ -49,7 +50,11 @@ public class ItemGroupAdapter extends ArrayAdapter<ItemSportsmanModel> {
         }
         ItemSportsmanModel record = getItem(position);
         holder.mName.setText(record.getName());
-        holder.mGroup.setText(record.getGroup());
+        if (record.getGroup() != null && record.getGroup().length()!=0) {
+            holder.mGroup.setText(record.getGroup());
+        }else{
+            holder.mGroup.setText("----");
+        }
         holder.mCheckBox.setChecked(record.isCheckItem());
         return row;
     }

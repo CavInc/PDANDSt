@@ -12,6 +12,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import cav.pdst.R;
+import cav.pdst.data.managers.DataManager;
 import cav.pdst.data.models.GroupModel;
 import cav.pdst.data.models.ItemSportsmanModel;
 import cav.pdst.ui.adapters.ItemGroupAdapter;
@@ -24,13 +25,16 @@ public class ItemGroupActivity extends AppCompatActivity  {
     private ListView mListView;
 
     private int mode;
+    private DataManager mDataManager;
 
     private GroupModel mGroupModel;
+    private ItemGroupAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_group);
+        mDataManager = DataManager.getInstance();
 
         mNameGroup = (EditText) findViewById(R.id.group_name_edit);
 
@@ -44,11 +48,11 @@ public class ItemGroupActivity extends AppCompatActivity  {
             mNameGroup.setText(mGroupModel.getName());
         }
 
-        ArrayList<ItemSportsmanModel> models = new ArrayList<>();
-        models.add(new ItemSportsmanModel(false,"Иванов",0,"-"));
+        ArrayList<ItemSportsmanModel> models = mDataManager.getSportsmanInGroup();
+       // models.add(new ItemSportsmanModel(false,"Иванов",0,"-"));
 
 
-        ItemGroupAdapter adapter = new ItemGroupAdapter(this,R.layout.item_group_item,models);
+        adapter = new ItemGroupAdapter(this,R.layout.item_group_item,models);
         mListView.setAdapter(adapter);
 
         setupToolBar();
@@ -91,16 +95,28 @@ public class ItemGroupActivity extends AppCompatActivity  {
         }
     }
 
+    private Integer[] getCheckElement(){
+        ArrayList<Integer> rec = new ArrayList<>();
+        for (int i=0;i<adapter.getCount();i++){
+            if (adapter.getItem(i).isCheckItem()){
+                Log.d(TAG,"SP ID "+adapter.getItem(i).getId());
+                rec.add(adapter.getItem(i).getId());
+            }
+        }
+        return rec.toArray(new Integer[rec.size()]);
+    }
 
 
     private void saveResult(){
         if (mNameGroup.getText().length()!=0) {
+            Integer[] selItem = getCheckElement();
             Intent answerIntent = new Intent();
             answerIntent.putExtra(ConstantManager.GROUP_NAME, mNameGroup.getText().toString());
             if (mode == ConstantManager.EDIT_GROUP){
                 answerIntent.putExtra(ConstantManager.GROUP_ID,mGroupModel.getId());
                 answerIntent.putExtra(ConstantManager.GROUP_COUNT,mGroupModel.getCount());
             }
+            answerIntent.putExtra(ConstantManager.GROUP_SELECT_ITEM,selItem);
             setResult(RESULT_OK, answerIntent);
         }
     }

@@ -3,13 +3,16 @@ package cav.pdst.data.managers;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.concurrent.Callable;
 
 import cav.pdst.data.database.DataBaseConnector;
 import cav.pdst.data.models.GroupModel;
+import cav.pdst.data.models.ItemSportsmanModel;
 import cav.pdst.data.models.SportsmanModel;
 import cav.pdst.data.models.SportsmanTrainingModel;
 import cav.pdst.data.models.TrainingModel;
@@ -17,6 +20,7 @@ import cav.pdst.utils.ConstantManager;
 import cav.pdst.utils.PdStApplication;
 
 public class DataManager {
+    private static final String TAG = "DM";
     private static DataManager INSTANCE = null;
 
     private Context mContext;
@@ -36,8 +40,11 @@ public class DataManager {
     }
 
     //region ======== databse ==============
-    public void addGroup(GroupModel data){
+    public void addGroup(GroupModel data, int[] selectItem){
         mDB.addGroup(data);
+        for (int i=0;i<selectItem.length;i++){
+           Log.d(TAG, String.valueOf(i));
+        }
     }
 
     public ArrayList<GroupModel> getGroup(){
@@ -55,6 +62,20 @@ public class DataManager {
 
     public void updateGroup(GroupModel data){
         mDB.updateGroup(data);
+    }
+
+    public ArrayList<ItemSportsmanModel> getSportsmanInGroup(){
+        ArrayList<ItemSportsmanModel> rec = new ArrayList<>();
+        mDB.open();
+        Cursor cursor = mDB.getSportsmanInGroup();
+        while (cursor.moveToNext()){
+            rec.add(new ItemSportsmanModel(cursor.getInt(cursor.getColumnIndex("_id")),
+                    false,cursor.getString(cursor.getColumnIndex("sp_name")),
+                    0,
+                    cursor.getString(cursor.getColumnIndex("group_name"))));
+        }
+        mDB.close();
+        return  rec;
     }
 
     public void delGrop(int id ){

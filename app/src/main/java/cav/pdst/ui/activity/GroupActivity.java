@@ -146,12 +146,15 @@ public class GroupActivity extends AppCompatActivity implements NavigationView.O
         switch (requestCode){
             case ConstantManager.NEW_GROUP:
                 if (resultCode == RESULT_OK && data !=null){
-                    mDataManager.addGroup(new GroupModel(data.getStringExtra(ConstantManager.GROUP_NAME),0));
+                    mDataManager.addGroup(new GroupModel(data.getStringExtra(ConstantManager.GROUP_NAME),0),
+                            data.getIntArrayExtra(ConstantManager.GROUP_SELECT_ITEM));
                     updateUI();
                 }
                 break;
             case ConstantManager.EDIT_GROUP:
                 if (resultCode == RESULT_OK && data !=null){
+                    int[] x =data.getIntArrayExtra(ConstantManager.GROUP_SELECT_ITEM);
+                    ArrayList<Integer> xm = data.getIntegerArrayListExtra(ConstantManager.GROUP_SELECT_ITEM);
                     GroupModel model =new GroupModel(data.getIntExtra(ConstantManager.GROUP_ID,-1),
                             data.getStringExtra(ConstantManager.GROUP_NAME),
                             data.getIntExtra(ConstantManager.GROUP_COUNT,0));
