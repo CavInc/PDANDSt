@@ -52,6 +52,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private DataManager mDataManager;
 
+    private Date selectedDate;
+
     // https://github.com/prolificinteractive/material-calendarview
     // https://github.com/dpreussler/clean-simple-calendar
     // https://github.com/mahendramahi/CalendarView
@@ -91,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         calendarView.addDecorator(new StartDayViewDecorator(m));
         calendarView.setOnDateChangedListener(mDateSelectedListener);
 
+        selectedDate = new Date();
 
         /*
         ArrayList<TrainingModel> model = new ArrayList<>();
@@ -172,6 +175,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             intent.putExtra(ConstantManager.MODE_TRAINING,ConstantManager.NEW_TRAINING);
             intent.putExtra(ConstantManager.TRAINING_HOUR,hour);
             intent.putExtra(ConstantManager.TRAINING_MINUTE,minute);
+            intent.putExtra(ConstantManager.TRAINING_DATE,selectedDate);
             startActivity(intent);
         }
     };
@@ -193,7 +197,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         @Override
         public void onDateSelected(MaterialCalendarView widget,CalendarDay date, boolean selected) {
             Log.d(TAG,"DAY SELECTED "+date.toString());
-
+            selectedDate = date.getDate();
         }
     };
 

@@ -1,6 +1,7 @@
 package cav.pdst.ui.activity;
 
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -26,7 +28,7 @@ import cav.pdst.ui.adapters.TrainingAdapter;
 import cav.pdst.ui.fragments.DatePickerFragment;
 import cav.pdst.utils.ConstantManager;
 
-public class TrainingActivity extends AppCompatActivity implements View.OnClickListener {
+public class TrainingActivity extends AppCompatActivity implements View.OnClickListener,DatePickerFragment.OnDateGet {
 
     private static final String TAG = "TRA";
     private ListView mListView;
@@ -46,6 +48,9 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
     private int hour;
     private int minute;
 
+    private Date mDate;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +60,8 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         mode = getIntent().getIntExtra(ConstantManager.MODE_TRAINING,ConstantManager.NEW_TRAINING);
         hour = getIntent().getIntExtra(ConstantManager.TRAINING_HOUR,-1);
         minute = getIntent().getIntExtra(ConstantManager.TRAINING_MINUTE,-1);
+        Bundle buingle = getIntent().getExtras();
+        mDate = (Date) buingle.get(ConstantManager.TRAINING_DATE);
 
 
         mListView = (ListView) findViewById(R.id.training_list_view);
@@ -73,6 +80,9 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
 
         mAdapter = new TrainingAdapter(this,R.layout.training_item,model);
         mListView.setAdapter(mAdapter);
+
+        setDateButton(mDate);
+
 
         setupToolBar();
     }
@@ -98,7 +108,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         super.onBackPressed();
         Log.d(TAG,"BACKUP");
         if (mTraining.getText().toString().length()!=0) {
-            TrainingModel model = new TrainingModel(mTraining.getText().toString(), ConstantManager.ONE, 0, new Date(), mTime);
+            TrainingModel model = new TrainingModel(mTraining.getText().toString(), ConstantManager.ONE, 0, mDate, mTime);
             mDataManager.addTraining(model);
         }
     }
@@ -124,5 +134,16 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
                 }, hour, minute, true).show();
                 break;
         }
+    }
+
+    private void setDateButton(Date date){
+        SimpleDateFormat format = new SimpleDateFormat("E dd.MM.yyyy");
+        mDataButton.setText(format.format(date));
+    }
+
+    @Override
+    public void OnDateGet(Date date) {
+        setDateButton(date);
+        mDate = date;
     }
 }

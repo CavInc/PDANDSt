@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
@@ -20,12 +21,25 @@ import cav.pdst.R;
 import cav.pdst.utils.ConstantManager;
 
 public class DatePickerFragment extends DialogFragment {
+    private static final String TAG = "DP";
     private DatePicker mDatePicker;
+
+    private OnDateGet mOnDateGetListener;
+
+    public interface OnDateGet{
+        public void OnDateGet(Date date);
+    }
 
     public static DatePickerFragment newInstance(){
         Bundle args = new Bundle();
         DatePickerFragment fragment = new DatePickerFragment();
         return fragment;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mOnDateGetListener =  (OnDateGet) activity;
     }
 
     @Override
@@ -46,19 +60,12 @@ public class DatePickerFragment extends DialogFragment {
                         int month = mDatePicker.getMonth();
                         int day = mDatePicker.getDayOfMonth();
                         Date date = new GregorianCalendar(year, month, day).getTime();
-                        sendResult(Activity.RESULT_OK, date);
+                        mOnDateGetListener.OnDateGet(date);
                     }
                 })
                 .create();
         //return super.onCreateDialog(savedInstanceState);
     }
 
-    private void sendResult(int resultCode, Date date){
 
-        Intent intent = new Intent();
-        intent.putExtra(ConstantManager.EXTRA_DATE, date);
-
-        //getTargetFragment().onActivityResult(getTargetRequestCode(), resultCode, intent);
-
-    }
 }

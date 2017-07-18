@@ -27,4 +27,5 @@ public interface ConstantManager {
     String TRAINING_HOUR = "TRAINING_HOUR";
 
     String TRAINING_MINUTE = "TRAINING_MINUTE";
+    String TRAINING_DATE = "TRAINING_DATE";
 }
