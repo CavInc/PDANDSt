@@ -28,4 +28,6 @@ public interface ConstantManager {
 
     String TRAINING_MINUTE = "TRAINING_MINUTE";
     String TRAINING_DATE = "TRAINING_DATE";
+    String GROUP_ID = "GROUP_ID";
+    String GROUP_COUNT = "GROUP_COUNT";
 }

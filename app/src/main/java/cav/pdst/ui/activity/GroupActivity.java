@@ -40,6 +40,8 @@ public class GroupActivity extends AppCompatActivity implements NavigationView.O
     private GroupAdapter adapter;
     private int mItemId;
 
+    private GroupModel mGroupModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -130,8 +132,8 @@ public class GroupActivity extends AppCompatActivity implements NavigationView.O
 
     @Override
     public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
-        GroupModel data = (GroupModel) adapterView.getItemAtPosition(position);
-        mItemId = data.getId();
+        mGroupModel = (GroupModel) adapterView.getItemAtPosition(position);
+        mItemId = mGroupModel.getId();
         EditDeleteDialog dialog = new EditDeleteDialog();
         dialog.show(getFragmentManager(),ConstantManager.DIALOG_EDIT_DEL);
         return true;
@@ -149,6 +151,13 @@ public class GroupActivity extends AppCompatActivity implements NavigationView.O
                 }
                 break;
             case ConstantManager.EDIT_GROUP:
+                if (resultCode == RESULT_OK && data !=null){
+                    GroupModel model =new GroupModel(data.getIntExtra(ConstantManager.GROUP_ID,-1),
+                            data.getStringExtra(ConstantManager.GROUP_NAME),
+                            data.getIntExtra(ConstantManager.GROUP_COUNT,0));
+                    mDataManager.updateGroup(model);
+                    updateUI();
+                }
                 break;
         }
     }
@@ -177,6 +186,12 @@ public class GroupActivity extends AppCompatActivity implements NavigationView.O
         }
         if (selectItem == R.id.dialog_edit_item){
             // редактируем
+            Intent intent = new Intent(this,ItemGroupActivity.class);
+            intent.putExtra(ConstantManager.MODE_GROUP,ConstantManager.EDIT_GROUP);
+            intent.putExtra(ConstantManager.GROUP_NAME,mGroupModel.getName());
+            intent.putExtra(ConstantManager.GROUP_ID,mGroupModel.getId());
+            intent.putExtra(ConstantManager.GROUP_COUNT,mGroupModel.getCount());
+            startActivityForResult(intent, ConstantManager.EDIT_GROUP);
         }
     }
 }

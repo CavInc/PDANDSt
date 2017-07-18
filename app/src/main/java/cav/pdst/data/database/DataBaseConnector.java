@@ -49,6 +49,15 @@ public class DataBaseConnector {
         return database.query(DBHelper.GROUP_TABLE,new String[]{"_id","group_name","count_item"},null,null,null,null,"group_name");
     }
 
+    public void updateGroup(GroupModel model){
+        open();
+        ContentValues values = new ContentValues();
+        values.put("group_name",model.getName());
+        values.put("count_item",model.getCount());
+        database.update(DBHelper.GROUP_TABLE,values,"_id="+model.getId(),null);
+        close();
+    }
+
     // training
     public void addTraining(TrainingModel data){
         open();

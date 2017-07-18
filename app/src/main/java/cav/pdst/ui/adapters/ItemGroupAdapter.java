@@ -2,11 +2,13 @@ package cav.pdst.ui.adapters;
 
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import java.util.List;
@@ -15,6 +17,7 @@ import cav.pdst.R;
 import cav.pdst.data.models.ItemSportsmanModel;
 
 public class ItemGroupAdapter extends ArrayAdapter<ItemSportsmanModel> {
+    private static final String TAG = "IGA";
     private LayoutInflater mInflater;
     private int resLayout;
 
@@ -25,13 +28,19 @@ public class ItemGroupAdapter extends ArrayAdapter<ItemSportsmanModel> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         View row = convertView;
         if (row == null) {
             row = mInflater.inflate(resLayout, parent, false);
             holder = new ViewHolder();
             holder.mCheckBox = (CheckBox) row.findViewById(R.id.item_group_item_cb);
+            holder.mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    Log.d(TAG,"CHECK POS"+position);
+                }
+            });
             holder.mName = (TextView) row.findViewById(R.id.item_group_item_name);
             holder.mGroup = (TextView) row.findViewById(R.id.item_group_item_group);
             row.setTag(holder);
@@ -44,6 +53,7 @@ public class ItemGroupAdapter extends ArrayAdapter<ItemSportsmanModel> {
         holder.mCheckBox.setChecked(record.isCheckItem());
         return row;
     }
+
 
     private class ViewHolder{
         public CheckBox mCheckBox;

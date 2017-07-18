@@ -53,6 +53,10 @@ public class DataManager {
         return  rec;
     }
 
+    public void updateGroup(GroupModel data){
+        mDB.updateGroup(data);
+    }
+
     public void delGrop(int id ){
         mDB.delGroup(id);
     }

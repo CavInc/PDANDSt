@@ -12,6 +12,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import cav.pdst.R;
+import cav.pdst.data.models.GroupModel;
 import cav.pdst.data.models.ItemSportsmanModel;
 import cav.pdst.ui.adapters.ItemGroupAdapter;
 import cav.pdst.utils.ConstantManager;
@@ -24,6 +25,8 @@ public class ItemGroupActivity extends AppCompatActivity  {
 
     private int mode;
 
+    private GroupModel mGroupModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,10 +36,12 @@ public class ItemGroupActivity extends AppCompatActivity  {
 
         mListView = (ListView) findViewById(R.id.item_group_list_view);
 
-        int mode = getIntent().getIntExtra(ConstantManager.MODE_GROUP,ConstantManager.NEW_GROUP);
+        mode = getIntent().getIntExtra(ConstantManager.MODE_GROUP,ConstantManager.NEW_GROUP);
 
         if (mode == ConstantManager.EDIT_GROUP) {
-
+            mGroupModel = new GroupModel(getIntent().getIntExtra(ConstantManager.GROUP_ID,-1),
+                    getIntent().getStringExtra(ConstantManager.GROUP_NAME),getIntent().getIntExtra(ConstantManager.GROUP_COUNT,0));
+            mNameGroup.setText(mGroupModel.getName());
         }
 
         ArrayList<ItemSportsmanModel> models = new ArrayList<>();
@@ -92,6 +97,10 @@ public class ItemGroupActivity extends AppCompatActivity  {
         if (mNameGroup.getText().length()!=0) {
             Intent answerIntent = new Intent();
             answerIntent.putExtra(ConstantManager.GROUP_NAME, mNameGroup.getText().toString());
+            if (mode == ConstantManager.EDIT_GROUP){
+                answerIntent.putExtra(ConstantManager.GROUP_ID,mGroupModel.getId());
+                answerIntent.putExtra(ConstantManager.GROUP_COUNT,mGroupModel.getCount());
+            }
             setResult(RESULT_OK, answerIntent);
         }
     }
