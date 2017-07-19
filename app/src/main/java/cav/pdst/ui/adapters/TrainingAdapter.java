@@ -3,6 +3,7 @@ package cav.pdst.ui.adapters;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import cav.pdst.data.models.SportsmanTrainingModel;
 import cav.pdst.utils.ConstantManager;
 
 public class TrainingAdapter extends ArrayAdapter<SportsmanTrainingModel> {
+    private static final String TAG = "TADAPTER";
     private LayoutInflater mInflater;
     private int resLayout;
 
@@ -29,26 +31,28 @@ public class TrainingAdapter extends ArrayAdapter<SportsmanTrainingModel> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         View row = convertView;
         if (row == null) {
             row = mInflater.inflate(resLayout,parent,false);
             holder = new ViewHolder();
             holder.mName = (CheckBox) row.findViewById(R.id.checkBox);
-            /*
+
             holder.mName.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-
+                    Log.d(TAG,"POSITION: "+position+" "+b);
+                    getItem(position).setCheck(b);
                 }
             });
-            */
+
             holder.mCount = (TextView) row.findViewById(R.id.tr_item_count_item);
             row.setTag(holder);
         }else{
             holder = (ViewHolder) row.getTag();
         }
+        holder.mName.setChecked(false);
         SportsmanTrainingModel record = getItem(position);
         holder.mCount.setText(String.valueOf(record.getCount()));
         holder.mName.setText(record.getName());
@@ -57,6 +61,7 @@ public class TrainingAdapter extends ArrayAdapter<SportsmanTrainingModel> {
         }else {
             holder.mName.setTextColor(Color.BLACK);
         }
+        holder.mName.setChecked(record.isCheck());
         return row;
     }
 

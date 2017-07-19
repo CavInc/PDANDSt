@@ -1,12 +1,11 @@
 package cav.pdst.ui.activity;
 
+
 import android.app.TimePickerDialog;
-import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -17,7 +16,6 @@ import android.widget.TimePicker;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 import cav.pdst.R;
@@ -134,8 +132,17 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    private Integer[] getCheckElement(){
+        ArrayList<Integer> rec = new ArrayList<>();
+        for (int i=0;i<mAdapter.getCount();i++){
+            if (mAdapter.getItem(i).isCheck()) {
+                rec.add(mAdapter.getItem(i).getId());
+            }
+        }
+        return rec.toArray(new Integer[rec.size()]);
+    }
     private void saveResult(){
-        //mAdapter.
+        Integer[] fm = getCheckElement();
         TrainingModel model = new TrainingModel(mTraining.getText().toString(), ConstantManager.ONE, 0, mDate, mTime);
         mDataManager.addTraining(model);
     }
