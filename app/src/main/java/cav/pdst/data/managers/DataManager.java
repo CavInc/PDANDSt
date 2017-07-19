@@ -138,8 +138,12 @@ public class DataManager {
     }
 
 
-    public void addTraining(TrainingModel data){
-        mDB.addTraining(data);
+    public void addTraining(TrainingModel data,Integer[] selectItem){
+        mDB.addTraining(data,selectItem);
+    }
+
+    public void updateTraining(TrainingModel data,Integer[] selectItem){
+        mDB.updateTraining(data,selectItem);
     }
 
     public ArrayList<TrainingModel> getTraining(){

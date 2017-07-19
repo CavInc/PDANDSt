@@ -53,12 +53,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DataManager mDataManager;
 
     private Date selectedDate;
+    TrainingModel selModel;
 
     // https://github.com/prolificinteractive/material-calendarview
     // https://github.com/dpreussler/clean-simple-calendar
     // https://github.com/mahendramahi/CalendarView
     // https://github.com/square/android-times-square/blob/master/sample/src/main/res/layout/sample_calendar_picker.xml
     // https://ru.stackoverflow.com/questions/574045/android-range-datepicker-material-design
+    //https://material.io/guidelines/style/color.html#color-color-system
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -185,8 +187,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     AdapterView.OnItemLongClickListener mItemLongClickListener = new AdapterView.OnItemLongClickListener() {
         @Override
         public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
-            TrainingModel data = (TrainingModel) adapterView.getItemAtPosition(position);
-            selectID = data.getId();
+            selModel = (TrainingModel) adapterView.getItemAtPosition(position);
+            selectID = selModel.getId();
             EditDeleteDialog dialog = new EditDeleteDialog();
             dialog.show(getFragmentManager(),ConstantManager.DIALOG_EDIT_DEL);
             return true;
@@ -221,9 +223,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         if (selectItem == R.id.dialog_edit_item){
             // редактируем
+
             Intent intent = new Intent(MainActivity.this,TrainingActivity.class);
             intent.putExtra(ConstantManager.MODE_TRAINING,ConstantManager.EDIT_TRAINING);
+
             //TODO сюда данные передаваемые в тренировку
+            intent.putExtra(ConstantManager.TRAINING_DATE,selModel.getDate());
+            intent.putExtra(ConstantManager.TRAINING_OBJECT,selModel);
+
             startActivity(intent);
         }
     }

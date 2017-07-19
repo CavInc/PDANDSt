@@ -82,7 +82,7 @@ public class DataBaseConnector {
     }
 
     // training
-    public void addTraining(TrainingModel data){
+    public void addTraining(TrainingModel data,Integer[] selectItem){
         open();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         ContentValues value = new ContentValues();
@@ -93,6 +93,10 @@ public class DataBaseConnector {
         //value.put("",data.getType());
         database.insert(DBHelper.TRAINING_TABLE,null,value);
         close();
+    }
+
+    public void updateTraining(TrainingModel data,Integer[] selectItem){
+
     }
 
     public void delTraining(int id){

@@ -47,6 +47,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
     private int minute;
 
     private Date mDate;
+    private TrainingModel mModel;
 
 
     @Override
@@ -56,8 +57,16 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
 
         mDataManager = DataManager.getInstance();
         mode = getIntent().getIntExtra(ConstantManager.MODE_TRAINING,ConstantManager.NEW_TRAINING);
-        hour = getIntent().getIntExtra(ConstantManager.TRAINING_HOUR,-1);
-        minute = getIntent().getIntExtra(ConstantManager.TRAINING_MINUTE,-1);
+        if (mode == ConstantManager.NEW_TRAINING) {
+            hour = getIntent().getIntExtra(ConstantManager.TRAINING_HOUR, -1);
+            minute = getIntent().getIntExtra(ConstantManager.TRAINING_MINUTE, -1);
+        } else {
+            mModel = getIntent().getParcelableExtra(ConstantManager.TRAINING_OBJECT);
+            String[] tm = mModel.getTime().split(":");
+            hour = Integer.parseInt(tm[0]);
+            minute = Integer.parseInt(tm[1]);
+
+        }
         Bundle buingle = getIntent().getExtras();
         mDate = (Date) buingle.get(ConstantManager.TRAINING_DATE);
 
@@ -73,6 +82,11 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         mTimeButton.setText(String.valueOf(hour)+":"+String.valueOf(minute));
         mTime = String.valueOf(hour)+":"+String.valueOf(minute);
 
+        if (mode == ConstantManager.EDIT_TRAINING) {
+            mTraining.setText(mModel.getName());
+            mCountSportsman.setText(getString(R.string.count_training_sportsman)+" "+mModel.getCount());
+        }
+
         // все спортсмены у указанием количества тренировок
         ArrayList<SportsmanTrainingModel> model = mDataManager.getSpTraining();
 
@@ -80,8 +94,6 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         mListView.setAdapter(mAdapter);
 
         setDateButton(mDate);
-
-
         setupToolBar();
     }
 
@@ -143,8 +155,14 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
     }
     private void saveResult(){
         Integer[] fm = getCheckElement();
-        TrainingModel model = new TrainingModel(mTraining.getText().toString(), ConstantManager.ONE, 0, mDate, mTime);
-        mDataManager.addTraining(model);
+        int type = ConstantManager.ONE;
+        if (fm.length!=0) type = ConstantManager.GROUP;
+        TrainingModel model = new TrainingModel(mTraining.getText().toString(), type, fm.length, mDate, mTime);
+        if (mode == ConstantManager.NEW_TRAINING) {
+            mDataManager.addTraining(model,fm);
+        } else {
+
+        }
     }
 
     private void setDateButton(Date date){
