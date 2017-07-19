@@ -14,6 +14,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String TRAINING_TABLE ="TRAINIG_TABLE";
     public static final String REF_TABLE = "REF_TABLE";
     public static final String SPORTSMAN_TABLE = "SPORTSMAN";
+    public static final String ABONEMENT_TABLE = "ABONEMENT";
 
     public DBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -54,6 +55,13 @@ public class DBHelper extends SQLiteOpenHelper {
                     "sp_name text,"+
                     "phone text,"+"" +
                     "comment text)");
+
+            db.execSQL("create table "+ABONEMENT_TABLE+"("+
+                    "sp_id integer not null,"+
+                    "_id integer not null,"+
+                    " buy_date text,"+
+                    " start_date text,"+
+                    " end_date text)");
 
 
         }else {
