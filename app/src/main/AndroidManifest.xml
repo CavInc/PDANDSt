@@ -19,7 +19,8 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.TrainingActivity">
+        <activity android:name=".ui.activity.TrainingActivity"
+                  android:windowSoftInputMode="stateHidden">
         </activity>
         <activity
             android:name=".ui.activity.GroupActivity"
@@ -36,6 +37,7 @@
         <activity
             android:name=".ui.activity.ItemGroupActivity"
             android:label="Редактирование группы"
+            android:windowSoftInputMode="stateHidden"
             android:parentActivityName=".ui.activity.GroupActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -43,6 +45,7 @@
         </activity>
         <activity android:name=".ui.activity.SportsmanDetailActivity"
                   android:parentActivityName=".ui.activity.SportsmanActivity"
+                  android:windowSoftInputMode="stateHidden"
                   android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

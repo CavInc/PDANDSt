@@ -60,17 +60,23 @@ public class DataManager {
         return  rec;
     }
 
-    public void updateGroup(GroupModel data){
-        mDB.updateGroup(data);
+    public void updateGroup(GroupModel data,Integer[] selectItem){
+        mDB.updateGroup(data,selectItem);
     }
 
     public ArrayList<ItemSportsmanModel> getSportsmanInGroup(){
         ArrayList<ItemSportsmanModel> rec = new ArrayList<>();
         mDB.open();
         Cursor cursor = mDB.getSportsmanInGroup();
+        boolean flg;
         while (cursor.moveToNext()){
+            if (cursor.getString(cursor.getColumnIndex("group_name"))!=null) {
+                flg=true;
+            } else {
+                flg=false;
+            }
             rec.add(new ItemSportsmanModel(cursor.getInt(cursor.getColumnIndex("_id")),
-                    false,cursor.getString(cursor.getColumnIndex("sp_name")),
+                    flg,cursor.getString(cursor.getColumnIndex("sp_name")),
                     0,
                     cursor.getString(cursor.getColumnIndex("group_name"))));
         }

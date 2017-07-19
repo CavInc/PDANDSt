@@ -99,7 +99,6 @@ public class ItemGroupActivity extends AppCompatActivity  {
         ArrayList<Integer> rec = new ArrayList<>();
         for (int i=0;i<adapter.getCount();i++){
             if (adapter.getItem(i).isCheckItem()){
-                Log.d(TAG,"SP ID "+adapter.getItem(i).getId());
                 rec.add(adapter.getItem(i).getId());
             }
         }

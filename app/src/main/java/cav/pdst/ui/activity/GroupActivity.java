@@ -158,7 +158,7 @@ public class GroupActivity extends AppCompatActivity implements NavigationView.O
                     GroupModel model =new GroupModel(data.getIntExtra(ConstantManager.GROUP_ID,-1),
                             data.getStringExtra(ConstantManager.GROUP_NAME),
                             data.getIntExtra(ConstantManager.GROUP_COUNT,0));
-                    mDataManager.updateGroup(model);
+                    mDataManager.updateGroup(model,fm);
                     updateUI();
                 }
                 break;
