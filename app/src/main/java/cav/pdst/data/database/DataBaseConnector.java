@@ -30,18 +30,26 @@ public class DataBaseConnector {
     }
 
     // Group
-    public void addGroup(GroupModel model){
+    public void addGroup(GroupModel model,Integer[] selectItem){
         open();
         ContentValues value = new ContentValues();
         value.put("group_name",model.getName());
         value.put("count_item",model.getCount());
-        database.insert(DBHelper.GROUP_TABLE,null,value);
+        int recid = (int) database.insert(DBHelper.GROUP_TABLE,null,value);
+        for (int i=0;i<selectItem.length;i++) {
+            value.clear();
+            value.put("type_ref", 0);
+            value.put("id1", selectItem[i]);
+            value.put("id2",recid);
+            database.insert(DBHelper.REF_TABLE,null,value);
+        }
         close();
     }
 
     public void delGroup(int id){
         open();
         database.delete(DBHelper.GROUP_TABLE,"_id="+id,null);
+        database.delete(DBHelper.REF_TABLE,"type_ref=0 and id2="+id,null);
         close();
     }
 
@@ -49,12 +57,20 @@ public class DataBaseConnector {
         return database.query(DBHelper.GROUP_TABLE,new String[]{"_id","group_name","count_item"},null,null,null,null,"group_name");
     }
 
-    public void updateGroup(GroupModel model){
+    public void updateGroup(GroupModel model,Integer[] selectItem){
         open();
         ContentValues values = new ContentValues();
         values.put("group_name",model.getName());
         values.put("count_item",model.getCount());
         database.update(DBHelper.GROUP_TABLE,values,"_id="+model.getId(),null);
+        database.delete(DBHelper.REF_TABLE,"type_ref=0 and id2="+model.getId(),null);
+        for (int i=0;i<selectItem.length;i++) {
+            values.clear();
+            values.put("type_ref", 0);
+            values.put("id1", selectItem[i]);
+            values.put("id2",model.getId());
+            database.insert(DBHelper.REF_TABLE,null,values);
+        }
         close();
     }
 

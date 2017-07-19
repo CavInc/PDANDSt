@@ -28,4 +28,8 @@ public class GroupModel {
     public int getCount() {
         return mCount;
     }
+
+    public void setCount(int count) {
+        mCount = count;
+    }
 }

@@ -40,8 +40,8 @@ public class DataManager {
     }
 
     //region ======== databse ==============
-    public void addGroup(GroupModel data, int[] selectItem){
-        mDB.addGroup(data);
+    public void addGroup(GroupModel data, Integer[] selectItem){
+        mDB.addGroup(data,selectItem);
         for (int i=0;i<selectItem.length;i++){
            Log.d(TAG, String.valueOf(i));
         }

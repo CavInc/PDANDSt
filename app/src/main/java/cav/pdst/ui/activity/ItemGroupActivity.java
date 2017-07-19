@@ -113,6 +113,7 @@ public class ItemGroupActivity extends AppCompatActivity  {
             Intent answerIntent = new Intent();
             answerIntent.putExtra(ConstantManager.GROUP_NAME, mNameGroup.getText().toString());
             if (mode == ConstantManager.EDIT_GROUP){
+                mGroupModel.setCount(selItem.length);
                 answerIntent.putExtra(ConstantManager.GROUP_ID,mGroupModel.getId());
                 answerIntent.putExtra(ConstantManager.GROUP_COUNT,mGroupModel.getCount());
             }
