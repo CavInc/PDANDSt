@@ -9,6 +9,7 @@ import android.util.ArrayMap;
 import android.util.Log;
 import android.util.SparseArray;
 
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -70,11 +71,11 @@ public class DataManager {
         mDB.updateGroup(data,selectItem);
     }
 
-    @TargetApi(Build.VERSION_CODES.KITKAT)
     public ArrayList<ItemSportsmanModel> getSportsmanInGroup(int group_id){
         ArrayList<ItemSportsmanModel> rec = new ArrayList<>();
-        //HashMap<Integer,ItemSportsmanModel> map_rec = new HashMap<>();
-        ArrayMap<Integer,ItemSportsmanModel> map_rec = new ArrayMap<>();
+        //TODO переделать на SparseArray
+        HashMap<Integer,ItemSportsmanModel> map_rec = new HashMap<>();
+        //ArrayMap<Integer,ItemSportsmanModel> map_rec = new ArrayMap<>();
         ItemSportsmanModel md;
         mDB.open();
         Cursor cursor = mDB.getSportsmanInGroup();
