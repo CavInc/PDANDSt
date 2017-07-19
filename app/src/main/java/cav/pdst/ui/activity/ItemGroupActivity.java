@@ -98,28 +98,31 @@ public class ItemGroupActivity extends AppCompatActivity  {
         }
     }
 
-    private Integer[] getCheckElement(){
+    private ArrayList<Integer> getCheckElement(){
         ArrayList<Integer> rec = new ArrayList<>();
         for (int i=0;i<adapter.getCount();i++){
             if (adapter.getItem(i).isCheckItem()){
                 rec.add(adapter.getItem(i).getId());
             }
         }
-        return rec.toArray(new Integer[rec.size()]);
+        //return rec.toArray(new Integer[rec.size()]);
+        return rec;
     }
 
 
     private void saveResult(){
         if (mNameGroup.getText().length()!=0) {
-            Integer[] selItem = getCheckElement();
+            //Integer[] selItem = getCheckElement();
+            ArrayList<Integer> selItem = getCheckElement();
             Intent answerIntent = new Intent();
             answerIntent.putExtra(ConstantManager.GROUP_NAME, mNameGroup.getText().toString());
             if (mode == ConstantManager.EDIT_GROUP){
-                mGroupModel.setCount(selItem.length);
+                mGroupModel.setCount(selItem.size());
                 answerIntent.putExtra(ConstantManager.GROUP_ID,mGroupModel.getId());
                 answerIntent.putExtra(ConstantManager.GROUP_COUNT,mGroupModel.getCount());
             }
-            answerIntent.putExtra(ConstantManager.GROUP_SELECT_ITEM,selItem);
+            //answerIntent.putExtra(ConstantManager.GROUP_SELECT_ITEM,selItem);
+            answerIntent.putIntegerArrayListExtra(ConstantManager.GROUP_SELECT_ITEM,selItem);
             setResult(RESULT_OK, answerIntent);
         }
     }
