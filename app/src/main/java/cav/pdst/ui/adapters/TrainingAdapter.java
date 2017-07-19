@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,10 +36,18 @@ public class TrainingAdapter extends ArrayAdapter<SportsmanTrainingModel> {
             row = mInflater.inflate(resLayout,parent,false);
             holder = new ViewHolder();
             holder.mName = (CheckBox) row.findViewById(R.id.checkBox);
+            /*
+            holder.mName.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+                }
+            });
+            */
             holder.mCount = (TextView) row.findViewById(R.id.tr_item_count_item);
             row.setTag(holder);
         }else{
-            holder = (ViewHolder)row.getTag();
+            holder = (ViewHolder) row.getTag();
         }
         SportsmanTrainingModel record = getItem(position);
         holder.mCount.setText(String.valueOf(record.getCount()));

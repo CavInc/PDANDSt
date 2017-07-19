@@ -106,10 +106,8 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Log.d(TAG,"BACKUP");
         if (mTraining.getText().toString().length()!=0) {
-            TrainingModel model = new TrainingModel(mTraining.getText().toString(), ConstantManager.ONE, 0, mDate, mTime);
-            mDataManager.addTraining(model);
+            saveResult();
         }
     }
 
@@ -134,6 +132,12 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
                 }, hour, minute, true).show();
                 break;
         }
+    }
+
+    private void saveResult(){
+        //mAdapter.
+        TrainingModel model = new TrainingModel(mTraining.getText().toString(), ConstantManager.ONE, 0, mDate, mTime);
+        mDataManager.addTraining(model);
     }
 
     private void setDateButton(Date date){

@@ -133,5 +133,18 @@ public class DataBaseConnector {
         return database.query(DBHelper.SPORTSMAN_TABLE,new String[]{"_id","sp_name","phone","comment"},null,null,null,null,"sp_name");
     }
 
+    // абонемент
+
+    public Cursor getAbonement(int sportsman_id){
+        return database.query(DBHelper.ABONEMENT_TABLE,
+                new String[]{"sp_id","_id","buy_date","start_date","end_date","type_abonement","pay","count_training"},
+                "sp_id="+sportsman_id,null,null,null,"_id");
+    }
+
+    public void delAbonement(int id,int sprotsman_id){
+        open();
+        database.delete(DBHelper.ABONEMENT_TABLE,"_id="+id+" and sp_id"+sprotsman_id,null);
+        close();
+    }
 
 }

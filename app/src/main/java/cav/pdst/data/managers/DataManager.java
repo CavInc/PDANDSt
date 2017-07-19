@@ -1,9 +1,13 @@
 package cav.pdst.data.managers;
 
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.database.Cursor;
+import android.os.Build;
+import android.util.ArrayMap;
 import android.util.Log;
+import android.util.SparseArray;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -12,6 +16,7 @@ import java.util.HashMap;
 import java.util.concurrent.Callable;
 
 import cav.pdst.data.database.DataBaseConnector;
+import cav.pdst.data.models.AbonementModel;
 import cav.pdst.data.models.GroupModel;
 import cav.pdst.data.models.ItemSportsmanModel;
 import cav.pdst.data.models.SportsmanModel;
@@ -65,9 +70,11 @@ public class DataManager {
         mDB.updateGroup(data,selectItem);
     }
 
+    @TargetApi(Build.VERSION_CODES.KITKAT)
     public ArrayList<ItemSportsmanModel> getSportsmanInGroup(int group_id){
         ArrayList<ItemSportsmanModel> rec = new ArrayList<>();
-        HashMap<Integer,ItemSportsmanModel> map_rec = new HashMap<>();
+        //HashMap<Integer,ItemSportsmanModel> map_rec = new HashMap<>();
+        ArrayMap<Integer,ItemSportsmanModel> map_rec = new ArrayMap<>();
         ItemSportsmanModel md;
         mDB.open();
         Cursor cursor = mDB.getSportsmanInGroup();
@@ -93,6 +100,7 @@ public class DataManager {
                     cursor.getString(cursor.getColumnIndex("group_name"))));
             */
         }
+
         for (ItemSportsmanModel m:map_rec.values()){
             rec.add(m);
         }
@@ -175,5 +183,23 @@ public class DataManager {
     public void delTraining(int id){
         mDB.delTraining(id);
     }
+
+    // abonement
+    public ArrayList<AbonementModel> getAbonement(int sprotsman_id){
+        ArrayList<AbonementModel> rec = new ArrayList<>();
+        mDB.open();
+        Cursor cursor = mDB.getAbonement(sprotsman_id);
+
+        mDB.close();
+        return rec;
+    }
+
+    public void addAbonement(AbonementModel data){
+
+    }
+    public void delAbonememet(int id,int sprotsman_id){
+        mDB.delAbonement(id,sprotsman_id);
+    }
+
 
 }
