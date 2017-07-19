@@ -75,9 +75,9 @@ public class DataBaseConnector {
     }
 
     public Cursor getSportsmanInGroup(){
-        String sql="select sp._id,sp.sp_name,gr.group_name from SPORTSMAN sp\n" +
+        String sql="select sp._id,sp.sp_name,gr.group_name,gr._id as gr_id from SPORTSMAN sp\n" +
                 "  left join REF_TABLE rf on rf.type_ref=0 and sp._id=rf.id1\n" +
-                "  left join GROUP_TABLE gr on gr._id =1 and rf.id2=gr._id order by sp_name";
+                "  left join GROUP_TABLE gr on rf.id2=gr._id order by sp_name";
         return database.rawQuery(sql,null);
     }
 

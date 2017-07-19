@@ -8,6 +8,7 @@ import android.util.Log;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.concurrent.Callable;
 
 import cav.pdst.data.database.DataBaseConnector;
@@ -64,21 +65,36 @@ public class DataManager {
         mDB.updateGroup(data,selectItem);
     }
 
-    public ArrayList<ItemSportsmanModel> getSportsmanInGroup(){
+    public ArrayList<ItemSportsmanModel> getSportsmanInGroup(int group_id){
         ArrayList<ItemSportsmanModel> rec = new ArrayList<>();
+        HashMap<Integer,ItemSportsmanModel> map_rec = new HashMap<>();
+        ItemSportsmanModel md;
         mDB.open();
         Cursor cursor = mDB.getSportsmanInGroup();
         boolean flg;
         while (cursor.moveToNext()){
-            if (cursor.getString(cursor.getColumnIndex("group_name"))!=null) {
+            if (cursor.getString(cursor.getColumnIndex("group_name"))!=null && cursor.getInt(cursor.getColumnIndex("gr_id"))==group_id) {
                 flg=true;
             } else {
                 flg=false;
             }
+            if (map_rec.containsKey(cursor.getInt(cursor.getColumnIndex("_id")))){
+                map_rec.get(cursor.getInt(cursor.getColumnIndex("_id")))
+                        .setGroup(map_rec.get(cursor.getInt(cursor.getColumnIndex("_id"))).getGroup() +"," +cursor.getString(cursor.getColumnIndex("group_name")));
+            }else{
+                md = new ItemSportsmanModel(cursor.getInt(cursor.getColumnIndex("_id")), flg,
+                        cursor.getString(cursor.getColumnIndex("sp_name")), cursor.getString(cursor.getColumnIndex("group_name")));
+                map_rec.put(cursor.getInt(cursor.getColumnIndex("_id")),md);
+            }
+            /*
             rec.add(new ItemSportsmanModel(cursor.getInt(cursor.getColumnIndex("_id")),
                     flg,cursor.getString(cursor.getColumnIndex("sp_name")),
                     0,
                     cursor.getString(cursor.getColumnIndex("group_name"))));
+            */
+        }
+        for (ItemSportsmanModel m:map_rec.values()){
+            rec.add(m);
         }
         mDB.close();
         return  rec;

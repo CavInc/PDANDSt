@@ -42,13 +42,16 @@ public class ItemGroupActivity extends AppCompatActivity  {
 
         mode = getIntent().getIntExtra(ConstantManager.MODE_GROUP,ConstantManager.NEW_GROUP);
 
+        int id=-1;
+
         if (mode == ConstantManager.EDIT_GROUP) {
             mGroupModel = new GroupModel(getIntent().getIntExtra(ConstantManager.GROUP_ID,-1),
                     getIntent().getStringExtra(ConstantManager.GROUP_NAME),getIntent().getIntExtra(ConstantManager.GROUP_COUNT,0));
             mNameGroup.setText(mGroupModel.getName());
+            id = mGroupModel.getId();
         }
 
-        ArrayList<ItemSportsmanModel> models = mDataManager.getSportsmanInGroup();
+        ArrayList<ItemSportsmanModel> models = mDataManager.getSportsmanInGroup(id);
        // models.add(new ItemSportsmanModel(false,"Иванов",0,"-"));
 
 
