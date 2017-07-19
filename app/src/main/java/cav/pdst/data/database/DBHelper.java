@@ -61,7 +61,10 @@ public class DBHelper extends SQLiteOpenHelper {
                     "_id integer not null,"+
                     " buy_date text,"+
                     " start_date text,"+
-                    " end_date text)");
+                    " end_date text,"+
+                    " type_abonement integer default 0,"+ // 0 -абонемент 1- разовое
+                    " pay numeric,"+"" +
+                    " count_training integer)");
 
 
         }else {
