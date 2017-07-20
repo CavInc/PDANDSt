@@ -34,4 +34,14 @@ public interface ConstantManager {
     String GROUP_COUNT = "GROUP_COUNT";
     String GROUP_SELECT_ITEM = "GROUP_SELECT_ITEM";
 
+    String MODE_ABONEMENT = "MODE_ABONEMENT";
+    int NEW_ABONEMENT = 0;
+    int EDIT_ABONEMENT = 1;
+    String AB_CREATEDATE = "AB_CREATEDATE";
+    String AB_STARTDATE = "AB_STARTDATE";
+    String AB_ENDDATE = "AB_END_DATE";
+    String AB_COUNT_TR = "AB_COUNT_TR";
+    String AB_COMMENT = "AB_COMMENT";
+    String AB_PAY = "AB_PAY";
+
 }

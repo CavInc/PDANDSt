@@ -14,12 +14,84 @@
         android:paddingTop="@dimen/activity_vertical_margin"
         >
         <TextView
+            android:id="@+id/tv_cd"
             android:text="Дата приобретения"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <EditText
+            android:id="@+id/et_create_date"
+            android:layout_width="match_parent"
+            android:focusable="false"
+            android:enabled="false"
+            android:layout_below="@id/tv_cd"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tv_start_date"
+            android:text="Действителен с"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_create_date"/>
+        <EditText
+            android:id="@+id/et_start_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:layout_below="@id/tv_start_date"/>
+
+        <TextView
+            android:id="@+id/tv_end_date"
+            android:text="Действтелен до"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_start_date"/>
+        <EditText
+            android:id="@+id/et_end_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:layout_below="@id/tv_end_date"/>
+
+        <TextView
+            android:id="@+id/tv_count_tr"
+            android:layout_below="@id/et_end_date"
+            android:text="Количество тренировок"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+        <EditText
+            android:id="@+id/et_count_tr"
+            android:layout_below="@id/tv_count_tr"
+            android:inputType="number"
+            android:hint="0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tv_price_ab"
+            android:text="Стоимость абонемента"
+            android:layout_below="@id/et_count_tr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <EditText
+            android:id="@+id/et_price_ab"
+            android:layout_below="@id/tv_price_ab"
+            android:inputType="numberDecimal"
+            android:hint="0.0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tv_coment"
+            android:text="Коментарий"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_price_ab"/>
+        <EditText
+            android:id="@+id/et_coment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:layout_below="@id/tv_coment"/>
 
 
     </RelativeLayout>
