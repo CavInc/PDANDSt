@@ -79,8 +79,8 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         mDataButton.setOnClickListener(this);
         mTimeButton = (Button) findViewById(R.id.time_button);
         mTimeButton.setOnClickListener(this);
-        mTimeButton.setText(String.valueOf(hour)+":"+String.valueOf(minute));
-        mTime = String.valueOf(hour)+":"+String.valueOf(minute);
+        mTimeButton.setText(formatTime(hour,minute));
+        mTime = formatTime(hour,minute);
 
         if (mode == ConstantManager.EDIT_TRAINING) {
             mTraining.setText(mModel.getName());
@@ -136,8 +136,9 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
                 new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int hours, int minutes) {
-                        mTimeButton.setText(String.valueOf(hours)+":"+String.valueOf(minutes));
-                        mTime = String.valueOf(hours)+":"+String.valueOf(minutes);
+                        String tm = formatTime(hours,minutes);
+                        mTimeButton.setText(tm);
+                        mTime = tm;
                     }
                 }, hour, minute, true).show();
                 break;
@@ -161,7 +162,8 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         if (mode == ConstantManager.NEW_TRAINING) {
             mDataManager.addTraining(model,fm);
         } else {
-
+            model.setId(mModel.getId());
+            mDataManager.updateTraining(model,fm);
         }
     }
 
@@ -175,4 +177,14 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         setDateButton(date);
         mDate = date;
     }
+
+    private String formatTime(int hour,int minute){
+        String h = String.valueOf(hour);
+        String m = String.valueOf(minute);
+        if (h.length()!=2) h = "0"+h;
+        if (m.length()!=2) m = "0"+m;
+        return h+":"+m;
+    }
 }
+
+

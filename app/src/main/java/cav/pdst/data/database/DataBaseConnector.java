@@ -91,12 +91,35 @@ public class DataBaseConnector {
         value.put("date",format.format(data.getDate()));
         value.put("time",data.getTime());
         //value.put("",data.getType());
-        database.insert(DBHelper.TRAINING_TABLE,null,value);
-        close();
+        int recid = (int) database.insert(DBHelper.TRAINING_TABLE,null,value);
+        for (int i=0;i<selectItem.length;i++) {
+            value.clear();
+            value.put("type_ref", 1);
+            value.put("id1", selectItem[i]);
+            value.put("id2",recid);
+            database.insert(DBHelper.REF_TABLE,null,value);
+        }
+       close();
     }
 
     public void updateTraining(TrainingModel data,Integer[] selectItem){
-
+        open();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        ContentValues value = new ContentValues();
+        value.put("training_name",data.getName());
+        value.put("count_item",data.getCount());
+        value.put("date",format.format(data.getDate()));
+        value.put("time",data.getTime());
+        database.update(DBHelper.TRAINING_TABLE,value,"_id="+data.getId(),null);
+        database.delete(DBHelper.REF_TABLE,"type_ref=1 and id2="+data.getId(),null);
+        for (int i=0;i<selectItem.length;i++) {
+            value.clear();
+            value.put("type_ref", 1);
+            value.put("id1", selectItem[i]);
+            value.put("id2",data.getId());
+            database.insert(DBHelper.REF_TABLE,null,value);
+        }
+        close();
     }
 
     public void delTraining(int id){
