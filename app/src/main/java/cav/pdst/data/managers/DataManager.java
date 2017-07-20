@@ -133,6 +133,10 @@ public class DataManager {
         mDB.addSportsman(data);
     }
 
+    public void updateSportsman(SportsmanModel data){
+        mDB.updateSportsman(data);
+    }
+
     public void delSportsman(int id){
         mDB.delSportsman(id);
     }
@@ -151,6 +155,31 @@ public class DataManager {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         mDB.open();
         Cursor cursor = mDB.getTraining();
+        while (cursor.moveToNext()){
+            int type_rec = ConstantManager.ONE;
+            if (cursor.getInt(cursor.getColumnIndex("count_item"))>1) {
+                type_rec = ConstantManager.GROUP;
+            } else {
+                type_rec = ConstantManager.ONE;
+            }
+            try {
+                rec.add(new TrainingModel(cursor.getInt(cursor.getColumnIndex("_id")),
+                        cursor.getString(cursor.getColumnIndex("training_name")),type_rec,
+                        cursor.getInt(cursor.getColumnIndex("count_item")),
+                        format.parse(cursor.getString(cursor.getColumnIndex("date"))),
+                        cursor.getString(cursor.getColumnIndex("time"))));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        mDB.close();
+        return rec;
+    }
+    public ArrayList<TrainingModel> getTraining(int sp_id){
+        ArrayList<TrainingModel> rec = new ArrayList<>();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        mDB.open();
+        Cursor cursor = mDB.getTraining(sp_id);
         while (cursor.moveToNext()){
             int type_rec = ConstantManager.ONE;
             if (cursor.getInt(cursor.getColumnIndex("count_item"))>1) {

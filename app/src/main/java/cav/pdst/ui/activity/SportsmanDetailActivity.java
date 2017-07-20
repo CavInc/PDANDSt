@@ -33,6 +33,7 @@ public class SportsmanDetailActivity extends AppCompatActivity implements SpInfo
     private int mode;
 
     private DataManager mDataManager;
+    private int sp_id = -1;
 
 
     @Override
@@ -45,6 +46,7 @@ public class SportsmanDetailActivity extends AppCompatActivity implements SpInfo
         mode = getIntent().getIntExtra(ConstantManager.MODE_SP_DETAIL,ConstantManager.NEW_SPORTSMAN);
         if (mode == ConstantManager.EDIT_SPORTSMAN) {
             mSportsmanModel = getIntent().getParcelableExtra(ConstantManager.SP_DETAIL_DATA);
+            sp_id = mSportsmanModel.getId();
         }
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -89,7 +91,11 @@ public class SportsmanDetailActivity extends AppCompatActivity implements SpInfo
 
     private void saveData(){
         if (mSportsmanModel.getName().length()!=0){
-            mDataManager.addSportsman(mSportsmanModel);
+            if (mode == ConstantManager.NEW_SPORTSMAN) {
+                mDataManager.addSportsman(mSportsmanModel);
+            } else {
+                mDataManager.updateSportsman(mSportsmanModel);
+            }
         }
 
     }
@@ -105,11 +111,11 @@ public class SportsmanDetailActivity extends AppCompatActivity implements SpInfo
         public Fragment getItem(int position) {
             switch (position){
                 case 0:
-                    return SpInfoFragment.newInstance();
+                    return SpInfoFragment.newInstance(mSportsmanModel,mode);
                 case 1:
-                    return SpTrainingFragment.newInstanse();
+                    return SpTrainingFragment.newInstanse(sp_id);
                 case 2:
-                    return SpAbonementFragment.newInstance();
+                    return SpAbonementFragment.newInstance(sp_id);
 
             }
             return null;

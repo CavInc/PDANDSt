@@ -131,12 +131,19 @@ public class DataBaseConnector {
     public Cursor getSPTraining(){
         String sql="select sp._id,sp.sp_name,a.ci from SPORTSMAN sp\n" +
                 "   left join (select id1, count(1) as ci from REF_TABLE where type_ref=1\n" +
-                "   group by id1) as a on sp._id=a.id1;";
+                "   group by id1) as a on sp._id=a.id1 order by sp.sp_name";
         return database.rawQuery(sql,null);
     }
 
     public Cursor getTraining(){
         return database.query(DBHelper.TRAINING_TABLE,new String[]{"_id","training_name","count_item","date","time"},null,null,null,null,"training_name");
+    }
+
+    public Cursor getTraining(int sp_id){
+        String sql="select _id,training_name,count_item,date,time from TRAINIG_TABLE tt\n" +
+                "   join REF_TABLE rf on rf.type_ref=1 and tt._id=rf.id2\n" +
+                "   where rf.id1="+sp_id;
+        return database.rawQuery(sql,null);
     }
 
     // sportsman
@@ -147,6 +154,17 @@ public class DataBaseConnector {
         value.put("phone",data.getTel());
         value.put("comment",data.getComment());
         database.insert(DBHelper.SPORTSMAN_TABLE,null,value);
+        close();
+    }
+
+    public void updateSportsman(SportsmanModel data){
+        open();
+        ContentValues value = new ContentValues();
+        value.put("sp_name",data.getName());
+        value.put("phone",data.getTel());
+        value.put("comment",data.getComment());
+        database.update(DBHelper.SPORTSMAN_TABLE,value,"_id="+data.getId(),null);
+
         close();
     }
 

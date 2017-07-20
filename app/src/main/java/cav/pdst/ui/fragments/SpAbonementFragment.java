@@ -25,14 +25,16 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
     private FloatingActionButton mFab;
 
     private DataManager mDataManager;
+    private int sp_id;
 
-    public static SpAbonementFragment newInstance(){
-        SpAbonementFragment fragment = new SpAbonementFragment();
+    public static SpAbonementFragment newInstance(int sp_id){
+        SpAbonementFragment fragment = new SpAbonementFragment(sp_id);
         return fragment;
     }
 
-    public SpAbonementFragment(){
+    public SpAbonementFragment(int sp_id){
         mDataManager = DataManager.getInstance();
+        this.sp_id = sp_id;
     }
 
     @Override
@@ -42,6 +44,7 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
         mFab.setOnClickListener(this);
 
         mListView = (ListView) rootView.findViewById(R.id.sp_abom_list_view);
+        updateUI();
 
         return rootView;
         //return super.onCreateView(inflater, container, savedInstanceState);

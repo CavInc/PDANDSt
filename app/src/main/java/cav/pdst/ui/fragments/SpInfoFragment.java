@@ -16,6 +16,7 @@ import org.w3c.dom.Text;
 
 import cav.pdst.R;
 import cav.pdst.data.models.SportsmanModel;
+import cav.pdst.utils.ConstantManager;
 
 
 public class SpInfoFragment extends Fragment {
@@ -30,11 +31,20 @@ public class SpInfoFragment extends Fragment {
     private SportsmanModel mSportsmanModel;
 
     private Callbacks mCallbacks;
+    private int mode;
 
 
-    public static SpInfoFragment newInstance(){
-        SpInfoFragment fragment = new SpInfoFragment();
+    public static SpInfoFragment newInstance(SportsmanModel model,int mode){
+        SpInfoFragment fragment = new SpInfoFragment(model,mode);
         return  fragment;
+    }
+
+    public SpInfoFragment(SportsmanModel model,int mode) {
+        mSportsmanModel = new SportsmanModel();
+        this.mode = mode;
+        if (mode == ConstantManager.EDIT_SPORTSMAN){
+            mSportsmanModel = model;
+        }
     }
 
     @Override
@@ -43,11 +53,6 @@ public class SpInfoFragment extends Fragment {
         mCallbacks = (Callbacks) activity;
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mSportsmanModel = new SportsmanModel();
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
@@ -56,6 +61,12 @@ public class SpInfoFragment extends Fragment {
         mFullName = (TextView) rootView.findViewById(R.id.info_full_name);
         mPhone = (TextView) rootView.findViewById(R.id.info_phone);
         mComment = (TextView) rootView.findViewById(R.id.info_comment);
+
+        if (mode == ConstantManager.EDIT_SPORTSMAN) {
+            mFullName.setText(mSportsmanModel.getName());
+            mPhone.setText(mSportsmanModel.getTel());
+            mComment.setText(mSportsmanModel.getComment());
+        }
 
         mFullName.addTextChangedListener(new TextWatcher() {
             @Override
