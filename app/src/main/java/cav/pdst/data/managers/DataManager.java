@@ -220,10 +220,26 @@ public class DataManager {
 
     // abonement
     public ArrayList<AbonementModel> getAbonement(int sprotsman_id){
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         ArrayList<AbonementModel> rec = new ArrayList<>();
         mDB.open();
         Cursor cursor = mDB.getAbonement(sprotsman_id);
-
+        while (cursor.moveToNext()){
+            try {
+                rec.add(new AbonementModel (cursor.getInt(cursor.getColumnIndex("_id")),
+                        cursor.getInt(cursor.getColumnIndex("sp_id")),
+                        format.parse(cursor.getString(cursor.getColumnIndex("buy_date"))),
+                        format.parse(cursor.getString(cursor.getColumnIndex("start_date"))),
+                        format.parse(cursor.getString(cursor.getColumnIndex("end_date"))),
+                        cursor.getInt(cursor.getColumnIndex("count_training")),
+                        cursor.getFloat(cursor.getColumnIndex("pay")),
+                        cursor.getInt(cursor.getColumnIndex("type_abonement")),
+                        cursor.getString(cursor.getColumnIndex("comment")),
+                        cursor.getInt(cursor.getColumnIndex("used_training"))));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
         mDB.close();
         return rec;
     }
@@ -235,5 +251,7 @@ public class DataManager {
         mDB.delAbonement(id,sprotsman_id);
     }
 
-
+    public void addUpdateAbonement(AbonementModel model) {
+        mDB.addUpdateAbonement(model);
+    }
 }

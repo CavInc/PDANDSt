@@ -31,6 +31,8 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
     private DataManager mDataManager;
     private int sp_id;
 
+    private int last_ab = 0; // количество абонементов на спортсмене
+
     private AbonementCallback mAbonementCallback;
 
 
@@ -68,10 +70,15 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
     }
 
     public void updateUI(){
-        ArrayList<AbonementModel> data = new ArrayList<>();
+        ArrayList<AbonementModel> data = mDataManager.getAbonement(sp_id);
+        if (data.size()!= 0) {
+            last_ab = data.get(data.size()-1).getId();
+            last_ab = last_ab + 1;
+        }
         if (mAbonementAdapter == null){
             mAbonementAdapter = new AbonementAdapter(this.getContext(),R.layout.abinement_item,data);
             mListView.setAdapter(mAbonementAdapter);
+
         }else {
             mAbonementAdapter.setData(data);
             mAbonementAdapter.notifyDataSetChanged();
@@ -102,9 +109,12 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
                     countTr = data.getIntExtra(ConstantManager.AB_COUNT_TR,0);
                     pay = data.getFloatExtra(ConstantManager.AB_PAY,0.0f);
                     comment = data.getStringExtra(ConstantManager.AB_COMMENT);
-                    AbonementModel model = getConvertModel(sp_id,-1,createDate,startDate,endDate,countTr,pay,comment);
+                    AbonementModel model = getConvertModel(sp_id,last_ab,createDate,startDate,endDate,countTr,pay,comment);
                     mAbonementAdapter.add(model);
-
+                    if (sp_id != -1){
+                        mDataManager.addUpdateAbonement(model);
+                        last_ab = last_ab + 1;
+                    }
                     break;
                 case ConstantManager.EDIT_ABONEMENT:
                     break;
@@ -118,7 +128,7 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
         SimpleDateFormat format = new SimpleDateFormat("E dd.MM.yyyy");
         try {
             return new AbonementModel(id,sp_id,format.parse(createDate),format.parse(startDate),
-                    format.parse(endDate),countTr,pay,0);
+                    format.parse(endDate),countTr,pay,0,comment,0);
         } catch (ParseException e) {
             e.printStackTrace();
         }

@@ -3,6 +3,7 @@ package cav.pdst.ui.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,6 +57,14 @@ public class AbonementAdapter extends ArrayAdapter<AbonementModel> {
         holder.mStartDate.setText(mFormat.format(record.getStartDate()));
         holder.mEndDate.setText(mFormat.format(record.getEndDate()));
         holder.mPay.setText(String.valueOf(record.getPay()));
+        holder.mTraining.setText("Использовано: "+record.getUsedTraining()+
+                " из "+record.getCountTraining()+", Доступно: "+(record.getCountTraining()-record.getUsedTraining()));
+        if ((record.getCountTraining()-record.getUsedTraining())!=0) {
+            holder.mPrime.setText("Доступны тренировки");
+            holder.mPrime.setTextColor(Color.GREEN);
+        } else {
+            holder.mPrime.setText("Потрачен");
+        }
 
         //holder.mPrime.setText();
         return row;

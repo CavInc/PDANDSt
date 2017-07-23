@@ -11,6 +11,8 @@ public class AbonementModel {
     private int mCountTraining;
     private float mPay;
     private int mType;
+    private String mComment;
+    private int mUsedTraining;
 
     public AbonementModel(int id, int spId, Date createDate, Date startDate, Date endDate, int countTraining, float pay, int type) {
         mId = id;
@@ -21,6 +23,20 @@ public class AbonementModel {
         mCountTraining = countTraining;
         mPay = pay;
         mType = type;
+    }
+
+    public AbonementModel(int id, int spId, Date createDate, Date startDate, Date endDate,
+                          int countTraining, float pay,int type, String comment, int usedTraining) {
+        mId = id;
+        mSpId = spId;
+        mCreateDate = createDate;
+        mStartDate = startDate;
+        mEndDate = endDate;
+        mCountTraining = countTraining;
+        mType = type;
+        mPay = pay;
+        mComment = comment;
+        mUsedTraining = usedTraining;
     }
 
     public int getId() {
@@ -53,5 +69,13 @@ public class AbonementModel {
 
     public int getType() {
         return mType;
+    }
+
+    public String getComment() {
+        return mComment;
+    }
+
+    public int getUsedTraining() {
+        return mUsedTraining;
     }
 }

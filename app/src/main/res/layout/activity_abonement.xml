@@ -89,8 +89,9 @@
         <EditText
             android:id="@+id/et_coment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:inputType="text"
+            android:gravity="start"
             android:layout_below="@id/tv_coment"/>
 
 

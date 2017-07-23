@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.text.SimpleDateFormat;
 
+import cav.pdst.data.models.AbonementModel;
 import cav.pdst.data.models.GroupModel;
 import cav.pdst.data.models.SportsmanModel;
 import cav.pdst.data.models.TrainingModel;
@@ -182,13 +183,30 @@ public class DataBaseConnector {
 
     public Cursor getAbonement(int sportsman_id){
         return database.query(DBHelper.ABONEMENT_TABLE,
-                new String[]{"sp_id","_id","buy_date","start_date","end_date","type_abonement","pay","count_training"},
+                new String[]{"sp_id","_id","buy_date","start_date","end_date",
+                        "type_abonement","pay","count_training","comment","used_training"},
                 "sp_id="+sportsman_id,null,null,null,"_id");
     }
 
     public void delAbonement(int id,int sprotsman_id){
         open();
         database.delete(DBHelper.ABONEMENT_TABLE,"_id="+id+" and sp_id"+sprotsman_id,null);
+        close();
+    }
+
+    public void addUpdateAbonement(AbonementModel model){
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        open();
+        ContentValues values = new ContentValues();
+        values.put("sp_id",model.getSpId());
+        values.put("_id",model.getId());
+        values.put("buy_date",format.format(model.getCreateDate()));
+        values.put("start_date",format.format(model.getStartDate()));
+        values.put("end_date",format.format(model.getEndDate()));
+        values.put("pay",model.getPay());
+        values.put("count_training",model.getCountTraining());
+        values.put("comment",model.getComment());
+        database.insertWithOnConflict(DBHelper.ABONEMENT_TABLE,null,values,SQLiteDatabase.CONFLICT_REPLACE);
         close();
     }
 
