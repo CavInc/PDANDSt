@@ -6,7 +6,8 @@
         android:id="@+id/ab_create_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Дата приобретения"/>
+        android:text="@string/create_date"
+        android:textStyle="bold"/>
     <TextView
         android:id="@+id/ab_start_date"
         android:layout_width="wrap_content"

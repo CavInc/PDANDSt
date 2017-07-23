@@ -28,6 +28,8 @@ public class AbonementActivity extends AppCompatActivity implements View.OnClick
 
     private  int mode;
 
+    private int dMode;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +50,8 @@ public class AbonementActivity extends AppCompatActivity implements View.OnClick
         if (mode == ConstantManager.NEW_ABONEMENT) {
             Date date = new Date();
             mCreateDate.setText(format.format(date));
+        } else {
+
         }
 
 
@@ -70,6 +74,12 @@ public class AbonementActivity extends AppCompatActivity implements View.OnClick
         //return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        saveResult();
+        super.onBackPressed();
+    }
+
     public void saveResult(){
         Intent answerIntent = new Intent();
         answerIntent.putExtra(ConstantManager.AB_CREATEDATE,mCreateDate.getText().toString());
@@ -77,12 +87,18 @@ public class AbonementActivity extends AppCompatActivity implements View.OnClick
         answerIntent.putExtra(ConstantManager.AB_ENDDATE,mEndDate.getText().toString());
         answerIntent.putExtra(ConstantManager.AB_COUNT_TR,Integer.parseInt(mCountTraining.getText().toString()));
         answerIntent.putExtra(ConstantManager.AB_COMMENT,mComent.getText().toString());
-        answerIntent.putExtra(ConstantManager.AB_PAY,Float.parseFloat(mPay.toString()));
+        answerIntent.putExtra(ConstantManager.AB_PAY,Float.parseFloat(mPay.getText().toString()));
         setResult(RESULT_OK,answerIntent);
     }
 
     @Override
     public void OnDateGet(Date date) {
+        SimpleDateFormat format = new SimpleDateFormat("E dd.MM.yyyy");
+        if (dMode == 0 ){
+            mStartDate.setText(format.format(date));
+        } else {
+            mEndDate.setText(format.format(date));
+        }
 
     }
 
@@ -91,9 +107,11 @@ public class AbonementActivity extends AppCompatActivity implements View.OnClick
         DatePickerFragment dialog = DatePickerFragment.newInstance();
         switch (view.getId()){
             case R.id.et_start_date:
+                dMode = 0;
                 dialog.show(getSupportFragmentManager(), ConstantManager.DIALOG_DATE);
                 break;
             case R.id.et_end_date:
+                dMode = 1;
                 dialog.show(getSupportFragmentManager(), ConstantManager.DIALOG_DATE);
                 break;
         }

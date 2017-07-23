@@ -15,6 +15,7 @@ import android.view.MenuItem;
 
 import cav.pdst.R;
 import cav.pdst.data.managers.DataManager;
+import cav.pdst.data.models.AbonementModel;
 import cav.pdst.data.models.SportsmanModel;
 import cav.pdst.ui.fragments.SpAbonementFragment;
 import cav.pdst.ui.fragments.SpInfoFragment;
@@ -22,13 +23,15 @@ import cav.pdst.ui.fragments.SpTrainingFragment;
 import cav.pdst.utils.ConstantManager;
 
 
-public class SportsmanDetailActivity extends AppCompatActivity implements SpInfoFragment.Callbacks  {
+public class SportsmanDetailActivity extends AppCompatActivity implements SpInfoFragment.Callbacks,
+        SpAbonementFragment.AbonementCallback {
 
     private static final String TAG = "SPDETAIL";
     private ViewPager mViewPager;
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
     private SportsmanModel mSportsmanModel;
+    private AbonementModel mAbonementModel;
 
     private int mode;
 
@@ -98,6 +101,11 @@ public class SportsmanDetailActivity extends AppCompatActivity implements SpInfo
             }
         }
 
+    }
+
+    @Override
+    public void updateData(AbonementModel model) {
+        mAbonementModel = model;
     }
 
 

@@ -31,6 +31,13 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
     private DataManager mDataManager;
     private int sp_id;
 
+    private AbonementCallback mAbonementCallback;
+
+
+    public interface AbonementCallback {
+        void updateData(AbonementModel model);
+    }
+
     public static SpAbonementFragment newInstance(int sp_id){
         SpAbonementFragment fragment = new SpAbonementFragment(sp_id);
         return fragment;
@@ -39,6 +46,12 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
     public SpAbonementFragment(int sp_id){
         mDataManager = DataManager.getInstance();
         this.sp_id = sp_id;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mAbonementCallback = (AbonementCallback) activity;
     }
 
     @Override
@@ -69,7 +82,6 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
     public void onClick(View view) {
         Intent intent = new Intent(this.getContext(), AbonementActivity.class);
         intent.putExtra(ConstantManager.MODE_ABONEMENT,ConstantManager.NEW_ABONEMENT);
-        startActivity(intent);
         startActivityForResult(intent,ConstantManager.NEW_ABONEMENT);
     }
 
@@ -91,6 +103,7 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
                     pay = data.getFloatExtra(ConstantManager.AB_PAY,0.0f);
                     comment = data.getStringExtra(ConstantManager.AB_COMMENT);
                     AbonementModel model = getConvertModel(sp_id,-1,createDate,startDate,endDate,countTr,pay,comment);
+                    mAbonementAdapter.add(model);
 
                     break;
                 case ConstantManager.EDIT_ABONEMENT:

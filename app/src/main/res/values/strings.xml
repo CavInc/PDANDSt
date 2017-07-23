@@ -9,4 +9,5 @@
     <string name="button_ok">Ok</string>
 
     <string name="count_training_sportsman">Количество спортсменов : </string>
+    <string name="create_date">Дата приобретения</string>
 </resources>
