@@ -27,6 +27,7 @@ import cav.pdst.data.models.SportsmanTrainingModel;
 import cav.pdst.data.models.TrainingModel;
 import cav.pdst.ui.adapters.TrainingAdapter;
 import cav.pdst.ui.fragments.DatePickerFragment;
+import cav.pdst.ui.fragments.InfoDialogFragment;
 import cav.pdst.utils.ConstantManager;
 
 public class TrainingActivity extends AppCompatActivity implements View.OnClickListener,DatePickerFragment.OnDateGet {
@@ -170,6 +171,11 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
             Log.d(TAG," POSITION Item "+position);
             SportsmanTrainingModel mx = (SportsmanTrainingModel) adapterView.getItemAtPosition(position);
             Log.d(TAG,mx.getId()+" "+mx.getName()+" "+mx.isCheck());
+            if (mx.getCount() == 0 ){
+                InfoDialogFragment dialog= new InfoDialogFragment();
+                dialog.show(getFragmentManager(),"INFODIALOG");
+                return;
+            }
             if (!mx.isCheck()){
                 //TODO действия по привязке тренировки к абонементу
 

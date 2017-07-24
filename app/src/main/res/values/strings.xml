@@ -10,4 +10,11 @@
 
     <string name="count_training_sportsman">Количество спортсменов : </string>
     <string name="create_date">Дата приобретения</string>
+
+    <string-array name="training_operation">
+        <item>Тренировка</item>
+        <item>Пропуск</item>
+        <item>Предупреждение</item>
+        <item>Отработка</item>
+    </string-array>
 </resources>

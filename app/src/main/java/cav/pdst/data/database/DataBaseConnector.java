@@ -224,7 +224,7 @@ public class DataBaseConnector {
     }
 
     // misc
-    public void linkTrainingAbomenet(){
+    public void linkTrainingAbomenet(int sp_id,int ab_id){
 
     }
 
