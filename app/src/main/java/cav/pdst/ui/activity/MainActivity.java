@@ -203,11 +203,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         public void onDateSelected(MaterialCalendarView widget,CalendarDay date, boolean selected) {
             Log.d(TAG,"DAY SELECTED "+date.toString());
             selectedDate = date.getDate();
+            updateUI();
         }
     };
 
     private void updateUI(){
-        ArrayList<TrainingModel> model = mDataManager.getTraining();
+        ArrayList<TrainingModel> model = mDataManager.getTraining(selectedDate);
         if (adapter == null){
             adapter = new TraningMainAdapter(this,R.layout.main_item,model);
             mListView.setAdapter(adapter);

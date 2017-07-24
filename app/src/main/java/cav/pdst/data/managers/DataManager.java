@@ -151,11 +151,11 @@ public class DataManager {
         mDB.updateTraining(data,selectItem);
     }
 
-    public ArrayList<TrainingModel> getTraining(){
+    public ArrayList<TrainingModel> getTraining(Date selectedDate){
         ArrayList<TrainingModel> rec = new ArrayList<>();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         mDB.open();
-        Cursor cursor = mDB.getTraining();
+        Cursor cursor = mDB.getTraining(format.format(selectedDate));
         while (cursor.moveToNext()){
             int type_rec = ConstantManager.ONE;
             if (cursor.getInt(cursor.getColumnIndex("count_item"))>1) {

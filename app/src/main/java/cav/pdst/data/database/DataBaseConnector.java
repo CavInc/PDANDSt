@@ -140,8 +140,8 @@ public class DataBaseConnector {
         return database.rawQuery(sql,null);
     }
 
-    public Cursor getTraining(){
-        return database.query(DBHelper.TRAINING_TABLE,new String[]{"_id","training_name","count_item","date","time"},null,null,null,null,"training_name");
+    public Cursor getTraining(String selectDate){
+        return database.query(DBHelper.TRAINING_TABLE,new String[]{"_id","training_name","count_item","date","time"},"date='"+selectDate+"'",null,null,null,"training_name");
     }
 
     public Cursor getTraining(int sp_id){
