@@ -45,7 +45,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     " date text,time text)");
 
             db.execSQL("create table "+REF_TABLE+"("+
-                    "type_ref integer not null,"+ // 0 -spman - group 1- traning-spman
+                    "type_ref integer not null,"+ // 0 -spman - group 1- traning-spman 2- тренировка - абонемент
                     "id1 integer not null,"+ // spanam
                     "id2 integer not null,"+ // otner
                     "primary key(type_ref,id1,id2))");

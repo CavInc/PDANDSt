@@ -145,6 +145,10 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    private void updateUI(){
+
+    }
+
     private Integer[] getCheckElement(){
         ArrayList<Integer> rec = new ArrayList<>();
         for (int i=0;i<mAdapter.getCount();i++){
@@ -154,6 +158,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         }
         return rec.toArray(new Integer[rec.size()]);
     }
+
     private void saveResult(){
         Integer[] fm = getCheckElement();
         int type = ConstantManager.ONE;
