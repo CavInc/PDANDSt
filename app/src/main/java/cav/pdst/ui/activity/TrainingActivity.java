@@ -178,6 +178,9 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
             }
             if (!mx.isCheck()){
                 //TODO действия по привязке тренировки к абонементу
+                // по id спростмена получаем его абонементы у которых дата действия в диапазоне тренировки
+                // из всего списка если несколько то возвращаестя тот у кого младший номер и есть не распределеннны тренировки
+                getAbonement(mx.getId(),mDate);
 
             } else {
                 //TODO снятие абонемента
@@ -189,6 +192,9 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         }
     };
 
+    private void getAbonement(int id, Date date) {
+
+    }
 
 
     private Integer[] getCheckElement(){
