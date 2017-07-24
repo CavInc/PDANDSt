@@ -136,7 +136,7 @@ public class DataBaseConnector {
                 "   group by id1) as a on sp._id=a.id1 order by sp.sp_name";
         */
         String sql="select sp._id,sp.sp_name,a.ci from SPORTSMAN sp "+
-                   " left join (select sp_id,sum(count_training-used_training) as ci from ABONEMENT group by sp_id) as a on sp._id= a.sp_id;";
+                   " left join (select sp_id,sum(count_training-used_training) as ci from ABONEMENT group by sp_id) as a on sp._id= a.sp_id order by sp.sp_name";
         return database.rawQuery(sql,null);
     }
 

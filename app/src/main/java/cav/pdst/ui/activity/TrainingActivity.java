@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -169,6 +170,16 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
             Log.d(TAG," POSITION Item "+position);
             SportsmanTrainingModel mx = (SportsmanTrainingModel) adapterView.getItemAtPosition(position);
             Log.d(TAG,mx.getId()+" "+mx.getName()+" "+mx.isCheck());
+            if (!mx.isCheck()){
+                //TODO действия по привязке тренировки к абонементу
+
+            } else {
+                //TODO снятие абонемента
+            }
+
+            ((SportsmanTrainingModel) adapterView.getItemAtPosition(position)).setCheck(! mx.isCheck());
+            mAdapter.notifyDataSetChanged();
+
         }
     };
 

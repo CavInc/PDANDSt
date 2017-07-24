@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.CheckedTextView;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -39,7 +40,7 @@ public class TrainingAdapter extends ArrayAdapter<SportsmanTrainingModel> {
         if (row == null) {
             row = mInflater.inflate(resLayout,parent,false);
             holder = new ViewHolder();
-            holder.mName = (TextView) row.findViewById(R.id.checkBox);
+            holder.mName = (CheckedTextView) row.findViewById(R.id.checkBox);
 /*
             holder.mName.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -64,7 +65,7 @@ public class TrainingAdapter extends ArrayAdapter<SportsmanTrainingModel> {
         }else {
             holder.mName.setTextColor(Color.BLACK);
         }
-       // holder.mName.setChecked(record.isCheck());
+        holder.mName.setChecked(record.isCheck());
         return row;
     }
 
@@ -74,7 +75,7 @@ public class TrainingAdapter extends ArrayAdapter<SportsmanTrainingModel> {
     }
 
     private class ViewHolder {
-        public TextView mName;
+        public CheckedTextView mName;
         public TextView mCount;
     }
 
