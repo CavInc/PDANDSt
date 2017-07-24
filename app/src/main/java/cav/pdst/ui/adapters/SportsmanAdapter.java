@@ -32,6 +32,7 @@ public class SportsmanAdapter extends ArrayAdapter<SportsmanModel>{
             holder = new ViewHolder();
             holder.mName = (TextView) row.findViewById(R.id.spman_item_name);
             holder.mPhone = (TextView) row.findViewById(R.id.spman_item_phone);
+            holder.mTraining = (TextView) row.findViewById(R.id.spman_item_training_count);
             row.setTag(holder);
         }else{
             holder = (ViewHolder)row.getTag();
@@ -40,6 +41,7 @@ public class SportsmanAdapter extends ArrayAdapter<SportsmanModel>{
         SportsmanModel record = getItem(position);
         holder.mName.setText(record.getName());
         holder.mPhone.setText(record.getTel());
+        holder.mTraining.setText("Тренировки: "+record.getTrainingAll()+" / доступно 0");
         return row;
     }
 
@@ -52,6 +54,7 @@ public class SportsmanAdapter extends ArrayAdapter<SportsmanModel>{
         //TODO добавить елементы после построения модели
         public TextView mName;
         public TextView mPhone;
+        public TextView mTraining;
 
     }
 }

@@ -13,6 +13,7 @@ import android.util.SparseArray;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.concurrent.Callable;
 
@@ -122,7 +123,7 @@ public class DataManager {
                     cursor.getInt(cursor.getColumnIndex("_id")),
                     cursor.getString(cursor.getColumnIndex("sp_name")),
                     cursor.getString(cursor.getColumnIndex("phone")),
-                    0,0,
+                    cursor.getInt(cursor.getColumnIndex("ci")),0,
                     cursor.getString(cursor.getColumnIndex("comment"))));
         }
         mDB.close();
@@ -193,6 +194,22 @@ public class DataManager {
                         cursor.getInt(cursor.getColumnIndex("count_item")),
                         format.parse(cursor.getString(cursor.getColumnIndex("date"))),
                         cursor.getString(cursor.getColumnIndex("time"))));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        mDB.close();
+        return rec;
+    }
+
+    public ArrayList<Date> getTrainingDay(){
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        ArrayList<Date> rec= new ArrayList<>();
+        mDB.open();
+        Cursor cursor = mDB.getDateTraining();
+        while (cursor.moveToNext()){
+            try {
+                rec.add(format.parse(cursor.getString(0)));
             } catch (ParseException e) {
                 e.printStackTrace();
             }

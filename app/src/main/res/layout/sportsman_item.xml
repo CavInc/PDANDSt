@@ -29,11 +29,13 @@
 
     </LinearLayout>
     <TextView
-        android:text="Тренировки: 9 / досутупон 4"
+        android:id="@+id/spman_item_training_count"
+        android:text="Тренировки: 0 / доступно 0"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"/>
     <TextView
+        android:id="@+id/spman_item_last_tr"
         android:text="Последняя:"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

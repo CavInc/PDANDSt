@@ -89,8 +89,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         calendarView.setCurrentDate(new Date());
         calendarView.setDateSelected(new Date(),true);
         Collection<CalendarDay> m = new ArrayList<>();
-        m.add(CalendarDay.from(2017,6,4));
-        m.add(CalendarDay.from(2017,6,10));
+        for (Date l:mDataManager.getTrainingDay()){
+            m.add(CalendarDay.from(l));
+        }
+       // m.add(CalendarDay.from(2017,6,4));
+       // m.add(CalendarDay.from(2017,6,10));
 
         calendarView.addDecorator(new StartDayViewDecorator(m));
         calendarView.setOnDateChangedListener(mDateSelectedListener);

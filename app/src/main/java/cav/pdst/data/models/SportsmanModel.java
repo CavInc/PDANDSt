@@ -8,8 +8,8 @@ public class SportsmanModel implements Parcelable {
     private int mId = -1;
     private String mName = null;
     private String mTel = null;
-    private int mTrainingAll;
-    private int mTraninigWrk;
+    private int mTrainingAll = 0;
+    private int mTraninigWrk = 0;
     private String mComment= null;
 
     public SportsmanModel(String name, String tel, int trainingAll, int traninigWrk, String comment) {
