@@ -87,11 +87,6 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
             mCountSportsman.setText(getString(R.string.count_training_sportsman)+" "+mModel.getCount());
         }
 
-        // все спортсмены у указанием количества тренировок
-        ArrayList<SportsmanTrainingModel> model = mDataManager.getSpTraining();
-
-        mAdapter = new TrainingAdapter(this,R.layout.training_item,model);
-        mListView.setAdapter(mAdapter);
 
         setDateButton(mDate);
         setupToolBar();
@@ -145,7 +140,22 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateUI();
+    }
+
     private void updateUI(){
+        // все спортсмены у указанием количества абонементов
+        ArrayList<SportsmanTrainingModel> model = mDataManager.getSpTraining();
+        if (mAdapter == null){
+            mAdapter = new TrainingAdapter(this,R.layout.training_item,model);
+            mListView.setAdapter(mAdapter);
+        }else {
+
+            mAdapter.notifyDataSetChanged();
+        }
 
     }
 
