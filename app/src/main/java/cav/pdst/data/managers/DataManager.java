@@ -32,6 +32,7 @@ public class DataManager {
     private static DataManager INSTANCE = null;
 
     private Context mContext;
+    private PreferensManager mPreferensManager;
 
     private DataBaseConnector mDB;
 
@@ -43,8 +44,13 @@ public class DataManager {
     }
 
     public DataManager(){
+        this.mPreferensManager = new PreferensManager();
         this.mContext = PdStApplication.getContext();
         mDB = new DataBaseConnector(mContext);
+    }
+
+    public PreferensManager getPreferensManager() {
+        return mPreferensManager;
     }
 
     //region ======== databse ==============
@@ -271,7 +277,5 @@ public class DataManager {
     public void addUpdateAbonement(AbonementModel model) {
         mDB.addUpdateAbonement(model);
     }
-
-
 
 }

@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -87,6 +89,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
             mCountSportsman.setText(getString(R.string.count_training_sportsman)+" "+mModel.getCount());
         }
 
+        mListView.setOnItemClickListener(mItemClickListener);
 
         setDateButton(mDate);
         setupToolBar();
@@ -153,11 +156,23 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
             mAdapter = new TrainingAdapter(this,R.layout.training_item,model);
             mListView.setAdapter(mAdapter);
         }else {
-
+            mAdapter.setData(model);
             mAdapter.notifyDataSetChanged();
         }
 
     }
+
+    AdapterView.OnItemClickListener mItemClickListener = new AdapterView.OnItemClickListener(){
+
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+            Log.d(TAG," POSITION Item "+position);
+            SportsmanTrainingModel mx = (SportsmanTrainingModel) adapterView.getItemAtPosition(position);
+            Log.d(TAG,mx.getId()+" "+mx.getName()+" "+mx.isCheck());
+        }
+    };
+
+
 
     private Integer[] getCheckElement(){
         ArrayList<Integer> rec = new ArrayList<>();

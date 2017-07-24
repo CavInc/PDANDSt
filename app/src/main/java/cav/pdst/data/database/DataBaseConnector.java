@@ -223,4 +223,9 @@ public class DataBaseConnector {
         close();
     }
 
+    // misc
+    public void linkTrainingAbomenet(){
+
+    }
+
 }

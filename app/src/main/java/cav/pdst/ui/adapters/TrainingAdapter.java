@@ -13,9 +13,11 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cav.pdst.R;
+import cav.pdst.data.models.SportsmanModel;
 import cav.pdst.data.models.SportsmanTrainingModel;
 import cav.pdst.utils.ConstantManager;
 
@@ -37,8 +39,8 @@ public class TrainingAdapter extends ArrayAdapter<SportsmanTrainingModel> {
         if (row == null) {
             row = mInflater.inflate(resLayout,parent,false);
             holder = new ViewHolder();
-            holder.mName = (CheckBox) row.findViewById(R.id.checkBox);
-
+            holder.mName = (TextView) row.findViewById(R.id.checkBox);
+/*
             holder.mName.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -46,13 +48,14 @@ public class TrainingAdapter extends ArrayAdapter<SportsmanTrainingModel> {
                     getItem(position).setCheck(b);
                 }
             });
+            */
 
             holder.mCount = (TextView) row.findViewById(R.id.tr_item_count_item);
             row.setTag(holder);
         }else{
             holder = (ViewHolder) row.getTag();
         }
-        holder.mName.setChecked(false);
+        //holder.mName.setChecked(false);
         SportsmanTrainingModel record = getItem(position);
         holder.mCount.setText(String.valueOf(record.getCount()));
         holder.mName.setText(record.getName());
@@ -61,12 +64,17 @@ public class TrainingAdapter extends ArrayAdapter<SportsmanTrainingModel> {
         }else {
             holder.mName.setTextColor(Color.BLACK);
         }
-        holder.mName.setChecked(record.isCheck());
+       // holder.mName.setChecked(record.isCheck());
         return row;
     }
 
+    public void setData(ArrayList<SportsmanTrainingModel> data){
+        this.clear();
+        this.addAll(data);
+    }
+
     private class ViewHolder {
-        public CheckBox mName;
+        public TextView mName;
         public TextView mCount;
     }
 

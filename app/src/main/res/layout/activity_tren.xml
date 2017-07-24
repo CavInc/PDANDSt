@@ -51,6 +51,7 @@
         android:text="Количество спортсменов"/>
     <ListView
         android:id="@+id/training_list_view"
+        android:choiceMode="multipleChoice"
         android:layout_below="@id/count_sportsman"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
