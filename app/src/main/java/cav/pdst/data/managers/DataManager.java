@@ -253,7 +253,7 @@ public class DataManager {
         Cursor cursor = mDB.getAbonement(sprotsman_id);
         while (cursor.moveToNext()){
             try {
-                rec.add(new AbonementModel (cursor.getInt(cursor.getColumnIndex("_id")),
+                rec.add(new AbonementModel (cursor.getInt(cursor.getColumnIndex("pos_id")),
                         cursor.getInt(cursor.getColumnIndex("sp_id")),
                         format.parse(cursor.getString(cursor.getColumnIndex("buy_date"))),
                         format.parse(cursor.getString(cursor.getColumnIndex("start_date"))),

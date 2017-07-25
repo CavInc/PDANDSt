@@ -181,7 +181,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
                 //TODO действия по привязке тренировки к абонементу
                 // по id спростмена получаем его абонементы у которых дата действия в диапазоне тренировки
                 // из всего списка если несколько то возвращаестя тот у кого младший номер и есть не распределеннны тренировки
-                getAbonement(mx.getId(),mDate);
+               int ab = getAbonement(mx.getId(),mDate);
 
             } else {
                 //TODO снятие абонемента

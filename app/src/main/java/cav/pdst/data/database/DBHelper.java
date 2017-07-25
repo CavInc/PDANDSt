@@ -57,8 +57,9 @@ public class DBHelper extends SQLiteOpenHelper {
                     "comment text)");
 
             db.execSQL("create table "+ABONEMENT_TABLE+"("+
-                    "sp_id integer not null,"+
-                    "_id integer not null,"+
+                    " _id integer not null primary key AUTOINCREMENT,"+
+                    " sp_id integer not null,"+
+                    " pos_id integer not null,"+
                     " buy_date text,"+
                     " start_date text,"+
                     " end_date text,"+
@@ -66,7 +67,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     " pay numeric,"+"" +
                     " count_training integer,"+
                     " used_training integer default 0,"+
-                    " comment text, primary key(sp_id,_id))");
+                    " comment text)");
         }else {
 
         }
