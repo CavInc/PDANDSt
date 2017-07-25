@@ -21,6 +21,7 @@ import cav.pdst.data.database.DataBaseConnector;
 import cav.pdst.data.models.AbonementModel;
 import cav.pdst.data.models.GroupModel;
 import cav.pdst.data.models.ItemSportsmanModel;
+import cav.pdst.data.models.LinkSpABTrModel;
 import cav.pdst.data.models.SportsmanModel;
 import cav.pdst.data.models.SportsmanTrainingModel;
 import cav.pdst.data.models.TrainingModel;
@@ -153,8 +154,8 @@ public class DataManager {
     }
 
 
-    public void addTraining(TrainingModel data,Integer[] selectItem){
-        mDB.addTraining(data,selectItem);
+    public void addTraining(TrainingModel data, Integer[] selectItem, ArrayList<LinkSpABTrModel> spAB){
+        mDB.addTraining(data,selectItem,spAB);
     }
 
     public void updateTraining(TrainingModel data,Integer[] selectItem){

@@ -6,9 +6,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import cav.pdst.data.models.AbonementModel;
 import cav.pdst.data.models.GroupModel;
+import cav.pdst.data.models.LinkSpABTrModel;
 import cav.pdst.data.models.SportsmanModel;
 import cav.pdst.data.models.TrainingModel;
 
@@ -83,7 +85,7 @@ public class DataBaseConnector {
     }
 
     // training
-    public void addTraining(TrainingModel data,Integer[] selectItem){
+    public void addTraining(TrainingModel data, Integer[] selectItem, ArrayList<LinkSpABTrModel> spAB){
         open();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         ContentValues value = new ContentValues();
@@ -99,6 +101,16 @@ public class DataBaseConnector {
             value.put("id1", selectItem[i]);
             value.put("id2",recid);
             database.insert(DBHelper.REF_TABLE,null,value);
+        }
+        for (int i=0;i<spAB.size();i++){
+            value.clear();
+            value.put("type_ref",2);
+            value.put("id1",recid);
+            value.put("id2",spAB.get(i).getAbonement());
+            database.insertWithOnConflict(DBHelper.REF_TABLE,null,value,SQLiteDatabase.CONFLICT_REPLACE);
+            String sql="update "+DBHelper.ABONEMENT_TABLE+" set used_training=used_training+1 "+
+                    "where _id="+spAB.get(i).getAbonement();
+            database.execSQL(sql);
         }
        close();
     }
@@ -124,8 +136,16 @@ public class DataBaseConnector {
     }
 
     public void delTraining(int id){
+        String sql;
         open();
         database.delete(DBHelper.TRAINING_TABLE,"_id="+id,null);
+        Cursor cursor = database.query(DBHelper.REF_TABLE,new String[]{"id2"},"type_ref=2 and id1="+id,null,null,null,null);
+        while (cursor.moveToNext()){
+            sql="update "+DBHelper.ABONEMENT_TABLE+" set used_training=used_training-1 "+
+                    "where _id="+cursor.getInt(0);
+            database.execSQL(sql);
+        }
+        database.delete(DBHelper.REF_TABLE,"type_ref=2 and id1="+id,null);
         close();
     }
 

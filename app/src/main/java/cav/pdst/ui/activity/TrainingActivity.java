@@ -24,6 +24,7 @@ import java.util.Date;
 
 import cav.pdst.R;
 import cav.pdst.data.managers.DataManager;
+import cav.pdst.data.models.LinkSpABTrModel;
 import cav.pdst.data.models.SportsmanTrainingModel;
 import cav.pdst.data.models.TrainingModel;
 import cav.pdst.ui.adapters.TrainingAdapter;
@@ -53,6 +54,8 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
 
     private Date mDate;
     private TrainingModel mModel;
+
+    private ArrayList<LinkSpABTrModel> mSpAB = new ArrayList<>();
 
 
     @Override
@@ -182,6 +185,13 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
                 // по id спростмена получаем его абонементы у которых дата действия в диапазоне тренировки
                 // из всего списка если несколько то возвращаестя тот у кого младший номер и есть не распределеннны тренировки
                int ab = getAbonement(mx.getId(),mDate);
+                if (ab==-1) {
+                    // показать что куй ?
+                    return;
+                }
+                mSpAB.add(new LinkSpABTrModel(mx.getId(),ab));
+
+
 
             } else {
                 //TODO снятие абонемента
@@ -226,7 +236,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         if (fm.length!=0) type = ConstantManager.GROUP;
         TrainingModel model = new TrainingModel(mTraining.getText().toString(), type, fm.length, mDate, mTime);
         if (mode == ConstantManager.NEW_TRAINING) {
-            mDataManager.addTraining(model,fm);
+            mDataManager.addTraining(model,fm,mSpAB);
         } else {
             model.setId(mModel.getId());
             mDataManager.updateTraining(model,fm);
