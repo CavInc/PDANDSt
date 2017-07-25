@@ -68,6 +68,20 @@ public class DBHelper extends SQLiteOpenHelper {
                     " count_training integer,"+
                     " used_training integer default 0,"+
                     " comment text)");
+             /*
+            db.execSQL("CREATE TRIGGER abonement_ai1\n" +
+                    "   after \n" +
+                    "    INSERT \n" +
+                    "   ON abonement\n" +
+                    "   FOR EACH ROW\n" +
+                    "BEGIN\n" +
+                    " update abonement set pos_id =(\n" +
+                    "   select coalesce(max(pos_id)+1,0,max(pos_id)+1)  from abonement\n" +
+                    "   where sp_id=new.sp_id)\n" +
+                    "   where _id=new._id;\n" +
+                    "END");
+             */
+
         }else {
 
         }

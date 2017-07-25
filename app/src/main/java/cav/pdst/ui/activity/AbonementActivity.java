@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import cav.pdst.R;
+import cav.pdst.data.managers.DataManager;
 import cav.pdst.ui.fragments.DatePickerFragment;
 import cav.pdst.utils.ConstantManager;
 
@@ -29,11 +30,14 @@ public class AbonementActivity extends AppCompatActivity implements View.OnClick
     private  int mode;
 
     private int dMode;
+    private DataManager mDataManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_abonement);
+
+        mDataManager = DataManager.getInstance();
 
         mCreateDate = (TextView) findViewById(R.id.et_create_date);
         mStartDate = (TextView) findViewById(R.id.et_start_date);
@@ -81,6 +85,7 @@ public class AbonementActivity extends AppCompatActivity implements View.OnClick
     }
 
     public void saveResult(){
+
         Intent answerIntent = new Intent();
         answerIntent.putExtra(ConstantManager.AB_CREATEDATE,mCreateDate.getText().toString());
         answerIntent.putExtra(ConstantManager.AB_STARTDATE,mStartDate.getText().toString());
@@ -89,6 +94,9 @@ public class AbonementActivity extends AppCompatActivity implements View.OnClick
         answerIntent.putExtra(ConstantManager.AB_COMMENT,mComent.getText().toString());
         answerIntent.putExtra(ConstantManager.AB_PAY,Float.parseFloat(mPay.getText().toString()));
         setResult(RESULT_OK,answerIntent);
+
+       // mDataManager.getDB().getLastIndex();
+
     }
 
     @Override

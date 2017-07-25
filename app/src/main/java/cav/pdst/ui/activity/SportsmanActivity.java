@@ -131,8 +131,6 @@ public class SportsmanActivity extends AppCompatActivity implements NavigationVi
                 break;
             case R.id.drawer_statistic:
                 break;
-            case R.id.drawer_setting:
-                break;
 
         }
         mNavigationDrawer.closeDrawer(GravityCompat.START);

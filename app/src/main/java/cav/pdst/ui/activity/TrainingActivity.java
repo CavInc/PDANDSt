@@ -1,6 +1,7 @@
 package cav.pdst.ui.activity;
 
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -20,12 +21,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 import cav.pdst.R;
 import cav.pdst.data.managers.DataManager;
+import cav.pdst.data.models.AbonementModel;
 import cav.pdst.data.models.LinkSpABTrModel;
 import cav.pdst.data.models.SportsmanTrainingModel;
 import cav.pdst.data.models.TrainingModel;
@@ -171,6 +174,8 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
 
     }
 
+    private int selSportspam;
+
     AdapterView.OnItemClickListener mItemClickListener = new AdapterView.OnItemClickListener(){
 
         @Override
@@ -178,6 +183,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
             Log.d(TAG," POSITION Item "+position);
             SportsmanTrainingModel mx = (SportsmanTrainingModel) adapterView.getItemAtPosition(position);
             Log.d(TAG,mx.getId()+" "+mx.getName()+" "+mx.isCheck());
+            selSportspam = mx.getId();
             if (mx.getCount() == 0 ){
                 InfoDialogFragment dialog= new InfoDialogFragment();
                 dialog.show(getFragmentManager(),"INFODIALOG");
@@ -274,6 +280,39 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    //TODO переделать к хуям на заведение абонемента в самой активности.
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK && data!=null){
+            if (requestCode == ConstantManager.NEW_ABONEMENT) {
+                int mx = mDataManager.getDB().getLastIndex(selSportspam);
+
+                String createDate = data.getStringExtra(ConstantManager.AB_CREATEDATE);
+                String startDate = data.getStringExtra(ConstantManager.AB_STARTDATE);
+                String endDate = data.getStringExtra(ConstantManager.AB_ENDDATE);
+                int countTr = data.getIntExtra(ConstantManager.AB_COUNT_TR, 0);
+                float pay = data.getFloatExtra(ConstantManager.AB_PAY, 0.0f);
+                String comment = data.getStringExtra(ConstantManager.AB_COMMENT);
+                AbonementModel model = getConvertModel(selSportspam,mx,createDate,startDate,endDate,countTr,pay,comment);
+                mDataManager.addUpdateAbonement(model);
+                updateUI();
+            }
+        }
+    }
+
+    private AbonementModel getConvertModel (int sp_id,int id,String createDate,
+                                            String startDate,String endDate,
+                                            int countTr,float pay,String comment) {
+        SimpleDateFormat format = new SimpleDateFormat("E dd.MM.yyyy");
+        try {
+            return new AbonementModel(id,sp_id,format.parse(createDate),format.parse(startDate),
+                    format.parse(endDate),countTr,pay,0,comment,0);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
 
 

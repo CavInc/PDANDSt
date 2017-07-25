@@ -112,8 +112,6 @@ public class GroupActivity extends AppCompatActivity implements NavigationView.O
                 break;
             case R.id.drawer_statistic:
                 break;
-            case R.id.drawer_setting:
-                break;
 
         }
         mNavigationDrawer.closeDrawer(GravityCompat.START);

@@ -243,6 +243,18 @@ public class DataBaseConnector {
         close();
     }
 
+    public int getLastIndex(int sp_id) {
+        int res = 0;
+        String sql="select coalesce (max(pos_id) + 1, 0, max(pos_id) + 1)from ABONEMENT where sp_id = "+sp_id;
+        open();
+        Cursor cursor = database.rawQuery(sql,null);
+        while (cursor.moveToNext()){
+            res = cursor.getInt(0);
+        }
+        close();
+        return res;
+    }
+
     // misc
     public void linkTrainingAbomenet(int sp_id,int ab_id){
 

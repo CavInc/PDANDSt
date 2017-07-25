@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import cav.pdst.utils.ConstantManager;
 
 public class SpAbonementFragment extends Fragment implements View.OnClickListener {
 
+    private static final String TAG = "SPAB";
     private ListView mListView;
     private AbonementAdapter mAbonementAdapter;
     private FloatingActionButton mFab;
@@ -63,7 +65,7 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
         mFab.setOnClickListener(this);
 
         mListView = (ListView) rootView.findViewById(R.id.sp_abom_list_view);
-        updateUI();
+
 
         return rootView;
         //return super.onCreateView(inflater, container, savedInstanceState);
@@ -90,6 +92,13 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
         Intent intent = new Intent(this.getContext(), AbonementActivity.class);
         intent.putExtra(ConstantManager.MODE_ABONEMENT,ConstantManager.NEW_ABONEMENT);
         startActivityForResult(intent,ConstantManager.NEW_ABONEMENT);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG," SP ABONEMEM RESUME");
+        updateUI();
     }
 
     @Override

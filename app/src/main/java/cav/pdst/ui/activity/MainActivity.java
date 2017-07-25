@@ -158,8 +158,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intent);
                 break;
             case R.id.drawer_statistic:
-                break;
-            case R.id.drawer_setting:
+                intent = new Intent(this,ReportActivity.class);
+                startActivity(intent);
                 break;
 
         }
