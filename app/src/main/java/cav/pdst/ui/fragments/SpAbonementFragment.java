@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.text.ParseException;
@@ -23,7 +24,7 @@ import cav.pdst.ui.adapters.AbonementAdapter;
 import cav.pdst.utils.ConstantManager;
 
 
-public class SpAbonementFragment extends Fragment implements View.OnClickListener {
+public class SpAbonementFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemLongClickListener {
 
     private static final String TAG = "SPAB";
     private ListView mListView;
@@ -36,6 +37,7 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
     private int last_ab = 0; // количество абонементов на спортсмене
 
     private AbonementCallback mAbonementCallback;
+
 
 
     public interface AbonementCallback {
@@ -65,6 +67,7 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
         mFab.setOnClickListener(this);
 
         mListView = (ListView) rootView.findViewById(R.id.sp_abom_list_view);
+        mListView.setOnItemLongClickListener(this);
 
 
         return rootView;
@@ -85,6 +88,13 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
             mAbonementAdapter.setData(data);
             mAbonementAdapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+        EditDeleteDialog dialog = new EditDeleteDialog();
+        dialog.show(getActivity().getFragmentManager(),ConstantManager.DIALOG_EDIT_DEL);
+        return true;
     }
 
     @Override
