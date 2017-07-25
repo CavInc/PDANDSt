@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Toolbar mToolbar;
     private FloatingActionButton mFab;
     private DrawerLayout mNavigationDrawer;
+    private MaterialCalendarView calendarView;
 
     private ListView mListView;
     private TraningMainAdapter adapter;
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private Date selectedDate;
     TrainingModel selModel;
+    private Collection<CalendarDay> mCalendarDays;
 
     // https://github.com/prolificinteractive/material-calendarview
     // https://github.com/dpreussler/clean-simple-calendar
@@ -80,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Calendar newYear = Calendar.getInstance();
         newYear.add(Calendar.YEAR, 1);
 
-        MaterialCalendarView calendarView = (MaterialCalendarView) findViewById(R.id.calendarView);
+        calendarView = (MaterialCalendarView) findViewById(R.id.calendarView);
         calendarView.state().edit()
                 .setFirstDayOfWeek(Calendar.MONDAY)
                 .setMinimumDate(CalendarDay.from(2016,12,31))
@@ -88,14 +90,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .commit();
         calendarView.setCurrentDate(new Date());
         calendarView.setDateSelected(new Date(),true);
-        Collection<CalendarDay> m = new ArrayList<>();
-        for (Date l:mDataManager.getTrainingDay()){
-            m.add(CalendarDay.from(l));
-        }
-       // m.add(CalendarDay.from(2017,6,4));
-       // m.add(CalendarDay.from(2017,6,10));
+        mCalendarDays = new ArrayList<>();
 
-        calendarView.addDecorator(new StartDayViewDecorator(m));
+        calendarView.addDecorator(new StartDayViewDecorator(mCalendarDays));
         calendarView.setOnDateChangedListener(mDateSelectedListener);
 
         selectedDate = new Date();
@@ -128,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onResume() {
         super.onResume();
-        updateUI();
+        updateUI(0);
     }
 
     @Override
@@ -203,11 +200,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         public void onDateSelected(MaterialCalendarView widget,CalendarDay date, boolean selected) {
             Log.d(TAG,"DAY SELECTED "+date.toString());
             selectedDate = date.getDate();
-            updateUI();
+            updateUI(1);
         }
     };
 
-    private void updateUI(){
+    private void updateUI(int mode){
         ArrayList<TrainingModel> model = mDataManager.getTraining(selectedDate);
         if (adapter == null){
             adapter = new TraningMainAdapter(this,R.layout.main_item,model);
@@ -216,6 +213,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             adapter.setData(model);
             adapter.notifyDataSetChanged();
         }
+        if (mode == 0) {
+            mCalendarDays.clear();
+            for (Date l : mDataManager.getTrainingDay()) {
+                mCalendarDays.add(CalendarDay.from(l));
+            }
+            calendarView.removeDecorators();
+            calendarView.addDecorator(new StartDayViewDecorator(mCalendarDays));
+        }
     }
 
     @Override
@@ -223,7 +228,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (selectItem==R.id.dialog_del_item) {
             // удаляем
             mDataManager.delTraining(selectID);
-            updateUI();
+            updateUI(0);
         }
         if (selectItem == R.id.dialog_edit_item){
             // редактируем
