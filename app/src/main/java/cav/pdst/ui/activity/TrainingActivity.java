@@ -1,7 +1,9 @@
 package cav.pdst.ui.activity;
 
 
+import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -32,7 +34,8 @@ import cav.pdst.ui.fragments.DatePickerFragment;
 import cav.pdst.ui.fragments.InfoDialogFragment;
 import cav.pdst.utils.ConstantManager;
 
-public class TrainingActivity extends AppCompatActivity implements View.OnClickListener,DatePickerFragment.OnDateGet {
+public class TrainingActivity extends AppCompatActivity implements View.OnClickListener,DatePickerFragment.OnDateGet,
+        InfoDialogFragment.InfoCallback {
 
     private static final String TAG = "TRA";
     private ListView mListView;
@@ -261,6 +264,16 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         if (m.length()!=2) m = "0"+m;
         return h+":"+m;
     }
+
+    @Override
+    public void OnInfoButtonClick(int button_id) {
+        if (button_id== Dialog.BUTTON_POSITIVE){
+            Intent intent = new Intent(this, AbonementActivity.class);
+            intent.putExtra(ConstantManager.MODE_ABONEMENT,ConstantManager.NEW_ABONEMENT);
+            startActivityForResult(intent,ConstantManager.NEW_ABONEMENT);
+        }
+    }
+
 }
 
 
