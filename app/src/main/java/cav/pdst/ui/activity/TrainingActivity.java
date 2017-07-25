@@ -2,6 +2,7 @@ package cav.pdst.ui.activity;
 
 
 import android.app.TimePickerDialog;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
@@ -192,8 +193,20 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         }
     };
 
-    private void getAbonement(int id, Date date) {
-
+    private int getAbonement(int id, Date date) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        ArrayList<Integer> rec = new ArrayList<>();
+        mDataManager.getDB().open();
+        Cursor cursor = mDataManager.getDB().getAbonementInDate(id,format.format(date));
+        while (cursor.moveToNext()){
+            rec.add(cursor.getInt(0));
+        }
+        mDataManager.getDB().close();
+        if (rec.size()!=0) {
+            return rec.get(0);
+        }else {
+            return -1;
+        }
     }
 
 

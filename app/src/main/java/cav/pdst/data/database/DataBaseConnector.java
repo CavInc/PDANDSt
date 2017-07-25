@@ -228,4 +228,13 @@ public class DataBaseConnector {
 
     }
 
+    public Cursor getAbonementInDate(int sp_id,String date){
+        String sql="select _id from ABONEMENT \n" +
+                   " where sp_id="+sp_id+" and start_date<='"+date+"' and end_date>='"+date+"' and (count_training-used_training)<>0"+
+                " order by _id";
+
+        //System.out.println(sql);
+        return database.rawQuery(sql,null);
+    }
+
 }

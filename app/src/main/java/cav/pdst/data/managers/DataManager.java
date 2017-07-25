@@ -53,6 +53,10 @@ public class DataManager {
         return mPreferensManager;
     }
 
+    public DataBaseConnector getDB() {
+        return mDB;
+    }
+
     //region ======== databse ==============
     public void addGroup(GroupModel data, Integer[] selectItem){
         mDB.addGroup(data,selectItem);
