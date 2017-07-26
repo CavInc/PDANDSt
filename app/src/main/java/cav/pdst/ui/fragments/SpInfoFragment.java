@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -61,6 +62,7 @@ public class SpInfoFragment extends Fragment {
         mFullName = (TextView) rootView.findViewById(R.id.info_full_name);
         mPhone = (TextView) rootView.findViewById(R.id.info_phone);
         mComment = (TextView) rootView.findViewById(R.id.info_comment);
+        mPhone.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
 
         if ((mode == ConstantManager.EDIT_SPORTSMAN) || (mode == ConstantManager.VIEW_SPORTSMAN)) {
             mFullName.setText(mSportsmanModel.getName());

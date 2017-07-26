@@ -22,6 +22,7 @@ import cav.pdst.data.models.AbonementModel;
 import cav.pdst.ui.activity.AbonementActivity;
 import cav.pdst.ui.adapters.AbonementAdapter;
 import cav.pdst.utils.ConstantManager;
+import cav.pdst.utils.Utils;
 
 
 public class SpAbonementFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemLongClickListener {
@@ -134,7 +135,7 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
                     countTr = data.getIntExtra(ConstantManager.AB_COUNT_TR,0);
                     pay = data.getFloatExtra(ConstantManager.AB_PAY,0.0f);
                     comment = data.getStringExtra(ConstantManager.AB_COMMENT);
-                    AbonementModel model = getConvertModel(sp_id,last_ab,createDate,startDate,endDate,countTr,pay,comment);
+                    AbonementModel model = Utils.getConvertModel(sp_id,last_ab,createDate,startDate,endDate,countTr,pay,comment);
                     mAbonementAdapter.add(model);
                     if (sp_id != -1){
                         mDataManager.addUpdateAbonement(model);
@@ -147,16 +148,5 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
         }
     }
 
-    private AbonementModel getConvertModel (int sp_id,int id,String createDate,
-                                            String startDate,String endDate,
-                                            int countTr,float pay,String comment) {
-        SimpleDateFormat format = new SimpleDateFormat("E dd.MM.yyyy");
-        try {
-            return new AbonementModel(id,sp_id,format.parse(createDate),format.parse(startDate),
-                    format.parse(endDate),countTr,pay,0,comment,0);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+
 }
