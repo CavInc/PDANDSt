@@ -42,7 +42,7 @@ public class SpInfoFragment extends Fragment {
     public SpInfoFragment(SportsmanModel model,int mode) {
         mSportsmanModel = new SportsmanModel();
         this.mode = mode;
-        if (mode == ConstantManager.EDIT_SPORTSMAN){
+        if ((mode == ConstantManager.EDIT_SPORTSMAN) || (mode == ConstantManager.VIEW_SPORTSMAN)){
             mSportsmanModel = model;
         }
     }
@@ -62,65 +62,75 @@ public class SpInfoFragment extends Fragment {
         mPhone = (TextView) rootView.findViewById(R.id.info_phone);
         mComment = (TextView) rootView.findViewById(R.id.info_comment);
 
-        if (mode == ConstantManager.EDIT_SPORTSMAN) {
+        if ((mode == ConstantManager.EDIT_SPORTSMAN) || (mode == ConstantManager.VIEW_SPORTSMAN)) {
             mFullName.setText(mSportsmanModel.getName());
             mPhone.setText(mSportsmanModel.getTel());
             mComment.setText(mSportsmanModel.getComment());
         }
+        if (mode == ConstantManager.VIEW_SPORTSMAN) {
+            mFullName.setEnabled(false);
+            mPhone.setEnabled(false);
+            mComment.setEnabled(false);
+            mFullName.setFocusable(false);
+            mPhone.setFocusable(false);
+            mComment.setFocusable(false);
+        }else {
 
-        mFullName.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            mFullName.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-            }
+                }
 
-            @Override
-            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
-                mSportsmanModel.setName(charSequence.toString());
-                updateData();
-            }
+                @Override
+                public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                    mSportsmanModel.setName(charSequence.toString());
+                    updateData();
+                }
 
-            @Override
-            public void afterTextChanged(Editable editable) {
+                @Override
+                public void afterTextChanged(Editable editable) {
 
-            }
-        });
+                }
+            });
 
-        mPhone.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            mPhone.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-            }
+                }
 
-            @Override
-            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
-                mSportsmanModel.setTel(charSequence.toString());
-                updateData();
-            }
+                @Override
+                public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                    mSportsmanModel.setTel(charSequence.toString());
+                    updateData();
+                }
 
-            @Override
-            public void afterTextChanged(Editable editable) {
+                @Override
+                public void afterTextChanged(Editable editable) {
 
-            }
-        });
+                }
+            });
 
-        mComment.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            mComment.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-            }
+                }
 
-            @Override
-            public void onTextChanged(CharSequence charSequence,int start, int before, int count) {
-                mSportsmanModel.setComment(charSequence.toString());
-                updateData();
-            }
+                @Override
+                public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                    mSportsmanModel.setComment(charSequence.toString());
+                    updateData();
+                }
 
-            @Override
-            public void afterTextChanged(Editable editable) {
+                @Override
+                public void afterTextChanged(Editable editable) {
 
-            }
-        });
+                }
+            });
+
+        }
 
         mCall = (Button) rootView.findViewById(R.id.info_call_button);
         mSendSMS = (Button) rootView.findViewById(R.id.info_send_sms);

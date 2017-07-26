@@ -47,7 +47,7 @@ public class SportsmanDetailActivity extends AppCompatActivity implements SpInfo
         mDataManager = DataManager.getInstance();
 
         mode = getIntent().getIntExtra(ConstantManager.MODE_SP_DETAIL,ConstantManager.NEW_SPORTSMAN);
-        if (mode == ConstantManager.EDIT_SPORTSMAN) {
+        if ((mode == ConstantManager.EDIT_SPORTSMAN) || (mode == ConstantManager.VIEW_SPORTSMAN)) {
             mSportsmanModel = getIntent().getParcelableExtra(ConstantManager.SP_DETAIL_DATA);
             sp_id = mSportsmanModel.getId();
         }
@@ -96,7 +96,7 @@ public class SportsmanDetailActivity extends AppCompatActivity implements SpInfo
         if (mSportsmanModel.getName().length()!=0){
             if (mode == ConstantManager.NEW_SPORTSMAN) {
                 mDataManager.addSportsman(mSportsmanModel);
-            } else {
+            } else if (mode == ConstantManager.EDIT_SPORTSMAN) {
                 mDataManager.updateSportsman(mSportsmanModel);
             }
         }
@@ -123,7 +123,7 @@ public class SportsmanDetailActivity extends AppCompatActivity implements SpInfo
                 case 1:
                     return SpTrainingFragment.newInstanse(sp_id);
                 case 2:
-                    return SpAbonementFragment.newInstance(sp_id);
+                    return SpAbonementFragment.newInstance(sp_id,mode);
 
             }
             return null;

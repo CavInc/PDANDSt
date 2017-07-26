@@ -33,6 +33,7 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
 
     private DataManager mDataManager;
     private int sp_id;
+    private int mode;
 
     private int last_ab = 0; // количество абонементов на спортсмене
 
@@ -44,14 +45,15 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
         void updateData(AbonementModel model);
     }
 
-    public static SpAbonementFragment newInstance(int sp_id){
-        SpAbonementFragment fragment = new SpAbonementFragment(sp_id);
+    public static SpAbonementFragment newInstance(int sp_id,int mode){
+        SpAbonementFragment fragment = new SpAbonementFragment(sp_id,mode);
         return fragment;
     }
 
-    public SpAbonementFragment(int sp_id){
+    public SpAbonementFragment(int sp_id,int mode){
         mDataManager = DataManager.getInstance();
         this.sp_id = sp_id;
+        this.mode = mode;
     }
 
     @Override
@@ -64,7 +66,11 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_sp_abonement, container, false);
         mFab = (FloatingActionButton) rootView.findViewById(R.id.frm_abonement_fab);
-        mFab.setOnClickListener(this);
+        if (mode != ConstantManager.VIEW_SPORTSMAN) {
+            mFab.setOnClickListener(this);
+        }else {
+            mFab.setEnabled(false);
+        }
 
         mListView = (ListView) rootView.findViewById(R.id.sp_abom_list_view);
         mListView.setOnItemLongClickListener(this);

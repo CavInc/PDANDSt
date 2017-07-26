@@ -113,8 +113,11 @@ public class SportsmanActivity extends AppCompatActivity implements NavigationVi
     }
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-        SportsmanModel model = (SportsmanModel) adapterView.getItemAtPosition(position);
-
+        selModel = (SportsmanModel) adapterView.getItemAtPosition(position);
+        Intent intent = new Intent(this,SportsmanDetailActivity.class);
+        intent.putExtra(ConstantManager.MODE_SP_DETAIL,ConstantManager.VIEW_SPORTSMAN);
+        intent.putExtra(ConstantManager.SP_DETAIL_DATA,selModel);
+        startActivity(intent);
     }
 
     @Override
