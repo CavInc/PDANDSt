@@ -18,9 +18,11 @@ import android.util.SparseBooleanArray;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -52,6 +54,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
 
     private Button mTimeButton;
     private Button mDataButton;
+    private Spinner mSpinner;
 
     private DataManager mDataManager;
 
@@ -93,6 +96,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         mListView = (ListView) findViewById(R.id.training_list_view);
         mTraining = (EditText) findViewById(R.id.training_edit);
         mCountSportsman = (TextView) findViewById(R.id.count_sportsman);
+        mSpinner = (Spinner) findViewById(R.id.group_spiner);
 
         mDataButton = (Button) findViewById(R.id.date_button);
         mDataButton.setOnClickListener(this);
@@ -107,6 +111,12 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         }
 
         mListView.setOnItemClickListener(mItemClickListener);
+
+        ArrayList<String> spinnerData = mDataManager.getGroupString();
+        spinnerData.add(0,"Все");
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,spinnerData);
+        mSpinner.setAdapter(spinnerAdapter);
+
 
         setDateButton(mDate);
         setupToolBar();
@@ -181,6 +191,8 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
 
     private int selSportspam;
 
+    private LinkSpABTrModel mLinkSpABTrModel;
+
     AdapterView.OnItemClickListener mItemClickListener = new AdapterView.OnItemClickListener(){
 
         @Override
@@ -204,7 +216,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
 
                     return;
                 }
-                mSpAB.add(new LinkSpABTrModel(mx.getId(),ab));
+                mLinkSpABTrModel = new LinkSpABTrModel(mx.getId(),ab);
 
                 TrainigOperationFragment dialog = new TrainigOperationFragment();
                 dialog.setTrainingOperationListener(new TrainigOperationFragment.TrainingOperationListener() {
@@ -213,24 +225,24 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
                         Log.d(TAG," ITEM "+witch);
                         mAdapter.getItem(position).setMode(witch);
                         if ((witch == ConstantManager.SPORTSMAN_MODE_TRAINING) || (witch == ConstantManager.SPORTSMAN_MODE_PASS)) {
-
+                            mSpAB.add(mLinkSpABTrModel);
                         }
                         mAdapter.getItem(position).setCheck(true);
                         mAdapter.notifyDataSetChanged();
                     }
                 });
                 dialog.show(getFragmentManager(),"OPERATIONDIALOG");
-
-
             } else {
-                //TODO снятие абонемента
-                //mSpAB.indexOf()
+                //снятие абонемента
                 Log.d(TAG,"СНЯТИЕ ");
+                if (mLinkSpABTrModel != null) {
+                    mSpAB.remove(mLinkSpABTrModel);
+                    mLinkSpABTrModel = null;
+                }
                 ((SportsmanTrainingModel) adapterView.getItemAtPosition(position)).setCheck(! mx.isCheck());
                 ((SportsmanTrainingModel) adapterView.getItemAtPosition(position)).setMode(-1);
                 mAdapter.notifyDataSetChanged();
             }
-            Log.d(TAG,"POST DIALOG");
         }
     };
 

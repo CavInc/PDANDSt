@@ -44,11 +44,19 @@
     </android.support.design.widget.TextInputLayout>
     <TextView
         android:id="@+id/count_sportsman"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/til"
         android:layout_marginBottom="16dp"
-        android:text="Количество спортсменов"/>
+        android:text="Количество спортсменов:  0 "/>
+    <Spinner
+        android:id="@+id/group_spiner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/til"
+        android:layout_toEndOf="@+id/count_sportsman"
+        android:layout_toRightOf="@+id/count_sportsman">
+    </Spinner>
     <ListView
         android:id="@+id/training_list_view"
         android:choiceMode="multipleChoice"

@@ -48,7 +48,7 @@ public class SportsmanAdapter extends ArrayAdapter<SportsmanModel>{
             holder.mAbCount.setText("доступно:"+record.getTraninigWrk());
             holder.mAbCount.setTextColor(Color.GREEN);
         }else {
-            holder.mAbCount.setText("Нет действующих авонеметнов");
+            holder.mAbCount.setText("Нет действующих абонеметнов");
             holder.mAbCount.setTextColor(Color.RED);
         }
         holder.mTraining.setText("Тренировки: "+record.getTrainingAll()+" / ");

@@ -79,6 +79,17 @@ public class DataManager {
         return  rec;
     }
 
+    public ArrayList<String> getGroupString(){
+        ArrayList<String> rec =new ArrayList<>();
+        mDB.open();
+        Cursor cursor = mDB.groupAll();
+        while (cursor.moveToNext()){
+            rec.add(cursor.getString(cursor.getColumnIndex("group_name")));
+        }
+        mDB.close();
+        return rec;
+    }
+
     public void updateGroup(GroupModel data,Integer[] selectItem){
         mDB.updateGroup(data,selectItem);
     }
