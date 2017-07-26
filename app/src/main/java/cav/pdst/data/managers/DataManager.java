@@ -134,7 +134,8 @@ public class DataManager {
                     cursor.getInt(cursor.getColumnIndex("_id")),
                     cursor.getString(cursor.getColumnIndex("sp_name")),
                     cursor.getString(cursor.getColumnIndex("phone")),
-                    cursor.getInt(cursor.getColumnIndex("ci")),0,
+                    cursor.getInt(cursor.getColumnIndex("ci")),
+                    cursor.getInt(cursor.getColumnIndex("sm")),
                     cursor.getString(cursor.getColumnIndex("comment"))));
         }
         mDB.close();

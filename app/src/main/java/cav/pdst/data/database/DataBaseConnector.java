@@ -214,11 +214,16 @@ public class DataBaseConnector {
     }
 
     public Cursor getSportsman(){
+        /*
         String sql="select sp._id,sp.sp_name,sp.phone,sp.comment,a.ci from SPORTSMAN sp\n" +
                 "   left join (select id1, count(1) as ci from REF_TABLE where type_ref=1\n" +
                 "   group by id1) as a on sp._id=a.id1 order by sp.sp_name";
+        */
+        String sql="select sp._id,sp.sp_name,sp.phone,sp.comment,a.ci,ab.sm from SPORTSMAN sp\n" +
+                "  left join (select id1, count(1) as ci from REF_TABLE where type_ref=1   group by id1) as a on sp._id=a.id1 \n" +
+                "  left join (select sp_id,sum(count_training-used_training) as sm from ABONEMENT where count_training-used_training<>0 group by sp_id) as ab on sp._id=ab.sp_id\n" +
+                "order by sp.sp_name";
         return database.rawQuery(sql,null);
-        //return database.query(DBHelper.SPORTSMAN_TABLE,new String[]{"_id","sp_name","phone","comment"},null,null,null,null,"sp_name");
     }
 
     // абонемент

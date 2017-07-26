@@ -1,6 +1,7 @@
 package cav.pdst.ui.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,8 @@ public class SportsmanAdapter extends ArrayAdapter<SportsmanModel>{
             holder.mName = (TextView) row.findViewById(R.id.spman_item_name);
             holder.mPhone = (TextView) row.findViewById(R.id.spman_item_phone);
             holder.mTraining = (TextView) row.findViewById(R.id.spman_item_training_count);
+            holder.mAbCount = (TextView) row.findViewById(R.id.spman_item_abonement_count);
+            holder.mLastTraining = (TextView) row.findViewById(R.id.spman_item_last_tr);
             row.setTag(holder);
         }else{
             holder = (ViewHolder)row.getTag();
@@ -41,7 +44,14 @@ public class SportsmanAdapter extends ArrayAdapter<SportsmanModel>{
         SportsmanModel record = getItem(position);
         holder.mName.setText(record.getName());
         holder.mPhone.setText(record.getTel());
-        holder.mTraining.setText("Тренировки: "+record.getTrainingAll()+" / доступно 0");
+        if (record.getTraninigWrk()>0) {
+            holder.mAbCount.setText("доступно:"+record.getTraninigWrk());
+            holder.mAbCount.setTextColor(Color.GREEN);
+        }else {
+            holder.mAbCount.setText("Нет действующих авонеметнов");
+            holder.mAbCount.setTextColor(Color.RED);
+        }
+        holder.mTraining.setText("Тренировки: "+record.getTrainingAll()+" / ");
         return row;
     }
 
@@ -55,6 +65,8 @@ public class SportsmanAdapter extends ArrayAdapter<SportsmanModel>{
         public TextView mName;
         public TextView mPhone;
         public TextView mTraining;
+        private TextView mAbCount;
+        private TextView mLastTraining;
 
     }
 }
