@@ -16,7 +16,7 @@ public class PreferensManager {
     }
 
     // сохраняем ссылку на выбранного спортсмена
-    private void saveUseSportsman(int id){
+    public void saveUseSportsman(int id){
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putInt(STORE_SPORTSMAN,id);
         editor.apply();

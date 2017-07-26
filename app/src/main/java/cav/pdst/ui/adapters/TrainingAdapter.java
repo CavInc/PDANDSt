@@ -3,6 +3,7 @@ package cav.pdst.ui.adapters;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -64,6 +65,21 @@ public class TrainingAdapter extends ArrayAdapter<SportsmanTrainingModel> {
             holder.mName.setTextColor(Color.GREEN);
         }else {
             holder.mName.setTextColor(Color.BLACK);
+        }
+        switch (record.getMode()){
+            case ConstantManager.SPORTSMAN_MODE_TRAINING:
+                holder.mName.setTextColor(ContextCompat.getColor(getContext(),R.color.app_green));
+                break;
+            case ConstantManager.SPORTSMAN_MODE_PASS:
+                holder.mName.setTextColor(ContextCompat.getColor(getContext(),R.color.app_red));
+                break;
+            case ConstantManager.SPORTSMAN_MODE_WARNING:
+                holder.mName.setTextColor(ContextCompat.getColor(getContext(),R.color.app_blue));
+                break;
+            case ConstantManager.SPORTSMAN_MODE_WORKINGOFF:
+                holder.mName.setTextColor(ContextCompat.getColor(getContext(),R.color.app_yellow));
+
+                break;
         }
         holder.mName.setChecked(record.isCheck());
         return row;

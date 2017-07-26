@@ -5,6 +5,7 @@ public class SportsmanTrainingModel {
     private String mName;
     private int mCount;
     private boolean mCheck;
+    private int mMode = -1;
 
     public SportsmanTrainingModel(int id, String name, int count) {
         mId = id;
@@ -30,5 +31,13 @@ public class SportsmanTrainingModel {
 
     public void setCheck(boolean check) {
         mCheck = check;
+    }
+
+    public int getMode() {
+        return mMode;
+    }
+
+    public void setMode(int mode) {
+        mMode = mode;
     }
 }

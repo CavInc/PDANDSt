@@ -2,8 +2,11 @@ package cav.pdst.ui.activity;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.DialogFragment;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -35,7 +38,9 @@ import cav.pdst.data.models.TrainingModel;
 import cav.pdst.ui.adapters.TrainingAdapter;
 import cav.pdst.ui.fragments.DatePickerFragment;
 import cav.pdst.ui.fragments.InfoDialogFragment;
+import cav.pdst.ui.fragments.TrainigOperationFragment;
 import cav.pdst.utils.ConstantManager;
+import cav.pdst.utils.Utils;
 
 public class TrainingActivity extends AppCompatActivity implements View.OnClickListener,DatePickerFragment.OnDateGet,
         InfoDialogFragment.InfoCallback {
@@ -179,7 +184,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
     AdapterView.OnItemClickListener mItemClickListener = new AdapterView.OnItemClickListener(){
 
         @Override
-        public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+        public void onItemClick(AdapterView<?> adapterView, View view, final int position, long id) {
             Log.d(TAG," POSITION Item "+position);
             SportsmanTrainingModel mx = (SportsmanTrainingModel) adapterView.getItemAtPosition(position);
             Log.d(TAG,mx.getId()+" "+mx.getName()+" "+mx.isCheck());
@@ -196,19 +201,36 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
                int ab = getAbonement(mx.getId(),mDate);
                 if (ab==-1) {
                     // показать что куй ?
+
                     return;
                 }
                 mSpAB.add(new LinkSpABTrModel(mx.getId(),ab));
 
+                TrainigOperationFragment dialog = new TrainigOperationFragment();
+                dialog.setTrainingOperationListener(new TrainigOperationFragment.TrainingOperationListener() {
+                    @Override
+                    public void onTrainingClickListener(int witch) {
+                        Log.d(TAG," ITEM "+witch);
+                        mAdapter.getItem(position).setMode(witch);
+                        if ((witch == ConstantManager.SPORTSMAN_MODE_TRAINING) || (witch == ConstantManager.SPORTSMAN_MODE_PASS)) {
+
+                        }
+                        mAdapter.getItem(position).setCheck(true);
+                        mAdapter.notifyDataSetChanged();
+                    }
+                });
+                dialog.show(getFragmentManager(),"OPERATIONDIALOG");
 
 
             } else {
                 //TODO снятие абонемента
+                //mSpAB.indexOf()
+                Log.d(TAG,"СНЯТИЕ ");
+                ((SportsmanTrainingModel) adapterView.getItemAtPosition(position)).setCheck(! mx.isCheck());
+                ((SportsmanTrainingModel) adapterView.getItemAtPosition(position)).setMode(-1);
+                mAdapter.notifyDataSetChanged();
             }
-
-            ((SportsmanTrainingModel) adapterView.getItemAtPosition(position)).setCheck(! mx.isCheck());
-            mAdapter.notifyDataSetChanged();
-
+            Log.d(TAG,"POST DIALOG");
         }
     };
 
@@ -294,25 +316,14 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
                 int countTr = data.getIntExtra(ConstantManager.AB_COUNT_TR, 0);
                 float pay = data.getFloatExtra(ConstantManager.AB_PAY, 0.0f);
                 String comment = data.getStringExtra(ConstantManager.AB_COMMENT);
-                AbonementModel model = getConvertModel(selSportspam,mx,createDate,startDate,endDate,countTr,pay,comment);
+                AbonementModel model = Utils.getConvertModel(selSportspam,mx,createDate,startDate,endDate,countTr,pay,comment);
                 mDataManager.addUpdateAbonement(model);
                 updateUI();
             }
         }
     }
 
-    private AbonementModel getConvertModel (int sp_id,int id,String createDate,
-                                            String startDate,String endDate,
-                                            int countTr,float pay,String comment) {
-        SimpleDateFormat format = new SimpleDateFormat("E dd.MM.yyyy");
-        try {
-            return new AbonementModel(id,sp_id,format.parse(createDate),format.parse(startDate),
-                    format.parse(endDate),countTr,pay,0,comment,0);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+
 }
 
 
