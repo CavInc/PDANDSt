@@ -42,6 +42,7 @@ public class SpTrainingAdapter extends ArrayAdapter<TrainingModel> {
             holder.mName = (TextView) row.findViewById(R.id.sptr_item_name);
             holder.mIcon = (ImageView) row.findViewById(R.id.sptr_item_icon);
             holder.mCount = (TextView) row.findViewById(R.id.sptr_item_count);
+            holder.mAbonentNum = (TextView) row.findViewById(R.id.sptr_item_abon_num);
             row.setTag(holder);
         }else{
             holder = (ViewHolder)row.getTag();
@@ -59,8 +60,7 @@ public class SpTrainingAdapter extends ArrayAdapter<TrainingModel> {
             holder.mIcon.setImageResource(R.drawable.ic_group_black_24dp);
         }
         holder.mCount.setText(Integer.toString(record.getCount()));
-
-
+        holder.mAbonentNum.setText("Абонемент №:"+record.getAbonentNum());
         return row;
     }
 
@@ -75,5 +75,6 @@ public class SpTrainingAdapter extends ArrayAdapter<TrainingModel> {
         public TextView mName;
         public ImageView mIcon;
         public TextView mCount;
+        public TextView mAbonentNum;
     }
 }

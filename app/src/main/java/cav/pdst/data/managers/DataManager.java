@@ -204,7 +204,8 @@ public class DataManager {
                         cursor.getString(cursor.getColumnIndex("training_name")),type_rec,
                         cursor.getInt(cursor.getColumnIndex("count_item")),
                         format.parse(cursor.getString(cursor.getColumnIndex("date"))),
-                        cursor.getString(cursor.getColumnIndex("time"))));
+                        cursor.getString(cursor.getColumnIndex("time")),
+                        cursor.getInt(cursor.getColumnIndex("abid"))));
             } catch (ParseException e) {
                 e.printStackTrace();
             }

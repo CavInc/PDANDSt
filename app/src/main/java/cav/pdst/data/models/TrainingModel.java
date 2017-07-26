@@ -14,13 +14,8 @@ public class TrainingModel implements Parcelable {
     private int mCount;
     private Date mDate;
     private String mTime;
+    private int mAbonentNum;
 
-    public TrainingModel(String name, int type, int count, Date date) {
-        mName = name;
-        mType = type;
-        mCount = count;
-        mDate = date;
-    }
 
     public TrainingModel(String name, int type, int count, Date date, String time) {
         mName = name;
@@ -39,6 +34,16 @@ public class TrainingModel implements Parcelable {
         mTime = time;
     }
 
+    public TrainingModel(int id, String name, int type, int count, Date date, String time, int abonentNum) {
+        mId = id;
+        mName = name;
+        mType = type;
+        mCount = count;
+        mDate = date;
+        mTime = time;
+        mAbonentNum = abonentNum;
+    }
+
     public TrainingModel(Parcel parcel) {
         mId = parcel.readInt();
         mName = parcel.readString();
@@ -46,6 +51,7 @@ public class TrainingModel implements Parcelable {
         mCount = parcel.readInt();
         mDate = (Date) parcel.readSerializable();
         mTime = parcel.readString();
+        mAbonentNum = parcel.readInt();
     }
 
 
@@ -97,6 +103,10 @@ public class TrainingModel implements Parcelable {
         mTime = time;
     }
 
+    public int getAbonentNum() {
+        return mAbonentNum;
+    }
+
     public static final Creator<TrainingModel> CREATOR = new Creator<TrainingModel>() {
         @Override
         public TrainingModel createFromParcel(Parcel parcel) {
@@ -108,6 +118,8 @@ public class TrainingModel implements Parcelable {
             return new TrainingModel[0];
         }
     };
+
+
 
     @Override
     public int describeContents() {
@@ -122,6 +134,6 @@ public class TrainingModel implements Parcelable {
         parcel.writeInt(getCount());
         parcel.writeSerializable(getDate());
         parcel.writeString(getTime());
-
+        parcel.writeInt(mAbonentNum);
     }
 }
