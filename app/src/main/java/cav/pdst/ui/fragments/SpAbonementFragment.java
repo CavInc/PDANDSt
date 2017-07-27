@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +13,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import cav.pdst.R;
@@ -99,7 +98,15 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
 
     @Override
     public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
-        EditDeleteDialog dialog = new EditDeleteDialog();
+        EditDeleteDialog dialog = EditDeleteDialog.newInstance();
+        dialog.setEditDeleteDialogListener(new EditDeleteDialog.EditDeleteDialogListener() {
+            @Override
+            public void onDialogItemClick(int selectItem) {
+
+            }
+        });
+
+        FragmentManager fm = getChildFragmentManager();
         dialog.show(getActivity().getFragmentManager(),ConstantManager.DIALOG_EDIT_DEL);
         return true;
     }

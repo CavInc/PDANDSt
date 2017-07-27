@@ -11,11 +11,17 @@ android {
         versionCode 1
         versionName "1.0"
         project.ext.set("archivesBaseName", "PDandST-" + defaultConfig.versionName);
+        resConfigs "en", "ru"
     }
     buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+            versionNameSuffix "-debug"
+        }
         release {
             minifyEnabled true
             shrinkResources true
+            zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,26 +18,28 @@ public class EditDeleteDialog extends DialogFragment implements View.OnClickList
 
     private static final String TAG = "EDDIALOG";
 
+
     public interface EditDeleteDialogListener {
         public void onDialogItemClick(int selectItem);
     }
 
     private EditDeleteDialogListener mListener;
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        Log.d(TAG,"ATTACH");
-
-        mListener = (EditDeleteDialogListener) getActivity();
-
+    public static EditDeleteDialog newInstance(){
+        Bundle args = new Bundle();
+        EditDeleteDialog f= new EditDeleteDialog();
+        return f;
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         Log.d(TAG,"ATTACH ACTIVITY");
-        mListener = (EditDeleteDialogListener) activity;
+        try {
+            mListener = (EditDeleteDialogListener) activity;
+        }catch (ClassCastException e){
+            throw new ClassCastException("must implement NoticeDialogListener");
+        }
     }
 
     @Override
@@ -53,9 +56,15 @@ public class EditDeleteDialog extends DialogFragment implements View.OnClickList
     public void onClick(View view) {
         int id= view.getId();
         Log.d(TAG,String.valueOf(id));
-        mListener.onDialogItemClick(id);
+        if (mListener != null) {
+            mListener.onDialogItemClick(id);
+        }
         dismiss();
 
+    }
+
+    public void setEditDeleteDialogListener(EditDeleteDialogListener listener){
+        this.mListener = listener;
     }
 
 }
