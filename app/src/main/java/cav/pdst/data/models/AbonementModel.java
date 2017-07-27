@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import java.util.Date;
 
 public class AbonementModel implements Parcelable {
+    private int mAbonementId;
     private int mId;
     private int mSpId;
     private Date mCreateDate;
@@ -154,5 +155,13 @@ public class AbonementModel implements Parcelable {
 
     public void setUsedTraining(int usedTraining) {
         mUsedTraining = usedTraining;
+    }
+
+    public int getAbonementId() {
+        return mAbonementId;
+    }
+
+    public void setAbonementId(int abonementId) {
+        mAbonementId = abonementId;
     }
 }
