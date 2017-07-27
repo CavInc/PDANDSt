@@ -1,5 +1,6 @@
 package cav.pdst.ui.fragments;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,7 +20,7 @@ import cav.pdst.R;
 import cav.pdst.data.models.SportsmanModel;
 import cav.pdst.utils.ConstantManager;
 
-
+@SuppressLint("ValidFragment")
 public class SpInfoFragment extends Fragment {
 
     private TextView mFullName;
@@ -36,6 +37,7 @@ public class SpInfoFragment extends Fragment {
 
 
     public static SpInfoFragment newInstance(SportsmanModel model,int mode){
+        Bundle args = new Bundle();
         SpInfoFragment fragment = new SpInfoFragment(model,mode);
         return  fragment;
     }
@@ -54,6 +56,10 @@ public class SpInfoFragment extends Fragment {
         mCallbacks = (Callbacks) activity;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {

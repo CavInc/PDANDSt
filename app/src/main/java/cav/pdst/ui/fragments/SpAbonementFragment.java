@@ -3,6 +3,7 @@ package cav.pdst.ui.fragments;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -27,6 +28,8 @@ import cav.pdst.utils.Utils;
 public class SpAbonementFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemLongClickListener {
 
     private static final String TAG = "SPAB";
+    private static final String SPORTSMAN_ID = "SP_ID";
+    private static final String MODE = "SP_MODE";
     private ListView mListView;
     private AbonementAdapter mAbonementAdapter;
     private FloatingActionButton mFab;
@@ -46,14 +49,21 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
     }
 
     public static SpAbonementFragment newInstance(int sp_id,int mode){
-        SpAbonementFragment fragment = new SpAbonementFragment(sp_id,mode);
+        Bundle args = new Bundle();
+        args.putSerializable(SPORTSMAN_ID,sp_id);
+        args.putSerializable(MODE,mode);
+        SpAbonementFragment fragment = new SpAbonementFragment();
+        fragment.setArguments(args);
         return fragment;
     }
 
-    public SpAbonementFragment(int sp_id,int mode){
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         mDataManager = DataManager.getInstance();
-        this.sp_id = sp_id;
-        this.mode = mode;
+        this.sp_id = getArguments().getInt(SPORTSMAN_ID);
+        this.mode = getArguments().getInt(MODE);
+
     }
 
     @Override
@@ -107,7 +117,7 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
         });
 
         FragmentManager fm = getChildFragmentManager();
-        dialog.show(getActivity().getFragmentManager(),ConstantManager.DIALOG_EDIT_DEL);
+        dialog.show(fm,ConstantManager.DIALOG_EDIT_DEL);
         return true;
     }
 

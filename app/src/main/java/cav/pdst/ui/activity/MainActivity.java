@@ -190,7 +190,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             selModel = (TrainingModel) adapterView.getItemAtPosition(position);
             selectID = selModel.getId();
             EditDeleteDialog dialog = new EditDeleteDialog();
-            dialog.show(getFragmentManager(),ConstantManager.DIALOG_EDIT_DEL);
+            dialog.show(getSupportFragmentManager(),ConstantManager.DIALOG_EDIT_DEL);
             return true;
         }
     };

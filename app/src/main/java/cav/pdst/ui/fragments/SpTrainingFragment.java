@@ -18,6 +18,7 @@ import cav.pdst.ui.adapters.SpTrainingAdapter;
 
 public class SpTrainingFragment extends Fragment {
 
+    private static final String SPORTSMAN_ID = "SP_ID";
     private int sp_id;
 
     private ListView mListView;
@@ -26,13 +27,20 @@ public class SpTrainingFragment extends Fragment {
     private DataManager mDataManager;
 
     public static SpTrainingFragment newInstanse(int sp_id){
-        SpTrainingFragment fragment = new SpTrainingFragment(sp_id);
+        Bundle args = new Bundle();
+        args.putSerializable(SPORTSMAN_ID,sp_id);
+        SpTrainingFragment fragment = new SpTrainingFragment();
+        fragment.setArguments(args);
         return fragment;
     }
 
-    public SpTrainingFragment(int sp_id) {
-        this.sp_id = sp_id;
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         mDataManager = DataManager.getInstance();
+        this.sp_id = getArguments().getInt(SPORTSMAN_ID);
     }
 
     @Override
