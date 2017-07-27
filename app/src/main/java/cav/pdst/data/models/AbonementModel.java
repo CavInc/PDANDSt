@@ -19,9 +19,10 @@ public class AbonementModel implements Parcelable {
     private int mUsedTraining = 0;
 
 
-    public AbonementModel(int id, int spId, Date createDate, Date startDate, Date endDate,
+    public AbonementModel(int id,int pos_id, int spId, Date createDate, Date startDate, Date endDate,
                           int countTraining, float pay,int type, String comment, int usedTraining) {
-        mId = id;
+        mAbonementId = id;
+        mId = pos_id;
         mSpId = spId;
         mCreateDate = createDate;
         mStartDate = startDate;
@@ -34,6 +35,7 @@ public class AbonementModel implements Parcelable {
     }
 
     protected AbonementModel(Parcel in) {
+        mAbonementId = in.readInt();
         mId = in.readInt();
         mSpId = in.readInt();
         mCreateDate = (Date) in.readSerializable();
@@ -48,6 +50,7 @@ public class AbonementModel implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(mAbonementId);
         dest.writeInt(mId);
         dest.writeInt(mSpId);
         dest.writeSerializable(mCreateDate);

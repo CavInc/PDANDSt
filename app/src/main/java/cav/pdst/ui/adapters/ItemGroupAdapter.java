@@ -47,7 +47,8 @@ public class ItemGroupAdapter extends ArrayAdapter<ItemSportsmanModel> {
             row.setTag(holder);
             holder.mCheckBox.setTag(getItem(position)); // ? https://habrahabr.ru/post/133575/
         }else {
-            holder = (ViewHolder)row.getTag();
+            holder = (ViewHolder) row.getTag();
+            holder.mCheckBox.setTag(getItem(position));
         }
         ItemSportsmanModel record = getItem(position);
         holder.mName.setText(record.getName());

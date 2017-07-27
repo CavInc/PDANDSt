@@ -242,7 +242,7 @@ public class DataManager {
         return rec;
     }
 
-    public ArrayList<SportsmanTrainingModel> getSpTraining(){
+    public ArrayList<SportsmanTrainingModel> getSpTraining(int group_id){
         ArrayList<SportsmanTrainingModel> rec = new ArrayList<>();
         mDB.open();
         Cursor cursor = mDB.getSPTraining();
@@ -267,7 +267,8 @@ public class DataManager {
         Cursor cursor = mDB.getAbonement(sprotsman_id);
         while (cursor.moveToNext()){
             try {
-                rec.add(new AbonementModel (cursor.getInt(cursor.getColumnIndex("pos_id")),
+                rec.add(new AbonementModel (cursor.getInt(cursor.getColumnIndex("_id")),
+                        cursor.getInt(cursor.getColumnIndex("pos_id")),
                         cursor.getInt(cursor.getColumnIndex("sp_id")),
                         format.parse(cursor.getString(cursor.getColumnIndex("buy_date"))),
                         format.parse(cursor.getString(cursor.getColumnIndex("start_date"))),

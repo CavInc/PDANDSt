@@ -69,6 +69,8 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
     private Date mDate;
     private TrainingModel mModel;
 
+    private int group_id = -1;
+
     private ArrayList<LinkSpABTrModel> mSpAB = new ArrayList<>();
 
 
@@ -189,7 +191,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
 
     private void updateUI(){
         // все спортсмены у указанием количества абонементов
-        ArrayList<SportsmanTrainingModel> model = mDataManager.getSpTraining();
+        ArrayList<SportsmanTrainingModel> model = mDataManager.getSpTraining(group_id);
         if (mAdapter == null){
             mAdapter = new TrainingAdapter(this,R.layout.training_item,model);
             mListView.setAdapter(mAdapter);

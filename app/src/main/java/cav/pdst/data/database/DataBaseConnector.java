@@ -230,9 +230,9 @@ public class DataBaseConnector {
 
     public Cursor getAbonement(int sportsman_id){
         return database.query(DBHelper.ABONEMENT_TABLE,
-                new String[]{"sp_id","pos_id","buy_date","start_date","end_date",
+                new String[]{"_id","sp_id","pos_id","buy_date","start_date","end_date",
                         "type_abonement","pay","count_training","comment","used_training"},
-                "sp_id="+sportsman_id,null,null,null,"_id");
+                "sp_id="+sportsman_id,null,null,null,"pos_id");
     }
 
     public void delAbonement(int id,int sprotsman_id){
@@ -245,6 +245,9 @@ public class DataBaseConnector {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         open();
         ContentValues values = new ContentValues();
+        if (model.getAbonementId()!= -1){
+            values.put("_id",model.getAbonementId());
+        }
         values.put("sp_id",model.getSpId());
         values.put("pos_id",model.getId());
         values.put("buy_date",format.format(model.getCreateDate()));

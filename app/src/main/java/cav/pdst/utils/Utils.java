@@ -13,7 +13,7 @@ public class Utils {
                                             int countTr, float pay, String comment) {
         SimpleDateFormat format = new SimpleDateFormat("E dd.MM.yyyy");
         try {
-            return new AbonementModel(id,sp_id,format.parse(createDate),format.parse(startDate),
+            return new AbonementModel(-1,id,sp_id,format.parse(createDate),format.parse(startDate),
                     format.parse(endDate),countTr,pay,0,comment,0);
         } catch (ParseException e) {
             e.printStackTrace();
