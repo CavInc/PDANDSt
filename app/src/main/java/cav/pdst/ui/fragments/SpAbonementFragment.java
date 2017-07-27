@@ -157,6 +157,8 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
                     if (sp_id != -1){
                         mDataManager.addUpdateAbonement(model);
                         last_ab = last_ab + 1;
+                    }else {
+                        mAbonementAdapter.add(model);
                     }
                     break;
                 case ConstantManager.EDIT_ABONEMENT:

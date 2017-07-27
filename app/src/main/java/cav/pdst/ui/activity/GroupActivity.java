@@ -133,6 +133,7 @@ public class GroupActivity extends AppCompatActivity implements NavigationView.O
         mGroupModel = (GroupModel) adapterView.getItemAtPosition(position);
         mItemId = mGroupModel.getId();
         EditDeleteDialog dialog = new EditDeleteDialog();
+        dialog.setEditDeleteDialogListener(this);
         dialog.show(getSupportFragmentManager(),ConstantManager.DIALOG_EDIT_DEL);
         return true;
     }

@@ -40,7 +40,7 @@ import cav.pdst.ui.fragments.EditDeleteDialog;
 import cav.pdst.utils.ConstantManager;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
-        EditDeleteDialog.EditDeleteDialogListener{
+        EditDeleteDialog.EditDeleteDialogListener {
 
     private static final String TAG = "MAIN";
     private Toolbar mToolbar;
@@ -190,6 +190,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             selModel = (TrainingModel) adapterView.getItemAtPosition(position);
             selectID = selModel.getId();
             EditDeleteDialog dialog = new EditDeleteDialog();
+            dialog.setEditDeleteDialogListener(MainActivity.this);
             dialog.show(getSupportFragmentManager(),ConstantManager.DIALOG_EDIT_DEL);
             return true;
         }

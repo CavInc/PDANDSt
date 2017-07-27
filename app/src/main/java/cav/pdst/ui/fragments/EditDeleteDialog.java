@@ -32,16 +32,6 @@ public class EditDeleteDialog extends DialogFragment implements View.OnClickList
         return f;
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        Log.d(TAG,"ATTACH ACTIVITY");
-        try {
-            mListener = (EditDeleteDialogListener) activity;
-        }catch (ClassCastException e){
-            throw new ClassCastException("must implement NoticeDialogListener");
-        }
-    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {

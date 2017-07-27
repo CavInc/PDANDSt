@@ -108,6 +108,7 @@ public class SportsmanActivity extends AppCompatActivity implements NavigationVi
         selModel = (SportsmanModel) adapterView.getItemAtPosition(position);
         selId = selModel.getId();
         EditDeleteDialog dialog = new EditDeleteDialog();
+        dialog.setEditDeleteDialogListener(this);
         dialog.show(getSupportFragmentManager(),ConstantManager.DIALOG_EDIT_DEL);
         return true;
     }

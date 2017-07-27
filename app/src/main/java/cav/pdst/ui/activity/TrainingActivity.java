@@ -45,7 +45,7 @@ import cav.pdst.utils.ConstantManager;
 import cav.pdst.utils.Utils;
 
 public class TrainingActivity extends AppCompatActivity implements View.OnClickListener,DatePickerFragment.OnDateGet,
-        InfoDialogFragment.InfoCallback {
+        InfoDialogFragment.InfoCallback, AdapterView.OnItemClickListener {
 
     private static final String TAG = "TRA";
     private ListView mListView;
@@ -116,6 +116,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         spinnerData.add(0,"Все");
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,spinnerData);
         mSpinner.setAdapter(spinnerAdapter);
+        mSpinner.setOnItemClickListener(this);
 
 
         setDateButton(mDate);
@@ -314,6 +315,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+
     //TODO переделать к хуям на заведение абонемента в самой активности.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -336,6 +338,10 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
     }
 
 
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+    }
 }
 
 
