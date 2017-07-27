@@ -108,11 +108,20 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
 
     @Override
     public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+        final AbonementModel model = (AbonementModel) adapterView.getItemAtPosition(position);
         EditDeleteDialog dialog = EditDeleteDialog.newInstance();
         dialog.setEditDeleteDialogListener(new EditDeleteDialog.EditDeleteDialogListener() {
             @Override
             public void onDialogItemClick(int selectItem) {
+                if (selectItem==R.id.dialog_del_item) {
 
+                }
+                if (selectItem == R.id.dialog_edit_item){
+                    Intent intent = new Intent(SpAbonementFragment.this.getContext(), AbonementActivity.class);
+                    intent.putExtra(ConstantManager.MODE_ABONEMENT,ConstantManager.EDIT_ABONEMENT);
+                    intent.putExtra(ConstantManager.AB_DETAIL_DATA,model);
+                    startActivityForResult(intent,ConstantManager.EDIT_ABONEMENT);
+                }
             }
         });
 
@@ -144,6 +153,7 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
             int countTr;
             float pay;
             String comment;
+
             switch (requestCode){
                 case ConstantManager.NEW_ABONEMENT:
                     createDate = data.getStringExtra(ConstantManager.AB_CREATEDATE);
@@ -162,6 +172,9 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
                     }
                     break;
                 case ConstantManager.EDIT_ABONEMENT:
+                    AbonementModel model2= data.getParcelableExtra(ConstantManager.AB_DETAIL_DATA);
+                    mDataManager.addUpdateAbonement(model2);
+                    mAbonementAdapter.add(model2);
                     break;
             }
         }

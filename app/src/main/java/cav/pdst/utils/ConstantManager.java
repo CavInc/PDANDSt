@@ -25,6 +25,8 @@ public interface ConstantManager {
     int VIEW_SPORTSMAN = 2;
 
     String SP_DETAIL_DATA = "SP_DETAIL_DATA";
+    String AB_DETAIL_DATA = "AB_DETAIL_DATA";
+
     String MODE_GROUP = "MODE_GROUP";
     String TRAINING_HOUR = "TRAINING_HOUR";
 
@@ -39,6 +41,7 @@ public interface ConstantManager {
     String MODE_ABONEMENT = "MODE_ABONEMENT";
     int NEW_ABONEMENT = 0;
     int EDIT_ABONEMENT = 1;
+
     String AB_CREATEDATE = "AB_CREATEDATE";
     String AB_STARTDATE = "AB_STARTDATE";
     String AB_ENDDATE = "AB_END_DATE";

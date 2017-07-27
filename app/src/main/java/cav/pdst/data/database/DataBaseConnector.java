@@ -253,6 +253,7 @@ public class DataBaseConnector {
         values.put("pay",model.getPay());
         values.put("count_training",model.getCountTraining());
         values.put("comment",model.getComment());
+        values.put("used_training",model.getUsedTraining());
         database.insertWithOnConflict(DBHelper.ABONEMENT_TABLE,null,values,SQLiteDatabase.CONFLICT_REPLACE);
         close();
     }

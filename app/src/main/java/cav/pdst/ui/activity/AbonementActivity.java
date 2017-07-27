@@ -15,8 +15,10 @@ import java.util.Date;
 
 import cav.pdst.R;
 import cav.pdst.data.managers.DataManager;
+import cav.pdst.data.models.AbonementModel;
 import cav.pdst.ui.fragments.DatePickerFragment;
 import cav.pdst.utils.ConstantManager;
+import cav.pdst.utils.Utils;
 
 public class AbonementActivity extends AppCompatActivity implements View.OnClickListener,DatePickerFragment.OnDateGet {
 
@@ -31,6 +33,7 @@ public class AbonementActivity extends AppCompatActivity implements View.OnClick
 
     private int dMode;
     private DataManager mDataManager;
+    private AbonementModel mAbonementModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +58,13 @@ public class AbonementActivity extends AppCompatActivity implements View.OnClick
             Date date = new Date();
             mCreateDate.setText(format.format(date));
         } else {
-
-
+            mAbonementModel = getIntent().getParcelableExtra(ConstantManager.AB_DETAIL_DATA);
+            mCreateDate.setText(format.format(mAbonementModel.getCreateDate()));
+            mStartDate.setText(format.format(mAbonementModel.getStartDate()));
+            mEndDate.setText(format.format(mAbonementModel.getEndDate()));
+            mCountTraining.setText(String.valueOf(mAbonementModel.getCountTraining()));
+            mPay.setText(String.valueOf(mAbonementModel.getPay()));
+            mComent.setText(mAbonementModel.getComment());
         }
 
 
@@ -88,12 +96,26 @@ public class AbonementActivity extends AppCompatActivity implements View.OnClick
     public void saveResult(){
 
         Intent answerIntent = new Intent();
-        answerIntent.putExtra(ConstantManager.AB_CREATEDATE,mCreateDate.getText().toString());
-        answerIntent.putExtra(ConstantManager.AB_STARTDATE,mStartDate.getText().toString());
-        answerIntent.putExtra(ConstantManager.AB_ENDDATE,mEndDate.getText().toString());
-        answerIntent.putExtra(ConstantManager.AB_COUNT_TR,Integer.parseInt(mCountTraining.getText().toString()));
-        answerIntent.putExtra(ConstantManager.AB_COMMENT,mComent.getText().toString());
-        answerIntent.putExtra(ConstantManager.AB_PAY,Float.parseFloat(mPay.getText().toString()));
+        if (mode == ConstantManager.NEW_ABONEMENT) {
+            answerIntent.putExtra(ConstantManager.AB_CREATEDATE, mCreateDate.getText().toString());
+            answerIntent.putExtra(ConstantManager.AB_STARTDATE, mStartDate.getText().toString());
+            answerIntent.putExtra(ConstantManager.AB_ENDDATE, mEndDate.getText().toString());
+            answerIntent.putExtra(ConstantManager.AB_COUNT_TR, Integer.parseInt(mCountTraining.getText().toString()));
+            answerIntent.putExtra(ConstantManager.AB_COMMENT, mComent.getText().toString());
+            answerIntent.putExtra(ConstantManager.AB_PAY, Float.parseFloat(mPay.getText().toString()));
+        }
+        if (mode == ConstantManager.EDIT_ABONEMENT) {
+            mAbonementModel.setStartDate(Utils.getSteToDate(mStartDate.getText().toString(),"E dd.MM.yyyy"));
+            mAbonementModel.setEndDate(Utils.getSteToDate(mEndDate.getText().toString(),"E dd.MM.yyyy"));
+            mAbonementModel.setCountTraining(Integer.parseInt(mCountTraining.getText().toString()));
+            mAbonementModel.setComment(mComent.getText().toString());
+            mAbonementModel.setPay(Float.parseFloat(mPay.getText().toString()));
+            if (mAbonementModel.getUsedTraining()>mAbonementModel.getCountTraining()){
+                //TODO Ругаться !!!!
+                return;
+            }
+            answerIntent.putExtra(ConstantManager.AB_DETAIL_DATA, mAbonementModel);
+        }
         setResult(RESULT_OK,answerIntent);
 
        // mDataManager.getDB().getLastIndex();

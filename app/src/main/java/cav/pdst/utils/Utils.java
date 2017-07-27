@@ -3,6 +3,7 @@ package cav.pdst.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import cav.pdst.data.models.AbonementModel;
 
@@ -14,6 +15,16 @@ public class Utils {
         try {
             return new AbonementModel(id,sp_id,format.parse(createDate),format.parse(startDate),
                     format.parse(endDate),countTr,pay,0,comment,0);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public static Date getSteToDate(String str_date,String mask){
+        SimpleDateFormat format = new SimpleDateFormat(mask);
+
+        try {
+            return format.parse(str_date);
         } catch (ParseException e) {
             e.printStackTrace();
         }

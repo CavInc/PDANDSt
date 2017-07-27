@@ -45,7 +45,7 @@ import cav.pdst.utils.ConstantManager;
 import cav.pdst.utils.Utils;
 
 public class TrainingActivity extends AppCompatActivity implements View.OnClickListener,DatePickerFragment.OnDateGet,
-        InfoDialogFragment.InfoCallback, AdapterView.OnItemClickListener {
+        InfoDialogFragment.InfoCallback {
 
     private static final String TAG = "TRA";
     private ListView mListView;
@@ -116,7 +116,17 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         spinnerData.add(0,"Все");
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,spinnerData);
         mSpinner.setAdapter(spinnerAdapter);
-        mSpinner.setOnItemClickListener(this);
+        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                Log.d(TAG," SELECT POSITION :"+adapterView.getItemAtPosition(position));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
 
         setDateButton(mDate);
@@ -337,11 +347,6 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-    }
 }
 
 
