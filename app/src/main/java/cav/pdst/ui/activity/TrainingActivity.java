@@ -36,6 +36,7 @@ import cav.pdst.data.managers.DataManager;
 import cav.pdst.data.models.AbonementModel;
 import cav.pdst.data.models.LinkSpABTrModel;
 import cav.pdst.data.models.SportsmanTrainingModel;
+import cav.pdst.data.models.TrainingGroupModel;
 import cav.pdst.data.models.TrainingModel;
 import cav.pdst.ui.adapters.TrainingAdapter;
 import cav.pdst.ui.fragments.DatePickerFragment;
@@ -114,25 +115,14 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
 
         mListView.setOnItemClickListener(mItemClickListener);
 
-        ArrayList<String> spinnerData = mDataManager.getGroupString();
-        spinnerData.add(0,"Все");
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,spinnerData);
+        ArrayList<TrainingGroupModel> spinnerData = mDataManager.getGroupString();
+        spinnerData.add(0,new TrainingGroupModel(-1,"Все"));
+        ArrayAdapter<TrainingGroupModel> spinnerAdapter = new ArrayAdapter<TrainingGroupModel>(this,android.R.layout.simple_spinner_item,spinnerData);
         mSpinner.setAdapter(spinnerAdapter);
-        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-                Log.d(TAG," SELECT POSITION :"+adapterView.getItemAtPosition(position));
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
 
         setDateButton(mDate);
         setupToolBar();
+        //setSpinerListener();
     }
 
     private void setupToolBar() {
@@ -186,8 +176,11 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onResume() {
         super.onResume();
-        updateUI();
+        //updateUI();
+        setSpinerListener();
+
     }
+
 
     private void updateUI(){
         // все спортсмены у указанием количества абонементов
@@ -200,6 +193,24 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
             mAdapter.notifyDataSetChanged();
         }
 
+    }
+
+    private void setSpinerListener(){
+        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                Log.d(TAG," SELECT POSITION :"+adapterView.getItemAtPosition(position));
+                TrainingGroupModel model = (TrainingGroupModel) adapterView.getItemAtPosition(position);
+                Log.d(TAG," ID "+model.getId()+" "+model.getName());
+                group_id = model.getId();
+                updateUI();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
     private int selSportspam;

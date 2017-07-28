@@ -24,6 +24,7 @@ import cav.pdst.data.models.ItemSportsmanModel;
 import cav.pdst.data.models.LinkSpABTrModel;
 import cav.pdst.data.models.SportsmanModel;
 import cav.pdst.data.models.SportsmanTrainingModel;
+import cav.pdst.data.models.TrainingGroupModel;
 import cav.pdst.data.models.TrainingModel;
 import cav.pdst.utils.ConstantManager;
 import cav.pdst.utils.PdStApplication;
@@ -79,12 +80,13 @@ public class DataManager {
         return  rec;
     }
 
-    public ArrayList<String> getGroupString(){
-        ArrayList<String> rec =new ArrayList<>();
+    public ArrayList<TrainingGroupModel> getGroupString(){
+        ArrayList<TrainingGroupModel> rec =new ArrayList<>();
         mDB.open();
         Cursor cursor = mDB.groupAll();
         while (cursor.moveToNext()){
-            rec.add(cursor.getString(cursor.getColumnIndex("group_name")));
+            rec.add(new TrainingGroupModel(cursor.getInt(cursor.getColumnIndex("_id")),
+                    cursor.getString(cursor.getColumnIndex("group_name"))));
         }
         mDB.close();
         return rec;
@@ -245,7 +247,7 @@ public class DataManager {
     public ArrayList<SportsmanTrainingModel> getSpTraining(int group_id){
         ArrayList<SportsmanTrainingModel> rec = new ArrayList<>();
         mDB.open();
-        Cursor cursor = mDB.getSPTraining();
+        Cursor cursor = mDB.getSPTraining(group_id);
         while (cursor.moveToNext()){
             rec.add(new SportsmanTrainingModel(cursor.getInt(cursor.getColumnIndex("_id")),
                     cursor.getString(cursor.getColumnIndex("sp_name")),
