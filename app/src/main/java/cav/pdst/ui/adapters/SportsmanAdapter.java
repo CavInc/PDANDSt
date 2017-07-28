@@ -2,6 +2,7 @@ package cav.pdst.ui.adapters;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,10 +47,10 @@ public class SportsmanAdapter extends ArrayAdapter<SportsmanModel>{
         holder.mPhone.setText(record.getTel());
         if (record.getTraninigWrk()>0) {
             holder.mAbCount.setText("доступно:"+record.getTraninigWrk());
-            holder.mAbCount.setTextColor(Color.GREEN);
+            holder.mAbCount.setTextColor(ContextCompat.getColor(getContext(),R.color.app_green));
         }else {
             holder.mAbCount.setText("Нет действующих абонеметнов");
-            holder.mAbCount.setTextColor(Color.RED);
+            holder.mAbCount.setTextColor(ContextCompat.getColor(getContext(),R.color.app_red));
         }
         holder.mTraining.setText("Тренировки: "+record.getTrainingAll()+" / ");
         return row;
