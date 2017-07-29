@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -57,6 +59,7 @@ public class ItemGroupActivity extends AppCompatActivity  {
 
         adapter = new ItemGroupAdapter(this,R.layout.item_group_item,models);
         mListView.setAdapter(adapter);
+        mListView.setOnItemClickListener(mItemClickListener);
 
         setupToolBar();
     }
@@ -97,6 +100,15 @@ public class ItemGroupActivity extends AppCompatActivity  {
             mNameGroup.setFocusable(false);
         }
     }
+
+    AdapterView.OnItemClickListener mItemClickListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+            ItemSportsmanModel model = (ItemSportsmanModel) adapterView.getItemAtPosition(position);
+           ((ItemSportsmanModel) adapterView.getItemAtPosition(position)).setCheckItem(!model.isCheckItem());
+            adapter.notifyDataSetChanged();
+        }
+    };
 
     private ArrayList<Integer> getCheckElement(){
         ArrayList<Integer> rec = new ArrayList<>();

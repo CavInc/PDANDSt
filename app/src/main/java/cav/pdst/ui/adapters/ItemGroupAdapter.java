@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.CheckedTextView;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
@@ -34,7 +35,8 @@ public class ItemGroupAdapter extends ArrayAdapter<ItemSportsmanModel> {
         if (row == null) {
             row = mInflater.inflate(resLayout, parent, false);
             holder = new ViewHolder();
-            holder.mCheckBox = (CheckBox) row.findViewById(R.id.item_group_item_cb);
+            holder.mCheckBox = (CheckedTextView) row.findViewById(R.id.item_group_item_cb);
+            /*
             holder.mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -42,13 +44,14 @@ public class ItemGroupAdapter extends ArrayAdapter<ItemSportsmanModel> {
                     getItem(position).setCheckItem(b);
                 }
             });
+            */
             holder.mName = (TextView) row.findViewById(R.id.item_group_item_name);
             holder.mGroup = (TextView) row.findViewById(R.id.item_group_item_group);
             row.setTag(holder);
-            holder.mCheckBox.setTag(getItem(position)); // ? https://habrahabr.ru/post/133575/
+           // holder.mCheckBox.setTag(getItem(position)); // ? https://habrahabr.ru/post/133575/
         }else {
             holder = (ViewHolder) row.getTag();
-            holder.mCheckBox.setTag(getItem(position));
+            //holder.mCheckBox.setTag(getItem(position));
         }
         ItemSportsmanModel record = getItem(position);
         holder.mName.setText(record.getName());
@@ -63,7 +66,7 @@ public class ItemGroupAdapter extends ArrayAdapter<ItemSportsmanModel> {
 
 
     private class ViewHolder{
-        public CheckBox mCheckBox;
+        public CheckedTextView mCheckBox;
         public TextView mName;
         public TextView mGroup;
     }
