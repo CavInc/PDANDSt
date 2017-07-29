@@ -113,7 +113,12 @@ public class DataManager {
             }
             if (map_rec.containsKey(cursor.getInt(cursor.getColumnIndex("_id")))){
                 map_rec.get(cursor.getInt(cursor.getColumnIndex("_id")))
-                        .setGroup(map_rec.get(cursor.getInt(cursor.getColumnIndex("_id"))).getGroup() +"," +cursor.getString(cursor.getColumnIndex("group_name")));
+                        .setGroup(map_rec.get(cursor.getInt(cursor.getColumnIndex("_id"))).getGroup()
+                                + "," + cursor.getString(cursor.getColumnIndex("group_name")));
+
+                if (flg) {
+                    map_rec.get(cursor.getInt(cursor.getColumnIndex("_id"))).setCheckItem(true);
+                }
             }else{
                 md = new ItemSportsmanModel(cursor.getInt(cursor.getColumnIndex("_id")), flg,
                         cursor.getString(cursor.getColumnIndex("sp_name")), cursor.getString(cursor.getColumnIndex("group_name")));
