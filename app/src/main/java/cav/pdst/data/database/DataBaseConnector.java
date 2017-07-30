@@ -173,7 +173,7 @@ public class DataBaseConnector {
     }
 
     public Cursor getTraining(String selectDate){
-        return database.query(DBHelper.TRAINING_TABLE,new String[]{"_id","training_name","count_item","date","time"},"date='"+selectDate+"'",null,null,null,"training_name");
+        return database.query(DBHelper.TRAINING_TABLE,new String[]{"_id","training_name","count_item","date","time"},"date='"+selectDate+"'",null,null,null,"time");
     }
 
     public Cursor getTraining(int sp_id){

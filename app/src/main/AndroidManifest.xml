@@ -55,7 +55,9 @@
         </activity>
         <activity android:name=".ui.activity.AbonementActivity">
         </activity>
-        <activity android:name=".ui.activity.ReportActivity">
+        <activity android:name=".ui.activity.ReportActivity"
+                  android:label="Статистика"
+            android:launchMode="singleTask">
         </activity>
     </application>
 

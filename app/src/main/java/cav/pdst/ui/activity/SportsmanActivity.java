@@ -135,6 +135,8 @@ public class SportsmanActivity extends AppCompatActivity implements NavigationVi
                 startActivity(intent);
                 break;
             case R.id.drawer_statistic:
+                intent = new Intent(this,ReportActivity.class);
+                startActivity(intent);
                 break;
 
         }

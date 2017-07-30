@@ -1,13 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<android.support.v4.widget.DrawerLayout
+    android:id="@+id/drawer_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="cav.pdst.ui.activity.ReportActivity">
 
-</RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+        <Button
+            android:id="@+id/r_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="16dp"/>
+        <TextView
+            android:id="@+id/r_period"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/r_month"
+            android:gravity="center"
+            android:text="Период"/>
+        <LinearLayout
+            android:id="@+id/r_period_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/r_period"
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/r_start_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="start date"
+                android:layout_weight="1"/>
+            <Button
+                android:id="@+id/r_end_date"
+                android:text="end_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+        </LinearLayout>
+        <GridLayout
+            android:id="@+id/r_grid_l"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/r_period_button"
+            android:layout_gravity="center"
+            android:orientation="horizontal"
+            android:columnCount="2">
+            <TextView android:text="Доход"
+                      android:textSize="18sp"
+                android:layout_gravity="left"/>
+            <Button
+                android:id="@+id/r_doxod_button"
+                android:layout_gravity="right"/>
+            <TextView android:text="Расход"
+                android:textSize="18sp"/>
+            <Button
+                android:id="@+id/r_rashod_button"
+                android:layout_gravity="right"/>
+            <TextView android:text="Итого:"
+                      android:textSize="18sp"
+                      android:textColor="@android:color/black"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/r_itogo"
+                android:text="1000"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:layout_gravity="right"/>
+
+        </GridLayout>
+
+    </RelativeLayout>
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/navigation_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        app:headerLayout="@layout/nav_head_main_drawer"
+        app:menu="@menu/main_activity_drawer">
+
+    </android.support.design.widget.NavigationView>
+
+</android.support.v4.widget.DrawerLayout>

@@ -111,6 +111,8 @@ public class GroupActivity extends AppCompatActivity implements NavigationView.O
                 startActivity(intent);
                 break;
             case R.id.drawer_statistic:
+                intent = new Intent(this,ReportActivity.class);
+                startActivity(intent);
                 break;
 
         }
@@ -184,7 +186,6 @@ public class GroupActivity extends AppCompatActivity implements NavigationView.O
 
     @Override
     public void onDialogItemClick(int selectItem) {
-        Log.d(TAG,"SELECT :"+String.valueOf(selectItem));
         if (selectItem==R.id.dialog_del_item) {
             // удаляем
             mDataManager.delGrop(mItemId);
