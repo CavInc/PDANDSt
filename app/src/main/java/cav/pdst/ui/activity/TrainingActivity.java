@@ -249,6 +249,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
                             //mSpAB.add(mLinkSpABTrModel);
                             mAdapter.getItem(position).setLinkAbonement(ab);
                         }
+
                         mAdapter.getItem(position).setCheck(true);
                         mAdapter.notifyDataSetChanged();
                     }
