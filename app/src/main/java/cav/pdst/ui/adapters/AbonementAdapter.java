@@ -48,12 +48,14 @@ public class AbonementAdapter extends ArrayAdapter<AbonementModel> {
             holder.mTraining = (TextView) row.findViewById(R.id.ab_training);
             holder.mPay = (TextView) row.findViewById(R.id.ab_pay_summ);
             holder.mPrime = (TextView) row.findViewById(R.id.ab_prime);
+            holder.mNum = (TextView) row.findViewById(R.id.ab_num_num);
             row.setTag(holder);
         }else{
             holder = (ViewHolder)row.getTag();
         }
         AbonementModel record = getItem(position);
 
+        holder.mNum.setText(String.valueOf(record.getId()));
         holder.mCreateDate.setText(mContext.getString(R.string.create_date)+":"+mFormat.format(record.getCreateDate()));
         holder.mStartDate.setText(mFormat.format(record.getStartDate()));
         holder.mEndDate.setText(mFormat.format(record.getEndDate()));
@@ -83,6 +85,7 @@ public class AbonementAdapter extends ArrayAdapter<AbonementModel> {
         public TextView mTraining;
         public TextView mPay;
         public TextView mPrime;
+        public TextView mNum;
 
     }
 }
