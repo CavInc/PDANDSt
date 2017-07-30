@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 import cav.pdst.data.models.AbonementModel;
 import cav.pdst.data.models.GroupModel;
-import cav.pdst.data.models.LinkSpABTrModel;
+import cav.pdst.data.models.SpRefAbModeModel;
 import cav.pdst.data.models.SportsmanModel;
 import cav.pdst.data.models.TrainingModel;
 
@@ -85,7 +85,7 @@ public class DataBaseConnector {
     }
 
     // training
-    public void addTraining(TrainingModel data, Integer[] selectItem, ArrayList<LinkSpABTrModel> spAB){
+    public void addTraining(TrainingModel data, ArrayList<SpRefAbModeModel> selectItem){
         open();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         ContentValues value = new ContentValues();
@@ -95,27 +95,29 @@ public class DataBaseConnector {
         value.put("time",data.getTime());
         //value.put("",data.getType());
         int recid = (int) database.insert(DBHelper.TRAINING_TABLE,null,value);
-        for (int i=0;i<selectItem.length;i++) {
+        for (int i=0;i<selectItem.size();i++) {
+            SpRefAbModeModel mx = selectItem.get(i);
             value.clear();
             value.put("type_ref", 1);
-            value.put("id1", selectItem[i]);
+            value.put("id1", mx.getSpId());
             value.put("id2",recid);
             database.insert(DBHelper.REF_TABLE,null,value);
-        }
-        for (int i=0;i<spAB.size();i++){
+
             value.clear();
             value.put("type_ref",2);
             value.put("id1",recid);
-            value.put("id2",spAB.get(i).getAbonement());
+            value.put("id2",mx.getAbonement());
+            value.put("type_link",mx.getMode());
             database.insertWithOnConflict(DBHelper.REF_TABLE,null,value,SQLiteDatabase.CONFLICT_REPLACE);
-            String sql="update "+DBHelper.ABONEMENT_TABLE+" set used_training=used_training+1 "+
-                    "where _id="+spAB.get(i).getAbonement();
+
+            String sql="update " + DBHelper.ABONEMENT_TABLE+" set used_training=used_training+1 "+
+                    "where _id=" + mx.getAbonement();
             database.execSQL(sql);
         }
        close();
     }
 
-    public void updateTraining(TrainingModel data,Integer[] selectItem){
+    public void updateTraining(TrainingModel data,ArrayList<SpRefAbModeModel> selectItem){
         open();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         ContentValues value = new ContentValues();
@@ -125,10 +127,11 @@ public class DataBaseConnector {
         value.put("time",data.getTime());
         database.update(DBHelper.TRAINING_TABLE,value,"_id="+data.getId(),null);
         database.delete(DBHelper.REF_TABLE,"type_ref=1 and id2="+data.getId(),null);
-        for (int i=0;i<selectItem.length;i++) {
+        for (int i=0;i<selectItem.size();i++) {
+            SpRefAbModeModel mx = selectItem.get(i);
             value.clear();
             value.put("type_ref", 1);
-            value.put("id1", selectItem[i]);
+            value.put("id1", mx.getSpId());
             value.put("id2",data.getId());
             database.insert(DBHelper.REF_TABLE,null,value);
         }

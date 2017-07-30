@@ -2,11 +2,8 @@ package cav.pdst.ui.activity;
 
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.app.TimePickerDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -14,7 +11,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.util.SparseBooleanArray;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -26,7 +22,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,7 +29,7 @@ import java.util.Date;
 import cav.pdst.R;
 import cav.pdst.data.managers.DataManager;
 import cav.pdst.data.models.AbonementModel;
-import cav.pdst.data.models.LinkSpABTrModel;
+import cav.pdst.data.models.SpRefAbModeModel;
 import cav.pdst.data.models.SportsmanTrainingModel;
 import cav.pdst.data.models.TrainingGroupModel;
 import cav.pdst.data.models.TrainingModel;
@@ -72,7 +67,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
 
     private int group_id = -1;
 
-    private ArrayList<LinkSpABTrModel> mSpAB = new ArrayList<>();
+    //private ArrayList<LinkSpABTrModel> mSpAB = new ArrayList<>();
 
 
     @Override
@@ -215,7 +210,8 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
 
     private int selSportspam;
 
-    private LinkSpABTrModel mLinkSpABTrModel;
+    //private LinkSpABTrModel mLinkSpABTrModel;
+    private int ab;
 
     AdapterView.OnItemClickListener mItemClickListener = new AdapterView.OnItemClickListener(){
 
@@ -234,13 +230,13 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
                 //TODO действия по привязке тренировки к абонементу
                 // по id спростмена получаем его абонементы у которых дата действия в диапазоне тренировки
                 // из всего списка если несколько то возвращаестя тот у кого младший номер и есть не распределеннны тренировки
-               int ab = getAbonement(mx.getId(),mDate);
+                ab = getAbonement(mx.getId(),mDate);
                 if (ab==-1) {
                     // показать что куй ?
 
                     return;
                 }
-                mLinkSpABTrModel = new LinkSpABTrModel(mx.getId(),ab);
+                //mLinkSpABTrModel = new LinkSpABTrModel(mx.getId(),ab);
 
                 TrainigOperationFragment dialog = new TrainigOperationFragment();
                 dialog.setTrainingOperationListener(new TrainigOperationFragment.TrainingOperationListener() {
@@ -248,8 +244,10 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
                     public void onTrainingClickListener(int witch) {
                         Log.d(TAG," ITEM "+witch);
                         mAdapter.getItem(position).setMode(witch);
+
                         if ((witch == ConstantManager.SPORTSMAN_MODE_TRAINING) || (witch == ConstantManager.SPORTSMAN_MODE_PASS)) {
-                            mSpAB.add(mLinkSpABTrModel);
+                            //mSpAB.add(mLinkSpABTrModel);
+                            mAdapter.getItem(position).setLinkAbonement(ab);
                         }
                         mAdapter.getItem(position).setCheck(true);
                         mAdapter.notifyDataSetChanged();
@@ -259,10 +257,13 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
             } else {
                 //снятие абонемента
                 Log.d(TAG,"СНЯТИЕ ");
+                /*
                 if (mLinkSpABTrModel != null) {
                     mSpAB.remove(mLinkSpABTrModel);
                     mLinkSpABTrModel = null;
                 }
+                */
+                mAdapter.getItem(position).setLinkAbonement(-1);
                 ((SportsmanTrainingModel) adapterView.getItemAtPosition(position)).setCheck(! mx.isCheck());
                 ((SportsmanTrainingModel) adapterView.getItemAtPosition(position)).setMode(-1);
                 mAdapter.notifyDataSetChanged();
@@ -287,23 +288,25 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
     }
 
 
-    private Integer[] getCheckElement(){
-        ArrayList<Integer> rec = new ArrayList<>();
+    private ArrayList<SpRefAbModeModel> getCheckElement(){
+        ArrayList<SpRefAbModeModel> rec = new ArrayList<>();
         for (int i=0;i<mAdapter.getCount();i++){
             if (mAdapter.getItem(i).isCheck()) {
-                rec.add(mAdapter.getItem(i).getId());
+                rec.add(new SpRefAbModeModel(mAdapter.getItem(i).getId(),
+                        mAdapter.getItem(i).getLinkAbonement(),
+                        mAdapter.getItem(i).getMode()));
             }
         }
-        return rec.toArray(new Integer[rec.size()]);
+        return rec;
     }
 
     private void saveResult(){
-        Integer[] fm = getCheckElement();
+        ArrayList<SpRefAbModeModel> fm = getCheckElement();
         int type = ConstantManager.ONE;
-        if (fm.length!=0) type = ConstantManager.GROUP;
-        TrainingModel model = new TrainingModel(mTraining.getText().toString(), type, fm.length, mDate, mTime);
+        if (fm.size()>0) type = ConstantManager.GROUP;
+        TrainingModel model = new TrainingModel(mTraining.getText().toString(), type, fm.size(), mDate, mTime);
         if (mode == ConstantManager.NEW_TRAINING) {
-            mDataManager.addTraining(model,fm,mSpAB);
+            mDataManager.addTraining(model,fm);
         } else {
             model.setId(mModel.getId());
             mDataManager.updateTraining(model,fm);

@@ -6,6 +6,7 @@ public class SportsmanTrainingModel {
     private int mCount;
     private boolean mCheck;
     private int mMode = -1;
+    private int mLinkAbonement = -1;
 
     public SportsmanTrainingModel(int id, String name, int count) {
         mId = id;
@@ -39,5 +40,13 @@ public class SportsmanTrainingModel {
 
     public void setMode(int mode) {
         mMode = mode;
+    }
+
+    public int getLinkAbonement() {
+        return mLinkAbonement;
+    }
+
+    public void setLinkAbonement(int linkAbonement) {
+        mLinkAbonement = linkAbonement;
     }
 }
