@@ -287,9 +287,6 @@ public class DataBaseConnector {
     }
 
     // misc
-    public void linkTrainingAbomenet(int sp_id,int ab_id){
-
-    }
 
     public Cursor getAbonementInDate(int sp_id,String date){
         String sql="select _id from ABONEMENT \n" +
@@ -297,6 +294,19 @@ public class DataBaseConnector {
                 " order by pos_id";
 
         //System.out.println(sql);
+        return database.rawQuery(sql,null);
+    }
+
+    public Cursor getDohod(String sdate, String edate){
+        /*
+        String sql="select sp.sp_name,ab.pay,(ab.start_date||' - '||ab.end_date) as period from ABONEMENT ab\n" +
+                "  join SPORTSMAN sp on ab.sp_id=sp._id\n" +
+                "where ab.start_date>='"+sdate+"' and ab.end_date<='"+edate+"'\n" +
+                "order by sp.sp_name,ab.start_date";
+        */
+        String sql="select sum(ab.pay) from ABONEMENT ab\n" +
+                "  join SPORTSMAN sp on ab.sp_id=sp._id\n" +
+                "where ab.start_date>='"+sdate+"' and ab.end_date<='"+edate+"'";
         return database.rawQuery(sql,null);
     }
 

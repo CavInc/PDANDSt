@@ -301,7 +301,14 @@ public class DataManager {
 
     // возвращаем доход и расход в диапазоне дат
     public ArrayList<Float> getReportAll(Date start, Date end){
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         ArrayList<Float> rec = new ArrayList<>();
+        mDB.open();
+        Cursor cursor =mDB.getDohod(format.format(start),format.format(end));
+        while (cursor.moveToNext()){
+            rec.add(0,cursor.getFloat(0));
+        }
+        mDB.close();
         return rec;
     }
 
