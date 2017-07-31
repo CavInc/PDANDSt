@@ -299,4 +299,12 @@ public class DataManager {
         mDB.addUpdateAbonement(model);
     }
 
+    // возвращаем доход и расход в диапазоне дат
+    public ArrayList<Float> getReportAll(Date start, Date end){
+        ArrayList<Float> rec = new ArrayList<>();
+        return rec;
+    }
+
+
+
 }

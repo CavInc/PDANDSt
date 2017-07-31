@@ -14,7 +14,7 @@
         android:padding="16dp">
         <Button
             android:id="@+id/r_month"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="16dp"/>
@@ -53,13 +53,13 @@
             android:layout_gravity="center"
             android:orientation="horizontal"
             android:columnCount="2">
-            <TextView android:text="Доход"
+            <TextView android:text="Доход:"
                       android:textSize="18sp"
                 android:layout_gravity="left"/>
             <Button
                 android:id="@+id/r_doxod_button"
                 android:layout_gravity="right"/>
-            <TextView android:text="Расход"
+            <TextView android:text="Расход:"
                 android:textSize="18sp"/>
             <Button
                 android:id="@+id/r_rashod_button"

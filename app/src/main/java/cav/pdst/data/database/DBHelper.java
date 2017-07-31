@@ -15,6 +15,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String REF_TABLE = "REF_TABLE";
     public static final String SPORTSMAN_TABLE = "SPORTSMAN";
     public static final String ABONEMENT_TABLE = "ABONEMENT";
+    public static final String RATE_TYPE_TABLE = "RATE_TYPE";
+    public static final String RATE_TABLE = "RATE";
 
     public DBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -69,6 +71,17 @@ public class DBHelper extends SQLiteOpenHelper {
                     " count_training integer,"+
                     " used_training integer default 0,"+
                     " comment text)");
+
+            db.execSQL("create table "+RATE_TYPE_TABLE+"(" +
+                    "_id integer not null primary key AUTOINCREMENT,"+
+                    "name text)");
+
+            db.execSQL("create table "+RATE_TABLE+"(" +
+                    "_id integer not null primary key AUTOINCREMENT," +
+                    "rate_type integer not null," +
+                    "create_date text," +
+                    "summ numeric default 0)");
+
              /*
             db.execSQL("CREATE TRIGGER abonement_ai1\n" +
                     "   after \n" +
