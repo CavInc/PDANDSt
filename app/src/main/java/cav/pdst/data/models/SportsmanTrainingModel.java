@@ -14,6 +14,14 @@ public class SportsmanTrainingModel {
         mCount = count;
     }
 
+    public SportsmanTrainingModel(int id, String name, int count, int mode, int linkAbonement) {
+        mId = id;
+        mName = name;
+        mCount = count;
+        mMode = mode;
+        mLinkAbonement = linkAbonement;
+    }
+
     public int getId() {
         return mId;
     }
