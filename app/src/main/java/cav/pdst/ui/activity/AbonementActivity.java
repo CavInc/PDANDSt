@@ -153,10 +153,14 @@ public class AbonementActivity extends AppCompatActivity implements View.OnClick
             if (position==1) {
                 mCountTraining.setText("1");
                 mCountTraining.setVisibility(View.GONE);
+                findViewById(R.id.tv_end_date).setVisibility(View.GONE);
+                findViewById(R.id.tv_count_tr).setVisibility(View.GONE);
                 mEndDate.setVisibility(View.GONE);
             } else {
                 mCountTraining.setVisibility(View.VISIBLE);
                 mEndDate.setVisibility(View.VISIBLE);
+                findViewById(R.id.tv_end_date).setVisibility(View.VISIBLE);
+                findViewById(R.id.tv_count_tr).setVisibility(View.VISIBLE);
             }
         }
 
@@ -171,6 +175,9 @@ public class AbonementActivity extends AppCompatActivity implements View.OnClick
         SimpleDateFormat format = new SimpleDateFormat("E dd.MM.yyyy");
         if (dMode == 0 ){
             mStartDate.setText(format.format(date));
+            if (mAbType==1) {
+                mEndDate.setText(format.format(date));
+            }
         } else {
             mEndDate.setText(format.format(date));
         }
