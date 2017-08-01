@@ -48,6 +48,7 @@ public interface ConstantManager {
     String AB_COUNT_TR = "AB_COUNT_TR";
     String AB_COMMENT = "AB_COMMENT";
     String AB_PAY = "AB_PAY";
+    String AB_TYPE = "AB_TYPE";
 
     int SPORTSMAN_MODE_TRAINING = 0;
     int SPORTSMAN_MODE_PASS = 1;

@@ -4,13 +4,18 @@ import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import cav.pdst.R;
@@ -22,6 +27,7 @@ import cav.pdst.utils.Utils;
 
 public class AbonementActivity extends AppCompatActivity implements View.OnClickListener,DatePickerFragment.OnDateGet {
 
+    private static final String TAG = "AB";
     private TextView mStartDate;
     private TextView mCreateDate;
     private TextView mEndDate;
@@ -31,9 +37,15 @@ public class AbonementActivity extends AppCompatActivity implements View.OnClick
 
     private  int mode;
 
+    private Spinner mSpinner;
+
     private int dMode;
     private DataManager mDataManager;
     private AbonementModel mAbonementModel;
+
+    private int mAbType = 0;
+
+    private String[] ab_type = new String[]{"Абонемент","Разовое занятие"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +60,10 @@ public class AbonementActivity extends AppCompatActivity implements View.OnClick
         mPay = (TextView) findViewById(R.id.et_price_ab);
         mCountTraining = (TextView) findViewById(R.id.et_count_tr);
         mComent = (TextView) findViewById(R.id.et_coment);
+        mSpinner = (Spinner) findViewById(R.id.tv_spiner_type);
+        ArrayAdapter<String> spinerAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,ab_type);
+        mSpinner.setAdapter(spinerAdapter);
+        mSpinner.setOnItemSelectedListener(mItemSelected);
 
         mStartDate.setOnClickListener(this);
         mEndDate.setOnClickListener(this);
@@ -94,6 +110,10 @@ public class AbonementActivity extends AppCompatActivity implements View.OnClick
     }
 
     public void saveResult(){
+        if (mStartDate.getText().toString().length()==0) {
+            //setResult(RESULT_CANCELED,null);
+            return;
+        }
 
         Intent answerIntent = new Intent();
         if (mode == ConstantManager.NEW_ABONEMENT) {
@@ -103,6 +123,7 @@ public class AbonementActivity extends AppCompatActivity implements View.OnClick
             answerIntent.putExtra(ConstantManager.AB_COUNT_TR, Integer.parseInt(mCountTraining.getText().toString()));
             answerIntent.putExtra(ConstantManager.AB_COMMENT, mComent.getText().toString());
             answerIntent.putExtra(ConstantManager.AB_PAY, Float.parseFloat(mPay.getText().toString()));
+            answerIntent.putExtra(ConstantManager.AB_TYPE,mAbType);
         }
         if (mode == ConstantManager.EDIT_ABONEMENT) {
             mAbonementModel.setStartDate(Utils.getSteToDate(mStartDate.getText().toString(),"E dd.MM.yyyy"));
@@ -121,6 +142,29 @@ public class AbonementActivity extends AppCompatActivity implements View.OnClick
        // mDataManager.getDB().getLastIndex();
 
     }
+
+    AdapterView.OnItemSelectedListener mItemSelected = new AdapterView.OnItemSelectedListener(){
+
+        @Override
+        public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+            // номер позиции равен типу 0- абонемент 1- разовое занятие
+            Log.d(TAG,"POS "+position);
+            mAbType = position;
+            if (position==1) {
+                mCountTraining.setText("1");
+                mCountTraining.setVisibility(View.GONE);
+                mEndDate.setVisibility(View.GONE);
+            } else {
+                mCountTraining.setVisibility(View.VISIBLE);
+                mEndDate.setVisibility(View.VISIBLE);
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> adapterView) {
+
+        }
+    };
 
     @Override
     public void OnDateGet(Date date) {

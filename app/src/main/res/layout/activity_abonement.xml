@@ -13,9 +13,27 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
         >
+        <LinearLayout
+            android:id="@+id/tv_type_l"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="Тип :"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+               android:layout_weight="0.3"/>
+            <Spinner
+                android:id="@+id/tv_spiner_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2"
+                />
+        </LinearLayout>
         <TextView
             android:id="@+id/tv_cd"
             android:text="Дата приобретения"
+            android:layout_below="@id/tv_type_l"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <EditText
