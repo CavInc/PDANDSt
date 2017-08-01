@@ -45,6 +45,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     " training_name text,"+
                     " count_item integer default 0,"+
                     " date text,time text)");
+            db.execSQL("CREATE INDEX \"trainint_date_desc\" on trainig_table (date DESC)");
 
             db.execSQL("create table "+REF_TABLE+"("+
                     "type_ref integer not null,"+ // 0 -spman - group 1- traning-spman 2- тренировка - абонемент
@@ -58,6 +59,8 @@ public class DBHelper extends SQLiteOpenHelper {
                     "sp_name text,"+
                     "phone text,"+"" +
                     "comment text)");
+
+            db.execSQL("CREATE INDEX \"SP_NAME_SPORTSMAN\" on sportsman (sp_name ASC)");
 
             db.execSQL("create table "+ABONEMENT_TABLE+"("+
                     " _id integer not null primary key AUTOINCREMENT,"+
