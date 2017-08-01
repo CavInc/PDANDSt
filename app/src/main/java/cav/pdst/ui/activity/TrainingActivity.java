@@ -179,7 +179,12 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
 
     private void updateUI(){
         // все спортсмены у указанием количества абонементов
-        ArrayList<SportsmanTrainingModel> model = mDataManager.getSpTraining(group_id);
+        ArrayList<SportsmanTrainingModel> model = null;
+        if (mode == ConstantManager.NEW_TRAINING) {
+          model = mDataManager.getSpTraining(group_id);
+        } else {
+            model = mDataManager.getSpTraining(group_id,mModel.getId());
+        }
         if (mAdapter == null){
             mAdapter = new TrainingAdapter(this,R.layout.training_item,model);
             mListView.setAdapter(mAdapter);

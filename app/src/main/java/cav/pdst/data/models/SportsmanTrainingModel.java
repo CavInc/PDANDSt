@@ -20,6 +20,12 @@ public class SportsmanTrainingModel {
         mCount = count;
         mMode = mode;
         mLinkAbonement = linkAbonement;
+        if (mLinkAbonement==0) {
+            mCheck = false;
+            mMode =-1;
+        }else {
+            mCheck = true;
+        }
     }
 
     public int getId() {

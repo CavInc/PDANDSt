@@ -127,6 +127,10 @@ public class DataBaseConnector {
         value.put("time",data.getTime());
         database.update(DBHelper.TRAINING_TABLE,value,"_id="+data.getId(),null);
         database.delete(DBHelper.REF_TABLE,"type_ref=1 and id2="+data.getId(),null);
+
+        //todo сдесь сделать отдачу абонемента обратно
+
+        database.delete(DBHelper.REF_TABLE,"type_ref=2 and id1="+data.getId(),null);
         for (int i=0;i<selectItem.size();i++) {
             SpRefAbModeModel mx = selectItem.get(i);
             value.clear();
@@ -134,6 +138,16 @@ public class DataBaseConnector {
             value.put("id1", mx.getSpId());
             value.put("id2",data.getId());
             database.insert(DBHelper.REF_TABLE,null,value);
+
+            value.clear();
+            value.put("type_ref",2);
+            value.put("id1",data.getId());
+            value.put("id2",mx.getAbonement());
+            value.put("type_link",mx.getMode());
+            database.insertWithOnConflict(DBHelper.REF_TABLE,null,value,SQLiteDatabase.CONFLICT_REPLACE);
+            String sql="update " + DBHelper.ABONEMENT_TABLE+" set used_training=used_training+1 "+
+                    "where _id=" + mx.getAbonement();
+            database.execSQL(sql);
         }
         close();
     }
@@ -155,11 +169,6 @@ public class DataBaseConnector {
     }
 
     public Cursor getSPTraining(int group_id){
-        /*
-        String sql="select sp._id,sp.sp_name,a.ci from SPORTSMAN sp\n" +
-                "   left join (select id1, count(1) as ci from REF_TABLE where type_ref=1\n" +
-                "   group by id1) as a on sp._id=a.id1 order by sp.sp_name";
-        */
         String sql = null;
         if (group_id == -1) {
             sql = "select sp._id,sp.sp_name,a.ci from SPORTSMAN sp " +
@@ -172,6 +181,21 @@ public class DataBaseConnector {
                     " order by sp.sp_name";
 
         }
+        return database.rawQuery(sql,null);
+    }
+    public Cursor getSPTraining(int group_id,int training_id){
+        String sql = null;
+        if (group_id == -1){
+            sql="select spt._id as _id,spt.sp_name as sp_name,a.ci as ci,tb.type_link as type_link,tb.id2 as ab from\n" +
+                    "                (select sp._id,sp.sp_name,rf.id2 from  SPORTSMAN sp\n" +
+                    "                        left join REF_TABLE rf on rf.type_ref=1 and sp._id = rf.id1 and rf.id2="+training_id+") as spt\n" +
+                    "    left join (select rf.id1,rf.id2,rf.type_link,ab.sp_id from REF_TABLE rf \n" +
+                    "                    left join ABONEMENT ab on rf.id2= ab._id\n" +
+                    "                    where rf.type_ref=2 and rf.id1="+training_id+") as tb on spt.id2=tb.id1 and spt._id=tb.sp_id\n" +
+                    "    left join (select sp_id,sum(count_training-used_training) as ci from ABONEMENT group by sp_id) as a on spt._id= a.sp_id\n" +
+                    " order by spt.sp_name";
+        }
+
         return database.rawQuery(sql,null);
     }
 

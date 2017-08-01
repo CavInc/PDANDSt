@@ -256,6 +256,21 @@ public class DataManager {
         mDB.close();
         return  rec;
     }
+    public ArrayList<SportsmanTrainingModel> getSpTraining(int group_id,int training_id){
+        ArrayList<SportsmanTrainingModel> rec = new ArrayList<>();
+        mDB.open();
+        Cursor cursor = mDB.getSPTraining(group_id, training_id);
+        while (cursor.moveToNext()){
+            int id = cursor.getInt(cursor.getColumnIndex("_id"));
+            String name = cursor.getString(cursor.getColumnIndex("sp_name"));
+            int ci = cursor.getInt(cursor.getColumnIndex("ci"));
+            int ab = cursor.getInt(cursor.getColumnIndex("ab"));
+            int tl = cursor.getInt(cursor.getColumnIndex("type_link"));
+            rec.add(new SportsmanTrainingModel(id,name,ci,tl,ab));
+        }
+        mDB.close();
+        return rec;
+    }
 
     public void delTraining(int id){
         mDB.delTraining(id);
