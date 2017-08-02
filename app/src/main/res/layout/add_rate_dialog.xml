@@ -5,6 +5,11 @@
               android:layout_height="match_parent"
               android:padding="16dp"
     >
+    <Button
+        android:id="@+id/add_rate_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"/>
     <TextView
         android:text="Тип расхода"
         android:layout_width="match_parent"

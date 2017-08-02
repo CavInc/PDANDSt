@@ -10,38 +10,50 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import cav.pdst.R;
 import cav.pdst.data.managers.DataManager;
 import cav.pdst.data.models.RateTypeSpinerModel;
+import cav.pdst.utils.ConstantManager;
 
 
-public class AddRateDialogFragment extends DialogFragment {
+public class AddRateDialogFragment extends DialogFragment implements View.OnClickListener,DatePickerFragment.OnDateGet {
 
     private DataManager mDataManager;
     private TextView mSumm;
     private Spinner mTypeRate;
+    private Button mDateButton;
 
     private int mIdRateType;
 
     private AddRateDialogListener mAddRateDialogListener;
+    private Date mCreateDate;
+
 
     public interface AddRateDialogListener {
-        public void OnSelected(int rate_type,float summ);
+        public void OnSelected(int rate_type,String create_date,float summ);
     }
 
     public AddRateDialogFragment() {
         mDataManager = DataManager.getInstance();
+        mCreateDate = new Date();
     }
 
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         View v = LayoutInflater.from(getActivity()).inflate(R.layout.add_rate_dialog, null);
+        mDateButton = (Button) v.findViewById(R.id.add_rate_data);
+        mDateButton.setOnClickListener(this);
+        mDateButton.setText(new SimpleDateFormat("E dd.MM.yyyy").format(mCreateDate));
+
         mSumm = (TextView) v.findViewById(R.id.add_rate_summ);
         mTypeRate = (Spinner) v.findViewById(R.id.add_rate_spiner);
 
@@ -68,11 +80,27 @@ public class AddRateDialogFragment extends DialogFragment {
                 .setPositiveButton(R.string.button_ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        mAddRateDialogListener.OnSelected(mIdRateType, Float.parseFloat(mSumm.getText().toString()));
+                        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                        mAddRateDialogListener.OnSelected(mIdRateType,
+                                format.format(mCreateDate),
+                                Float.parseFloat(mSumm.getText().toString()));
                     }
                 });
 
         return builder.create();
+    }
+
+    @Override
+    public void onClick(View view) {
+        DatePickerFragment dialog = DatePickerFragment.newInstance();
+        dialog.show(getActivity().getSupportFragmentManager(), ConstantManager.DIALOG_DATE);
+    }
+
+    @Override
+    public void OnDateGet(Date date) {
+        SimpleDateFormat format = new SimpleDateFormat("E dd.MM.yyyy");
+        mDateButton.setText(format.format(date));
+        mCreateDate = date;
     }
 
     public void setAddRateDialogListener(AddRateDialogListener listener){

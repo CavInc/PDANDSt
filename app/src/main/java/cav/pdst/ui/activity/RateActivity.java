@@ -79,8 +79,8 @@ public class RateActivity extends AppCompatActivity {
     AddRateDialogFragment.AddRateDialogListener mAddRateDialogListener = new AddRateDialogFragment.AddRateDialogListener(){
 
         @Override
-        public void OnSelected(int rate_type, float summ) {
-            mDataManager.getDB().addUpdateRate(rate_type,"2017-08-01",summ);
+        public void OnSelected(int rate_type, String create_date, float summ) {
+            mDataManager.getDB().addUpdateRate(rate_type,create_date,summ);
         }
     };
 
