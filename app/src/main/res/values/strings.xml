@@ -7,6 +7,7 @@
 
     <string name="action_settings">Settings</string>
     <string name="button_ok">Ok</string>
+    <string name="button_cancel">Закрыть</string>
 
     <string name="count_training_sportsman">Количество спортсменов : </string>
     <string name="create_date">Дата приобретения</string>

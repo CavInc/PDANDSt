@@ -24,6 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/r_month"
             android:gravity="center"
+            android:layout_marginBottom="8dp"
             android:text="Период"/>
         <LinearLayout
             android:id="@+id/r_period_button"
@@ -37,12 +38,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="start date"
+                android:textColor="@android:color/white"
+                android:background="@drawable/custom_button_background"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
                 android:layout_weight="1"/>
             <Button
                 android:id="@+id/r_end_date"
                 android:text="end_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:textColor="@android:color/white"
+                android:background="@drawable/custom_button_background"
                 android:layout_weight="1"/>
         </LinearLayout>
         <GridLayout

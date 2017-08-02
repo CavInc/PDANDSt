@@ -341,4 +341,45 @@ public class DataBaseConnector {
         return database.rawQuery(sql,null);
     }
 
+    public Cursor getDohodDetail(String sdate,String edate){
+        String sql="select sp.sp_name,ab.comment,ab.pay,ab.start_date,ab.end_date from ABONEMENT ab\n" +
+                " left join SPORTSMAN sp on ab.sp_id=sp._id\n" +
+                "where ab.start_date>='"+sdate+"' and ab.end_date<='"+edate+"'\n" +
+                "order by sp.sp_name";
+        return database.rawQuery(sql,null);
+    }
+
+    public Cursor getRateDetail(String sdate,String edate){
+        String sql="select rt._id,rf.name,rt.create_date,rt.summ,rt.rate_type from RATE rt\n" +
+                " left join rate_type rf on rt.rate_type=rf._id"+
+                " where rt.create_date>='"+sdate+"' and rt.create_date<='"+edate+"'";
+        return database.rawQuery(sql,null);
+    }
+
+    // rate
+    public void addUpdateRateType(int id,String name){
+        open();
+        ContentValues values = new ContentValues();
+        if (id!=-1){
+            values.put("_id",id);
+        }
+        values.put("name",name);
+        database.insertWithOnConflict(DBHelper.RATE_TYPE_TABLE,null,values,SQLiteDatabase.CONFLICT_REPLACE);
+        close();
+    }
+
+    public Cursor getRateType(){
+        return database.query(DBHelper.RATE_TYPE_TABLE,new String[]{"_id","name"},null,null,null,null,null);
+    }
+
+    public void addUpdateRate(int rate_type,String date,Float summ){
+        ContentValues values = new ContentValues();
+        values.put("rate_type",rate_type);
+        values.put("create_date",date);
+        values.put("summ",summ);
+        open();
+        database.insertWithOnConflict(DBHelper.RATE_TABLE,null,values,SQLiteDatabase.CONFLICT_REPLACE);
+        close();
+    }
+
 }

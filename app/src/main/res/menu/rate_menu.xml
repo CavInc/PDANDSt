@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/add_rate"
+        android:title="Добавить расход"
+        android:icon="@android:drawable/ic_menu_add"
+        app:showAsAction="ifRoom"/>
+    <group>
+        <item
+            android:id="@+id/add_rate_type"
+            android:title="Добавить тип расхода"/>
+        <item
+            android:title="Редатировать тип расхода"/>
+    </group>
+
+</menu>

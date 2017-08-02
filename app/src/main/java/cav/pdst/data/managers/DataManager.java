@@ -16,6 +16,7 @@ import cav.pdst.data.database.DataBaseConnector;
 import cav.pdst.data.models.AbonementModel;
 import cav.pdst.data.models.GroupModel;
 import cav.pdst.data.models.ItemSportsmanModel;
+import cav.pdst.data.models.RateTypeSpinerModel;
 import cav.pdst.data.models.SpRefAbModeModel;
 import cav.pdst.data.models.SportsmanModel;
 import cav.pdst.data.models.SportsmanTrainingModel;
@@ -332,5 +333,14 @@ public class DataManager {
     }
 
 
-
+    public ArrayList<RateTypeSpinerModel> getRateType() {
+        ArrayList<RateTypeSpinerModel> rec = new ArrayList<>();
+        mDB.open();
+        Cursor cursor = mDB.getRateType();
+        while (cursor.moveToNext()){
+            rec.add(new RateTypeSpinerModel(cursor.getInt(0),cursor.getString(1)));
+        }
+        mDB.close();
+        return rec;
+    }
 }

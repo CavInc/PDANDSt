@@ -65,9 +65,15 @@ public class ReportActivity extends AppCompatActivity implements NavigationView.
         mRashod.setOnClickListener(this);
         
         setupCurrentMontData();
-        updateUI();
+
         setupToolBar();
         setupDrower();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateUI();
     }
 
     private void setupCurrentMontData() {
@@ -167,8 +173,17 @@ public class ReportActivity extends AppCompatActivity implements NavigationView.
                 dialog.show(getSupportFragmentManager(), ConstantManager.DIALOG_DATE);
                 break;
             case R.id.r_doxod_button:
+                //TODO переделать константы
+                Intent dx = new Intent(this,DohodActivity.class);
+                dx.putExtra(ConstantManager.AB_STARTDATE,mFirstDate);
+                dx.putExtra(ConstantManager.AB_ENDDATE,mLastDate);
+                startActivity(dx);
                 break;
             case R.id.r_rashod_button:
+                Intent rt = new Intent(this,RateActivity.class);
+                rt.putExtra(ConstantManager.AB_STARTDATE,mFirstDate);
+                rt.putExtra(ConstantManager.AB_ENDDATE,mLastDate);
+                startActivity(rt);
                 break;
         }
     }

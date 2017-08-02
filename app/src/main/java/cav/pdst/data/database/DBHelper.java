@@ -75,6 +75,8 @@ public class DBHelper extends SQLiteOpenHelper {
                     " used_training integer default 0,"+
                     " comment text)");
 
+            db.execSQL("CREATE INDEX \"ab_date\" on abonement (start_date ASC, end_date ASC)");
+
             db.execSQL("create table "+RATE_TYPE_TABLE+"(" +
                     "_id integer not null primary key AUTOINCREMENT,"+
                     "name text)");
@@ -84,6 +86,8 @@ public class DBHelper extends SQLiteOpenHelper {
                     "rate_type integer not null," +
                     "create_date text," +
                     "summ numeric default 0)");
+
+            db.execSQL("CREATE INDEX \"rate_data_idx\" on rate (create_date ASC)");
 
              /*
             db.execSQL("CREATE TRIGGER abonement_ai1\n" +
