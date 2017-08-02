@@ -92,6 +92,7 @@ public class DohodActivity extends AppCompatActivity {
         Cursor cursor = mDataManager.getDB().getDohodDetail(format.format(mStart),format.format(mEnd));
         while (cursor.moveToNext()){
             TableRow row = new TableRow(this);
+            row.setPadding(0,8,0,8);
             TextView sp = new TextView(this);
             sp.setText(cursor.getString(0));
             TextView pay = new TextView(this);

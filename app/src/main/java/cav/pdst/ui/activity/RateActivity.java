@@ -6,10 +6,12 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -87,7 +89,10 @@ public class RateActivity extends AppCompatActivity {
     private void setupTable(){
         mTableLayout.setStretchAllColumns(true);
 
+
         TableRow head = new TableRow(this);
+        TextView h_id = new TextView(this);
+
         TextView h_sp = new TextView(this);
         h_sp.setText("Тип расхода");
         h_sp.setTextColor(Color.WHITE);
@@ -98,6 +103,7 @@ public class RateActivity extends AppCompatActivity {
         h_sum.setTextColor(Color.WHITE);
         h_sum.setGravity(Gravity.CENTER);
 
+        head.addView(h_id);
         head.addView(h_sp);
         head.addView(h_sum);
         head.setBackgroundColor(ContextCompat.getColor(this,R.color.app_green));
@@ -108,17 +114,34 @@ public class RateActivity extends AppCompatActivity {
         Cursor cursor = mDataManager.getDB().getRateDetail(format.format(mStart),format.format(mEnd));
         while (cursor.moveToNext()){
             TableRow row = new TableRow(this);
+            row.setPadding(0,8,0,8);
+            TextView id = new TextView(this);
+            id.setText(String.valueOf(cursor.getInt(cursor.getColumnIndex("_id"))));
+
             TextView sp = new TextView(this);
             sp.setText(cursor.getString(cursor.getColumnIndex("name")));
             TextView pay = new TextView(this);
             pay.setGravity(Gravity.RIGHT);
             pay.setText(String.valueOf(cursor.getFloat(cursor.getColumnIndex("summ"))));
 
+            row.addView(id);
             row.addView(sp);
             row.addView(pay);
+            row.setOnLongClickListener(mRowClickListener);
             mTableLayout.addView(row);
         }
 
         mDataManager.getDB().close();
+        mTableLayout.setColumnCollapsed(0,false);
     }
+
+    View.OnLongClickListener mRowClickListener = new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View view) {
+            Log.d("RARE AC"," ROW CLICK");
+            TableRow row = (TableRow) view;
+            Log.d("RARE_AC", (String) ((TextView) row.getVirtualChildAt(0)).getText());
+            return false;
+        }
+    };
 }

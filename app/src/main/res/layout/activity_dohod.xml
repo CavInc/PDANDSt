@@ -15,7 +15,8 @@
         <TableLayout
             android:id="@+id/dohod_tb_l"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:shrinkColumns="2">
         </TableLayout>
     </ScrollView>
 
