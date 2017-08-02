@@ -92,7 +92,8 @@ public class ReportActivity extends AppCompatActivity implements NavigationView.
         ArrayList<Float> data = mDataManager.getReportAll(mFirstDate,mLastDate);
         if (data.size()!=0) {
             mDohod.setText(String.valueOf(data.get(0)));
-
+            mRashod.setText(String.valueOf(data.get(1)));
+            mItogo.setText(String.valueOf(data.get(0)-data.get(1)));
         }else {
             mDohod.setText("0.00");
             mRashod.setText("0.00");

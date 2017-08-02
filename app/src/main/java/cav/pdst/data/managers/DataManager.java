@@ -323,6 +323,10 @@ public class DataManager {
         while (cursor.moveToNext()){
             rec.add(0,cursor.getFloat(0));
         }
+        cursor = mDB.getRateAll(format.format(start),format.format(end));
+        while (cursor.moveToNext()){
+            rec.add(1,cursor.getFloat(0));
+        }
         mDB.close();
         return rec;
     }

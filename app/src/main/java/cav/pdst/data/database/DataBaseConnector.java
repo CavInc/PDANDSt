@@ -330,9 +330,14 @@ public class DataBaseConnector {
                 "where ab.start_date>='"+sdate+"' and ab.end_date<='"+edate+"'\n" +
                 "order by sp.sp_name,ab.start_date";
         */
-        String sql="select sum(ab.pay) from ABONEMENT ab\n" +
+        String sql="select sum(ab.pay) as sm from ABONEMENT ab\n" +
                 "  join SPORTSMAN sp on ab.sp_id=sp._id\n" +
                 "where ab.start_date>='"+sdate+"' and ab.end_date<='"+edate+"'";
+        return database.rawQuery(sql,null);
+    }
+    public Cursor getRateAll(String sdate,String edate){
+        String sql="select sum(summ) as sm from RATE "+
+                "where create_date>='"+sdate+"' and create_date<='"+edate+"'";
         return database.rawQuery(sql,null);
     }
 
