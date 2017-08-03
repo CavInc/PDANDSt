@@ -40,7 +40,7 @@ import cav.pdst.ui.fragments.TrainigOperationFragment;
 import cav.pdst.utils.ConstantManager;
 import cav.pdst.utils.Utils;
 
-public class TrainingActivity extends AppCompatActivity implements View.OnClickListener,DatePickerFragment.OnDateGet,
+public class TrainingActivity extends AppCompatActivity implements View.OnClickListener,DatePickerFragment.OnDateGetListener,
         InfoDialogFragment.InfoCallback {
 
     private static final String TAG = "TRA";

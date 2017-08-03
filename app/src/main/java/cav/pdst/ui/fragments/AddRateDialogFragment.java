@@ -24,7 +24,7 @@ import cav.pdst.data.models.RateTypeSpinerModel;
 import cav.pdst.utils.ConstantManager;
 
 
-public class AddRateDialogFragment extends DialogFragment implements View.OnClickListener,DatePickerFragment.OnDateGet {
+public class AddRateDialogFragment extends DialogFragment implements View.OnClickListener{
 
     private DataManager mDataManager;
     private TextView mSumm;
@@ -93,15 +93,17 @@ public class AddRateDialogFragment extends DialogFragment implements View.OnClic
     @Override
     public void onClick(View view) {
         DatePickerFragment dialog = DatePickerFragment.newInstance();
+        dialog.setOnDateGetListener(new DatePickerFragment.OnDateGetListener() {
+            @Override
+            public void OnDateGet(Date date) {
+                SimpleDateFormat format = new SimpleDateFormat("E dd.MM.yyyy");
+                mDateButton.setText(format.format(date));
+                mCreateDate = date;
+            }
+        });
         dialog.show(getActivity().getSupportFragmentManager(), ConstantManager.DIALOG_DATE);
     }
 
-    @Override
-    public void OnDateGet(Date date) {
-        SimpleDateFormat format = new SimpleDateFormat("E dd.MM.yyyy");
-        mDateButton.setText(format.format(date));
-        mCreateDate = date;
-    }
 
     public void setAddRateDialogListener(AddRateDialogListener listener){
         mAddRateDialogListener = listener;

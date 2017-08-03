@@ -8,7 +8,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -29,7 +28,7 @@ import cav.pdst.utils.ConstantManager;
 import cav.pdst.utils.SwipeTouchListener;
 
 public class ReportActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,View.OnClickListener,
-        DatePickerFragment.OnDateGet{
+        DatePickerFragment.OnDateGetListener {
     private static final String TAG = "RA";
     private final int START_DATE = 0;
     private final int END_DATE = 1;

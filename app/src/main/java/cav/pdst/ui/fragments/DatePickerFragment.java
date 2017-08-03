@@ -3,30 +3,27 @@ package cav.pdst.ui.fragments;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
 import cav.pdst.R;
-import cav.pdst.utils.ConstantManager;
 
 public class DatePickerFragment extends DialogFragment {
     private static final String TAG = "DP";
     private DatePicker mDatePicker;
 
-    private OnDateGet mOnDateGetListener;
+    private OnDateGetListener mOnDateGetListener;
 
-    public interface OnDateGet{
+    public interface OnDateGetListener {
         public void OnDateGet(Date date);
     }
 
@@ -39,7 +36,11 @@ public class DatePickerFragment extends DialogFragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        mOnDateGetListener =  (OnDateGet) activity;
+        try {
+            mOnDateGetListener = (OnDateGetListener) activity;
+        } catch (Exception e) {
+
+        }
     }
 
     @Override
@@ -60,11 +61,17 @@ public class DatePickerFragment extends DialogFragment {
                         int month = mDatePicker.getMonth();
                         int day = mDatePicker.getDayOfMonth();
                         Date date = new GregorianCalendar(year, month, day).getTime();
-                        mOnDateGetListener.OnDateGet(date);
+                        if (mOnDateGetListener != null) {
+                            mOnDateGetListener.OnDateGet(date);
+                        }
                     }
                 })
                 .create();
         //return super.onCreateDialog(savedInstanceState);
+    }
+
+    public void setOnDateGetListener( OnDateGetListener listener){
+        mOnDateGetListener = listener;
     }
 
 
