@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -76,7 +75,8 @@ public class ReportActivity extends AppCompatActivity implements NavigationView.
         swipeTouchListener = new SwipeTouchListener();
         mMonthLayout.setOnTouchListener(swipeTouchListener);
         mMonthLayout.setOnClickListener(this);
-        //mMonthLayout.setOnTouchListener(mTouchListener);
+
+        swipeTouchListener.setSwipeListener(mDetectListener);
 
         mStartDate.setOnClickListener(this);
         mEndDate.setOnClickListener(this);
@@ -179,40 +179,19 @@ public class ReportActivity extends AppCompatActivity implements NavigationView.
         return true;
     }
 
-    View.OnClickListener mLayoutClickListener = new View.OnClickListener() {
+    SwipeTouchListener.SwipeDetectListener mDetectListener = new SwipeTouchListener.SwipeDetectListener() {
         @Override
-        public void onClick(View view) {
-            Log.d(TAG,"CLIK DETECT");
-            if (swipeTouchListener.swipeDetected()){
-                Log.d(TAG,"SWEEP DETECT");
-                if (swipeTouchListener.getAction() == SwipeTouchListener.Action.LR) {
-                    Log.d(TAG,"LEFT");
-                }
-                if (swipeTouchListener.getAction() == SwipeTouchListener.Action.RL) {
-                    Log.d(TAG,"RIGTH");
-                }
+        public void OnSwipeDirection(SwipeTouchListener.Action direct) {
+            if (direct == SwipeTouchListener.Action.LR) {
+                changeMonth(0);
             }
+            if (direct == SwipeTouchListener.Action.RL) {
+                changeMonth(1);
+            }
+
         }
     };
 
-
-    View.OnTouchListener mTouchListener = new View.OnTouchListener() {
-        @Override
-        public boolean onTouch(View view, MotionEvent motionEvent) {
-            Log.d(TAG,"TOUCH");
-            switch (motionEvent.getAction()){
-                case MotionEvent.ACTION_DOWN:{
-                    Log.d(TAG,"DOWN");
-                    return true;
-                }
-                case MotionEvent.ACTION_UP:{
-                    Log.d(TAG,"UP");
-                    return true;
-                }
-            }
-            return false;
-        }
-    };
 
     private void changeMonth(int direction){
         Date dx = null;
@@ -237,9 +216,6 @@ public class ReportActivity extends AppCompatActivity implements NavigationView.
     public void onClick(View view) {
         DatePickerFragment dialog = DatePickerFragment.newInstance();
         switch (view.getId()){
-            case R.id.r_month_l:
-                Log.d(TAG,"EPT");
-                break;
             case R.id.r_start_date:
                 dialogMode = START_DATE;
                 dialog.show(getSupportFragmentManager(), ConstantManager.DIALOG_DATE);

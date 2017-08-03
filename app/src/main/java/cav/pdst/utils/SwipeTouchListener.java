@@ -1,6 +1,5 @@
 package cav.pdst.utils;
 
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -33,7 +32,7 @@ public class SwipeTouchListener implements View.OnTouchListener{
     }
 
     public interface SwipeDetectListener {
-        public void OnSwipeDetect(Action swipeDetect);
+        public void OnSwipeDirection(Action direct);
     }
 
     @Override
@@ -57,24 +56,26 @@ public class SwipeTouchListener implements View.OnTouchListener{
                     // Слева направо
                     if (deltaX < 0) {
                         mSwipeDetected = Action.LR;
-                        Log.d("SP","L - R");
+                        mSwipeDetectListener.OnSwipeDirection(mSwipeDetected);
                         return true;
                     }
                     // Справа налево
                     if (deltaX > 0) {
                         mSwipeDetected = Action.RL;
-                        Log.d("SP","R -L");
+                        mSwipeDetectListener.OnSwipeDirection(mSwipeDetected);
                         return true;
                     }
                 }else if (Math.abs(deltaY) > VERTICAL_MIN_DISTANCE) { // Обнаружение вертикального свайпа
                     // Сверху вниз
                     if (deltaY < 0) {
                         mSwipeDetected = Action.TB;
+                        mSwipeDetectListener.OnSwipeDirection(mSwipeDetected);
                         return true;
                     }
                     // Снизу вверх
                     if (deltaY > 0) {
                         mSwipeDetected = Action.BT;
+                        mSwipeDetectListener.OnSwipeDirection(mSwipeDetected);
                         return true;
                     }
                 }
