@@ -12,17 +12,47 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="16dp">
-        <Button
-            android:id="@+id/r_month"
+        <LinearLayout
+            android:id="@+id/r_month_l"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="16dp"/>
+            android:orientation="vertical"
+            android:layout_marginBottom="16dp">
+            <TextView
+                android:text="Текущий месяц"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/r_left_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_chevron_left_black_24dp"/>
+                <TextView
+                    android:id="@+id/r_month"
+                    android:textSize="24sp"
+                    android:text="apr. 2017"
+                    android:textColor="@android:color/black"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+                <ImageView
+                    android:id="@+id/r_rigth_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_chevron_right_black_24dp"/>
+            </LinearLayout>
+        </LinearLayout>
+
         <TextView
             android:id="@+id/r_period"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/r_month"
+            android:layout_below="@id/r_month_l"
             android:gravity="center"
             android:layout_marginBottom="8dp"
             android:text="Период"/>
