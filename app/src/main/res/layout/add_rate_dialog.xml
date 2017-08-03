@@ -9,6 +9,7 @@
         android:id="@+id/add_rate_data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/custom_button_background"
         android:layout_marginBottom="16dp"/>
     <TextView
         android:text="Тип расхода"

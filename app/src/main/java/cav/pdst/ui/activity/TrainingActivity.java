@@ -2,6 +2,7 @@ package cav.pdst.ui.activity;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -238,7 +239,12 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
                 ab = getAbonement(mx.getId(),mDate);
                 if (ab==-1) {
                     // показать что куй ?
-
+                    AlertDialog.Builder dialog =new AlertDialog.Builder(TrainingActivity.this)
+                            .setTitle("Предупреждение")
+                            .setMessage("Не подходящий абонемент")
+                            .setIcon(android.R.drawable.ic_dialog_info)
+                            .setPositiveButton(R.string.button_ok,null);
+                    dialog.show();
                     return;
                 }
                 //mLinkSpABTrModel = new LinkSpABTrModel(mx.getId(),ab);
