@@ -83,15 +83,19 @@ public class RateActivity extends AppCompatActivity {
         @Override
         public void OnSelected(int rate_type, String create_date, float summ) {
             mDataManager.getDB().addUpdateRate(rate_type,create_date,summ);
+            setupTable();
         }
     };
 
     private void setupTable(){
-        mTableLayout.setStretchAllColumns(true);
+        mTableLayout.removeAllViews();
+        //mTableLayout.setStretchAllColumns(true);
+        mTableLayout.setColumnStretchable(0,true);
+        mTableLayout.setColumnStretchable(1,true);
 
 
         TableRow head = new TableRow(this);
-        TextView h_id = new TextView(this);
+       // TextView h_id = new TextView(this);
 
         TextView h_sp = new TextView(this);
         h_sp.setText("Тип расхода");
@@ -103,9 +107,9 @@ public class RateActivity extends AppCompatActivity {
         h_sum.setTextColor(Color.WHITE);
         h_sum.setGravity(Gravity.CENTER);
 
-        head.addView(h_id);
         head.addView(h_sp);
         head.addView(h_sum);
+        //head.addView(h_id);
         head.setBackgroundColor(ContextCompat.getColor(this,R.color.app_green));
         mTableLayout.addView(head);
 
@@ -115,18 +119,16 @@ public class RateActivity extends AppCompatActivity {
         while (cursor.moveToNext()){
             TableRow row = new TableRow(this);
             row.setPadding(0,8,0,8);
-            TextView id = new TextView(this);
-            id.setText(String.valueOf(cursor.getInt(cursor.getColumnIndex("_id"))));
-
             TextView sp = new TextView(this);
             sp.setText(cursor.getString(cursor.getColumnIndex("name")));
             TextView pay = new TextView(this);
             pay.setGravity(Gravity.RIGHT);
             pay.setText(String.valueOf(cursor.getFloat(cursor.getColumnIndex("summ"))));
-
-            row.addView(id);
+            TextView id = new TextView(this);
+            id.setText(String.valueOf(cursor.getInt(cursor.getColumnIndex("_id"))));
             row.addView(sp);
             row.addView(pay);
+            row.addView(id);
             row.setOnLongClickListener(mRowClickListener);
             mTableLayout.addView(row);
         }
@@ -140,7 +142,7 @@ public class RateActivity extends AppCompatActivity {
         public boolean onLongClick(View view) {
             Log.d("RARE AC"," ROW CLICK");
             TableRow row = (TableRow) view;
-            Log.d("RARE_AC", (String) ((TextView) row.getVirtualChildAt(0)).getText());
+            Log.d("RARE_AC", (String) ((TextView) row.getVirtualChildAt(2)).getText());
             return false;
         }
     };
