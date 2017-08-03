@@ -49,6 +49,7 @@ public class AbonementAdapter extends ArrayAdapter<AbonementModel> {
             holder.mPay = (TextView) row.findViewById(R.id.ab_pay_summ);
             holder.mPrime = (TextView) row.findViewById(R.id.ab_prime);
             holder.mNum = (TextView) row.findViewById(R.id.ab_num_num);
+            holder.mAbType = (TextView) row.findViewById(R.id.ab_num_text);
             row.setTag(holder);
         }else{
             holder = (ViewHolder)row.getTag();
@@ -68,6 +69,11 @@ public class AbonementAdapter extends ArrayAdapter<AbonementModel> {
         } else {
             holder.mPrime.setText("Потрачен");
         }
+        if (record.getType() == 0) {
+            holder.mAbType.setText("Номер абонемента:");
+        }else {
+            holder.mAbType.setText("Разовое занятие");
+        }
 
         //holder.mPrime.setText();
         return row;
@@ -86,6 +92,7 @@ public class AbonementAdapter extends ArrayAdapter<AbonementModel> {
         public TextView mPay;
         public TextView mPrime;
         public TextView mNum;
+        public TextView mAbType;
 
     }
 }

@@ -73,6 +73,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     " pay numeric,"+"" +
                     " count_training integer,"+
                     " used_training integer default 0,"+
+                    " working integer default 0,"+
                     " comment text)");
 
             db.execSQL("CREATE INDEX \"ab_date\" on abonement (start_date ASC, end_date ASC)");
