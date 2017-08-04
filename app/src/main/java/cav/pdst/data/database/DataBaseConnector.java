@@ -104,16 +104,24 @@ public class DataBaseConnector {
             value.put("type_link",mx.getMode());
             database.insert(DBHelper.REF_TABLE,null,value);
 
-            value.clear();
-            value.put("type_ref",2);
-            value.put("id1",recid);
-            value.put("id2",mx.getAbonement());
-            value.put("type_link",mx.getMode());
-            database.insertWithOnConflict(DBHelper.REF_TABLE,null,value,SQLiteDatabase.CONFLICT_REPLACE);
+            if ((mx.getMode() == 0) || (mx.getMode() == 1)){
+                value.clear();
+                value.put("type_ref", 2);
+                value.put("id1", recid);
+                value.put("id2", mx.getAbonement());
+                value.put("type_link", mx.getMode());
+                database.insertWithOnConflict(DBHelper.REF_TABLE, null, value, SQLiteDatabase.CONFLICT_REPLACE);
 
-            String sql="update " + DBHelper.ABONEMENT_TABLE+" set used_training=used_training+1 "+
-                    "where _id=" + mx.getAbonement();
-            database.execSQL(sql);
+                String sql = "update " + DBHelper.ABONEMENT_TABLE + " set used_training=used_training+1 " +
+                        "where _id=" + mx.getAbonement();
+                database.execSQL(sql);
+            }
+            // предупреждение
+            if (mx.getMode() == 2 ){
+                String sql = "update " + DBHelper.ABONEMENT_TABLE + " set working=working+1 " +
+                        "where _id=" + mx.getAbonement();
+                database.execSQL(sql);
+            }
         }
        close();
     }
@@ -241,7 +249,6 @@ public class DataBaseConnector {
         value.put("phone",data.getTel());
         value.put("comment",data.getComment());
         database.update(DBHelper.SPORTSMAN_TABLE,value,"_id="+data.getId(),null);
-
         close();
     }
 
@@ -269,7 +276,7 @@ public class DataBaseConnector {
     public Cursor getAbonement(int sportsman_id){
         return database.query(DBHelper.ABONEMENT_TABLE,
                 new String[]{"_id","sp_id","pos_id","buy_date","start_date","end_date",
-                        "type_abonement","pay","count_training","comment","used_training"},
+                        "type_abonement","pay","count_training","comment","used_training","working"},
                 "sp_id="+sportsman_id,null,null,null,"pos_id");
     }
 
