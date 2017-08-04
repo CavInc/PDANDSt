@@ -12,17 +12,33 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="16dp">
-        <Button
-            android:id="@+id/r_month"
+        <LinearLayout
+            android:id="@+id/r_month_l"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="16dp"/>
+            android:orientation="vertical"
+            android:layout_marginBottom="16dp">
+            <TextView
+                android:text="Текущий период"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"/>
+            <TextView
+                android:id="@+id/r_month"
+                android:text="май 2016"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
         <TextView
             android:id="@+id/r_period"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/r_month"
+            android:layout_below="@id/r_month_l"
             android:gravity="center"
             android:layout_marginBottom="8dp"
             android:text="Период"/>
