@@ -309,6 +309,7 @@ public class DataBaseConnector {
         values.put("comment",model.getComment());
         values.put("type_abonement",model.getType());
         values.put("used_training",model.getUsedTraining());
+        values.put("working",model.getWorking());
         database.insertWithOnConflict(DBHelper.ABONEMENT_TABLE,null,values,SQLiteDatabase.CONFLICT_REPLACE);
         close();
     }
