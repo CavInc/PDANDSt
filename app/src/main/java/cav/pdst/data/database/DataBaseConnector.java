@@ -278,6 +278,12 @@ public class DataBaseConnector {
         database.delete(DBHelper.ABONEMENT_TABLE,"pos_id="+id+" and sp_id"+sprotsman_id,null);
         close();
     }
+    // удаляем не приязанные абонементы
+    public void delAbonement(){
+        open();
+        database.delete(DBHelper.ABONEMENT_TABLE,"sp_id=-1",null);
+        close();
+    }
 
     public void addUpdateAbonement(AbonementModel model){
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
