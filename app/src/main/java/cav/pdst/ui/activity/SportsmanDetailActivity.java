@@ -99,6 +99,8 @@ public class SportsmanDetailActivity extends AppCompatActivity implements SpInfo
             } else if (mode == ConstantManager.EDIT_SPORTSMAN) {
                 mDataManager.updateSportsman(mSportsmanModel);
             }
+        }else{
+            mDataManager.getDB().delAbonement();
         }
 
     }

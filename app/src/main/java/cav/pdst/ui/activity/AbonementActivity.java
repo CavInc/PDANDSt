@@ -12,10 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 import cav.pdst.R;
@@ -25,7 +22,7 @@ import cav.pdst.ui.fragments.DatePickerFragment;
 import cav.pdst.utils.ConstantManager;
 import cav.pdst.utils.Utils;
 
-public class AbonementActivity extends AppCompatActivity implements View.OnClickListener,DatePickerFragment.OnDateGet {
+public class AbonementActivity extends AppCompatActivity implements View.OnClickListener,DatePickerFragment.OnDateGetListener {
 
     private static final String TAG = "AB";
     private TextView mStartDate;

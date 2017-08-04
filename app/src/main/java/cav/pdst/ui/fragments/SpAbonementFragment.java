@@ -166,12 +166,16 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
                     AbonementModel model = Utils.getConvertModel(sp_id,last_ab,createDate,startDate,endDate,countTr,pay,comment);
                     model.setType(type);
                     mAbonementAdapter.add(model);
+                    mDataManager.addUpdateAbonement(model);
+                    last_ab = last_ab + 1;
+                    /*
                     if (sp_id != -1){
                         mDataManager.addUpdateAbonement(model);
                         last_ab = last_ab + 1;
                     }else {
                         mAbonementAdapter.add(model);
                     }
+                    */
                     break;
                 case ConstantManager.EDIT_ABONEMENT:
                     AbonementModel model2= data.getParcelableExtra(ConstantManager.AB_DETAIL_DATA);

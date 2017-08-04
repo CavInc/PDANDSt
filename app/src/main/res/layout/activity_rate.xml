@@ -15,7 +15,8 @@
         <TableLayout
             android:id="@+id/rate_tb_l"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:collapseColumns="2">
 
         </TableLayout>
     </ScrollView>

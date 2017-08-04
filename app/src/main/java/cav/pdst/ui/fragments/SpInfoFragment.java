@@ -2,6 +2,8 @@ package cav.pdst.ui.fragments;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -68,6 +70,7 @@ public class SpInfoFragment extends Fragment {
         mFullName = (TextView) rootView.findViewById(R.id.info_full_name);
         mPhone = (TextView) rootView.findViewById(R.id.info_phone);
         mComment = (TextView) rootView.findViewById(R.id.info_comment);
+
         mPhone.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
 
         if ((mode == ConstantManager.EDIT_SPORTSMAN) || (mode == ConstantManager.VIEW_SPORTSMAN)) {
@@ -143,6 +146,8 @@ public class SpInfoFragment extends Fragment {
         mCall = (Button) rootView.findViewById(R.id.info_call_button);
         mSendSMS = (Button) rootView.findViewById(R.id.info_send_sms);
 
+        mCall.setOnClickListener(mCallListener);
+
         return rootView;
         //return super.onCreateView(inflater, container, savedInstanceState);
     }
@@ -151,6 +156,18 @@ public class SpInfoFragment extends Fragment {
         mCallbacks.updateData(mSportsmanModel);
     }
 
+
+    View.OnClickListener mCallListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if (mPhone.getText().toString().length()!=0){
+                Intent callIntent = new Intent(Intent.ACTION_CALL);
+                callIntent.setData(Uri.parse("tel:" + mPhone.getText()));
+                callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(callIntent);
+            }
+        }
+    };
 
     public interface Callbacks{
         void updateData(SportsmanModel model);

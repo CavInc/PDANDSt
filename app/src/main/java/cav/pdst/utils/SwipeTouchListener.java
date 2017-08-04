@@ -22,11 +22,17 @@ public class SwipeTouchListener implements View.OnTouchListener{
     private static final int VERTICAL_MIN_DISTANCE = 80; // Минимальное расстояние для свайпа по вертикали
     private Action mSwipeDetected = Action.None; // Последнее дейтсвие
 
+    private SwipeDetectListener mSwipeDetectListener;
+
     public boolean swipeDetected() {
         return mSwipeDetected != Action.None;
     }
     public Action getAction() {
         return mSwipeDetected;
+    }
+
+    public interface SwipeDetectListener {
+        public void OnSwipeDirection(Action direct);
     }
 
     @Override
@@ -36,7 +42,7 @@ public class SwipeTouchListener implements View.OnTouchListener{
                 downX = motionEvent.getX();
                 downY = motionEvent.getY();
                 mSwipeDetected = Action.None;
-                return false;
+                return true;
             }
             case MotionEvent.ACTION_UP:{
                 upX = motionEvent.getX();
@@ -50,28 +56,36 @@ public class SwipeTouchListener implements View.OnTouchListener{
                     // Слева направо
                     if (deltaX < 0) {
                         mSwipeDetected = Action.LR;
+                        mSwipeDetectListener.OnSwipeDirection(mSwipeDetected);
                         return true;
                     }
                     // Справа налево
                     if (deltaX > 0) {
                         mSwipeDetected = Action.RL;
+                        mSwipeDetectListener.OnSwipeDirection(mSwipeDetected);
                         return true;
                     }
                 }else if (Math.abs(deltaY) > VERTICAL_MIN_DISTANCE) { // Обнаружение вертикального свайпа
                     // Сверху вниз
                     if (deltaY < 0) {
                         mSwipeDetected = Action.TB;
-                        return false;
+                        mSwipeDetectListener.OnSwipeDirection(mSwipeDetected);
+                        return true;
                     }
                     // Снизу вверх
                     if (deltaY > 0) {
                         mSwipeDetected = Action.BT;
-                        return false;
+                        mSwipeDetectListener.OnSwipeDirection(mSwipeDetected);
+                        return true;
                     }
                 }
-                return true;
+                return false;
             }
         }
         return false;
+    }
+
+    public void setSwipeListener (SwipeDetectListener listener){
+        mSwipeDetectListener = listener;
     }
 }

@@ -50,10 +50,15 @@
         android:layout_alignParentRight="true"
         android:text="99999"/>
     <TextView
+        android:id="@+id/ab_outworking"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ab_training"/>
+    <TextView
         android:id="@+id/ab_prime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ab_training"
+        android:layout_below="@id/ab_outworking"
         android:text="Потрачено"/>
 
 

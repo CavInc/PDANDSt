@@ -2,6 +2,7 @@ package cav.pdst.ui.activity;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -40,7 +41,7 @@ import cav.pdst.ui.fragments.TrainigOperationFragment;
 import cav.pdst.utils.ConstantManager;
 import cav.pdst.utils.Utils;
 
-public class TrainingActivity extends AppCompatActivity implements View.OnClickListener,DatePickerFragment.OnDateGet,
+public class TrainingActivity extends AppCompatActivity implements View.OnClickListener,DatePickerFragment.OnDateGetListener,
         InfoDialogFragment.InfoCallback {
 
     private static final String TAG = "TRA";
@@ -238,7 +239,12 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
                 ab = getAbonement(mx.getId(),mDate);
                 if (ab==-1) {
                     // показать что куй ?
-
+                    AlertDialog.Builder dialog =new AlertDialog.Builder(TrainingActivity.this)
+                            .setTitle("Предупреждение")
+                            .setMessage("Не подходящий абонемент")
+                            .setIcon(android.R.drawable.ic_dialog_info)
+                            .setPositiveButton(R.string.button_ok,null);
+                    dialog.show();
                     return;
                 }
                 //mLinkSpABTrModel = new LinkSpABTrModel(mx.getId(),ab);
@@ -252,6 +258,9 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
 
                         if ((witch == ConstantManager.SPORTSMAN_MODE_TRAINING) || (witch == ConstantManager.SPORTSMAN_MODE_PASS)) {
                             //mSpAB.add(mLinkSpABTrModel);
+                            mAdapter.getItem(position).setLinkAbonement(ab);
+                        }
+                        if (witch == ConstantManager.SPORTSMAN_MODE_WARNING) {
                             mAdapter.getItem(position).setLinkAbonement(ab);
                         }
 

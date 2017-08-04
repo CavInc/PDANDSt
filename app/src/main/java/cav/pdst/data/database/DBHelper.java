@@ -58,6 +58,8 @@ public class DBHelper extends SQLiteOpenHelper {
                     "_id integer not null primary key AUTOINCREMENT,"+
                     "sp_name text,"+
                     "phone text,"+"" +
+                    "last_date text,"+
+                    "last_time text,"+
                     "comment text)");
 
             db.execSQL("CREATE INDEX \"SP_NAME_SPORTSMAN\" on sportsman (sp_name ASC)");
@@ -73,6 +75,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     " pay numeric,"+"" +
                     " count_training integer,"+
                     " used_training integer default 0,"+
+                    " working integer default 0,"+
                     " comment text)");
 
             db.execSQL("CREATE INDEX \"ab_date\" on abonement (start_date ASC, end_date ASC)");
@@ -88,6 +91,15 @@ public class DBHelper extends SQLiteOpenHelper {
                     "summ numeric default 0)");
 
             db.execSQL("CREATE INDEX \"rate_data_idx\" on rate (create_date ASC)");
+
+            // обновляем записи в абонементах при создании спортсмена
+            db.execSQL("CREATE TRIGGER sportsman_ai0\n" +
+                    "   AFTER   INSERT \n" +
+                    "   ON sportsman\n" +
+                    " BEGIN\n" +
+                    "    update abonement set sp_id=new._id\n" +
+                    "    where sp_id= -1;\n" +
+                    "END");
 
              /*
             db.execSQL("CREATE TRIGGER abonement_ai1\n" +
