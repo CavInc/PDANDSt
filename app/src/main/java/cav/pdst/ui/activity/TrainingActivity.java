@@ -133,7 +133,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.all_save_menu, menu);
+        inflater.inflate(R.menu.trainint_menu, menu);
         return true;
     }
 
@@ -147,6 +147,9 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
                 saveResult();
             }
             onBackPressed();
+        }
+        if (item.getItemId() == R.id.add_sportsman_item) {
+
         }
         return true;
         //return super.onOptionsItemSelected(item);

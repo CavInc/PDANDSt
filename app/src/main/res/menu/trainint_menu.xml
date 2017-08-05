@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/add_sportsman_item"
+        android:icon="@drawable/ic_person_add_black_24dp"
+        android:title="Добавить спортсмена"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/save_item"
+        android:title="@string/menu_save_item"
+        android:icon="@drawable/ic_check_black_24dp"
+        app:showAsAction="ifRoom"/>
+</menu>

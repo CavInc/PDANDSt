@@ -90,6 +90,7 @@ public class ItemGroupActivity extends AppCompatActivity  {
         }
         if (item.getItemId() == R.id.save_item){
             saveResult();
+            onBackPressed();
         }
         return true;
         //return super.onOptionsItemSelected(item);
