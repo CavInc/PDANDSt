@@ -68,6 +68,9 @@ public class SportsmanDetailActivity extends AppCompatActivity implements SpInfo
 
     private void setupToolBar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (toolbar!=null  && mode != ConstantManager.NEW_SPORTSMAN){
+            toolbar.setTitle(mSportsmanModel.getName());
+        }
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar!=null){
