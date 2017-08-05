@@ -106,9 +106,19 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         mTimeButton.setText(formatTime(hour,minute));
         mTime = formatTime(hour,minute);
 
-        if (mode == ConstantManager.EDIT_TRAINING) {
+        if (mode == ConstantManager.EDIT_TRAINING || mode == ConstantManager.VIEW_TRAINING) {
             mTraining.setText(mModel.getName());
             mCountSportsman.setText(getString(R.string.count_training_sportsman)+" "+mModel.getCount());
+        }
+
+        if (mode == ConstantManager.VIEW_TRAINING) {
+            mTraining.setFocusable(false);
+            mTraining.setEnabled(false);
+            mListView.setEnabled(false);
+
+            mTimeButton.setEnabled(false);
+            mDataButton.setEnabled(false);
+            mSpinner.setEnabled(false);
         }
 
         mListView.setOnItemClickListener(mItemClickListener);

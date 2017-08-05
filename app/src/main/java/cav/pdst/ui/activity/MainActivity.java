@@ -187,7 +187,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     AdapterView.OnItemClickListener mItemClickListener = new AdapterView.OnItemClickListener() {
         @Override
-        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+            selModel = (TrainingModel) adapterView.getItemAtPosition(position);
+            selectID = selModel.getId();
             Intent intent = new Intent(MainActivity.this,TrainingActivity.class);
             intent.putExtra(ConstantManager.MODE_TRAINING,ConstantManager.VIEW_TRAINING);
             intent.putExtra(ConstantManager.TRAINING_DATE,selModel.getDate());

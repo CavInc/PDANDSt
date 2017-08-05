@@ -60,14 +60,6 @@ public class GroupActivity extends AppCompatActivity implements NavigationView.O
         mListView.setOnItemClickListener(this);
         mListView.setOnItemLongClickListener(this);
 
-        /*
-        ArrayList<GroupModel> model =new ArrayList<>();
-
-        //дебуг
-        model.add(new GroupModel("Васька",0));
-        model.add(new GroupModel("Сиска",0));
-        //дебуг
-        */
         ArrayList<GroupModel> model = mDataManager.getGroup();
 
 
