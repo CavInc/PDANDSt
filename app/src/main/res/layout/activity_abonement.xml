@@ -39,8 +39,6 @@
         <EditText
             android:id="@+id/et_create_date"
             android:layout_width="match_parent"
-            android:focusable="false"
-            android:enabled="false"
             android:layout_below="@id/tv_cd"
             android:layout_height="wrap_content"/>
 

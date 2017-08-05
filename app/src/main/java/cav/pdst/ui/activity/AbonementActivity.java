@@ -64,6 +64,7 @@ public class AbonementActivity extends AppCompatActivity implements View.OnClick
         mSpinner.setAdapter(spinerAdapter);
         mSpinner.setOnItemSelectedListener(mItemSelected);
 
+        mCreateDate.setOnClickListener(this);
         mStartDate.setOnClickListener(this);
         mEndDate.setOnClickListener(this);
 
@@ -188,10 +189,11 @@ public class AbonementActivity extends AppCompatActivity implements View.OnClick
             if (mAbType==1) {
                 mEndDate.setText(format.format(date));
             }
-        } else {
+        } else if (dMode == 1){
             mEndDate.setText(format.format(date));
+        } else if (dMode == 2){
+            mCreateDate.setText(format.format(date));
         }
-
     }
 
     @Override
@@ -205,6 +207,10 @@ public class AbonementActivity extends AppCompatActivity implements View.OnClick
             case R.id.et_end_date:
                 dMode = 1;
                 dialog.show(getSupportFragmentManager(), ConstantManager.DIALOG_DATE);
+                break;
+            case R.id.et_create_date:
+                dMode = 2;
+                dialog.show(getSupportFragmentManager(),ConstantManager.DIALOG_DATE);
                 break;
         }
 
