@@ -11,6 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import cav.pdst.R;
@@ -74,8 +76,19 @@ public class SportsmanDetailActivity extends AppCompatActivity implements SpInfo
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.all_save_menu, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId()==android.R.id.home){
+            onBackPressed();
+        }
+        if (item.getItemId() == R.id.save_item) {
+            saveData();
             onBackPressed();
         }
         return true;
@@ -83,7 +96,7 @@ public class SportsmanDetailActivity extends AppCompatActivity implements SpInfo
 
     @Override
     public void onBackPressed() {
-        saveData();
+        //saveData();
         super.onBackPressed();
     }
 

@@ -62,7 +62,7 @@ public class TrainingAdapter extends ArrayAdapter<SportsmanTrainingModel> {
         holder.mCount.setText(String.valueOf(record.getCount()));
         holder.mName.setText(record.getName());
         if (record.getCount()!=0){
-            holder.mName.setTextColor(Color.GREEN);
+            holder.mName.setTextColor(ContextCompat.getColor(getContext(),R.color.app_green));
         }else {
             holder.mName.setTextColor(Color.BLACK);
         }
