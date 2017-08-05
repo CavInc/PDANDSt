@@ -85,6 +85,7 @@ public class SportsmanDetailActivity extends AppCompatActivity implements SpInfo
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId()==android.R.id.home){
+            mDataManager.getDB().delAbonement();
             onBackPressed();
         }
         if (item.getItemId() == R.id.save_item) {

@@ -10,13 +10,15 @@ public interface ConstantManager {
 
     String GROUP_NAME = "GROUP_NAME";
 
-    int NEW_GROUP = 0;
-    int EDIT_GROUP = 1;
+    int NEW_GROUP = 200;
+    int EDIT_GROUP = 201;
+    int VIEW_GROUP = 202;
 
     String MODE_TRAINING = "MODE_TRAINING";
 
     int NEW_TRAINING = 0;
     int EDIT_TRAINING = 1;
+    int VIEW_TRAINING = 2;
 
     String EXTRA_DATE = "EXTRA_DATE";
     String MODE_SP_DETAIL = "MODE_SP_DETAIL";
@@ -54,5 +56,6 @@ public interface ConstantManager {
     int SPORTSMAN_MODE_PASS = 1;
     int SPORTSMAN_MODE_WARNING = 2;
     int SPORTSMAN_MODE_WORKINGOFF = 3;
+
 
 }

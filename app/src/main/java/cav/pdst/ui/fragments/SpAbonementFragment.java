@@ -80,6 +80,7 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
             mFab.setOnClickListener(this);
         }else {
             mFab.setEnabled(false);
+            mFab.setVisibility(View.GONE);
         }
 
         mListView = (ListView) rootView.findViewById(R.id.sp_abom_list_view);

@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mFab = (FloatingActionButton) findViewById(R.id.main_tr_fab);
         mFab.setOnClickListener(mClickListener);
         mListView = (ListView) findViewById(R.id.tr_list_view);
+        mListView.setOnItemClickListener(mItemClickListener);
         mListView.setOnItemLongClickListener(mItemLongClickListener);
 
 
@@ -184,6 +185,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private int selectID = -1;
 
+    AdapterView.OnItemClickListener mItemClickListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            Intent intent = new Intent(MainActivity.this,TrainingActivity.class);
+            intent.putExtra(ConstantManager.MODE_TRAINING,ConstantManager.VIEW_TRAINING);
+            intent.putExtra(ConstantManager.TRAINING_DATE,selModel.getDate());
+            intent.putExtra(ConstantManager.TRAINING_OBJECT,selModel);
+            startActivity(intent);
+        }
+    };
+
     AdapterView.OnItemLongClickListener mItemLongClickListener = new AdapterView.OnItemLongClickListener() {
         @Override
         public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
@@ -236,8 +248,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             Intent intent = new Intent(MainActivity.this,TrainingActivity.class);
             intent.putExtra(ConstantManager.MODE_TRAINING,ConstantManager.EDIT_TRAINING);
-
-            //TODO сюда данные передаваемые в тренировку
             intent.putExtra(ConstantManager.TRAINING_DATE,selModel.getDate());
             intent.putExtra(ConstantManager.TRAINING_OBJECT,selModel);
 

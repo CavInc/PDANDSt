@@ -27,7 +27,8 @@ import cav.pdst.ui.fragments.EditDeleteDialog;
 import cav.pdst.utils.ConstantManager;
 
 public class GroupActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
-        View.OnClickListener,AdapterView.OnItemLongClickListener,EditDeleteDialog.EditDeleteDialogListener{
+        View.OnClickListener,AdapterView.OnItemLongClickListener,
+        EditDeleteDialog.EditDeleteDialogListener,AdapterView.OnItemClickListener{
 
     private static final String TAG = "GROUP";
     private Toolbar mToolbar;
@@ -56,6 +57,7 @@ public class GroupActivity extends AppCompatActivity implements NavigationView.O
         mFab.setOnClickListener(this);
 
         mListView = (ListView) findViewById(R.id.group_list_view);
+        mListView.setOnItemClickListener(this);
         mListView.setOnItemLongClickListener(this);
 
         /*
@@ -129,6 +131,17 @@ public class GroupActivity extends AppCompatActivity implements NavigationView.O
         }
 
     }
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+        mGroupModel = (GroupModel) adapterView.getItemAtPosition(position);
+        mItemId = mGroupModel.getId();
+        Intent intent = new Intent(this,ItemGroupActivity.class);
+        intent.putExtra(ConstantManager.MODE_GROUP,ConstantManager.VIEW_GROUP);
+        intent.putExtra(ConstantManager.GROUP_NAME,mGroupModel.getName());
+        intent.putExtra(ConstantManager.GROUP_ID,mGroupModel.getId());
+        intent.putExtra(ConstantManager.GROUP_COUNT,mGroupModel.getCount());
+        startActivity(intent);
+    }
 
     @Override
     public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
@@ -201,4 +214,6 @@ public class GroupActivity extends AppCompatActivity implements NavigationView.O
             startActivityForResult(intent, ConstantManager.EDIT_GROUP);
         }
     }
+
+
 }

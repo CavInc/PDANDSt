@@ -48,11 +48,19 @@ public class ItemGroupActivity extends AppCompatActivity  {
 
         int id=-1;
 
-        if (mode == ConstantManager.EDIT_GROUP) {
+        if (mode == ConstantManager.EDIT_GROUP || mode == ConstantManager.VIEW_GROUP) {
             mGroupModel = new GroupModel(getIntent().getIntExtra(ConstantManager.GROUP_ID,-1),
                     getIntent().getStringExtra(ConstantManager.GROUP_NAME),getIntent().getIntExtra(ConstantManager.GROUP_COUNT,0));
             mNameGroup.setText(mGroupModel.getName());
             id = mGroupModel.getId();
+        }
+
+        if (mode == ConstantManager.VIEW_GROUP) {
+            mNameGroup.setFocusable(false);
+            mNameGroup.setEnabled(false);
+
+            mListView.setEnabled(false);
+
         }
 
         ArrayList<ItemSportsmanModel> models = mDataManager.getSportsmanInGroup(id);
@@ -86,7 +94,6 @@ public class ItemGroupActivity extends AppCompatActivity  {
         if (item.getItemId() == android.R.id.home) {
             //saveResult();
             onBackPressed();
-            //finish();
         }
         if (item.getItemId() == R.id.save_item){
             saveResult();
