@@ -89,6 +89,7 @@ public class SportsmanDetailActivity extends AppCompatActivity implements SpInfo
         }
         if (item.getItemId() == R.id.save_item) {
             saveData();
+            setResult(RESULT_OK,null);
             onBackPressed();
         }
         return true;

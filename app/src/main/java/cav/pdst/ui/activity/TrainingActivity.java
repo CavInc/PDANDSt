@@ -149,7 +149,9 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
             onBackPressed();
         }
         if (item.getItemId() == R.id.add_sportsman_item) {
-
+            Intent intent = new Intent(this,SportsmanDetailActivity.class);
+            intent.putExtra(ConstantManager.MODE_SP_DETAIL,ConstantManager.NEW_SPORTSMAN);
+            startActivityForResult(intent,ConstantManager.NEW_SPORTSMAN);
         }
         return true;
         //return super.onOptionsItemSelected(item);
@@ -391,6 +393,10 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
                 updateUI();
             }
         }
+        if (resultCode == Activity.RESULT_OK && requestCode == ConstantManager.NEW_SPORTSMAN){
+            updateUI();
+        }
+
     }
 
 }

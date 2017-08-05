@@ -20,9 +20,9 @@ public interface ConstantManager {
 
     String EXTRA_DATE = "EXTRA_DATE";
     String MODE_SP_DETAIL = "MODE_SP_DETAIL";
-    int NEW_SPORTSMAN = 0;
-    int EDIT_SPORTSMAN = 1;
-    int VIEW_SPORTSMAN = 2;
+    int NEW_SPORTSMAN = 100;
+    int EDIT_SPORTSMAN = 101;
+    int VIEW_SPORTSMAN = 102;
 
     String SP_DETAIL_DATA = "SP_DETAIL_DATA";
     String AB_DETAIL_DATA = "AB_DETAIL_DATA";
