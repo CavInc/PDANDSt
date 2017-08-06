@@ -289,6 +289,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
                         }
 
                         mAdapter.getItem(position).setCheck(true);
+
                         mAdapter.notifyDataSetChanged();
                     }
                 });

@@ -61,29 +61,35 @@ public class TrainingAdapter extends ArrayAdapter<SportsmanTrainingModel> {
         SportsmanTrainingModel record = getItem(position);
         holder.mCount.setText(String.valueOf(record.getCount()));
         holder.mName.setText(record.getName());
-        holder.mName.setBackgroundColor(Color.TRANSPARENT);
+        //holder.mName.setBackgroundColor(Color.TRANSPARENT);
+        row.setBackgroundColor(Color.TRANSPARENT);
+
         if (record.getCount()!=0){
             holder.mName.setTextColor(ContextCompat.getColor(getContext(),R.color.app_green));
         }else {
             holder.mName.setTextColor(Color.BLACK);
         }
+
         switch (record.getMode()){
             case ConstantManager.SPORTSMAN_MODE_TRAINING:
                 holder.mName.setTextColor(Color.BLACK);
-                holder.mName.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.app_green));
+               // holder.mName.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.app_green));
+                row.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.app_green));
                 break;
             case ConstantManager.SPORTSMAN_MODE_PASS:
                 holder.mName.setTextColor(Color.BLACK);
-                holder.mName.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.app_red));
+               // holder.mName.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.app_red));
+                row.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.app_red));
                 break;
             case ConstantManager.SPORTSMAN_MODE_WARNING:
                 holder.mName.setTextColor(Color.BLACK);
-                holder.mName.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.app_blue));
+                //holder.mName.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.app_blue));
+                row.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.app_blue));
                 break;
             case ConstantManager.SPORTSMAN_MODE_WORKINGOFF:
                 holder.mName.setTextColor(Color.BLACK);
-                holder.mName.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.app_yellow));
-
+                //holder.mName.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.app_yellow));
+                row.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.app_yellow));
                 break;
         }
         holder.mName.setChecked(record.isCheck());

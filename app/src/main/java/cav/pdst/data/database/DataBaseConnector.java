@@ -188,10 +188,10 @@ public class DataBaseConnector {
         String sql = null;
         if (group_id == -1) {
             sql = "select sp._id,sp.sp_name,a.ci from SPORTSMAN sp " +
-                    " left join (select sp_id,sum(count_training-used_training) as ci from ABONEMENT group by sp_id) as a on sp._id= a.sp_id order by sp.sp_name";
+                    " left join (select sp_id,sum(count_training+working-used_training) as ci from ABONEMENT group by sp_id) as a on sp._id= a.sp_id order by sp.sp_name";
         }else{
             sql="select sp._id,sp.sp_name,a.ci from SPORTSMAN sp \n" +
-                    " left join (select sp_id,sum(count_training-used_training) as ci from ABONEMENT group by sp_id) as a on sp._id= a.sp_id \n" +
+                    " left join (select sp_id,sum(count_training+working-used_training) as ci from ABONEMENT group by sp_id) as a on sp._id= a.sp_id \n" +
                     "  join REF_TABLE rf on rf.type_ref=0 and sp._id=rf.id1 \n" +
                     " where rf.id2=" +group_id+" "+
                     " order by sp.sp_name";
@@ -208,7 +208,7 @@ public class DataBaseConnector {
                     "    left join (select rf.id1,rf.id2,rf.type_link,ab.sp_id from REF_TABLE rf \n" +
                     "                    left join ABONEMENT ab on rf.id2= ab._id\n" +
                     "                    where rf.type_ref=2 and rf.id1="+training_id+") as tb on spt.id2=tb.id1 and spt._id=tb.sp_id\n" +
-                    "    left join (select sp_id,sum(count_training-used_training) as ci from ABONEMENT group by sp_id) as a on spt._id= a.sp_id\n" +
+                    "    left join (select sp_id,sum(count_training+working-used_training) as ci from ABONEMENT group by sp_id) as a on spt._id= a.sp_id\n" +
                     " order by spt.sp_name";
         }
 

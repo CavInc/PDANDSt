@@ -3,6 +3,7 @@ package cav.pdst.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import cav.pdst.data.models.AbonementModel;
@@ -29,6 +30,19 @@ public class Utils {
             e.printStackTrace();
         }
         return null;
+    }
+
+    // проверить что дата находится в прошлом месяце
+    public boolean isAfterDate(Date date){
+        Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        int moth = c.get(Calendar.MONTH);
+        c.setTime(date);
+        int old_year = c.get(Calendar.YEAR);
+        int old_moth = c.get(Calendar.MONTH);
+        if (year>old_year) return true;
+        if (moth>old_moth) return true;
+        return false;
     }
 }
 

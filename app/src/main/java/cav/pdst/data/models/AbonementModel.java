@@ -19,6 +19,7 @@ public class AbonementModel implements Parcelable {
     private int mUsedTraining = 0;
     private int mWorking = 0;
     private int mWarning = 0;
+    private float mDebit = 0.0f;
 
 
     public AbonementModel(int id,int pos_id, int spId, Date createDate, Date startDate, Date endDate,
@@ -69,6 +70,7 @@ public class AbonementModel implements Parcelable {
         mUsedTraining = in.readInt();
         mWorking = in.readInt();
         mWarning = in.readInt();
+        mDebit = in.readFloat();
     }
 
     @Override
@@ -86,6 +88,7 @@ public class AbonementModel implements Parcelable {
         dest.writeInt(mUsedTraining);
         dest.writeInt(mWorking);
         dest.writeInt(mWarning);
+        dest.writeFloat(mDebit);
     }
 
     @Override
@@ -203,5 +206,13 @@ public class AbonementModel implements Parcelable {
 
     public int getWarning() {
         return mWarning;
+    }
+
+    public float getDebit() {
+        return mDebit;
+    }
+
+    public void setDebit(float debit) {
+        mDebit = debit;
     }
 }
