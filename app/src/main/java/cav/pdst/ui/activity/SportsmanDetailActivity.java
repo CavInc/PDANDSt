@@ -111,6 +111,8 @@ public class SportsmanDetailActivity extends AppCompatActivity implements SpInfo
     }
 
     private void saveData(){
+        if (mode == ConstantManager.VIEW_SPORTSMAN) return;
+
         if (mSportsmanModel.getName().length()!=0){
             if (mode == ConstantManager.NEW_SPORTSMAN) {
                 mDataManager.addSportsman(mSportsmanModel);

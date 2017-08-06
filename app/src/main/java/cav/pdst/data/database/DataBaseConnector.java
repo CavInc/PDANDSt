@@ -310,6 +310,7 @@ public class DataBaseConnector {
         values.put("type_abonement",model.getType());
         values.put("used_training",model.getUsedTraining());
         values.put("working",model.getWorking());
+        values.put("warning_count",model.getWarning());
         database.insertWithOnConflict(DBHelper.ABONEMENT_TABLE,null,values,SQLiteDatabase.CONFLICT_REPLACE);
         close();
     }
@@ -346,7 +347,7 @@ public class DataBaseConnector {
         */
         String sql="select sum(ab.pay) as sm from ABONEMENT ab\n" +
                 "  join SPORTSMAN sp on ab.sp_id=sp._id\n" +
-                "where ab.start_date>='"+sdate+"' and ab.end_date<='"+edate+"'";
+                "where ab.buy_date>='"+sdate+"' and ab.buy_date<='"+edate+"'";
         return database.rawQuery(sql,null);
     }
     public Cursor getRateAll(String sdate,String edate){

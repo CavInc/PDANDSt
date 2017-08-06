@@ -340,6 +340,8 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void saveResult(){
+        if (mode == ConstantManager.VIEW_TRAINING) return;
+
         ArrayList<SpRefAbModeModel> fm = getCheckElement();
         int type = ConstantManager.ONE;
         if (fm.size()>0) type = ConstantManager.GROUP;

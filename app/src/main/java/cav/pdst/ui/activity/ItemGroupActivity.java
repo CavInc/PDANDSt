@@ -142,6 +142,7 @@ public class ItemGroupActivity extends AppCompatActivity  {
 
 
     private void saveResult(){
+        if (mode == ConstantManager.VIEW_GROUP) return;
         if (mNameGroup.getText().length()!=0) {
             //Integer[] selItem = getCheckElement();
             ArrayList<Integer> selItem = getCheckElement();
