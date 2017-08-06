@@ -118,7 +118,7 @@ public class DataBaseConnector {
             }
             // предупреждение
             if (mx.getMode() == 2 ){
-                String sql = "update " + DBHelper.ABONEMENT_TABLE + " set working=working+1 " +
+                String sql = "update " + DBHelper.ABONEMENT_TABLE + " set warning_count=warning_count+1 " +
                         "where _id=" + mx.getAbonement();
                 database.execSQL(sql);
             }
@@ -276,7 +276,7 @@ public class DataBaseConnector {
     public Cursor getAbonement(int sportsman_id){
         return database.query(DBHelper.ABONEMENT_TABLE,
                 new String[]{"_id","sp_id","pos_id","buy_date","start_date","end_date",
-                        "type_abonement","pay","count_training","comment","used_training","working"},
+                        "type_abonement","pay","count_training","comment","used_training","working","warning_count"},
                 "sp_id="+sportsman_id,null,null,null,"pos_id");
     }
 

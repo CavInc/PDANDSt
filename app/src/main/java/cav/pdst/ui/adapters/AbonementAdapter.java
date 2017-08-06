@@ -51,6 +51,7 @@ public class AbonementAdapter extends ArrayAdapter<AbonementModel> {
             holder.mNum = (TextView) row.findViewById(R.id.ab_num_num);
             holder.mAbType = (TextView) row.findViewById(R.id.ab_num_text);
             holder.mWorking = (TextView) row.findViewById(R.id.ab_outworking);
+            holder.mWarning = (TextView) row.findViewById(R.id.ab_warning);
             row.setTag(holder);
         }else{
             holder = (ViewHolder)row.getTag();
@@ -76,6 +77,12 @@ public class AbonementAdapter extends ArrayAdapter<AbonementModel> {
             holder.mAbType.setText("Разовое занятие");
         }
         holder.mWorking.setText("Отработки : "+record.getWorking());
+        if (record.getWarning() != 0){
+            holder.mWarning.setText("Предупреждения : "+record.getWarning());
+            holder.mWarning.setVisibility(View.VISIBLE);
+        } else {
+            holder.mWarning.setVisibility(View.GONE);
+        }
 
         //holder.mPrime.setText();
         return row;
@@ -96,5 +103,6 @@ public class AbonementAdapter extends ArrayAdapter<AbonementModel> {
         public TextView mNum;
         public TextView mAbType;
         public TextView mWorking;
+        public TextView mWarning;
     }
 }

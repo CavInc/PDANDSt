@@ -55,10 +55,16 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/ab_training"/>
     <TextView
+        android:id="@+id/ab_warning"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ab_outworking"
+        android:visibility="gone"/>
+    <TextView
         android:id="@+id/ab_prime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ab_outworking"
+        android:layout_below="@id/ab_warning"
         android:text="Потрачено"/>
 
 

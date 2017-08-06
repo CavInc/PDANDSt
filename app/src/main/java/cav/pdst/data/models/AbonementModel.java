@@ -18,6 +18,7 @@ public class AbonementModel implements Parcelable {
     private String mComment;
     private int mUsedTraining = 0;
     private int mWorking = 0;
+    private int mWarning = 0;
 
 
     public AbonementModel(int id,int pos_id, int spId, Date createDate, Date startDate, Date endDate,
@@ -36,7 +37,8 @@ public class AbonementModel implements Parcelable {
     }
 
     public AbonementModel(int id,int pos_id, int spId, Date createDate, Date startDate, Date endDate,
-                          int countTraining, float pay,int type, String comment, int usedTraining,int working) {
+                          int countTraining, float pay,int type, String comment,
+                          int usedTraining,int working,int warning) {
         mAbonementId = id;
         mId = pos_id;
         mSpId = spId;
@@ -49,6 +51,7 @@ public class AbonementModel implements Parcelable {
         mComment = comment;
         mUsedTraining = usedTraining;
         mWorking = working;
+        mWarning = warning;
     }
 
 
@@ -65,6 +68,7 @@ public class AbonementModel implements Parcelable {
         mComment = in.readString();
         mUsedTraining = in.readInt();
         mWorking = in.readInt();
+        mWarning = in.readInt();
     }
 
     @Override
@@ -81,6 +85,7 @@ public class AbonementModel implements Parcelable {
         dest.writeString(mComment);
         dest.writeInt(mUsedTraining);
         dest.writeInt(mWorking);
+        dest.writeInt(mWarning);
     }
 
     @Override
@@ -190,5 +195,9 @@ public class AbonementModel implements Parcelable {
 
     public int getWorking() {
         return mWorking;
+    }
+
+    public int getWarning() {
+        return mWarning;
     }
 }

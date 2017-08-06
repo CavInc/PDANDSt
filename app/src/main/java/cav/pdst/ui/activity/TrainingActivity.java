@@ -70,8 +70,6 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
 
     private int group_id = -1;
 
-    //private ArrayList<LinkSpABTrModel> mSpAB = new ArrayList<>();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -250,7 +248,6 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
 
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, final int position, long id) {
-            Log.d(TAG," POSITION Item "+position);
             SportsmanTrainingModel mx = (SportsmanTrainingModel) adapterView.getItemAtPosition(position);
             Log.d(TAG,mx.getId()+" "+mx.getName()+" "+mx.isCheck());
             selSportspam = mx.getId();
