@@ -65,7 +65,9 @@ public class AbonementAdapter extends ArrayAdapter<AbonementModel> {
         holder.mPay.setText(String.valueOf(record.getPay()));
         holder.mTraining.setText("Использовано: "+record.getUsedTraining()+
                 " из "+record.getCountTraining()+", Доступно: "+(record.getCountTraining()-record.getUsedTraining()));
+
         if ((record.getCountTraining()-record.getUsedTraining())!=0) {
+
             holder.mPrime.setText("Доступны тренировки");
             holder.mPrime.setTextColor(ContextCompat.getColor(getContext(),R.color.app_green));
         } else {

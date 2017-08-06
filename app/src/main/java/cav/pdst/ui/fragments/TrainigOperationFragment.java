@@ -39,6 +39,7 @@ public class TrainigOperationFragment extends DialogFragment{
                         }
                     }
                 });
+
         return builder.create();
     }
 

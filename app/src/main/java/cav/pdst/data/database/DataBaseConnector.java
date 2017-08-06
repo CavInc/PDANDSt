@@ -104,7 +104,7 @@ public class DataBaseConnector {
             value.put("type_link",mx.getMode());
             database.insert(DBHelper.REF_TABLE,null,value);
 
-            if ((mx.getMode() == 0) || (mx.getMode() == 1)){
+            if ((mx.getMode() == 0) || (mx.getMode() == 1) ){
                 value.clear();
                 value.put("type_ref", 2);
                 value.put("id1", recid);
@@ -118,6 +118,13 @@ public class DataBaseConnector {
             }
             // предупреждение
             if (mx.getMode() == 2 ){
+                value.clear();
+                value.put("type_ref", 2);
+                value.put("id1", recid);
+                value.put("id2", mx.getAbonement());
+                value.put("type_link", mx.getMode());
+                database.insertWithOnConflict(DBHelper.REF_TABLE, null, value, SQLiteDatabase.CONFLICT_REPLACE);
+
                 String sql = "update " + DBHelper.ABONEMENT_TABLE + " set warning_count=warning_count+1 " +
                         "where _id=" + mx.getAbonement();
                 database.execSQL(sql);
@@ -282,7 +289,13 @@ public class DataBaseConnector {
 
     public void delAbonement(int id,int sprotsman_id){
         open();
-        database.delete(DBHelper.ABONEMENT_TABLE,"pos_id="+id+" and sp_id"+sprotsman_id,null);
+        database.delete(DBHelper.ABONEMENT_TABLE,"pos_id="+id+" and sp_id="+sprotsman_id,null);
+        close();
+    }
+    // удаляем по идентификатору
+    public void delAbonement(int id){
+        open();
+        database.delete(DBHelper.ABONEMENT_TABLE,"_id="+id,null);
         close();
     }
     // удаляем не приязанные абонементы
@@ -299,13 +312,18 @@ public class DataBaseConnector {
         if (model.getAbonementId()!= -1){
             values.put("_id",model.getAbonementId());
         }
-        String sql="select _id,warning_count from ABONEMENT\n" +
-                "where sp_id="+model.getSpId()+" and end_date<'"+model.getEndDate()+"' and warning_count<>0\n" +
-                "order by end_date DESC\n" +
+        int ref_id = -1;
+        String sql="select ab._id,ab.warning_count from ABONEMENT ab\n" +
+                " left join (select id1,count(1) as ci from REF_TABLE rf\n" +
+                "      where rf.type_ref=3\n" +
+                "      group by id1) as a on ab.\"_id\"=a.id1 \n" +
+                "where ab.sp_id="+model.getSpId()+" and ab.end_date<'"+model.getEndDate()+"' and (ab.warning_count-COALESCE(a.ci,0,a.ci))<>0\n" +
+                "order by ab.end_date DESC\n" +
                 "limit 1";
         Cursor cursor =database.rawQuery(sql,null);
         while (cursor.moveToNext()) {
             model.setWorking(cursor.getInt(1));
+            ref_id=cursor.getInt(0);
         }
 
         values.put("sp_id",model.getSpId());
@@ -320,7 +338,15 @@ public class DataBaseConnector {
         values.put("used_training",model.getUsedTraining());
         values.put("working",model.getWorking());
         values.put("warning_count",model.getWarning());
-        database.insertWithOnConflict(DBHelper.ABONEMENT_TABLE,null,values,SQLiteDatabase.CONFLICT_REPLACE);
+        int rec_id = (int) database.insertWithOnConflict(DBHelper.ABONEMENT_TABLE,null,values,SQLiteDatabase.CONFLICT_REPLACE);
+
+        if (model.getWorking()!=0) {
+            values.clear();
+            values.put("type_ref", 3);
+            values.put("id1", ref_id); // откуда
+            values.put("id2", rec_id); // куда
+            database.insert(DBHelper.REF_TABLE,null,values);
+        }
         close();
     }
 

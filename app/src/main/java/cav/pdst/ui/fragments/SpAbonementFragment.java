@@ -75,18 +75,16 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_sp_abonement, container, false);
+
+        mListView = (ListView) rootView.findViewById(R.id.sp_abom_list_view);
         mFab = (FloatingActionButton) rootView.findViewById(R.id.frm_abonement_fab);
         if (mode != ConstantManager.VIEW_SPORTSMAN) {
             mFab.setOnClickListener(this);
+            mListView.setOnItemLongClickListener(this);
         }else {
             mFab.setEnabled(false);
             mFab.setVisibility(View.GONE);
         }
-
-        mListView = (ListView) rootView.findViewById(R.id.sp_abom_list_view);
-        mListView.setOnItemLongClickListener(this);
-
-
         return rootView;
         //return super.onCreateView(inflater, container, savedInstanceState);
     }
@@ -115,7 +113,8 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
             @Override
             public void onDialogItemClick(int selectItem) {
                 if (selectItem==R.id.dialog_del_item) {
-
+                    mDataManager.delAbonememet(model.getId(),model.getSpId());
+                    mAbonementAdapter.remove(model);
                 }
                 if (selectItem == R.id.dialog_edit_item){
                     Intent intent = new Intent(SpAbonementFragment.this.getContext(), AbonementActivity.class);
@@ -141,7 +140,6 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
     @Override
     public void onResume() {
         super.onResume();
-        Log.d(TAG," SP ABONEMEM RESUME");
         updateUI();
     }
 

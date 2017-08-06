@@ -48,7 +48,7 @@ public class DBHelper extends SQLiteOpenHelper {
             db.execSQL("CREATE INDEX \"trainint_date_desc\" on trainig_table (date DESC)");
 
             db.execSQL("create table "+REF_TABLE+"("+
-                    "type_ref integer not null,"+ // 0 -spman - group 1- traning-spman 2- тренировка - абонемент
+                    "type_ref integer not null,"+ // 0 -spman - group 1- traning-spman 2- тренировка - абонемент 3- абонемент - абонемент
                     "id1 integer not null,"+ // spanam
                     "id2 integer not null,"+ // otner
                     "type_link integer default -1,"+ // для связи тренировка абонемент указан тип связи
@@ -77,6 +77,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     " used_training integer default 0,"+
                     " working integer default 0,"+
                     " warning_count integer default 0,"+
+                    " debt numeric default 0,"+
                     " comment text)");
 
             db.execSQL("CREATE INDEX \"ab_date\" on abonement (start_date ASC, end_date ASC)");
@@ -101,6 +102,14 @@ public class DBHelper extends SQLiteOpenHelper {
                     "    update abonement set sp_id=new._id\n" +
                     "    where sp_id= -1;\n" +
                     "END");
+            // удаление связанных елементов
+            db.execSQL("CREATE TRIGGER abonement_bd0 AFTER DELETE on ABONEMENT\n" +
+                    "BEGIN\n" +
+                    "  DELETE from REF_TABLE\n" +
+                    "  where type_ref=3 and id1=old._id;\n" +
+                    "  DELETE FROM REF_TABLE\n" +
+                    "  where type_ref=3 and id2=old._id;\n" +
+                    "END;\n");
 
              /*
             db.execSQL("CREATE TRIGGER abonement_ai1\n" +
