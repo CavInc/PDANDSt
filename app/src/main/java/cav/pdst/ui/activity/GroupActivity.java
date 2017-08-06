@@ -82,6 +82,7 @@ public class GroupActivity extends AppCompatActivity implements NavigationView.O
     private void setupDrower() {
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setCheckedItem(R.id.drawer_group);
     }
 
     @Override

@@ -110,6 +110,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void setupDrower() {
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        navigationView.setCheckedItem(R.id.drawer_tr);
         navigationView.setNavigationItemSelectedListener(this);
     }
 

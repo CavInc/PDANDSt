@@ -129,6 +129,7 @@ public class ReportActivity extends AppCompatActivity implements NavigationView.
 
     private void setupDrower() {
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        navigationView.setCheckedItem(R.id.drawer_statistic);
         navigationView.setNavigationItemSelectedListener(this);
     }
 

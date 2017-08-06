@@ -299,6 +299,15 @@ public class DataBaseConnector {
         if (model.getAbonementId()!= -1){
             values.put("_id",model.getAbonementId());
         }
+        String sql="select _id,warning_count from ABONEMENT\n" +
+                "where sp_id="+model.getSpId()+" and end_date<'"+model.getEndDate()+"' and warning_count<>0\n" +
+                "order by end_date DESC\n" +
+                "limit 1";
+        Cursor cursor =database.rawQuery(sql,null);
+        while (cursor.moveToNext()) {
+            model.setWorking(cursor.getInt(1));
+        }
+
         values.put("sp_id",model.getSpId());
         values.put("pos_id",model.getId());
         values.put("buy_date",format.format(model.getCreateDate()));

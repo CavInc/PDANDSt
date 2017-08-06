@@ -197,6 +197,10 @@ public class AbonementModel implements Parcelable {
         return mWorking;
     }
 
+    public void setWorking(int working) {
+        mWorking = working;
+    }
+
     public int getWarning() {
         return mWarning;
     }

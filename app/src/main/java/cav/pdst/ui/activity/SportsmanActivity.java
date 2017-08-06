@@ -70,6 +70,7 @@ public class SportsmanActivity extends AppCompatActivity implements NavigationVi
 
     private void setupDrower() {
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        navigationView.setCheckedItem(R.id.drawer_stoptman);
         navigationView.setNavigationItemSelectedListener(this);
     }
 
@@ -141,7 +142,7 @@ public class SportsmanActivity extends AppCompatActivity implements NavigationVi
 
         }
         mNavigationDrawer.closeDrawer(GravityCompat.START);
-        return true;
+        return false;
     }
 
     @Override
