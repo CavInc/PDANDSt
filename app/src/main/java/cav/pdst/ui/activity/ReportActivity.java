@@ -176,7 +176,7 @@ public class ReportActivity extends AppCompatActivity implements NavigationView.
                 break;
         }
         mNavigationDrawer.closeDrawer(GravityCompat.START);
-        return true;
+        return false;
     }
 
     SwipeTouchListener.SwipeDetectListener mDetectListener = new SwipeTouchListener.SwipeDetectListener() {

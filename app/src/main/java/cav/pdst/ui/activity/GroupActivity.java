@@ -112,7 +112,7 @@ public class GroupActivity extends AppCompatActivity implements NavigationView.O
 
         }
         mNavigationDrawer.closeDrawer(GravityCompat.START);
-        return true;
+        return false;
     }
 
     @Override

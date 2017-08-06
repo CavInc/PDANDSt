@@ -166,7 +166,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         }
         mNavigationDrawer.closeDrawer(GravityCompat.START);
-        return true;
+        return false;
     }
 
     View.OnClickListener mClickListener = new View.OnClickListener() {
