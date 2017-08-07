@@ -87,7 +87,7 @@ public class AbonementAdapter extends ArrayAdapter<AbonementModel> {
         } else {
             holder.mWarning.setVisibility(View.GONE);
         }
-        if (Utils.isAfterDate(record.getEndDate()) && (record.getCountTraining()-record.getUsedTraining())!=0){
+        if (Utils.isAfterDate2(record.getEndDate()) && (record.getCountTraining()-record.getUsedTraining())!=0){
             holder.mPrime.setText("Доступны тренировки, но период закрыт");
             holder.mPrime.setTextColor(ContextCompat.getColor(getContext(),R.color.app_red));
         }
