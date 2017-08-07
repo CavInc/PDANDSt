@@ -16,10 +16,12 @@ import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import cav.pdst.R;
 import cav.pdst.data.models.AbonementModel;
+import cav.pdst.utils.Utils;
 
 public class AbonementAdapter extends ArrayAdapter<AbonementModel> {
     private LayoutInflater mInflater;
@@ -84,6 +86,10 @@ public class AbonementAdapter extends ArrayAdapter<AbonementModel> {
             holder.mWarning.setVisibility(View.VISIBLE);
         } else {
             holder.mWarning.setVisibility(View.GONE);
+        }
+        if (Utils.isAfterDate(record.getEndDate()) && (record.getCountTraining()-record.getUsedTraining())!=0){
+            holder.mPrime.setText("Доступны тренировки, но период закрыт");
+            holder.mPrime.setTextColor(ContextCompat.getColor(getContext(),R.color.app_red));
         }
 
         //holder.mPrime.setText();

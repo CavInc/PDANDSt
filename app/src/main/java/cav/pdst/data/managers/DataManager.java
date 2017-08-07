@@ -297,7 +297,8 @@ public class DataManager {
                         cursor.getString(cursor.getColumnIndex("comment")),
                         cursor.getInt(cursor.getColumnIndex("used_training")),
                         cursor.getInt(cursor.getColumnIndex("working")),
-                        cursor.getInt(cursor.getColumnIndex("warning_count"))));
+                        cursor.getInt(cursor.getColumnIndex("warning_count")),
+                        cursor.getFloat(cursor.getColumnIndex("debt"))));
             } catch (ParseException e) {
                 e.printStackTrace();
             }

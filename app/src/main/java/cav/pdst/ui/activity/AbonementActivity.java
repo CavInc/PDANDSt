@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -33,6 +34,7 @@ public class AbonementActivity extends AppCompatActivity implements View.OnClick
     private TextView mCountTraining;
     private TextView mComent;
     private TextView mPay;
+    private EditText mDebit;
 
     private  int mode;
 
@@ -59,6 +61,7 @@ public class AbonementActivity extends AppCompatActivity implements View.OnClick
         mPay = (TextView) findViewById(R.id.et_price_ab);
         mCountTraining = (TextView) findViewById(R.id.et_count_tr);
         mComent = (TextView) findViewById(R.id.et_coment);
+        mDebit = (EditText) findViewById(R.id.et_debit);
         mSpinner = (Spinner) findViewById(R.id.tv_spiner_type);
         ArrayAdapter<String> spinerAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,ab_type);
         mSpinner.setAdapter(spinerAdapter);
@@ -81,6 +84,7 @@ public class AbonementActivity extends AppCompatActivity implements View.OnClick
             mCountTraining.setText(String.valueOf(mAbonementModel.getCountTraining()));
             mPay.setText(String.valueOf(mAbonementModel.getPay()));
             mComent.setText(mAbonementModel.getComment());
+            mDebit.setText(String.valueOf(mAbonementModel.getDebit()));
         }
         if (mode == ConstantManager.VIEW_ABONEMENT) {
             mCreateDate.setEnabled(false);
@@ -90,6 +94,7 @@ public class AbonementActivity extends AppCompatActivity implements View.OnClick
             mPay.setEnabled(false);
             mComent.setEnabled(false);
             mSpinner.setEnabled(false);
+            mDebit.setEnabled(false);
         }
 
 
@@ -144,6 +149,7 @@ public class AbonementActivity extends AppCompatActivity implements View.OnClick
             answerIntent.putExtra(ConstantManager.AB_COMMENT, mComent.getText().toString());
             answerIntent.putExtra(ConstantManager.AB_PAY, Float.parseFloat(mPay.getText().toString()));
             answerIntent.putExtra(ConstantManager.AB_TYPE,mAbType);
+            answerIntent.putExtra(ConstantManager.AB_DEBIT,Float.parseFloat(mDebit.getText().toString()));
         }
         if (mode == ConstantManager.EDIT_ABONEMENT) {
             mAbonementModel.setStartDate(Utils.getSteToDate(mStartDate.getText().toString(),"E dd.MM.yyyy"));
@@ -151,6 +157,7 @@ public class AbonementActivity extends AppCompatActivity implements View.OnClick
             mAbonementModel.setCountTraining(Integer.parseInt(mCountTraining.getText().toString()));
             mAbonementModel.setComment(mComent.getText().toString());
             mAbonementModel.setPay(Float.parseFloat(mPay.getText().toString()));
+            mAbonementModel.setDebit(Float.parseFloat(mDebit.getText().toString()));
             if (mAbonementModel.getUsedTraining()>mAbonementModel.getCountTraining()){
                 //TODO Ругаться !!!!
                 return;

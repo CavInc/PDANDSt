@@ -15,7 +15,7 @@ public class Utils {
         SimpleDateFormat format = new SimpleDateFormat("E dd.MM.yyyy");
         try {
             return new AbonementModel(-1,id,sp_id,format.parse(createDate),format.parse(startDate),
-                    format.parse(endDate),countTr,pay,0,comment,0,0,0);
+                    format.parse(endDate),countTr,pay,0,comment,0,0,0,0);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -33,7 +33,7 @@ public class Utils {
     }
 
     // проверить что дата находится в прошлом месяце
-    public boolean isAfterDate(Date date){
+    public static boolean isAfterDate(Date date){
         Calendar c = Calendar.getInstance();
         int year = c.get(Calendar.YEAR);
         int moth = c.get(Calendar.MONTH);

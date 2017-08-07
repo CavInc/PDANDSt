@@ -174,8 +174,11 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
                     pay = data.getFloatExtra(ConstantManager.AB_PAY,0.0f);
                     comment = data.getStringExtra(ConstantManager.AB_COMMENT);
                     int type = data.getIntExtra(ConstantManager.AB_TYPE,0);
+                    float debit = data.getFloatExtra(ConstantManager.AB_DEBIT,0.0f);
                     AbonementModel model = Utils.getConvertModel(sp_id,last_ab,createDate,startDate,endDate,countTr,pay,comment);
                     model.setType(type);
+                    model.setDebit(debit);
+
                     mAbonementAdapter.add(model);
                     mDataManager.addUpdateAbonement(model);
                     last_ab = last_ab + 1;

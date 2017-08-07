@@ -52,11 +52,11 @@ public interface ConstantManager {
     String AB_COMMENT = "AB_COMMENT";
     String AB_PAY = "AB_PAY";
     String AB_TYPE = "AB_TYPE";
+    String AB_DEBIT = "AB_DEBIT";
 
     int SPORTSMAN_MODE_TRAINING = 0;
     int SPORTSMAN_MODE_PASS = 1;
     int SPORTSMAN_MODE_WARNING = 2;
     int SPORTSMAN_MODE_WORKINGOFF = 3;
-
 
 }

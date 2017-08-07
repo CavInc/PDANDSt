@@ -108,13 +108,26 @@
             android:hint="0.0"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_debit_ti"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Задолженность"
+            android:layout_below="@id/et_price_ab"/>
+        <EditText
+            android:id="@+id/et_debit"
+            android:text="0.0"
+            android:layout_below="@id/tv_debit_ti"
+            android:inputType="numberDecimal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
         <TextView
             android:id="@+id/tv_coment"
             android:text="Коментарий"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/et_price_ab"/>
+            android:layout_below="@id/et_debit"/>
         <EditText
             android:id="@+id/et_coment"
             android:layout_width="match_parent"
