@@ -14,6 +14,7 @@
         android:gravity="center_vertical"
         android:drawableLeft="?android:attr/listChoiceIndicatorMultiple"
         android:text="New CheckBox"
+        android:textStyle="bold"
         android:layout_weight="1"/>
 
     <TextView
@@ -21,6 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="8dp"
+        android:textStyle="bold"
         android:text="New Text"
         />
 </LinearLayout>
