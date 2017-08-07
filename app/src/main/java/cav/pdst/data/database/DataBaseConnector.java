@@ -145,8 +145,15 @@ public class DataBaseConnector {
         database.delete(DBHelper.REF_TABLE,"type_ref=1 and id2="+data.getId(),null);
 
         //todo сдесь сделать отдачу абонемента обратно
-
+        String sql ="select id2 from ref_table rf where rf.type_ref=2 and id1="+data.getId()+" and rf.type_link in (0,1)";
+        Cursor cursor = database.rawQuery(sql,null);
+        while (cursor.moveToNext()){
+            sql="update " + DBHelper.ABONEMENT_TABLE+" set used_training=used_training-1 "+
+                    "where _id=" + cursor.getString(0);
+            database.execSQL(sql);
+        }
         database.delete(DBHelper.REF_TABLE,"type_ref=2 and id1="+data.getId(),null);
+
         for (int i=0;i<selectItem.size();i++) {
             SpRefAbModeModel mx = selectItem.get(i);
             value.clear();
@@ -161,7 +168,7 @@ public class DataBaseConnector {
             value.put("id2",mx.getAbonement());
             value.put("type_link",mx.getMode());
             database.insertWithOnConflict(DBHelper.REF_TABLE,null,value,SQLiteDatabase.CONFLICT_REPLACE);
-            String sql="update " + DBHelper.ABONEMENT_TABLE+" set used_training=used_training+1 "+
+            sql="update " + DBHelper.ABONEMENT_TABLE+" set used_training=used_training+1 "+
                     "where _id=" + mx.getAbonement();
             database.execSQL(sql);
         }
