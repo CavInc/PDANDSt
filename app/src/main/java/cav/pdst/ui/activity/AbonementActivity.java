@@ -82,6 +82,15 @@ public class AbonementActivity extends AppCompatActivity implements View.OnClick
             mPay.setText(String.valueOf(mAbonementModel.getPay()));
             mComent.setText(mAbonementModel.getComment());
         }
+        if (mode == ConstantManager.VIEW_ABONEMENT) {
+            mCreateDate.setEnabled(false);
+            mStartDate.setEnabled(false);
+            mEndDate.setEnabled(false);
+            mCountTraining.setEnabled(false);
+            mPay.setEnabled(false);
+            mComent.setEnabled(false);
+            mSpinner.setEnabled(false);
+        }
 
 
         setupToolBar();
@@ -122,9 +131,9 @@ public class AbonementActivity extends AppCompatActivity implements View.OnClick
 
     public void saveResult(){
         if (mStartDate.getText().toString().length()==0) {
-            //setResult(RESULT_CANCELED,null);
             return;
         }
+        if (mode == ConstantManager.VIEW_ABONEMENT) return;;
 
         Intent answerIntent = new Intent();
         if (mode == ConstantManager.NEW_ABONEMENT) {

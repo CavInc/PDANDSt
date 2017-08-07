@@ -25,7 +25,8 @@ import cav.pdst.utils.ConstantManager;
 import cav.pdst.utils.Utils;
 
 
-public class SpAbonementFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemLongClickListener {
+public class SpAbonementFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemLongClickListener,
+        AdapterView.OnItemClickListener {
 
     private static final String TAG = "SPAB";
     private static final String SPORTSMAN_ID = "SP_ID";
@@ -41,6 +42,7 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
     private int last_ab = 0; // количество абонементов на спортсмене
 
     private AbonementCallback mAbonementCallback;
+
 
 
 
@@ -85,6 +87,7 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
             mFab.setEnabled(false);
             mFab.setVisibility(View.GONE);
         }
+        mListView.setOnItemClickListener(this);
         return rootView;
         //return super.onCreateView(inflater, container, savedInstanceState);
     }
@@ -103,6 +106,15 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
             mAbonementAdapter.setData(data);
             mAbonementAdapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+        final AbonementModel model = (AbonementModel) adapterView.getItemAtPosition(position);
+        Intent intent = new Intent(SpAbonementFragment.this.getContext(), AbonementActivity.class);
+        intent.putExtra(ConstantManager.MODE_ABONEMENT,ConstantManager.VIEW_ABONEMENT);
+        intent.putExtra(ConstantManager.AB_DETAIL_DATA,model);
+        startActivity(intent);
     }
 
     @Override
