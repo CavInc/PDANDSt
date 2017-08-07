@@ -1,6 +1,8 @@
 package cav.pdst.ui.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,6 +63,20 @@ public class SpTrainingAdapter extends ArrayAdapter<TrainingModel> {
         }
         holder.mCount.setText(Integer.toString(record.getCount()));
         holder.mAbonentNum.setText("Абонемент №:"+record.getAbonentNum());
+        switch (record.getType()){
+            case ConstantManager.SPORTSMAN_MODE_TRAINING:
+                holder.mName.setTextColor(Color.BLACK);
+                break;
+            case ConstantManager.SPORTSMAN_MODE_PASS:
+                holder.mName.setTextColor(ContextCompat.getColor(getContext(),R.color.app_red));
+                break;
+            case ConstantManager.SPORTSMAN_MODE_WARNING:
+                holder.mName.setTextColor(ContextCompat.getColor(getContext(),R.color.app_blue));
+                break;
+            case ConstantManager.SPORTSMAN_MODE_WORKINGOFF:
+                holder.mName.setTextColor(ContextCompat.getColor(getContext(),R.color.app_yellow));
+                break;
+        }
         return row;
     }
 

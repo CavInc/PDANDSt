@@ -227,16 +227,11 @@ public class DataBaseConnector {
     }
 
     public Cursor getTraining(int sp_id){
-        /*
-        String sql="select _id,training_name,count_item,date,time from TRAINIG_TABLE tt\n" +
-                "   join REF_TABLE rf on rf.type_ref=1 and tt._id=rf.id2\n" +
-                "   where rf.id1="+sp_id;
-        */
-        String sql="select tt._id,tt.training_name,tt.count_item,tt.date,tt.time,ab.pos_id as abid from REF_TABLE  rf\n" +
+        String sql="select tt._id,tt.training_name,tt.count_item,tt.date,tt.time,ab.pos_id as abid,rt.type_link from REF_TABLE  rf\n" +
                 "  join TRAINIG_TABLE tt on rf.id2=tt._id\n" +
                 "  join REF_TABLE rf2 on rf2.type_ref=2 and tt._id=rf2.id1\n" +
                 "  join ABONEMENT ab on rf2.id2=ab._id and ab.sp_id=" +sp_id+
-                " where  rf.type_ref=1 and rf.id1="+sp_id;
+                " where  rf.type_ref=1 and rf.id1="+sp_id+" order by tt.date desc ,tt.time desc";
         return database.rawQuery(sql,null);
     }
     //TODO возможно следует передавать дату
