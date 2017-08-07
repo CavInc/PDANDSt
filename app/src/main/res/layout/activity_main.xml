@@ -31,11 +31,24 @@
                 android:fitsSystemWindows="true">
                 <com.prolificinteractive.materialcalendarview.MaterialCalendarView
                     android:id="@+id/calendarView"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/size_16dp"
                     app:mcv_dateTextAppearance="@style/CustomTextAppearance"
                     app:mcv_selectionColor="?attr/colorAccent"
-                    app:mcv_showOtherDates="all"
+                    app:mcv_showOtherDates="out_of_range"
+                    app:mcv_calendarMode="month"
+                    android:layout_gravity="left"
+                    />
+                <Button
+                    android:id="@+id/to_day"
+                    android:text="Сегодня"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/fab_margin_8"
+                    android:layout_marginRight="@dimen/fab_margin_8"
+                    android:background="@drawable/custom_button_background"
+                    android:layout_gravity="bottom|right"
                     />
             </FrameLayout>
 
