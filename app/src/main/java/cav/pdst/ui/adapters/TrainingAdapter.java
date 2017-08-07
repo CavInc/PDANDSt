@@ -69,7 +69,6 @@ public class TrainingAdapter extends ArrayAdapter<SportsmanTrainingModel> {
         }else {
             holder.mName.setTextColor(Color.BLACK);
         }
-        /*
 
         switch (record.getMode()){
             case ConstantManager.SPORTSMAN_MODE_TRAINING:
@@ -93,7 +92,7 @@ public class TrainingAdapter extends ArrayAdapter<SportsmanTrainingModel> {
                 row.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.app_yellow));
                 break;
         }
-        */
+
         holder.mName.setChecked(record.isCheck());
         return row;
     }

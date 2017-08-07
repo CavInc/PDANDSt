@@ -130,6 +130,14 @@ public class DataBaseConnector {
                 database.execSQL(sql);
             }
         }
+        Cursor cursor = getLastDateTraining(recid);
+        while (cursor.moveToNext()){
+            value.clear();
+            value.put("last_date",cursor.getString(cursor.getColumnIndex("date")));
+            value.put("last_time",cursor.getString(cursor.getColumnIndex("time")));
+            database.update(DBHelper.SPORTSMAN_TABLE,value,"_id="+cursor.getInt(0),null);
+        }
+
        close();
     }
 
@@ -227,7 +235,7 @@ public class DataBaseConnector {
     }
 
     public Cursor getTraining(int sp_id){
-        String sql="select tt._id,tt.training_name,tt.count_item,tt.date,tt.time,ab.pos_id as abid,rt.type_link from REF_TABLE  rf\n" +
+        String sql="select tt._id,tt.training_name,tt.count_item,tt.date,tt.time,ab.pos_id as abid,rf.type_link from REF_TABLE  rf\n" +
                 "  join TRAINIG_TABLE tt on rf.id2=tt._id\n" +
                 "  join REF_TABLE rf2 on rf2.type_ref=2 and tt._id=rf2.id1\n" +
                 "  join ABONEMENT ab on rf2.id2=ab._id and ab.sp_id=" +sp_id+
@@ -273,7 +281,7 @@ public class DataBaseConnector {
                 "   left join (select id1, count(1) as ci from REF_TABLE where type_ref=1\n" +
                 "   group by id1) as a on sp._id=a.id1 order by sp.sp_name";
         */
-        String sql="select sp._id,sp.sp_name,sp.phone,sp.comment,a.ci,ab.sm from SPORTSMAN sp\n" +
+        String sql="select sp._id,sp.sp_name,sp.phone,sp.comment,a.ci,ab.sm,sp.last_date,sp.last_time from SPORTSMAN sp\n" +
                 "  left join (select id1, count(1) as ci from REF_TABLE where type_ref=1   group by id1) as a on sp._id=a.id1 \n" +
                 "  left join (select sp_id,sum(count_training-used_training) as sm from ABONEMENT where count_training-used_training<>0 group by sp_id) as ab on sp._id=ab.sp_id\n" +
                 "order by sp.sp_name";
@@ -368,9 +376,18 @@ public class DataBaseConnector {
 
     // misc
 
+    // возвращает чтото если у спортсмена дата последней тренировки меньше.
+    private Cursor getLastDateTraining(int trainig) {
+        String sql="select sp._id,tt.date,tt.time from TRAINIG_TABLE tt\n" +
+                " left join REF_TABLE rf on rf.type_ref=1 and tt._id=rf.id2\n" +
+                " left join SPORTSMAN sp on rf.id1=sp._id\n" +
+                " where tt._id="+trainig+" and (tt.date>sp.last_date) and (tt.time>sp.last_time)";
+        return database.rawQuery(sql,null);
+    }
+
     public Cursor getAbonementInDate(int sp_id,String date){
         String sql="select _id from ABONEMENT \n" +
-                   " where sp_id="+sp_id+" and start_date<='"+date+"' and end_date>='"+date+"' and (count_training-used_training)<>0"+
+                   " where sp_id="+sp_id+" and start_date<='"+date+"' and end_date>='"+date+"' and (count_training+working-used_training)<>0"+
                 " order by pos_id";
 
         //System.out.println(sql);

@@ -11,22 +11,19 @@ public class SportsmanModel implements Parcelable {
     private int mTrainingAll = 0;
     private int mTraninigWrk = 0;
     private String mComment= null;
+    private String mLastDate = null;
+    private String mLastTime = null;
 
-    public SportsmanModel(String name, String tel, int trainingAll, int traninigWrk, String comment) {
-        mName = name;
-        mTel = tel;
-        mTrainingAll = trainingAll;
-        mTraninigWrk = traninigWrk;
-        mComment = comment;
-    }
 
-    public SportsmanModel(int id, String name, String tel, int trainingAll, int traninigWrk, String comment) {
+    public SportsmanModel(int id, String name, String tel, int trainingAll, int traninigWrk, String comment,String lastDate,String lastTime) {
         mId = id;
         mName = name;
         mTel = tel;
         mTrainingAll = trainingAll;
         mTraninigWrk = traninigWrk;
         mComment = comment;
+        mLastDate = lastDate;
+        mLastTime = lastTime;
     }
 
     public SportsmanModel() {
@@ -38,6 +35,8 @@ public class SportsmanModel implements Parcelable {
         mName = parcel.readString();
         mTel = parcel.readString();
         mComment = parcel.readString();
+        mLastDate = parcel.readString();
+        mLastTime = parcel.readString();
     }
 
     public int getId() {
@@ -88,6 +87,14 @@ public class SportsmanModel implements Parcelable {
         mComment = comment;
     }
 
+    public String getLastDate() {
+        return mLastDate;
+    }
+
+    public String getLastTime() {
+        return mLastTime;
+    }
+
     public static final Creator<SportsmanModel> CREATOR = new Creator<SportsmanModel>() {
         @Override
         public SportsmanModel createFromParcel(Parcel parcel) {
@@ -111,6 +118,8 @@ public class SportsmanModel implements Parcelable {
         parcel.writeString(mName);
         parcel.writeString(mTel);
         parcel.writeString(mComment);
+        parcel.writeString(mLastDate);
+        parcel.writeString(mLastTime);
 
     }
 }

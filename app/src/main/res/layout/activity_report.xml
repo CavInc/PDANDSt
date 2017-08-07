@@ -33,7 +33,7 @@
                     android:src="@drawable/ic_chevron_left_black_24dp"/>
                 <TextView
                     android:id="@+id/r_month"
-                    android:textSize="24sp"
+                    android:textSize="@dimen/font_size_24"
                     android:text="apr. 2017"
                     android:textColor="@android:color/black"
                     android:gravity="center"
@@ -54,14 +54,14 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/r_month_l"
             android:gravity="center"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="@dimen/size_8dp"
             android:text="Период"/>
         <LinearLayout
             android:id="@+id/r_period_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/r_period"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="@dimen/size_16dp"
             android:orientation="horizontal">
             <Button
                 android:id="@+id/r_start_date"
@@ -78,8 +78,8 @@
                 android:text="end_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp"
+                android:layout_marginLeft="@dimen/size_4dp"
+                android:layout_marginRight="@dimen/size_4dp"
                 android:textColor="@android:color/white"
                 android:background="@drawable/custom_button_background"
                 android:layout_weight="1"/>
@@ -99,12 +99,12 @@
                 android:id="@+id/r_doxod_button"
                 android:layout_gravity="right"/>
             <TextView android:text="Расход:"
-                android:textSize="18sp"/>
+                android:textSize="@dimen/font_size_18"/>
             <Button
                 android:id="@+id/r_rashod_button"
                 android:layout_gravity="right"/>
             <TextView android:text="Итого:"
-                      android:textSize="18sp"
+                      android:textSize="@dimen/font_size_18"
                       android:textColor="@android:color/black"
                 android:textStyle="bold"/>
             <TextView
@@ -112,9 +112,8 @@
                 android:text="1000"
                 android:textStyle="bold"
                 android:textColor="@android:color/black"
-                android:textSize="18sp"
+                android:textSize="@dimen/font_size_18"
                 android:layout_gravity="right"/>
-
         </GridLayout>
 
     </RelativeLayout>

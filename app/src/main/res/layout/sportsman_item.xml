@@ -51,7 +51,7 @@
 
     <TextView
         android:id="@+id/spman_item_last_tr"
-        android:text="Последняя:"
+        android:text="@string/last_training_data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

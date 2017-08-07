@@ -12,6 +12,8 @@
     <string name="count_training_sportsman">Количество спортсменов : </string>
     <string name="create_date">Дата приобретения</string>
     <string name="menu_save_item">Сохранить</string>
+    <string name="last_training_data">Последняя:</string>
+
 
     <string-array name="training_operation">
         <item>Тренировка</item>

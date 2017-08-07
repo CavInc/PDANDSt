@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,9 +20,11 @@ import cav.pdst.data.models.SportsmanModel;
 public class SportsmanAdapter extends ArrayAdapter<SportsmanModel>{
     private LayoutInflater mInflater;
     private int resLayout;
+    private Context mContext;
 
     public SportsmanAdapter(Context context, int resource, List<SportsmanModel> objects) {
         super(context, resource, objects);
+        mContext = context;
         resLayout = resource;
         mInflater = LayoutInflater.from(context);
     }
@@ -53,6 +57,16 @@ public class SportsmanAdapter extends ArrayAdapter<SportsmanModel>{
             holder.mAbCount.setTextColor(ContextCompat.getColor(getContext(),R.color.app_red));
         }
         holder.mTraining.setText("Тренировки: "+record.getTrainingAll()+" / ");
+        if (!record.getLastDate().equals("2010-01-01")){
+            String l = "";
+            try {
+                l= new SimpleDateFormat("E dd.MM.yyyy").format(new SimpleDateFormat("yyyy-MM-dd").parse(record.getLastDate()));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            holder.mLastTraining.setText(mContext.getString(R.string.last_training_data)+" "+l+" "+record.getLastTime());
+        }
         return row;
     }
 

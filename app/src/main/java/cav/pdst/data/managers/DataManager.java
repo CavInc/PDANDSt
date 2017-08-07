@@ -150,7 +150,9 @@ public class DataManager {
                     cursor.getString(cursor.getColumnIndex("phone")),
                     cursor.getInt(cursor.getColumnIndex("ci")),
                     cursor.getInt(cursor.getColumnIndex("sm")),
-                    cursor.getString(cursor.getColumnIndex("comment"))));
+                    cursor.getString(cursor.getColumnIndex("comment")),
+                    cursor.getString(cursor.getColumnIndex("last_date")),
+                    cursor.getString(cursor.getColumnIndex("last_time"))));
         }
         mDB.close();
         return rec;
@@ -220,7 +222,8 @@ public class DataManager {
                         cursor.getInt(cursor.getColumnIndex("count_item")),
                         format.parse(cursor.getString(cursor.getColumnIndex("date"))),
                         cursor.getString(cursor.getColumnIndex("time")),
-                        cursor.getInt(cursor.getColumnIndex("abid"))));
+                        cursor.getInt(cursor.getColumnIndex("abid")),
+                        cursor.getInt(cursor.getColumnIndex("type_link"))));
             } catch (ParseException e) {
                 e.printStackTrace();
             }

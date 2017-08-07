@@ -107,6 +107,8 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         if (mode == ConstantManager.EDIT_TRAINING || mode == ConstantManager.VIEW_TRAINING) {
             mTraining.setText(mModel.getName());
             mCountSportsman.setText(getString(R.string.count_training_sportsman)+" "+mModel.getCount());
+        } else {
+            mCountSportsman.setText(getString(R.string.count_training_sportsman)+" 0");
         }
 
         if (mode == ConstantManager.VIEW_TRAINING) {

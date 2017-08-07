@@ -9,6 +9,13 @@
     <dimen name="fab_margin_8">8dp</dimen>
     <dimen name="fab_margin_4">4dp</dimen>
 
+    <dimen name="size_16dp">16dp</dimen>
+    <dimen name="size_8dp">8dp</dimen>
+    <dimen name="size_4dp">4dp</dimen>
+
+    <dimen name="font_size_24">24sp</dimen>
+
     <dimen name="calendar_height">260dp</dimen>
+    <dimen name="font_size_18">18sp</dimen>
 
 </resources>

@@ -58,8 +58,8 @@ public class DBHelper extends SQLiteOpenHelper {
                     "_id integer not null primary key AUTOINCREMENT,"+
                     "sp_name text,"+
                     "phone text,"+"" +
-                    "last_date text,"+
-                    "last_time text,"+
+                    "last_date text default '2010-01-01',"+
+                    "last_time text default '00:00',"+
                     "comment text)");
 
             db.execSQL("CREATE INDEX \"SP_NAME_SPORTSMAN\" on sportsman (sp_name ASC)");
