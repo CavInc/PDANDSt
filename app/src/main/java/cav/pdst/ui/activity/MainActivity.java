@@ -214,7 +214,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     OnDateSelectedListener mDateSelectedListener = new OnDateSelectedListener() {
         @Override
         public void onDateSelected(MaterialCalendarView widget,CalendarDay date, boolean selected) {
-            Log.d(TAG,"DAY SELECTED "+date.toString());
             selectedDate = date.getDate();
             updateUI(1);
         }
