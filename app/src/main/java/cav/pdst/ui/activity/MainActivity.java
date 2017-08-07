@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     TrainingModel selModel;
     private Collection<CalendarDay> mCalendarDays;
 
-    // https://github.com/prolificinteractive/material-calendarview
+    //
     // https://github.com/dpreussler/clean-simple-calendar
     // https://github.com/mahendramahi/CalendarView
     // https://github.com/square/android-times-square/blob/master/sample/src/main/res/layout/sample_calendar_picker.xml
