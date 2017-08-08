@@ -400,7 +400,11 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
                 int countTr = data.getIntExtra(ConstantManager.AB_COUNT_TR, 0);
                 float pay = data.getFloatExtra(ConstantManager.AB_PAY, 0.0f);
                 String comment = data.getStringExtra(ConstantManager.AB_COMMENT);
+                int type = data.getIntExtra(ConstantManager.AB_TYPE,0);
+                float debit = data.getFloatExtra(ConstantManager.AB_DEBIT,0.0f);
                 AbonementModel model = Utils.getConvertModel(selSportspam,mx,createDate,startDate,endDate,countTr,pay,comment);
+                model.setType(type);
+                model.setDebit(debit);
                 mDataManager.addUpdateAbonement(model);
                 updateUI();
             }
