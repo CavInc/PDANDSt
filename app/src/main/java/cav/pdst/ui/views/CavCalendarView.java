@@ -149,7 +149,7 @@ public class CavCalendarView extends LinearLayout {
             }
             TextView dx = (TextView) view;
             Log.d("CCL",dx.getText().toString());
-            dx.setTextColor(Color.RED);
+            dx.setTextColor(mSelectedColor);
             dxSelect = dx;
 
             Calendar c = Calendar.getInstance();
@@ -191,7 +191,16 @@ public class CavCalendarView extends LinearLayout {
         mMonth.setText(mMonths[mCurrentMonth]+" "+mCurrentYear);
     }
 
+    //TODO  не запоминает дату выбранную при листании месяца будет скидывать
     public void setSelectedDate(Date date){
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        int y = c.get(Calendar.YEAR);
+        int m = c.get(Calendar.MONTH);
+        int d = c.get(Calendar.DAY_OF_MONTH);
+        if (y!=mCurrentYear) return;
+        if (m!=mCurrentMonth) return;
+
 
     }
 
