@@ -6,7 +6,11 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingRight="8dp"
+        android:paddingLeft="8dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
       <ImageView
           android:id="@+id/cc_left_arrroy"
           android:layout_width="wrap_content"
@@ -19,6 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:textStyle="bold"
             android:layout_weight="0.8"/>
         <ImageView
             android:src="@drawable/ic_chevron_right_black_24dp"
@@ -30,8 +35,7 @@
     <TableLayout
         android:id="@+id/cc_table_day"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TableRow
-            android:id="@+id/cc_table_legend"/>
+        android:layout_height="wrap_content"
+        android:stretchColumns="*">
     </TableLayout>
 </LinearLayout>

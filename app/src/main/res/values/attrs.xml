@@ -1,0 +1,7 @@
+<resources>
+    <declare-styleable name="CavCalendarView">
+        <attr name="cc_selectColor" format="color"/>
+        <attr name="cc_dayColor" format="color"/>
+        <attr name="cc_weekColor" format="color"/>
+    </declare-styleable>
+</resources>
