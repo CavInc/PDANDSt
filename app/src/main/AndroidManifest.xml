@@ -3,7 +3,6 @@
           package="cav.pdst"
           android:installLocation="auto">
 
-    <uses-permission android:name="android.permission.SEND_SMS"/>
     <uses-permission android:name="android.permission.CALL_PHONE"/>
 
     <application

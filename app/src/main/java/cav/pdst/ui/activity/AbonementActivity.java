@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ import cav.pdst.R;
 import cav.pdst.data.managers.DataManager;
 import cav.pdst.data.models.AbonementModel;
 import cav.pdst.ui.fragments.DatePickerFragment;
+import cav.pdst.ui.fragments.DateTimeFragment;
 import cav.pdst.utils.ConstantManager;
 import cav.pdst.utils.Utils;
 
@@ -35,6 +37,7 @@ public class AbonementActivity extends AppCompatActivity implements View.OnClick
     private TextView mComent;
     private TextView mPay;
     private EditText mDebit;
+    private Button mDebitDate;
 
     private  int mode;
 
@@ -62,6 +65,8 @@ public class AbonementActivity extends AppCompatActivity implements View.OnClick
         mCountTraining = (TextView) findViewById(R.id.et_count_tr);
         mComent = (TextView) findViewById(R.id.et_coment);
         mDebit = (EditText) findViewById(R.id.et_debit);
+        mDebitDate = (Button) findViewById(R.id.button_debit_date);
+
         mSpinner = (Spinner) findViewById(R.id.tv_spiner_type);
         ArrayAdapter<String> spinerAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,ab_type);
         mSpinner.setAdapter(spinerAdapter);
@@ -70,6 +75,7 @@ public class AbonementActivity extends AppCompatActivity implements View.OnClick
         mCreateDate.setOnClickListener(this);
         mStartDate.setOnClickListener(this);
         mEndDate.setOnClickListener(this);
+        mDebitDate.setOnClickListener(this);
 
         SimpleDateFormat format = new SimpleDateFormat("E dd.MM.yyyy");
         mode = getIntent().getIntExtra(ConstantManager.MODE_ABONEMENT,ConstantManager.NEW_ABONEMENT);
@@ -85,6 +91,9 @@ public class AbonementActivity extends AppCompatActivity implements View.OnClick
             mPay.setText(String.valueOf(mAbonementModel.getPay()));
             mComent.setText(mAbonementModel.getComment());
             mDebit.setText(String.valueOf(mAbonementModel.getDebit()));
+            if (mAbonementModel.getDebitDate()!=null){
+                mDebitDate.setText(new SimpleDateFormat("dd.MM.yyyy HH:mm").format(mAbonementModel.getDebitDate()));
+            }
         }
         if (mode == ConstantManager.VIEW_ABONEMENT) {
             mCreateDate.setEnabled(false);
@@ -95,6 +104,7 @@ public class AbonementActivity extends AppCompatActivity implements View.OnClick
             mComent.setEnabled(false);
             mSpinner.setEnabled(false);
             mDebit.setEnabled(false);
+            mDebitDate.setEnabled(false);
         }
 
 
@@ -149,7 +159,12 @@ public class AbonementActivity extends AppCompatActivity implements View.OnClick
             answerIntent.putExtra(ConstantManager.AB_COMMENT, mComent.getText().toString());
             answerIntent.putExtra(ConstantManager.AB_PAY, Float.parseFloat(mPay.getText().toString()));
             answerIntent.putExtra(ConstantManager.AB_TYPE,mAbType);
-            answerIntent.putExtra(ConstantManager.AB_DEBIT,Float.parseFloat(mDebit.getText().toString()));
+            if (mDebit.getText().toString().length()!=0) {
+                answerIntent.putExtra(ConstantManager.AB_DEBIT, Float.parseFloat(mDebit.getText().toString()));
+            }else {
+                answerIntent.putExtra(ConstantManager.AB_DEBIT,0.0f);
+            }
+            answerIntent.putExtra(ConstantManager.AB_DEBIT_DATETIME,mDebitDate.getText().toString());
         }
         if (mode == ConstantManager.EDIT_ABONEMENT) {
             mAbonementModel.setStartDate(Utils.getSteToDate(mStartDate.getText().toString(),"E dd.MM.yyyy"));
@@ -158,6 +173,7 @@ public class AbonementActivity extends AppCompatActivity implements View.OnClick
             mAbonementModel.setComment(mComent.getText().toString());
             mAbonementModel.setPay(Float.parseFloat(mPay.getText().toString()));
             mAbonementModel.setDebit(Float.parseFloat(mDebit.getText().toString()));
+            mAbonementModel.setDebitDate(Utils.getSteToDate(mDebitDate.getText().toString(),"dd.MM.yyyy HH:mm"));
             if (mAbonementModel.getUsedTraining()>mAbonementModel.getCountTraining()){
                 //TODO Ругаться !!!!
                 return;
@@ -227,6 +243,16 @@ public class AbonementActivity extends AppCompatActivity implements View.OnClick
             case R.id.et_create_date:
                 dMode = 2;
                 dialog.show(getSupportFragmentManager(),ConstantManager.DIALOG_DATE);
+                break;
+            case R.id.button_debit_date:
+                DateTimeFragment dateTimeFragment = new DateTimeFragment();
+                dateTimeFragment.setOnDateTimeChangeListener(new DateTimeFragment.OnDateTimeChangeListener() {
+                    @Override
+                    public void OnDateTimeChange(Date date) {
+                        mDebitDate.setText(new SimpleDateFormat("dd.MM.yyy HH:mm").format(date));
+                    }
+                });
+                dateTimeFragment.show(getSupportFragmentManager(),"date_time");
                 break;
         }
 

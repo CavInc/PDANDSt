@@ -147,6 +147,7 @@ public class SpInfoFragment extends Fragment {
         mSendSMS = (Button) rootView.findViewById(R.id.info_send_sms);
 
         mCall.setOnClickListener(mCallListener);
+        mSendSMS.setOnClickListener(mSendSMSListener);
 
         return rootView;
         //return super.onCreateView(inflater, container, savedInstanceState);
@@ -165,6 +166,16 @@ public class SpInfoFragment extends Fragment {
                 callIntent.setData(Uri.parse("tel:" + mPhone.getText()));
                 callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(callIntent);
+            }
+        }
+    };
+
+    View.OnClickListener mSendSMSListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if (mPhone.getText().toString().length()!=0){
+                Intent smsIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("sms:"+mPhone.getText()));
+                startActivity(smsIntent);
             }
         }
     };

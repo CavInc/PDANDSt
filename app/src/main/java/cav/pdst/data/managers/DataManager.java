@@ -288,6 +288,11 @@ public class DataManager {
         Cursor cursor = mDB.getAbonement(sprotsman_id);
         while (cursor.moveToNext()){
             try {
+                Date ddebit = null;
+                String db= cursor.getString(cursor.getColumnIndex("alarm_date"));
+                if (db != null){
+                    ddebit = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(db);
+                }
                 rec.add(new AbonementModel (cursor.getInt(cursor.getColumnIndex("_id")),
                         cursor.getInt(cursor.getColumnIndex("pos_id")),
                         cursor.getInt(cursor.getColumnIndex("sp_id")),
@@ -301,7 +306,7 @@ public class DataManager {
                         cursor.getInt(cursor.getColumnIndex("used_training")),
                         cursor.getInt(cursor.getColumnIndex("working")),
                         cursor.getInt(cursor.getColumnIndex("warning_count")),
-                        cursor.getFloat(cursor.getColumnIndex("debt"))));
+                        cursor.getFloat(cursor.getColumnIndex("debt")),ddebit));
             } catch (ParseException e) {
                 e.printStackTrace();
             }
