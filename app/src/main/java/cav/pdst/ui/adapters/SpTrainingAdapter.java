@@ -63,8 +63,8 @@ public class SpTrainingAdapter extends ArrayAdapter<TrainingModel> {
         }
         holder.mCount.setText(Integer.toString(record.getCount()));
         holder.mAbonentNum.setText("Абонемент №:"+record.getAbonentNum());
-        /*
-        switch (record.getType()){
+
+        switch (record.getTypeTraining()){
             case ConstantManager.SPORTSMAN_MODE_TRAINING:
                 holder.mName.setTextColor(Color.BLACK);
                 break;
@@ -78,7 +78,7 @@ public class SpTrainingAdapter extends ArrayAdapter<TrainingModel> {
                 holder.mName.setTextColor(ContextCompat.getColor(getContext(),R.color.app_yellow));
                 break;
         }
-        */
+
         return row;
     }
 
