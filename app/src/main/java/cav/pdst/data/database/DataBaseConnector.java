@@ -293,7 +293,8 @@ public class DataBaseConnector {
     public Cursor getAbonement(int sportsman_id){
         return database.query(DBHelper.ABONEMENT_TABLE,
                 new String[]{"_id","sp_id","pos_id","buy_date","start_date","end_date",
-                        "type_abonement","pay","count_training","comment","used_training","working","warning_count","debt"},
+                        "type_abonement","pay","count_training","comment","used_training","working"
+                        ,"warning_count","debt","alarm_date"},
                 "sp_id="+sportsman_id,null,null,null,"pos_id");
     }
 
@@ -349,7 +350,9 @@ public class DataBaseConnector {
         values.put("working",model.getWorking());
         values.put("warning_count",model.getWarning());
         values.put("debt",model.getDebit());
-
+        if (model.getDebitDate() != null){
+            values.put("alarm_date",new SimpleDateFormat("yyyy-MM-dd HH:mm").format(model.getDebitDate()));
+        }
         int rec_id = (int) database.insertWithOnConflict(DBHelper.ABONEMENT_TABLE,null,values,SQLiteDatabase.CONFLICT_REPLACE);
 
         if (model.getWorking()!=0) {

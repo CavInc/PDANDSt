@@ -116,7 +116,7 @@
             android:layout_below="@id/et_price_ab"/>
         <EditText
             android:id="@+id/et_debit"
-            android:text="0.0"
+            android:hint="0.0"
             android:layout_below="@id/tv_debit_ti"
             android:inputType="numberDecimal"
             android:layout_width="wrap_content"

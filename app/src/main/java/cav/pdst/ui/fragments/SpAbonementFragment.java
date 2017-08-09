@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import cav.pdst.R;
@@ -175,10 +176,13 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
                     comment = data.getStringExtra(ConstantManager.AB_COMMENT);
                     int type = data.getIntExtra(ConstantManager.AB_TYPE,0);
                     float debit = data.getFloatExtra(ConstantManager.AB_DEBIT,0.0f);
+                    String sDateDebit = data.getStringExtra(ConstantManager.AB_DEBIT_DATETIME);
                     AbonementModel model = Utils.getConvertModel(sp_id,last_ab,createDate,startDate,endDate,countTr,pay,comment);
                     model.setType(type);
                     model.setDebit(debit);
-
+                    if (sDateDebit.length()!=0) {
+                        model.setDebitDate(Utils.getSteToDate(sDateDebit, "dd.MM.yyyy HH:mm"));
+                    }
                     mAbonementAdapter.add(model);
                     mDataManager.addUpdateAbonement(model);
                     last_ab = last_ab + 1;
