@@ -1,4 +1,4 @@
-<LinearLayout
+<cav.pdst.utils.CustomLinearLayout
     android:id="@+id/cc_calendar_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -39,4 +39,4 @@
         android:layout_height="wrap_content"
         android:stretchColumns="*">
     </TableLayout>
-</LinearLayout>
+</cav.pdst.utils.CustomLinearLayout>

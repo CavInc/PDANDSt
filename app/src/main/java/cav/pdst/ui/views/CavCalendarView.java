@@ -42,7 +42,7 @@ public class CavCalendarView extends LinearLayout  {
     private GestureDetector mGestureDetector;
 
     private final String[] mMonths = {"Январь","Февраль","Март",
-            "Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь" +
+            "Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь",
             "Ноябрь","Декабрь"};
 
     private TextView dxSelect = null;
@@ -95,7 +95,8 @@ public class CavCalendarView extends LinearLayout  {
         SwipeTouchListener swipeTouchListener = new SwipeTouchListener();
         //mGestureDetector = new GestureDetector(this.getContext(),new SwipeGestureDetector());
         LinearLayout mLayout = (LinearLayout) findViewById(R.id.cc_calendar_layout);
-        //mLayout.setOnTouchListener(swipeTouchListener);
+        mLayout.setOnTouchListener(swipeTouchListener);
+        /*
         mLayout.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -103,6 +104,7 @@ public class CavCalendarView extends LinearLayout  {
                 return true;
             }
         });
+        */
         swipeTouchListener.setSwipeListener(mDetectListener);
 
         setLegend();
@@ -130,8 +132,9 @@ public class CavCalendarView extends LinearLayout  {
         day -=1;
         c.setTime(mLastDate);
         int day_cout = c.get(Calendar.DAY_OF_MONTH);
-        int line_count = 4;
-        if ((day_cout % 7)!=0) line_count = 5;
+        //int line_count = 4;
+        //if ((day_cout % 7)!=0) line_count = 5;
+        int line_count = 5;
         int day_i = 1;
         for (int i=1;i<=line_count;i++){
             TableRow line = new TableRow(this.getContext());
