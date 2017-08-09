@@ -78,6 +78,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     " working integer default 0,"+
                     " warning_count integer default 0,"+
                     " debt numeric default 0,"+
+                    " alarm_date text,"+
                     " comment text)");
 
             db.execSQL("CREATE INDEX \"ab_date\" on abonement (start_date ASC, end_date ASC)");
