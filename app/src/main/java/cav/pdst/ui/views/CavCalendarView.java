@@ -6,8 +6,10 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,7 +23,7 @@ import java.util.Date;
 import cav.pdst.R;
 
 //https://habrahabr.ru/post/124879/
-public class CavCalendarView extends LinearLayout {
+public class CavCalendarView extends LinearLayout implements View.OnTouchListener {
     private TextView mMonth;
     private ImageView mLeftArrov;
     private ImageView mRightArrov;
@@ -36,6 +38,7 @@ public class CavCalendarView extends LinearLayout {
     private Date mLastDate;
 
     private OnDateChangedListener mDateChangedListener;
+    private GestureDetector mGestureDetector;
 
     private final String[] mMonths = {"Январь","Февраль","Март",
             "Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь" +
@@ -47,6 +50,8 @@ public class CavCalendarView extends LinearLayout {
     private int mSelectedColor;
     private int mDayColor;
     private int mWeekColor;
+
+
 
     public interface OnDateChangedListener{
         public void onDateSelected(Date date);
@@ -80,6 +85,10 @@ public class CavCalendarView extends LinearLayout {
         mRightArrov.setOnClickListener(mArroyClickListener);
 
         mTableLayout = (TableLayout) findViewById(R.id.cc_table_day);
+
+        mGestureDetector = new GestureDetector(this.getContext(),new SwipeGestureDetector());
+        LinearLayout mLayout = (LinearLayout) findViewById(R.id.cc_calendar_layout);
+        mLayout.setOnTouchListener(this);
 
         setLegend();
         setCurrentDate(new Date());
@@ -150,6 +159,8 @@ public class CavCalendarView extends LinearLayout {
             TextView dx = (TextView) view;
             Log.d("CCL",dx.getText().toString());
             dx.setTextColor(mSelectedColor);
+            //dx.setBackground(android.R.drawable.stat_notify_sync);
+            dx.setBackgroundResource(R.drawable.custom_select_background);
             dxSelect = dx;
 
             Calendar c = Calendar.getInstance();
@@ -206,5 +217,47 @@ public class CavCalendarView extends LinearLayout {
 
     public void setOnDateChangedListener(OnDateChangedListener listener){
         mDateChangedListener = listener;
+    }
+
+    private void onRightSwipe() {
+        Log.d("CCL","Right");
+    }
+
+    private void onLeftSwipe() {
+        Log.d("CCL","Left");
+    }
+
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+        return mGestureDetector.onTouchEvent(motionEvent);
+    }
+
+    private class SwipeGestureDetector extends GestureDetector.SimpleOnGestureListener {
+        private static final int SWIPE_MIN_DISTANCE = 50;
+        private static final int SWIPE_MAX_OFF_PATH = 200;
+        private static final int SWIPE_THRESHOLD_VELOCITY = 200;
+
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            try{
+                float diffAbs = Math.abs(e1.getY() - e2.getY());
+                float diff = e1.getX() - e2.getX();
+                if (diffAbs > SWIPE_MAX_OFF_PATH) return false;
+
+                // Left swipe
+                if (diff > SWIPE_MIN_DISTANCE
+                        && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                    onLeftSwipe();
+                }// Right swipe
+                else if (-diff > SWIPE_MIN_DISTANCE
+                        && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                    onRightSwipe();
+                }
+
+            }catch (Exception e){
+
+            }
+            return true;
+        }
     }
 }
