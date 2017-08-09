@@ -21,9 +21,10 @@ import java.util.Calendar;
 import java.util.Date;
 
 import cav.pdst.R;
+import cav.pdst.utils.SwipeTouchListener;
 
 //https://habrahabr.ru/post/124879/
-public class CavCalendarView extends LinearLayout implements View.OnTouchListener {
+public class CavCalendarView extends LinearLayout  {
     private TextView mMonth;
     private ImageView mLeftArrov;
     private ImageView mRightArrov;
@@ -52,6 +53,11 @@ public class CavCalendarView extends LinearLayout implements View.OnTouchListene
     private int mWeekColor;
 
 
+
+    //https://ru.stackoverflow.com/questions/560926/%D0%9A%D0%B0%D0%BA-%D0%BE%D1%82%D1%81%D0%BB%D0%B5%D0%B4%D0%B8%D1%82%D1%8C-swipe-%D0%B8%D0%BC%D0%B5%D0%BD%D0%BD%D0%BE-%D1%87%D1%82%D0%BE-%D0%BF%D0%B0%D0%BB%D1%8C%D1%86%D0%B5%D0%BC-%D0%BF%D1%80%D0%BE%D0%B2%D0%B5%D0%BB%D0%B8-%D0%BF%D0%BE-textview
+    //https://habrahabr.ru/post/120931/
+    //http://developer.alexanderklimov.ru/android/views/imageswitcher.php#gesture
+    //https://habrahabr.ru/sandbox/76660/
 
     public interface OnDateChangedListener{
         public void onDateSelected(Date date);
@@ -86,9 +92,18 @@ public class CavCalendarView extends LinearLayout implements View.OnTouchListene
 
         mTableLayout = (TableLayout) findViewById(R.id.cc_table_day);
 
-        mGestureDetector = new GestureDetector(this.getContext(),new SwipeGestureDetector());
+        SwipeTouchListener swipeTouchListener = new SwipeTouchListener();
+        //mGestureDetector = new GestureDetector(this.getContext(),new SwipeGestureDetector());
         LinearLayout mLayout = (LinearLayout) findViewById(R.id.cc_calendar_layout);
-        mLayout.setOnTouchListener(this);
+        //mLayout.setOnTouchListener(swipeTouchListener);
+        mLayout.setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                Log.d("SLL","TOUCH");
+                return true;
+            }
+        });
+        swipeTouchListener.setSwipeListener(mDetectListener);
 
         setLegend();
         setCurrentDate(new Date());
@@ -171,6 +186,19 @@ public class CavCalendarView extends LinearLayout implements View.OnTouchListene
         }
     };
 
+    SwipeTouchListener.SwipeDetectListener mDetectListener = new SwipeTouchListener.SwipeDetectListener() {
+        @Override
+        public void OnSwipeDirection(SwipeTouchListener.Action direct) {
+            if (direct == SwipeTouchListener.Action.LR) {
+                changeMonth(0);
+            }
+            if (direct == SwipeTouchListener.Action.RL) {
+                changeMonth(1);
+            }
+
+        }
+    };
+
     private void changeMonth(int direction){
         Calendar c = Calendar.getInstance();
         c.set(mCurrentYear,mCurrentMonth,1);
@@ -227,10 +255,6 @@ public class CavCalendarView extends LinearLayout implements View.OnTouchListene
         Log.d("CCL","Left");
     }
 
-    @Override
-    public boolean onTouch(View view, MotionEvent motionEvent) {
-        return mGestureDetector.onTouchEvent(motionEvent);
-    }
 
     private class SwipeGestureDetector extends GestureDetector.SimpleOnGestureListener {
         private static final int SWIPE_MIN_DISTANCE = 50;
