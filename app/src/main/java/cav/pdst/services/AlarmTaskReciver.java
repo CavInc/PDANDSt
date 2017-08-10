@@ -44,6 +44,7 @@ public class AlarmTaskReciver extends BroadcastReceiver {
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setTicker("Задолженность")
                 .setWhen(System.currentTimeMillis())
+                .setContentTitle("Задолженность")
                 .setContentText(mMsg)
                 .setOngoing(true)
                 .setDefaults(Notification.DEFAULT_SOUND)

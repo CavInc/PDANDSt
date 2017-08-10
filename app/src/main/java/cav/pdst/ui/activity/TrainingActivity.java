@@ -320,6 +320,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         Cursor cursor = mDataManager.getDB().getAbonementInDate(id,format.format(date));
         while (cursor.moveToNext()){
             rec.add(cursor.getInt(0));
+
         }
         mDataManager.getDB().close();
         if (rec.size()!=0) {
