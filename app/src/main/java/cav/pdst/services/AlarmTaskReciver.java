@@ -7,7 +7,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.util.Log;
 
+import cav.pdst.R;
 import cav.pdst.utils.ConstantManager;
 
 public class AlarmTaskReciver extends BroadcastReceiver {
@@ -21,6 +23,7 @@ public class AlarmTaskReciver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         // an Intent broadcast.
         //throw new UnsupportedOperationException("Not yet implemented");
+        Log.d("ATR","ESH");
         mMsg = intent.getStringExtra(ConstantManager.ALARM_MSG);
         showNotification(context);
     }
@@ -38,9 +41,12 @@ public class AlarmTaskReciver extends BroadcastReceiver {
         PendingIntent pi = PendingIntent.getService(context,0,intent,PendingIntent.FLAG_CANCEL_CURRENT);
 
         builder.setContentIntent(pi)
+                .setSmallIcon(R.mipmap.ic_launcher)
                 .setTicker("Задолженность")
                 .setWhen(System.currentTimeMillis())
                 .setContentText(mMsg)
+                .setOngoing(true)
+                .setDefaults(Notification.DEFAULT_SOUND)
                 .setAutoCancel(true);
 
         if (Build.VERSION.SDK_INT < 16){

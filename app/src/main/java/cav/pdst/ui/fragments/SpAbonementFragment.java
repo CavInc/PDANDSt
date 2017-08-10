@@ -14,12 +14,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import cav.pdst.R;
 import cav.pdst.data.managers.DataManager;
 import cav.pdst.data.models.AbonementModel;
+import cav.pdst.services.AlarmTaskReciver;
 import cav.pdst.ui.activity.AbonementActivity;
 import cav.pdst.ui.adapters.AbonementAdapter;
 import cav.pdst.utils.ConstantManager;
@@ -197,13 +197,16 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
                     if (model.getDebitDate()!=null){
                         Utils.startAlarm(this.getContext(),model.getDebitDate(),"Задолженность");
                     }
+
+
+
                     break;
                 case ConstantManager.EDIT_ABONEMENT:
                     AbonementModel model2= data.getParcelableExtra(ConstantManager.AB_DETAIL_DATA);
                     mDataManager.addUpdateAbonement(model2);
                     mAbonementAdapter.add(model2);
                     if (model2.getDebitDate()!=null){
-                        Utils.startAlarm(this.getContext(),model2.getDebitDate(),"Задолденность");
+                        Utils.startAlarm(this.getContext(),model2.getDebitDate(),"Задолженность");
                     }
                     break;
             }

@@ -66,7 +66,7 @@ public class Utils {
         PendingIntent pi= PendingIntent.getBroadcast(context,0, intent,0);
         Calendar c = Calendar.getInstance();
         c.setTime(date);
-        am.set(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+5000,pi);
+        am.set(AlarmManager.RTC_WAKEUP,c.getTimeInMillis(),pi);
         Log.d(TAG,"SET ALARM");
 
     }
