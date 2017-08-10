@@ -1,12 +1,18 @@
 package cav.pdst.utils;
 
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 import cav.pdst.data.models.AbonementModel;
+import cav.pdst.services.AlarmTaskReciver;
 
 public class Utils {
     public static AbonementModel getConvertModel (int sp_id, int id, String createDate,
@@ -48,6 +54,17 @@ public class Utils {
     public static boolean isAfterDate2(Date date){
         Date dt = new Date();
         return dt.after(date);
+    }
+
+    public static void startAlarm(Context context,Date date,String msg){
+        AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent=new Intent(context, AlarmTaskReciver.class);
+        intent.putExtra(ConstantManager.ALARM_MSG,msg);
+        PendingIntent pi= PendingIntent.getBroadcast(context,0, intent,0);
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        am.set(AlarmManager.RTC_WAKEUP,c.getTimeInMillis(),pi);
+
     }
 }
 

@@ -8,7 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import cav.pdst.R;
 import cav.pdst.data.managers.DataManager;
@@ -25,6 +29,7 @@ public class SpTrainingFragment extends Fragment {
     private SpTrainingAdapter mAdapter;
 
     private DataManager mDataManager;
+    private MaterialCalendarView calendarView;
 
     public static SpTrainingFragment newInstanse(int sp_id){
         Bundle args = new Bundle();
@@ -46,6 +51,15 @@ public class SpTrainingFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container,  Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_sp_training, container, false);
+
+        Calendar newYear = Calendar.getInstance();
+        newYear.add(Calendar.YEAR, 1);
+        calendarView = (MaterialCalendarView) rootView.findViewById(R.id.calendarView);
+        calendarView.state().edit()
+                .setFirstDayOfWeek(Calendar.MONDAY)
+                .setMinimumDate(CalendarDay.from(2016,12,31))
+                .setMaximumDate(newYear)
+                .commit();
 
         mListView = (ListView) rootView.findViewById(R.id.sp_info_list_view);
 

@@ -95,16 +95,17 @@ public class CavCalendarView extends LinearLayout  {
         SwipeTouchListener swipeTouchListener = new SwipeTouchListener();
         //mGestureDetector = new GestureDetector(this.getContext(),new SwipeGestureDetector());
         LinearLayout mLayout = (LinearLayout) findViewById(R.id.cc_calendar_layout);
-        mLayout.setOnTouchListener(swipeTouchListener);
+       // mLayout.setOnTouchListener(swipeTouchListener);
         /*
         mLayout.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 Log.d("SLL","TOUCH");
-                return true;
+                return false;
             }
         });
         */
+
         swipeTouchListener.setSwipeListener(mDetectListener);
 
         setLegend();
@@ -116,6 +117,7 @@ public class CavCalendarView extends LinearLayout  {
         TableRow head = new TableRow(this.getContext());
         for (int i = 0;i<7;i++){
             TextView tv = new TextView(this.getContext());
+            tv.setTextColor(mWeekColor);
             tv.setText(mDayName[i]);
             tv.setGravity(Gravity.CENTER_HORIZONTAL);
             head.addView(tv);
@@ -141,6 +143,7 @@ public class CavCalendarView extends LinearLayout  {
             for (int j=0;j<7;j++){
                 if (day_i>day_cout) break;
                 TextView tx = new TextView(this.getContext());
+                tx.setPadding(0,8,0,8);
                 if ((j<day) && i==1) {
                     tx.setText(" ");
                 }else {
@@ -173,12 +176,13 @@ public class CavCalendarView extends LinearLayout  {
         public void onClick(View view) {
             if (dxSelect!= null){
                 dxSelect.setTextColor(mDayColor);
+                dxSelect.setBackgroundColor(Color.TRANSPARENT);
             }
             TextView dx = (TextView) view;
             Log.d("CCL",dx.getText().toString());
             dx.setTextColor(mSelectedColor);
             //dx.setBackground(android.R.drawable.stat_notify_sync);
-            dx.setBackgroundResource(R.drawable.custom_select_background);
+            dx.setBackgroundResource(R.drawable.today_circle_background);
             dxSelect = dx;
 
             Calendar c = Calendar.getInstance();

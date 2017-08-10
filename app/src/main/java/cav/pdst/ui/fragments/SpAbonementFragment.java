@@ -194,11 +194,17 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
                         mAbonementAdapter.add(model);
                     }
                     */
+                    if (model.getDebitDate()!=null){
+                        Utils.startAlarm(this.getContext(),model.getDebitDate(),"Задолженность");
+                    }
                     break;
                 case ConstantManager.EDIT_ABONEMENT:
                     AbonementModel model2= data.getParcelableExtra(ConstantManager.AB_DETAIL_DATA);
                     mDataManager.addUpdateAbonement(model2);
                     mAbonementAdapter.add(model2);
+                    if (model2.getDebitDate()!=null){
+                        Utils.startAlarm(this.getContext(),model2.getDebitDate(),"Задолденность");
+                    }
                     break;
             }
         }
