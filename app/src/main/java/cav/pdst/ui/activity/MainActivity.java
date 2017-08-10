@@ -192,9 +192,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
    View.OnClickListener mToDayListener = new View.OnClickListener() {
        @Override
        public void onClick(View view) {
+           selectedDate = new Date();
            calendarView.clearSelection();
-           calendarView.setCurrentDate(new Date());
-           calendarView.setDateSelected(new Date(),true);
+           calendarView.setCurrentDate(selectedDate);
+           calendarView.setDateSelected(selectedDate,true);
+           updateUI(1);
        }
    };
 
