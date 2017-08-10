@@ -168,6 +168,7 @@ public class DataBaseConnector {
             value.put("type_ref", 1);
             value.put("id1", mx.getSpId());
             value.put("id2",data.getId());
+            value.put("type_link",mx.getMode());
             database.insert(DBHelper.REF_TABLE,null,value);
 
             value.clear();
