@@ -66,6 +66,7 @@
         <activity
             android:name=".ui.activity.ReportActivity"
             android:label="Статистика"
+            android:theme="@style/AppTheme.NoActionBar"
             android:launchMode="singleTask">
         </activity>
         <activity

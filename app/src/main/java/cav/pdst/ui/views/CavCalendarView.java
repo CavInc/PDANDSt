@@ -38,6 +38,9 @@ public class CavCalendarView extends LinearLayout  {
     private Date mFirstDate;
     private Date mLastDate;
 
+    private Date mSelectDate;
+    private Date mCurrentDate;
+
     private OnDateChangedListener mDateChangedListener;
     private GestureDetector mGestureDetector;
 
@@ -236,10 +239,12 @@ public class CavCalendarView extends LinearLayout  {
         c.set(Calendar.DAY_OF_MONTH, c.getActualMaximum(Calendar.DAY_OF_MONTH));
         mLastDate=c.getTime();
         mMonth.setText(mMonths[mCurrentMonth]+" "+mCurrentYear);
+        mCurrentDate = date;
     }
 
     //TODO  не запоминает дату выбранную при листании месяца будет скидывать
     public void setSelectedDate(Date date){
+        mSelectDate = date;
         Calendar c = Calendar.getInstance();
         c.setTime(date);
         int y = c.get(Calendar.YEAR);
@@ -247,8 +252,10 @@ public class CavCalendarView extends LinearLayout  {
         int d = c.get(Calendar.DAY_OF_MONTH);
         if (y!=mCurrentYear) return;
         if (m!=mCurrentMonth) return;
+        if (dxSelect!=null) {
+            dxSelect.setBackgroundColor(Color.TRANSPARENT);
 
-
+        }
     }
 
     public void setOnDateChangedListener(OnDateChangedListener listener){
