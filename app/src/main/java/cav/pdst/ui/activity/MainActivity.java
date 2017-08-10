@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Toolbar mToolbar;
     private FloatingActionButton mFab;
     private DrawerLayout mNavigationDrawer;
-    private Button mToDay;
+    private ImageButton mToDay;
     private MaterialCalendarView calendarView;
 
     private ListView mListView;
@@ -76,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mNavigationDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mToDay = (Button) findViewById(R.id.to_day);
+        mToDay = (ImageButton) findViewById(R.id.to_day);
         mToDay.setOnClickListener(mToDayListener);
         mFab = (FloatingActionButton) findViewById(R.id.main_tr_fab);
         mFab.setOnClickListener(mClickListener);

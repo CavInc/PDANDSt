@@ -77,12 +77,6 @@
             android:label="Расход">
         </activity>
 
-        <service
-            android:name=".services.AlarmTaskReciver"
-            android:enabled="true"
-            android:exported="false">
-        </service>
-
         <receiver
             android:name=".services.AlarmTaskReciver"
             android:enabled="true"

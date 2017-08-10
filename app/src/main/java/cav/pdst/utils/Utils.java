@@ -5,6 +5,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,9 +16,11 @@ import cav.pdst.data.models.AbonementModel;
 import cav.pdst.services.AlarmTaskReciver;
 
 public class Utils {
+    private static final String TAG = "UTILS";
+
     public static AbonementModel getConvertModel (int sp_id, int id, String createDate,
-                                            String startDate, String endDate,
-                                            int countTr, float pay, String comment) {
+                                                  String startDate, String endDate,
+                                                  int countTr, float pay, String comment) {
         SimpleDateFormat format = new SimpleDateFormat("E dd.MM.yyyy");
         try {
             return new AbonementModel(-1,id,sp_id,format.parse(createDate),format.parse(startDate),
@@ -63,7 +66,8 @@ public class Utils {
         PendingIntent pi= PendingIntent.getBroadcast(context,0, intent,0);
         Calendar c = Calendar.getInstance();
         c.setTime(date);
-        am.set(AlarmManager.RTC_WAKEUP,c.getTimeInMillis(),pi);
+        am.set(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+5000,pi);
+        Log.d(TAG,"SET ALARM");
 
     }
 }

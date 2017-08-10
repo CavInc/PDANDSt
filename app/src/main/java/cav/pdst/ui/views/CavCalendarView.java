@@ -136,6 +136,7 @@ public class CavCalendarView extends LinearLayout  {
         int day_cout = c.get(Calendar.DAY_OF_MONTH);
         //int line_count = 4;
         //if ((day_cout % 7)!=0) line_count = 5;
+
         int line_count = 5;
         int day_i = 1;
         for (int i=1;i<=line_count;i++){
