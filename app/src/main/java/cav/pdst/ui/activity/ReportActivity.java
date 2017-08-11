@@ -8,6 +8,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -34,6 +35,7 @@ public class ReportActivity extends AppCompatActivity implements NavigationView.
     private final int END_DATE = 1;
 
     private DrawerLayout mNavigationDrawer;
+    private Toolbar mToolbar;
 
     private DataManager mDataManager;
     private TextView mItogo;
@@ -60,6 +62,7 @@ public class ReportActivity extends AppCompatActivity implements NavigationView.
         mDataManager = DataManager.getInstance();
 
         mNavigationDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
 
         mItogo = (TextView) findViewById(R.id.r_itogo);
         mMonth = (TextView) findViewById(R.id.r_month);
@@ -134,6 +137,8 @@ public class ReportActivity extends AppCompatActivity implements NavigationView.
     }
 
     private void setupToolBar() {
+
+        setSupportActionBar(mToolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar!=null){
             actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);

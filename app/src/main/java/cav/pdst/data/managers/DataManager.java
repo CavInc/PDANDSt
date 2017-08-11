@@ -204,11 +204,11 @@ public class DataManager {
         mDB.close();
         return rec;
     }
-    public ArrayList<TrainingModel> getTraining(int sp_id){
+    public ArrayList<TrainingModel> getTraining(int sp_id,Date selectedDate){
         ArrayList<TrainingModel> rec = new ArrayList<>();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         mDB.open();
-        Cursor cursor = mDB.getTraining(sp_id);
+        Cursor cursor = mDB.getTraining(sp_id,format.format(selectedDate));
         while (cursor.moveToNext()){
             int type_rec = ConstantManager.ONE;
             if (cursor.getInt(cursor.getColumnIndex("count_item"))>1) {
@@ -247,6 +247,23 @@ public class DataManager {
         mDB.close();
         return rec;
     }
+
+    public ArrayList<Date> getTrainingDay(int sp_id){
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        ArrayList<Date> rec= new ArrayList<>();
+        mDB.open();
+        Cursor cursor = mDB.getDateTraining(sp_id);
+        while (cursor.moveToNext()){
+            try {
+                rec.add(format.parse(cursor.getString(0)));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        mDB.close();
+        return rec;
+    }
+
 
     public ArrayList<SportsmanTrainingModel> getSpTraining(int group_id){
         ArrayList<SportsmanTrainingModel> rec = new ArrayList<>();

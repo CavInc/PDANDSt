@@ -40,6 +40,10 @@ public class SportsmanTrainingModel {
         return mCount;
     }
 
+    public void setCount(int count) {
+        mCount = count;
+    }
+
     public boolean isCheck() {
         return mCheck;
     }
@@ -63,4 +67,5 @@ public class SportsmanTrainingModel {
     public void setLinkAbonement(int linkAbonement) {
         mLinkAbonement = linkAbonement;
     }
+
 }

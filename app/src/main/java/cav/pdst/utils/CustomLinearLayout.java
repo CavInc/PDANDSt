@@ -20,7 +20,12 @@ public class CustomLinearLayout extends LinearLayout{
     }
 
     @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        return false;
+    }
+
+    @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        return true;
+        return false;
     }
 }

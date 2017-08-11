@@ -1,14 +1,28 @@
 package cav.pdst.ui.fragments;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.DayViewDecorator;
+import com.prolificinteractive.materialcalendarview.DayViewFacade;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
+import com.prolificinteractive.materialcalendarview.spans.DotSpan;
+
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashSet;
 
 import cav.pdst.R;
 import cav.pdst.data.managers.DataManager;
@@ -25,6 +39,10 @@ public class SpTrainingFragment extends Fragment {
     private SpTrainingAdapter mAdapter;
 
     private DataManager mDataManager;
+    private MaterialCalendarView calendarView;
+    private Date selectedDate;
+
+    private Collection<CalendarDay> mCalendarDays;
 
     public static SpTrainingFragment newInstanse(int sp_id){
         Bundle args = new Bundle();
@@ -47,15 +65,78 @@ public class SpTrainingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater,ViewGroup container,  Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_sp_training, container, false);
 
+        Calendar newYear = Calendar.getInstance();
+        newYear.add(Calendar.YEAR, 1);
+        calendarView = (MaterialCalendarView) rootView.findViewById(R.id.calendarView);
+        calendarView.state().edit()
+                .setFirstDayOfWeek(Calendar.MONDAY)
+                .setMinimumDate(CalendarDay.from(2016,12,31))
+                .setMaximumDate(newYear)
+                .commit();
+        calendarView.setCurrentDate(new Date());
+        calendarView.setDateSelected(new Date(),true);
+        mCalendarDays = new ArrayList<>();
+
+        for (Date l : mDataManager.getTrainingDay(sp_id)) {
+            mCalendarDays.add(CalendarDay.from(l));
+        }
+
+        calendarView.addDecorator(new StartDayViewDecorator(mCalendarDays));
+        calendarView.setOnDateChangedListener(mDateSelectedListener);
+
+        selectedDate = new Date();
+
         mListView = (ListView) rootView.findViewById(R.id.sp_info_list_view);
 
-
-        ArrayList<TrainingModel> model = mDataManager.getTraining(sp_id);
-        mAdapter = new SpTrainingAdapter(this.getContext(),R.layout.sp_training_item,model);
-
-        mListView.setAdapter(mAdapter);
+        updateUI();
 
         return rootView;
        // return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+
+
+    OnDateSelectedListener mDateSelectedListener = new OnDateSelectedListener() {
+        @Override
+        public void onDateSelected(MaterialCalendarView widget,CalendarDay date, boolean selected) {
+            selectedDate = date.getDate();
+            updateUI();
+        }
+    };
+
+    private void updateUI() {
+        ArrayList<TrainingModel> model = mDataManager.getTraining(sp_id,selectedDate);
+        if (mAdapter == null){
+            mAdapter = new SpTrainingAdapter(this.getContext(),R.layout.sp_training_item,model);
+
+            mListView.setAdapter(mAdapter);
+            updateUI();
+        }else {
+            mAdapter.setData(model);
+            mAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private class StartDayViewDecorator implements DayViewDecorator {
+
+        private final HashSet<CalendarDay> dates;
+        private final int color;
+
+        // передали список дат
+        public StartDayViewDecorator(Collection<CalendarDay> dates){
+            this.color = Color.GREEN;
+            this.dates = new HashSet<>(dates);
+        }
+
+        @Override
+        public boolean shouldDecorate(CalendarDay day) {
+            return dates.contains(day); // входит ли обрабатываемая дата в диапазон переданых и если да то вызов decorate;
+        }
+
+        @Override
+        public void decorate(DayViewFacade view) {
+            view.addSpan(new ForegroundColorSpan(ContextCompat.getColor(getActivity(),R.color.app_green_dark)));
+            view.addSpan(new DotSpan(5, color));
+        }
     }
 }

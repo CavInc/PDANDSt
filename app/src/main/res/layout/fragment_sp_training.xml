@@ -2,14 +2,24 @@
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="16dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
+    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/calendar_height"
+        android:layout_gravity="center_horizontal"
+        app:mcv_selectionColor="?attr/colorAccent"
+        app:mcv_showOtherDates="out_of_range"
+        />
 
     <ListView
               android:id="@+id/sp_info_list_view"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+        android:layout_weight="1">
 
     </ListView>
 

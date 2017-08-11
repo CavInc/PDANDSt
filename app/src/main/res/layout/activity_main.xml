@@ -31,25 +31,25 @@
                 android:fitsSystemWindows="true">
                 <com.prolificinteractive.materialcalendarview.MaterialCalendarView
                     android:id="@+id/calendarView"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/size_16dp"
                     app:mcv_dateTextAppearance="@style/CustomTextAppearance"
                     app:mcv_selectionColor="?attr/colorAccent"
                     app:mcv_showOtherDates="out_of_range"
                     app:mcv_calendarMode="month"
                     android:layout_gravity="left"
                     />
-                <Button
+                <ImageButton
                     android:id="@+id/to_day"
-                    android:text="Сегодня"
+                    android:hint="Сегодня"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/custom_select_background"
+                    android:padding="4dp"
                     android:layout_marginBottom="@dimen/fab_margin_8"
                     android:layout_marginRight="@dimen/fab_margin_8"
-                    android:background="@drawable/custom_button_background"
-                    android:layout_gravity="bottom|right"
-                    />
+                    android:layout_gravity="top|right"
+                    android:src="@drawable/calendar_today"/>
             </FrameLayout>
 
 
@@ -62,18 +62,12 @@
             android:orientation="vertical"
             android:paddingLeft="16dp"
             android:paddingRight="16dp">
-            <cav.pdst.ui.views.CavCalendarView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            </cav.pdst.ui.views.CavCalendarView>
             <ListView
                 android:id="@+id/tr_list_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_weight="0.5">
-
             </ListView>
         </LinearLayout>
 

@@ -253,7 +253,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
             SportsmanTrainingModel mx = (SportsmanTrainingModel) adapterView.getItemAtPosition(position);
             Log.d(TAG,mx.getId()+" "+mx.getName()+" "+mx.isCheck());
             selSportspam = mx.getId();
-            if (mx.getCount() == 0 ){
+            if (mx.getCount() == 0 && (!mx.isCheck())){
                 InfoDialogFragment dialog= new InfoDialogFragment();
                 dialog.show(getFragmentManager(),"INFODIALOG");
                 return;
@@ -291,6 +291,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
                         }
 
                         mAdapter.getItem(position).setCheck(true);
+                        mAdapter.getItem(position).setCount(mAdapter.getItem(position).getCount()-1);
 
                         mAdapter.notifyDataSetChanged();
                     }
@@ -308,6 +309,8 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
                 mAdapter.getItem(position).setLinkAbonement(-1);
                 ((SportsmanTrainingModel) adapterView.getItemAtPosition(position)).setCheck(! mx.isCheck());
                 ((SportsmanTrainingModel) adapterView.getItemAtPosition(position)).setMode(-1);
+                ((SportsmanTrainingModel) adapterView.getItemAtPosition(position))
+                        .setCount(((SportsmanTrainingModel) adapterView.getItemAtPosition(position)).getCount()+1);
                 mAdapter.notifyDataSetChanged();
             }
         }
@@ -320,6 +323,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         Cursor cursor = mDataManager.getDB().getAbonementInDate(id,format.format(date));
         while (cursor.moveToNext()){
             rec.add(cursor.getInt(0));
+
         }
         mDataManager.getDB().close();
         if (rec.size()!=0) {

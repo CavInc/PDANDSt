@@ -168,6 +168,7 @@ public class DataBaseConnector {
             value.put("type_ref", 1);
             value.put("id1", mx.getSpId());
             value.put("id2",data.getId());
+            value.put("type_link",mx.getMode());
             database.insert(DBHelper.REF_TABLE,null,value);
 
             value.clear();
@@ -234,17 +235,24 @@ public class DataBaseConnector {
         return database.query(DBHelper.TRAINING_TABLE,new String[]{"_id","training_name","count_item","date","time"},"date='"+selectDate+"'",null,null,null,"time");
     }
 
-    public Cursor getTraining(int sp_id){
+    public Cursor getTraining(int sp_id,String selectDate){
         String sql="select tt._id,tt.training_name,tt.count_item,tt.date,tt.time,ab.pos_id as abid,rf.type_link from REF_TABLE  rf\n" +
                 "  join TRAINIG_TABLE tt on rf.id2=tt._id\n" +
                 "  join REF_TABLE rf2 on rf2.type_ref=2 and tt._id=rf2.id1\n" +
                 "  join ABONEMENT ab on rf2.id2=ab._id and ab.sp_id=" +sp_id+
-                " where  rf.type_ref=1 and rf.id1="+sp_id+" order by tt.date desc ,tt.time desc";
+                " where  rf.type_ref=1 and rf.id1="+sp_id+" and tt.date='"+selectDate+"' order by tt.date desc ,tt.time desc";
         return database.rawQuery(sql,null);
     }
     //TODO возможно следует передавать дату
     public Cursor getDateTraining(){
         String sql="select distinct date from TRAINIG_TABLE order by date;";
+        return database.rawQuery(sql,null);
+    }
+    public Cursor getDateTraining(int sp_id){
+        String sql="select distinct tt.date,* from TRAINIG_TABLE  tt\n" +
+                " left join REF_TABLE rf on rf.type_ref=1 and tt._id=rf.id2\n" +
+                " where rf.id1=" +sp_id+" "+
+                "order by tt.date";
         return database.rawQuery(sql,null);
     }
 
@@ -389,9 +397,9 @@ public class DataBaseConnector {
     }
 
     public Cursor getAbonementInDate(int sp_id,String date){
-        String sql="select _id from ABONEMENT \n" +
+        String sql="select _id,working from ABONEMENT \n" +
                    " where sp_id="+sp_id+" and start_date<='"+date+"' and end_date>='"+date+"' and (count_training+working-used_training)<>0"+
-                " order by pos_id";
+                " order by pos_id limit 1";
 
         //System.out.println(sql);
         return database.rawQuery(sql,null);

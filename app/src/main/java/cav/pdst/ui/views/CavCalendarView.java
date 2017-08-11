@@ -38,6 +38,9 @@ public class CavCalendarView extends LinearLayout  {
     private Date mFirstDate;
     private Date mLastDate;
 
+    private Date mSelectDate;
+    private Date mCurrentDate;
+
     private OnDateChangedListener mDateChangedListener;
     private GestureDetector mGestureDetector;
 
@@ -95,16 +98,17 @@ public class CavCalendarView extends LinearLayout  {
         SwipeTouchListener swipeTouchListener = new SwipeTouchListener();
         //mGestureDetector = new GestureDetector(this.getContext(),new SwipeGestureDetector());
         LinearLayout mLayout = (LinearLayout) findViewById(R.id.cc_calendar_layout);
-        mLayout.setOnTouchListener(swipeTouchListener);
+       // mLayout.setOnTouchListener(swipeTouchListener);
         /*
         mLayout.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 Log.d("SLL","TOUCH");
-                return true;
+                return false;
             }
         });
         */
+
         swipeTouchListener.setSwipeListener(mDetectListener);
 
         setLegend();
@@ -116,6 +120,7 @@ public class CavCalendarView extends LinearLayout  {
         TableRow head = new TableRow(this.getContext());
         for (int i = 0;i<7;i++){
             TextView tv = new TextView(this.getContext());
+            tv.setTextColor(mWeekColor);
             tv.setText(mDayName[i]);
             tv.setGravity(Gravity.CENTER_HORIZONTAL);
             head.addView(tv);
@@ -134,6 +139,7 @@ public class CavCalendarView extends LinearLayout  {
         int day_cout = c.get(Calendar.DAY_OF_MONTH);
         //int line_count = 4;
         //if ((day_cout % 7)!=0) line_count = 5;
+
         int line_count = 5;
         int day_i = 1;
         for (int i=1;i<=line_count;i++){
@@ -141,6 +147,7 @@ public class CavCalendarView extends LinearLayout  {
             for (int j=0;j<7;j++){
                 if (day_i>day_cout) break;
                 TextView tx = new TextView(this.getContext());
+                tx.setPadding(0,8,0,8);
                 if ((j<day) && i==1) {
                     tx.setText(" ");
                 }else {
@@ -173,12 +180,13 @@ public class CavCalendarView extends LinearLayout  {
         public void onClick(View view) {
             if (dxSelect!= null){
                 dxSelect.setTextColor(mDayColor);
+                dxSelect.setBackgroundColor(Color.TRANSPARENT);
             }
             TextView dx = (TextView) view;
             Log.d("CCL",dx.getText().toString());
             dx.setTextColor(mSelectedColor);
             //dx.setBackground(android.R.drawable.stat_notify_sync);
-            dx.setBackgroundResource(R.drawable.custom_select_background);
+            dx.setBackgroundResource(R.drawable.today_circle_background);
             dxSelect = dx;
 
             Calendar c = Calendar.getInstance();
@@ -231,10 +239,12 @@ public class CavCalendarView extends LinearLayout  {
         c.set(Calendar.DAY_OF_MONTH, c.getActualMaximum(Calendar.DAY_OF_MONTH));
         mLastDate=c.getTime();
         mMonth.setText(mMonths[mCurrentMonth]+" "+mCurrentYear);
+        mCurrentDate = date;
     }
 
     //TODO  не запоминает дату выбранную при листании месяца будет скидывать
     public void setSelectedDate(Date date){
+        mSelectDate = date;
         Calendar c = Calendar.getInstance();
         c.setTime(date);
         int y = c.get(Calendar.YEAR);
@@ -242,8 +252,10 @@ public class CavCalendarView extends LinearLayout  {
         int d = c.get(Calendar.DAY_OF_MONTH);
         if (y!=mCurrentYear) return;
         if (m!=mCurrentMonth) return;
+        if (dxSelect!=null) {
+            dxSelect.setBackgroundColor(Color.TRANSPARENT);
 
-
+        }
     }
 
     public void setOnDateChangedListener(OnDateChangedListener listener){

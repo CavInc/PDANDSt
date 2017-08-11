@@ -15,8 +15,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".ui.activity.MainActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -51,28 +51,38 @@
         </activity>
         <activity
             android:name=".ui.activity.SportsmanDetailActivity"
+            android:label="Спортсмен"
             android:parentActivityName=".ui.activity.SportsmanActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:label="Спортсмен"
             android:windowSoftInputMode="stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.activity.SportsmanActivity"/>
         </activity>
-        <activity android:name=".ui.activity.AbonementActivity"
+        <activity
+            android:name=".ui.activity.AbonementActivity"
             android:label="Абонемент">
         </activity>
         <activity
             android:name=".ui.activity.ReportActivity"
             android:label="Статистика"
+            android:theme="@style/AppTheme.NoActionBar"
             android:launchMode="singleTask">
         </activity>
-        <activity android:name=".ui.activity.DohodActivity"
+        <activity
+            android:name=".ui.activity.DohodActivity"
             android:label="Доход">
         </activity>
-        <activity android:name=".ui.activity.RateActivity"
+        <activity
+            android:name=".ui.activity.RateActivity"
             android:label="Расход">
         </activity>
+
+        <receiver
+            android:name=".services.AlarmTaskReciver"
+            android:enabled="true"
+            android:exported="true">
+        </receiver>
     </application>
 
 </manifest>

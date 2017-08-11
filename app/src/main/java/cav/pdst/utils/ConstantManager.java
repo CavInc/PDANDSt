@@ -60,5 +60,8 @@ public interface ConstantManager {
     int SPORTSMAN_MODE_WARNING = 2;
     int SPORTSMAN_MODE_WORKINGOFF = 3;
 
+    final int NOTIFY_ID = 10001;
 
+    String ALARM_MSG = "ALARM_MSG";
+    String ALARM_ID = "ALARM_ID";
 }
