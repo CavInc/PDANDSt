@@ -15,6 +15,7 @@ import cav.pdst.utils.ConstantManager;
 public class AlarmTaskReciver extends BroadcastReceiver {
 
     private String mMsg;
+    private int mId; // id спортсмена
 
     public AlarmTaskReciver() {
     }
@@ -25,6 +26,7 @@ public class AlarmTaskReciver extends BroadcastReceiver {
         //throw new UnsupportedOperationException("Not yet implemented");
         Log.d("ATR","ESH");
         mMsg = intent.getStringExtra(ConstantManager.ALARM_MSG);
+        mId = intent.getIntExtra(ConstantManager.ALARM_ID,0);
         showNotification(context);
     }
 
@@ -38,7 +40,7 @@ public class AlarmTaskReciver extends BroadcastReceiver {
         Notification.Builder builder = new Notification.Builder(context);
 
         Intent intent = new Intent();
-        PendingIntent pi = PendingIntent.getService(context,0,intent,PendingIntent.FLAG_CANCEL_CURRENT);
+        PendingIntent pi = PendingIntent.getService(context,mId,intent,PendingIntent.FLAG_CANCEL_CURRENT);
 
         builder.setContentIntent(pi)
                 .setSmallIcon(R.mipmap.ic_launcher)
@@ -57,6 +59,6 @@ public class AlarmTaskReciver extends BroadcastReceiver {
         }
 
 
-        notificationManager.notify(ConstantManager.NOTIFY_ID, notification);
+        notificationManager.notify(ConstantManager.NOTIFY_ID+mId, notification);
     }
 }

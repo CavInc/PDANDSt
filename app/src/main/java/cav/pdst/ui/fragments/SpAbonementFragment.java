@@ -195,7 +195,8 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
                     }
                     */
                     if (model.getDebitDate()!=null){
-                        Utils.startAlarm(this.getContext(),model.getDebitDate(),"Задолженность");
+                        Utils.startAlarm(this.getContext(),model.getDebitDate(),
+                                "Задолженность :"+model.getDebitDate(),model.getSpId());
                     }
 
 
@@ -206,7 +207,8 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
                     mDataManager.addUpdateAbonement(model2);
                     mAbonementAdapter.add(model2);
                     if (model2.getDebitDate()!=null){
-                        Utils.startAlarm(this.getContext(),model2.getDebitDate(),"Задолженность");
+                        Utils.startAlarm(this.getContext(),model2.getDebitDate(),
+                                "Задолженность :"+model2.getDebitDate(),model2.getSpId());
                     }
                     break;
             }

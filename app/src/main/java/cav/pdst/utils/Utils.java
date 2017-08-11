@@ -59,15 +59,15 @@ public class Utils {
         return dt.after(date);
     }
 
-    public static void startAlarm(Context context,Date date,String msg){
+    public static void startAlarm(Context context,Date date,String msg,int sp_id){
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent=new Intent(context, AlarmTaskReciver.class);
         intent.putExtra(ConstantManager.ALARM_MSG,msg);
-        PendingIntent pi= PendingIntent.getBroadcast(context,0, intent,0);
+        intent.putExtra(ConstantManager.ALARM_ID,sp_id);
+        PendingIntent pi= PendingIntent.getBroadcast(context,sp_id, intent,0);
         Calendar c = Calendar.getInstance();
         c.setTime(date);
         am.set(AlarmManager.RTC_WAKEUP,c.getTimeInMillis(),pi);
-        Log.d(TAG,"SET ALARM");
 
     }
 }

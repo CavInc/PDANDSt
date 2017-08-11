@@ -63,4 +63,5 @@ public interface ConstantManager {
     final int NOTIFY_ID = 10001;
 
     String ALARM_MSG = "ALARM_MSG";
+    String ALARM_ID = "ALARM_ID";
 }
