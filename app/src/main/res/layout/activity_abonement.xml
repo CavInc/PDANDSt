@@ -121,6 +121,16 @@
             android:inputType="numberDecimal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_alarm_txt"
+            android:text="Уведомить"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_price_ab"
+            android:gravity="center"
+            android:layout_alignParentRight="true"
+            android:layout_alignLeft="@+id/button_debit_date"
+            />
         <Button
             android:id="@+id/button_debit_date"
             android:layout_width="wrap_content"
