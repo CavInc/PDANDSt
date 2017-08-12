@@ -79,8 +79,7 @@ public class SpTrainingFragment extends Fragment {
                 .setMinimumDate(CalendarDay.from(2016,12,31))
                 .setMaximumDate(newYear)
                 .commit();
-        calendarView.setCurrentDate(new Date());
-        calendarView.setDateSelected(new Date(),true);
+
         mCalendarDays = new ArrayList<>();
 
         for (Date l : mDataManager.getTrainingDay(sp_id)) {
@@ -89,6 +88,9 @@ public class SpTrainingFragment extends Fragment {
 
         calendarView.addDecorator(new StartDayViewDecorator(mCalendarDays));
         calendarView.setOnDateChangedListener(mDateSelectedListener);
+
+        calendarView.setCurrentDate(new Date());
+        calendarView.setDateSelected(new Date(),true);
 
         mListView = (ListView) rootView.findViewById(R.id.sp_info_list_view);
 
@@ -134,7 +136,6 @@ public class SpTrainingFragment extends Fragment {
 
         @Override
         public boolean shouldDecorate(CalendarDay day) {
-            if (day.equals(CalendarDay.from(selectedDate))) return false;
             return dates.contains(day); // входит ли обрабатываемая дата в диапазон переданых и если да то вызов decorate;
         }
 

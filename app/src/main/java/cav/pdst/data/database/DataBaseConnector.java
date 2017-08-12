@@ -249,7 +249,7 @@ public class DataBaseConnector {
         return database.rawQuery(sql,null);
     }
     public Cursor getDateTraining(int sp_id){
-        String sql="select distinct tt.date,* from TRAINIG_TABLE  tt\n" +
+        String sql="select distinct tt.date from TRAINIG_TABLE  tt\n" +
                 " left join REF_TABLE rf on rf.type_ref=1 and tt._id=rf.id2\n" +
                 " where rf.id1=" +sp_id+" "+
                 "order by tt.date";
