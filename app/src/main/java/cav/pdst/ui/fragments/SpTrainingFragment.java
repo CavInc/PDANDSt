@@ -69,6 +69,8 @@ public class SpTrainingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater,ViewGroup container,  Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_sp_training, container, false);
 
+        selectedDate = new Date();
+
         Calendar newYear = Calendar.getInstance();
         newYear.add(Calendar.YEAR, 1);
         calendarView = (MaterialCalendarView) rootView.findViewById(R.id.calendarView);
@@ -87,8 +89,6 @@ public class SpTrainingFragment extends Fragment {
 
         calendarView.addDecorator(new StartDayViewDecorator(mCalendarDays));
         calendarView.setOnDateChangedListener(mDateSelectedListener);
-
-        selectedDate = new Date();
 
         mListView = (ListView) rootView.findViewById(R.id.sp_info_list_view);
 
@@ -134,14 +134,16 @@ public class SpTrainingFragment extends Fragment {
 
         @Override
         public boolean shouldDecorate(CalendarDay day) {
+            if (day.equals(CalendarDay.from(selectedDate))) return false;
             return dates.contains(day); // входит ли обрабатываемая дата в диапазон переданых и если да то вызов decorate;
         }
 
         @Override
         public void decorate(DayViewFacade view) {
             view.addSpan(new ForegroundColorSpan(ContextCompat.getColor(getActivity(),R.color.app_green_dark)));
-            //view.addSpan(new BackgroundColorSpan(ContextCompat.getColor(getActivity(),R.color.app_green_dark)));
-            view.addSpan(new DotSpan(5, color));
+            //view.addSpan(new DotSpan(5, color));
+            //view.addSpan(new ForegroundColorSpan(Color.WHITE));
+            view.setBackgroundDrawable(ContextCompat.getDrawable(getContext(),R.drawable.custom_select_green_background));
         }
     }
 }
