@@ -40,7 +40,7 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
     private int sp_id;
     private int mode;
 
-    private int last_ab = 0; // количество абонементов на спортсмене
+    private int last_ab = 1; // количество абонементов на спортсмене
 
     private AbonementCallback mAbonementCallback;
 

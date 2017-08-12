@@ -1,10 +1,14 @@
 package cav.pdst.ui.fragments;
 
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.text.style.BackgroundColorSpan;
 import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -136,6 +140,7 @@ public class SpTrainingFragment extends Fragment {
         @Override
         public void decorate(DayViewFacade view) {
             view.addSpan(new ForegroundColorSpan(ContextCompat.getColor(getActivity(),R.color.app_green_dark)));
+            //view.addSpan(new BackgroundColorSpan(ContextCompat.getColor(getActivity(),R.color.app_green_dark)));
             view.addSpan(new DotSpan(5, color));
         }
     }

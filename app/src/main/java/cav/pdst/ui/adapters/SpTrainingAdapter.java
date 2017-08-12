@@ -66,7 +66,7 @@ public class SpTrainingAdapter extends ArrayAdapter<TrainingModel> {
 
         switch (record.getTypeTraining()){
             case ConstantManager.SPORTSMAN_MODE_TRAINING:
-                holder.mName.setTextColor(Color.BLACK);
+                holder.mName.setTextColor(ContextCompat.getColor(getContext(),R.color.app_green));
                 break;
             case ConstantManager.SPORTSMAN_MODE_PASS:
                 holder.mName.setTextColor(ContextCompat.getColor(getContext(),R.color.app_red));
