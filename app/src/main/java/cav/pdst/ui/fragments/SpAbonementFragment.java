@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import cav.pdst.R;
@@ -196,7 +197,9 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
                     */
                     if (model.getDebitDate()!=null){
                         Utils.startAlarm(this.getContext(),model.getDebitDate(),
-                                "Задолженность :"+model.getDebitDate(),model.getSpId());
+                                "Задолженность : ("+model.getDebit()+")"
+                                        +new SimpleDateFormat("dd.MM.yy HH:mm").format(model.getDebitDate()),
+                                model.getSpId());
                     }
 
 
@@ -208,7 +211,9 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
                     mAbonementAdapter.add(model2);
                     if (model2.getDebitDate()!=null){
                         Utils.startAlarm(this.getContext(),model2.getDebitDate(),
-                                "Задолженность :"+model2.getDebitDate(),model2.getSpId());
+                                "Задолженность : ("+model2.getDebit()+")"
+                                        + new SimpleDateFormat("dd.MM.yy HH:mm").format(model2.getDebitDate()),
+                                model2.getSpId());
                     }
                     break;
             }
