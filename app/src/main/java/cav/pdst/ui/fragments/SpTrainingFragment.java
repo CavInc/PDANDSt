@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -80,6 +81,9 @@ public class SpTrainingFragment extends Fragment {
                 .setMaximumDate(newYear)
                 .commit();
 
+
+
+        /*
         mCalendarDays = new ArrayList<>();
 
         for (Date l : mDataManager.getTrainingDay(sp_id)) {
@@ -87,6 +91,10 @@ public class SpTrainingFragment extends Fragment {
         }
 
         calendarView.addDecorator(new StartDayViewDecorator(mCalendarDays));
+        */
+        // асинхронно грузим данный о испоьзованных днях
+        new LoadUseDay().execute();
+
         calendarView.setOnDateChangedListener(mDateSelectedListener);
 
         calendarView.setCurrentDate(new Date());
@@ -114,9 +122,7 @@ public class SpTrainingFragment extends Fragment {
         ArrayList<TrainingModel> model = mDataManager.getTraining(sp_id,selectedDate);
         if (mAdapter == null){
             mAdapter = new SpTrainingAdapter(this.getContext(),R.layout.sp_training_item,model);
-
             mListView.setAdapter(mAdapter);
-            updateUI();
         }else {
             mAdapter.setData(model);
             mAdapter.notifyDataSetChanged();
@@ -145,6 +151,24 @@ public class SpTrainingFragment extends Fragment {
             //view.addSpan(new DotSpan(5, color));
             //view.addSpan(new ForegroundColorSpan(Color.WHITE));
             view.setBackgroundDrawable(ContextCompat.getDrawable(getContext(),R.drawable.custom_select_green_background));
+        }
+    }
+
+    private class LoadUseDay extends AsyncTask<Void,Void,Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            mCalendarDays = new ArrayList<>();
+
+            for (Date l : mDataManager.getTrainingDay(sp_id)) {
+                mCalendarDays.add(CalendarDay.from(l));
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            calendarView.addDecorator(new StartDayViewDecorator(mCalendarDays));
         }
     }
 }
