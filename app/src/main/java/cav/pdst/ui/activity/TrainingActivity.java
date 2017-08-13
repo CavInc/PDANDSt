@@ -34,6 +34,7 @@ import cav.pdst.data.managers.DataManager;
 import cav.pdst.data.models.AbonementModel;
 import cav.pdst.data.models.SpRefAbModeModel;
 import cav.pdst.data.models.SportsmanTrainingModel;
+import cav.pdst.data.models.TestAbonementModel;
 import cav.pdst.data.models.TrainingGroupModel;
 import cav.pdst.data.models.TrainingModel;
 import cav.pdst.ui.adapters.TrainingAdapter;
@@ -244,7 +245,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
     private int selSportspam;
 
     //private LinkSpABTrModel mLinkSpABTrModel;
-    private int ab;
+    private TestAbonementModel ab;
 
     AdapterView.OnItemClickListener mItemClickListener = new AdapterView.OnItemClickListener(){
 
@@ -263,7 +264,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
                 // по id спростмена получаем его абонементы у которых дата действия в диапазоне тренировки
                 // из всего списка если несколько то возвращаестя тот у кого младший номер и есть не распределеннны тренировки
                 ab = getAbonement(mx.getId(),mDate);
-                if (ab==-1) {
+                if (ab.getId() == -1) {
                     // показать что куй ?
                     AlertDialog.Builder dialog =new AlertDialog.Builder(TrainingActivity.this)
                             .setTitle("Предупреждение")
@@ -275,7 +276,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
                 }
                 //mLinkSpABTrModel = new LinkSpABTrModel(mx.getId(),ab);
 
-                TrainigOperationFragment dialog = new TrainigOperationFragment();
+                TrainigOperationFragment dialog = TrainigOperationFragment.newInstance(ab.getWorking());
                 dialog.setTrainingOperationListener(new TrainigOperationFragment.TrainingOperationListener() {
                     @Override
                     public void onTrainingClickListener(int witch) {
@@ -284,10 +285,10 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
 
                         if ((witch == ConstantManager.SPORTSMAN_MODE_TRAINING) || (witch == ConstantManager.SPORTSMAN_MODE_PASS)) {
                             //mSpAB.add(mLinkSpABTrModel);
-                            mAdapter.getItem(position).setLinkAbonement(ab);
+                            mAdapter.getItem(position).setLinkAbonement(ab.getId());
                         }
                         if (witch == ConstantManager.SPORTSMAN_MODE_WARNING) {
-                            mAdapter.getItem(position).setLinkAbonement(ab);
+                            mAdapter.getItem(position).setLinkAbonement(ab.getId());
                         }
 
                         mAdapter.getItem(position).setCheck(true);
@@ -316,20 +317,19 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         }
     };
 
-    private int getAbonement(int id, Date date) {
+    private TestAbonementModel getAbonement(int id, Date date) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        ArrayList<Integer> rec = new ArrayList<>();
+        ArrayList<TestAbonementModel> rec = new ArrayList<>();
         mDataManager.getDB().open();
         Cursor cursor = mDataManager.getDB().getAbonementInDate(id,format.format(date));
         while (cursor.moveToNext()){
-            rec.add(cursor.getInt(0));
-
+            rec.add(new TestAbonementModel(cursor.getInt(0),cursor.getInt(1)));
         }
         mDataManager.getDB().close();
         if (rec.size()!=0) {
             return rec.get(0);
         }else {
-            return -1;
+            return new TestAbonementModel(-1,0);
         }
     }
 
