@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -294,10 +295,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             //view.setSelectionDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.calendar_day_selector_out_range_transparent));
            // view.setBackgroundDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.calendar_day_selector_in_range));
 
-          //  view.addSpan(new ForegroundColorSpan(Color.WHITE));
-            view.addSpan(new ForegroundColorSpan(Color.GREEN));
-            view.addSpan(new DotSpan(5, color));
-
+            view.addSpan(new ForegroundColorSpan(Color.WHITE));
+          //  view.addSpan(new ForegroundColorSpan(Color.GREEN));
+          //  view.addSpan(new DotSpan(5, color));
+          //  view.addSpan(new ForegroundColorSpan(ContextCompat.getColor(MainActivity.this,R.color.app_green_dark)));
+            view.setBackgroundDrawable(ContextCompat.getDrawable(MainActivity.this,R.drawable.custom_select_green_background));
         }
     }
 }
