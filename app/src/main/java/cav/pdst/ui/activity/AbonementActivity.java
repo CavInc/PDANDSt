@@ -199,11 +199,19 @@ public class AbonementActivity extends AppCompatActivity implements View.OnClick
                 findViewById(R.id.tv_end_date).setVisibility(View.GONE);
                 findViewById(R.id.tv_count_tr).setVisibility(View.GONE);
                 mEndDate.setVisibility(View.GONE);
+                mDebit.setVisibility(View.GONE);
+                mDebitDate.setVisibility(View.GONE);
+                findViewById(R.id.tv_debit_ti).setVisibility(View.GONE);
+                findViewById(R.id.tv_alarm_txt).setVisibility(View.GONE);
             } else {
                 mCountTraining.setVisibility(View.VISIBLE);
                 mEndDate.setVisibility(View.VISIBLE);
                 findViewById(R.id.tv_end_date).setVisibility(View.VISIBLE);
                 findViewById(R.id.tv_count_tr).setVisibility(View.VISIBLE);
+                mDebit.setVisibility(View.VISIBLE);
+                mDebitDate.setVisibility(View.VISIBLE);
+                findViewById(R.id.tv_debit_ti).setVisibility(View.VISIBLE);
+                findViewById(R.id.tv_alarm_txt).setVisibility(View.VISIBLE);
             }
         }
 
