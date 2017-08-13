@@ -71,6 +71,8 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
 
     private int group_id = -1;
 
+    private Menu mMenu;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +91,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
             minute = Integer.parseInt(tm[1]);
 
         }
+
         Bundle buingle = getIntent().getExtras();
         mDate = (Date) buingle.get(ConstantManager.TRAINING_DATE);
 
@@ -113,13 +116,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         }
 
         if (mode == ConstantManager.VIEW_TRAINING) {
-            mTraining.setFocusable(false);
-            mTraining.setEnabled(false);
-            mListView.setEnabled(false);
-
-            mTimeButton.setEnabled(false);
-            mDataButton.setEnabled(false);
-            mSpinner.setEnabled(false);
+            changeEditable(false);
         }
 
         mListView.setOnItemClickListener(mItemClickListener);
@@ -143,8 +140,20 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        mMenu = menu;
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.trainint_menu, menu);
+        if (mode == ConstantManager.VIEW_TRAINING) {
+            mMenu.findItem(R.id.add_sportsman_item).setVisible(false);
+            mMenu.findItem(R.id.save_item).setVisible(false);
+            mMenu.findItem(R.id.edit_tr_item).setVisible(true);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        Log.d(TAG,"PREPARE MENY");
         return true;
     }
 
@@ -163,6 +172,13 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
             Intent intent = new Intent(this,SportsmanDetailActivity.class);
             intent.putExtra(ConstantManager.MODE_SP_DETAIL,ConstantManager.NEW_SPORTSMAN);
             startActivityForResult(intent,ConstantManager.NEW_SPORTSMAN);
+        }
+        if (item.getItemId() == R.id.edit_tr_item) {
+            mMenu.findItem(R.id.add_sportsman_item).setVisible(true);
+            mMenu.findItem(R.id.save_item).setVisible(true);
+            mMenu.findItem(R.id.edit_tr_item).setVisible(false);
+            mode = ConstantManager.EDIT_TRAINING;
+            changeEditable(true);
         }
         return true;
         //return super.onOptionsItemSelected(item);
@@ -203,6 +219,16 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         //updateUI();
         setSpinerListener();
 
+    }
+
+    private void changeEditable(boolean flg) {
+        mTraining.setFocusable(flg);
+        mTraining.setEnabled(flg);
+        mListView.setEnabled(flg);
+
+        mTimeButton.setEnabled(flg);
+        mDataButton.setEnabled(flg);
+        mSpinner.setEnabled(flg);
     }
 
 
