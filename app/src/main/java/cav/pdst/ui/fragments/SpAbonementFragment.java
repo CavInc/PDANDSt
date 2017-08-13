@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import cav.pdst.R;
 import cav.pdst.data.managers.DataManager;
 import cav.pdst.data.models.AbonementModel;
+import cav.pdst.data.models.SportsmanModel;
 import cav.pdst.services.AlarmTaskReciver;
 import cav.pdst.ui.activity.AbonementActivity;
 import cav.pdst.ui.adapters.AbonementAdapter;
@@ -33,12 +34,14 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
     private static final String TAG = "SPAB";
     private static final String SPORTSMAN_ID = "SP_ID";
     private static final String MODE = "SP_MODE";
+    private static final String SPORTSMAN_NAME = "SP_NAME";
     private ListView mListView;
     private AbonementAdapter mAbonementAdapter;
     private FloatingActionButton mFab;
 
     private DataManager mDataManager;
     private int sp_id;
+    private String sp_name;
     private int mode;
 
     private int last_ab = 1; // количество абонементов на спортсмене
@@ -52,9 +55,10 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
         void updateData(AbonementModel model);
     }
 
-    public static SpAbonementFragment newInstance(int sp_id,int mode){
+    public static SpAbonementFragment newInstance(SportsmanModel model, int mode){
         Bundle args = new Bundle();
-        args.putSerializable(SPORTSMAN_ID,sp_id);
+        args.putSerializable(SPORTSMAN_ID,model.getId());
+        args.putString(SPORTSMAN_NAME,model.getName());
         args.putSerializable(MODE,mode);
         SpAbonementFragment fragment = new SpAbonementFragment();
         fragment.setArguments(args);
@@ -67,7 +71,7 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
         mDataManager = DataManager.getInstance();
         this.sp_id = getArguments().getInt(SPORTSMAN_ID);
         this.mode = getArguments().getInt(MODE);
-
+        this.sp_name = getArguments().getString(SPORTSMAN_NAME);
     }
 
     @Override
@@ -197,7 +201,7 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
                     */
                     if (model.getDebitDate()!=null){
                         Utils.startAlarm(this.getContext(),model.getDebitDate(),
-                                "Задолженность : ("+model.getDebit()+")"
+                                sp_name+" : ("+model.getDebit()+")"
                                         +new SimpleDateFormat("dd.MM.yy HH:mm").format(model.getDebitDate()),
                                 model.getSpId());
                     }
@@ -211,7 +215,7 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
                     mAbonementAdapter.add(model2);
                     if (model2.getDebitDate()!=null){
                         Utils.startAlarm(this.getContext(),model2.getDebitDate(),
-                                "Задолженность : ("+model2.getDebit()+")"
+                                sp_name+" : ("+model2.getDebit()+")"
                                         + new SimpleDateFormat("dd.MM.yy HH:mm").format(model2.getDebitDate()),
                                 model2.getSpId());
                     }

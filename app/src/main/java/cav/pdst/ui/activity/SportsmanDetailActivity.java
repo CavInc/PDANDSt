@@ -145,7 +145,7 @@ public class SportsmanDetailActivity extends AppCompatActivity implements SpInfo
                 case 1:
                     return SpTrainingFragment.newInstanse(sp_id);
                 case 2:
-                    return SpAbonementFragment.newInstance(sp_id,mode);
+                    return SpAbonementFragment.newInstance(mSportsmanModel,mode);
 
             }
             return null;
