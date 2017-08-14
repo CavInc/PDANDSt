@@ -13,6 +13,7 @@ import cav.pdst.data.models.GroupModel;
 import cav.pdst.data.models.SpRefAbModeModel;
 import cav.pdst.data.models.SportsmanModel;
 import cav.pdst.data.models.TrainingModel;
+import cav.pdst.utils.ConstantManager;
 
 
 public class DataBaseConnector {
@@ -157,18 +158,25 @@ public class DataBaseConnector {
         value.put("count_item",data.getCount());
         value.put("date",format.format(data.getDate()));
         value.put("time",data.getTime());
-        database.update(DBHelper.TRAINING_TABLE,value,"_id="+data.getId(),null);
-        database.delete(DBHelper.REF_TABLE,"type_ref=1 and id2="+data.getId(),null);
+        database.update(DBHelper.TRAINING_TABLE,value,"_id="+data.getId(),null); // обновили данные тренировки
+        database.delete(DBHelper.REF_TABLE,"type_ref=1 and id2="+data.getId(),null); // удалили связь спортсмен - тренировка
 
         //todo сдесь сделать отдачу абонемента обратно
-        String sql ="select id2 from ref_table rf where rf.type_ref=2 and id1="+data.getId()+" and rf.type_link in (0,1)";
+        // откатываем использованные тренировки обратно откатываются тренировки и пропуски.
+        String sql ="select id2,type_link from ref_table rf where rf.type_ref=2 and id1="+data.getId();
         Cursor cursor = database.rawQuery(sql,null);
         while (cursor.moveToNext()){
-            sql="update " + DBHelper.ABONEMENT_TABLE+" set used_training=used_training-1 "+
-                    "where _id=" + cursor.getString(0);
+            if (cursor.getInt(1) == ConstantManager.SPORTSMAN_MODE_WARNING) {
+                sql = "update " + DBHelper.ABONEMENT_TABLE + " set warning_count=warning_count-1 " +
+                        "where _id=" + cursor.getString(0);
+            } else {
+                sql = "update " + DBHelper.ABONEMENT_TABLE + " set used_training=used_training-1 " +
+                        "where _id=" + cursor.getString(0);
+            }
             database.execSQL(sql);
         }
-        database.delete(DBHelper.REF_TABLE,"type_ref=2 and id1="+data.getId(),null);
+
+        database.delete(DBHelper.REF_TABLE,"type_ref=2 and id1="+data.getId(),null);// удаляем связь тренировка - абонемент
 
         for (int i=0;i<selectItem.size();i++) {
             SpRefAbModeModel mx = selectItem.get(i);
@@ -185,8 +193,13 @@ public class DataBaseConnector {
             value.put("id2",mx.getAbonement());
             value.put("type_link",mx.getMode());
             database.insertWithOnConflict(DBHelper.REF_TABLE,null,value,SQLiteDatabase.CONFLICT_REPLACE);
-            sql="update " + DBHelper.ABONEMENT_TABLE+" set used_training=used_training+1 "+
-                    "where _id=" + mx.getAbonement();
+            if (mx.getMode() == ConstantManager.SPORTSMAN_MODE_WARNING) {
+                sql = "update " + DBHelper.ABONEMENT_TABLE + " set warning_count=warning_count+1 " +
+                        "where _id=" + mx.getAbonement();
+            }else {
+                sql = "update " + DBHelper.ABONEMENT_TABLE + " set used_training=used_training+1 " +
+                        "where _id=" + mx.getAbonement();
+            }
             database.execSQL(sql);
         }
         close();
@@ -256,9 +269,10 @@ public class DataBaseConnector {
         String sql="select distinct date from TRAINIG_TABLE order by date;";
         return database.rawQuery(sql,null);
     }
+
     public Cursor getDateTraining(int sp_id){
         String sql="select distinct tt.date from TRAINIG_TABLE  tt\n" +
-                " left join REF_TABLE rf on rf.type_ref=1 and tt._id=rf.id2\n" +
+                " join REF_TABLE rf on rf.type_ref=1 and tt._id=rf.id2\n" +
                 " where rf.id1=" +sp_id+" "+
                 "order by tt.date";
         return database.rawQuery(sql,null);
