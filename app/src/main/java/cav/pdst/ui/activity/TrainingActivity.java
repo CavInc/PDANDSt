@@ -151,11 +151,6 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         return true;
     }
 
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        Log.d(TAG,"PREPARE MENY");
-        return true;
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -330,7 +325,6 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
                 dialog.show(getFragmentManager(),"OPERATIONDIALOG");
             } else {
                 //снятие абонемента
-                Log.d(TAG,"СНЯТИЕ ");
                 /*
                 if (mLinkSpABTrModel != null) {
                     mSpAB.remove(mLinkSpABTrModel);

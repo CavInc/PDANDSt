@@ -53,7 +53,7 @@ public class Utils {
         if (moth>old_moth) return true;
         return false;
     }
-
+    //TODO что то рещить с времененем
     public static boolean isAfterDate2(Date date){
         Date dt = new Date();
         return dt.after(date);

@@ -43,7 +43,7 @@ public class AlarmTaskReciver extends BroadcastReceiver {
         PendingIntent pi = PendingIntent.getService(context,mId,intent,PendingIntent.FLAG_CANCEL_CURRENT);
 
         builder.setContentIntent(pi)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.drawable.icon_alarm_p)
                 .setTicker("Задолженность")
                 .setWhen(System.currentTimeMillis())
                 .setContentTitle("Задолженность")

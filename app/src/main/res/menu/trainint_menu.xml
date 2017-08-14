@@ -15,7 +15,5 @@
         android:title="Редактировать"
         android:icon="@drawable/ic_edit_withe_24dp"
         app:showAsAction="ifRoom"
-        android:visible="false">
-
-    </item>
+        android:visible="false"/>
 </menu>

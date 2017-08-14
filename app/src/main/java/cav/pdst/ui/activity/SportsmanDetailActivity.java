@@ -40,6 +40,8 @@ public class SportsmanDetailActivity extends AppCompatActivity implements SpInfo
     private DataManager mDataManager;
     private int sp_id = -1;
 
+    private Menu mMenu;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,8 +82,13 @@ public class SportsmanDetailActivity extends AppCompatActivity implements SpInfo
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        mMenu = menu;
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.all_save_menu, menu);
+        if (mode == ConstantManager.VIEW_SPORTSMAN) {
+            mMenu.findItem(R.id.save_item).setVisible(false);
+            mMenu.findItem(R.id.edit_tr_item).setVisible(true);
+        }
         return true;
     }
 
@@ -95,6 +102,12 @@ public class SportsmanDetailActivity extends AppCompatActivity implements SpInfo
             saveData();
             setResult(RESULT_OK,null);
             onBackPressed();
+        }
+        if (item.getItemId() == R.id.edit_tr_item) {
+            mMenu.findItem(R.id.save_item).setVisible(true);
+            mMenu.findItem(R.id.edit_tr_item).setVisible(false);
+            mode = ConstantManager.EDIT_SPORTSMAN;
+            //mSectionsPagerAdapter.getItem(mViewPager.getCurrentItem()).
         }
         return true;
     }

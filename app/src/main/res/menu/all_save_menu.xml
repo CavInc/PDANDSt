@@ -5,4 +5,10 @@
         android:title="@string/menu_save_item"
         android:icon="@drawable/ic_check_black_24dp"
         app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/edit_tr_item"
+        android:title="Редактировать"
+        android:icon="@drawable/ic_edit_withe_24dp"
+        app:showAsAction="ifRoom"
+        android:visible="false"/>
 </menu>

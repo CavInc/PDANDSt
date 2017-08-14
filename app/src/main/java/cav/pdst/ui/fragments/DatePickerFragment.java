@@ -44,6 +44,14 @@ public class DatePickerFragment extends DialogFragment {
     }
 
     @Override
+    public void onDetach() {
+        super.onDetach();
+        if (mOnDateGetListener !=null){
+            mOnDateGetListener = null;
+        }
+    }
+
+    @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         //Calendar calendar = Calendar.getInstance();
