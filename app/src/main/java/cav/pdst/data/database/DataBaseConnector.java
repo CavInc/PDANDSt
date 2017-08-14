@@ -24,12 +24,20 @@ public class DataBaseConnector {
     }
 
     public void open(){
-        database = mDBHelper.getWritableDatabase();
+            database = mDBHelper.getWritableDatabase();
     }
     public void close(){
         if (database!=null) {
             database.close();
         }
+    }
+
+    public void openRead(){
+        database =mDBHelper.getReadableDatabase();
+    }
+
+    public boolean isOpen(){
+        return database.isOpen();
     }
 
     // Group
@@ -104,7 +112,7 @@ public class DataBaseConnector {
             value.put("type_link",mx.getMode());
             database.insert(DBHelper.REF_TABLE,null,value);
 
-            if ((mx.getMode() == 0) || (mx.getMode() == 1) ){
+            if ((mx.getMode() == 0) || (mx.getMode() == 1) || (mx.getMode() == 3) ){
                 value.clear();
                 value.put("type_ref", 2);
                 value.put("id1", recid);

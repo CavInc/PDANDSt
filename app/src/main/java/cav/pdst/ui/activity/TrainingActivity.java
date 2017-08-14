@@ -309,6 +309,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
                         Log.d(TAG," ITEM "+witch);
                         mAdapter.getItem(position).setMode(witch);
 
+                        /*
                         if ((witch == ConstantManager.SPORTSMAN_MODE_TRAINING) || (witch == ConstantManager.SPORTSMAN_MODE_PASS)) {
                             //mSpAB.add(mLinkSpABTrModel);
                             mAdapter.getItem(position).setLinkAbonement(ab.getId());
@@ -316,6 +317,9 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
                         if (witch == ConstantManager.SPORTSMAN_MODE_WARNING) {
                             mAdapter.getItem(position).setLinkAbonement(ab.getId());
                         }
+                        */
+
+                        mAdapter.getItem(position).setLinkAbonement(ab.getId());
 
                         mAdapter.getItem(position).setCheck(true);
                         mAdapter.getItem(position).setCount(mAdapter.getItem(position).getCount()-1);

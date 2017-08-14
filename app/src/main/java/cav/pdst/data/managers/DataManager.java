@@ -251,7 +251,9 @@ public class DataManager {
     public ArrayList<Date> getTrainingDay(int sp_id){
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         ArrayList<Date> rec= new ArrayList<>();
+        //mDB.openRead();
         mDB.open();
+        Log.d(TAG," STATUS DB "+String.valueOf(mDB.isOpen()));
         Cursor cursor = mDB.getDateTraining(sp_id);
         while (cursor.moveToNext()){
             try {

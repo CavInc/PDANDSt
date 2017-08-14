@@ -46,7 +46,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     " count_item integer default 0,"+
                     " date text,time text)");
             db.execSQL("CREATE INDEX \"trainint_date_desc\" on trainig_table (date DESC)");
-            db.execSQL("CREATE INDEX \"trainint_date_asc\" on trainig_table (date)");
+            db.execSQL("CREATE INDEX \"trainint_date_asc\" on trainig_table (date ASC)");
 
             db.execSQL("create table "+REF_TABLE+"("+
                     "type_ref integer not null,"+ // 0 -spman - group 1- traning-spman 2- тренировка - абонемент 3- абонемент - абонемент

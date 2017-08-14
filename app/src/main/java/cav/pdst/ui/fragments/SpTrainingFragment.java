@@ -92,8 +92,11 @@ public class SpTrainingFragment extends Fragment {
 
         calendarView.addDecorator(new StartDayViewDecorator(mCalendarDays));
         */
+        //TODO разобраться с асинхоронностью
         // асинхронно грузим данный о испоьзованных днях
-        new LoadUseDay().execute();
+        //new LoadUseDay().execute();
+
+        loadUseDay();
 
         calendarView.setOnDateChangedListener(mDateSelectedListener);
 
@@ -127,6 +130,14 @@ public class SpTrainingFragment extends Fragment {
             mAdapter.setData(model);
             mAdapter.notifyDataSetChanged();
         }
+    }
+
+    private void loadUseDay(){
+        mCalendarDays = new ArrayList<>();
+        for (Date l : mDataManager.getTrainingDay(sp_id)) {
+            mCalendarDays.add(CalendarDay.from(l));
+        }
+        calendarView.addDecorator(new StartDayViewDecorator(mCalendarDays));
     }
 
     private class StartDayViewDecorator implements DayViewDecorator {
@@ -171,4 +182,6 @@ public class SpTrainingFragment extends Fragment {
             calendarView.addDecorator(new StartDayViewDecorator(mCalendarDays));
         }
     }
+
+
 }
