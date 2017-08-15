@@ -38,7 +38,7 @@ public class SpInfoFragment extends Fragment {
     private Callbacks mCallbacks;
     private int mode;
 
-   private static SpInfoFragment sFragment = null;
+   //private static SpInfoFragment sFragment = null;
     private static boolean oneFrm = false;
 
     public static SpInfoFragment newInstance(SportsmanModel model,int mode) {
@@ -46,6 +46,7 @@ public class SpInfoFragment extends Fragment {
         Bundle args = new Bundle();
         args.putInt(MODE, mode);
         args.putParcelable(MODEL, model);
+        /*
         if (sFragment == null) {
             sFragment = new SpInfoFragment();
             sFragment.setArguments(args);
@@ -57,6 +58,9 @@ public class SpInfoFragment extends Fragment {
                 sFragment.changeMode(true);
             }
         }
+        */
+        SpInfoFragment sFragment = new SpInfoFragment();
+        sFragment.setArguments(args);
         return sFragment;
     }
 
