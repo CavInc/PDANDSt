@@ -11,7 +11,7 @@
             android:id="@+id/add_rate_type"
             android:title="Добавить тип расхода"/>
         <item
-            android:title="Редатировать тип расхода"/>
+            android:title="Редактировать тип расхода"/>
     </group>
 
 </menu>
