@@ -158,6 +158,25 @@ public class DataManager {
         return rec;
     }
 
+    public SportsmanModel getSportsman(int id){
+        SportsmanModel model = null;
+        mDB.open();
+        Cursor cursor = mDB.getSportsman(id);
+        while (cursor.moveToNext()){
+            model = new SportsmanModel(
+                    cursor.getInt(cursor.getColumnIndex("_id")),
+                    cursor.getString(cursor.getColumnIndex("sp_name")),
+                    cursor.getString(cursor.getColumnIndex("phone")),
+                    cursor.getInt(cursor.getColumnIndex("ci")),
+                    cursor.getInt(cursor.getColumnIndex("sm")),
+                    cursor.getString(cursor.getColumnIndex("comment")),
+                    cursor.getString(cursor.getColumnIndex("last_date")),
+                    cursor.getString(cursor.getColumnIndex("last_time")));
+        }
+        mDB.close();
+        return model;
+    }
+
     public void addSportsman(SportsmanModel data){
         mDB.addSportsman(data);
     }

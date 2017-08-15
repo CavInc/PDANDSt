@@ -56,6 +56,10 @@ public class SportsmanDetailActivity extends AppCompatActivity implements SpInfo
             sp_id = mSportsmanModel.getId();
         }
 
+        if (mode == ConstantManager.ALARM_SPORTSMAN){
+            mSportsmanModel = mDataManager.getSportsman(getIntent().getIntExtra(ConstantManager.ALARM_ID,-1));
+        }
+
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.

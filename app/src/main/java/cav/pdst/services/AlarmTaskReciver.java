@@ -10,12 +10,14 @@ import android.os.Build;
 import android.util.Log;
 
 import cav.pdst.R;
+import cav.pdst.ui.activity.SportsmanDetailActivity;
 import cav.pdst.utils.ConstantManager;
 
 public class AlarmTaskReciver extends BroadcastReceiver {
 
     private String mMsg;
     private int mId; // id спортсмена
+    private Context mContext;
 
     public AlarmTaskReciver() {
     }
@@ -24,6 +26,7 @@ public class AlarmTaskReciver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         // an Intent broadcast.
         //throw new UnsupportedOperationException("Not yet implemented");
+        mContext = context;
         Log.d("ATR","ESH");
         mMsg = intent.getStringExtra(ConstantManager.ALARM_MSG);
         mId = intent.getIntExtra(ConstantManager.ALARM_ID,0);
@@ -39,7 +42,9 @@ public class AlarmTaskReciver extends BroadcastReceiver {
 
         Notification.Builder builder = new Notification.Builder(context);
 
-        Intent intent = new Intent();
+        Intent intent = new Intent(mContext, SportsmanDetailActivity.class);
+        intent.putExtra(ConstantManager.MODE_SP_DETAIL,ConstantManager.ALARM_SPORTSMAN);
+        intent.putExtra(ConstantManager.ALARM_ID,mId);
         PendingIntent pi = PendingIntent.getService(context,mId,intent,PendingIntent.FLAG_CANCEL_CURRENT);
 
         builder.setContentIntent(pi)

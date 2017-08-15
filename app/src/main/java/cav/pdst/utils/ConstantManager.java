@@ -22,9 +22,11 @@ public interface ConstantManager {
 
     String EXTRA_DATE = "EXTRA_DATE";
     String MODE_SP_DETAIL = "MODE_SP_DETAIL";
+
     int NEW_SPORTSMAN = 100;
     int EDIT_SPORTSMAN = 101;
     int VIEW_SPORTSMAN = 102;
+    int ALARM_SPORTSMAN = 103;
 
     String SP_DETAIL_DATA = "SP_DETAIL_DATA";
     String AB_DETAIL_DATA = "AB_DETAIL_DATA";
@@ -64,4 +66,5 @@ public interface ConstantManager {
 
     String ALARM_MSG = "ALARM_MSG";
     String ALARM_ID = "ALARM_ID";
+
 }
