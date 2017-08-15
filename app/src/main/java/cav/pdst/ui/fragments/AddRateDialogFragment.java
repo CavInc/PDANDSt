@@ -74,6 +74,8 @@ public class AddRateDialogFragment extends DialogFragment implements View.OnClic
             }
         });
 
+
+
         AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
         builder.setTitle("Добавить расход")
                 .setView(v)
@@ -89,6 +91,14 @@ public class AddRateDialogFragment extends DialogFragment implements View.OnClic
                 });
 
         return builder.create();
+    }
+
+    public void setParametr(Date date,int type,float summ){
+        mCreateDate = date;
+        mDateButton.setText(new SimpleDateFormat("E dd.MM.yyyy").format(date));
+        mSumm.setText(String.valueOf(summ));
+        mIdRateType = type;
+
     }
 
     @Override

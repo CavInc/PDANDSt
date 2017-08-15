@@ -16,6 +16,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -145,6 +146,7 @@ public class RateActivity extends AppCompatActivity {
             TableRow row = (TableRow) view;
             Log.d("RARE_AC", (String) ((TextView) row.getVirtualChildAt(2)).getText());
             final int row_id = Integer.valueOf ((String) ((TextView) row.getVirtualChildAt(2)).getText());
+
             EditDeleteDialog dialog = EditDeleteDialog.newInstance();
             dialog.setEditDeleteDialogListener(new EditDeleteDialog.EditDeleteDialogListener() {
                 @Override
@@ -152,6 +154,29 @@ public class RateActivity extends AppCompatActivity {
                     if (selectItem==R.id.dialog_del_item) {
                         mDataManager.getDB().delRate(row_id);
                         setupTable();
+                    }
+                    if (selectItem == R.id.dialog_edit_item){
+                        int type_rate = 0;
+                        Date date_rate = null;
+                        float summ = 0;
+                        mDataManager.getDB().open();
+                        Cursor cursor = mDataManager.getDB().getRateDetailOne(row_id);
+                        while (cursor.moveToNext()){
+                            type_rate = cursor.getInt(cursor.getColumnIndex("rate_type"));
+                            summ = cursor.getFloat(cursor.getColumnIndex("summ"));
+                            try {
+                                date_rate = new SimpleDateFormat("yyyy-MM-dd").parse(cursor.getString(cursor.getColumnIndex("create_date")));
+                            } catch (ParseException e) {
+
+                            }
+                        }
+                        mDataManager.getDB().close();
+
+                        AddRateDialogFragment dialog = new AddRateDialogFragment();
+                        dialog.setParametr(date_rate,type_rate,summ);
+
+                       // dialog.setAddRateDialogListener(mAddRateDialogListener);
+                        dialog.show(getSupportFragmentManager(),"ratenew");
                     }
                 }
             });

@@ -473,6 +473,12 @@ public class DataBaseConnector {
         return database.rawQuery(sql,null);
     }
 
+    public Cursor getRateDetailOne(int id){
+        return  database.query(DBHelper.RATE_TABLE,
+                new String[]{"_id","rate_type","create_date","summ"},
+                "_id="+id,null,null,null,null);
+    }
+
     // rate
     public void addUpdateRateType(int id,String name){
         open();
