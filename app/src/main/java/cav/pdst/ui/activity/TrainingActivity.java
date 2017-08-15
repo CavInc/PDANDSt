@@ -124,6 +124,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         ArrayList<TrainingGroupModel> spinnerData = mDataManager.getGroupString();
         spinnerData.add(0,new TrainingGroupModel(-1,"Все"));
         ArrayAdapter<TrainingGroupModel> spinnerAdapter = new ArrayAdapter<TrainingGroupModel>(this,android.R.layout.simple_spinner_item,spinnerData);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinner.setAdapter(spinnerAdapter);
 
         setDateButton(mDate);

@@ -59,6 +59,7 @@ public class AddRateDialogFragment extends DialogFragment implements View.OnClic
 
         ArrayList<RateTypeSpinerModel> model = mDataManager.getRateType();
         ArrayAdapter<RateTypeSpinerModel> adapter = new ArrayAdapter<RateTypeSpinerModel>(getActivity(),android.R.layout.simple_spinner_item,model);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mTypeRate.setAdapter(adapter);
 
         mTypeRate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

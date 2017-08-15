@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -98,7 +99,12 @@ public class DohodActivity extends AppCompatActivity {
             TextView pay = new TextView(this);
             pay.setText(String.valueOf(cursor.getFloat(2)));
             TextView period = new TextView(this);
-            period.setText(cursor.getString(3)+"-"+cursor.getString(4));
+            try {
+                period.setText(new SimpleDateFormat("dd.MM.yyyy").format(format.parse(cursor.getString(3)))
+                        +"-"+new SimpleDateFormat("dd.MM.yyyy").format(format.parse(cursor.getString(4))));
+            } catch (ParseException e) {
+
+            }
 
             row.addView(sp);
             row.addView(pay);
