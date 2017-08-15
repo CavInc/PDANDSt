@@ -85,61 +85,7 @@ public class SpInfoFragment extends Fragment {
         if (mode == ConstantManager.VIEW_SPORTSMAN) {
             changeMode(false);
         }else {
-
-            mFullName.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
-                    mSportsmanModel.setName(charSequence.toString());
-                    updateData();
-                }
-
-                @Override
-                public void afterTextChanged(Editable editable) {
-
-                }
-            });
-
-            mPhone.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
-                    mSportsmanModel.setTel(charSequence.toString());
-                    updateData();
-                }
-
-                @Override
-                public void afterTextChanged(Editable editable) {
-
-                }
-            });
-
-            mComment.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
-                    mSportsmanModel.setComment(charSequence.toString());
-                    updateData();
-                }
-
-                @Override
-                public void afterTextChanged(Editable editable) {
-
-                }
-            });
-
+            setupListener();
         }
 
         mCall = (Button) rootView.findViewById(R.id.info_call_button);
@@ -164,10 +110,70 @@ public class SpInfoFragment extends Fragment {
         mFullName.setFocusable(flg);
         mPhone.setFocusable(flg);
         mComment.setFocusable(flg);
+        if (flg){
+            setupListener();
+        }
     }
 
     private void updateData(){
         mCallbacks.updateData(mSportsmanModel);
+    }
+
+    private void setupListener(){
+
+        mFullName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                mSportsmanModel.setName(charSequence.toString());
+                updateData();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        mPhone.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                mSportsmanModel.setTel(charSequence.toString());
+                updateData();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        mComment.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                mSportsmanModel.setComment(charSequence.toString());
+                updateData();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
 
