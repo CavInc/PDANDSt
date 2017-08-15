@@ -23,6 +23,7 @@ import cav.pdst.R;
 import cav.pdst.data.managers.DataManager;
 import cav.pdst.ui.fragments.AddRateDialogFragment;
 import cav.pdst.ui.fragments.AddRateTypeDialogFragment;
+import cav.pdst.ui.fragments.EditDeleteDialog;
 import cav.pdst.utils.ConstantManager;
 
 public class RateActivity extends AppCompatActivity {
@@ -143,6 +144,19 @@ public class RateActivity extends AppCompatActivity {
             Log.d("RARE AC"," ROW CLICK");
             TableRow row = (TableRow) view;
             Log.d("RARE_AC", (String) ((TextView) row.getVirtualChildAt(2)).getText());
+            final int row_id = Integer.valueOf ((String) ((TextView) row.getVirtualChildAt(2)).getText());
+            EditDeleteDialog dialog = EditDeleteDialog.newInstance();
+            dialog.setEditDeleteDialogListener(new EditDeleteDialog.EditDeleteDialogListener() {
+                @Override
+                public void onDialogItemClick(int selectItem) {
+                    if (selectItem==R.id.dialog_del_item) {
+                        mDataManager.getDB().delRate(row_id);
+                        setupTable();
+                    }
+                }
+            });
+
+            dialog.show(getSupportFragmentManager(),"rate_edit_date");
             return false;
         }
     };

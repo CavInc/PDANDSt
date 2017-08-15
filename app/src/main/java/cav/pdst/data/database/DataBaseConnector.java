@@ -499,4 +499,10 @@ public class DataBaseConnector {
         close();
     }
 
+    public void delRate(int id){
+        open();
+        database.delete(DBHelper.RATE_TABLE,"_id="+id,null);
+        close();
+    }
+
 }
