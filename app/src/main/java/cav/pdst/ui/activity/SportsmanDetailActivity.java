@@ -107,7 +107,14 @@ public class SportsmanDetailActivity extends AppCompatActivity implements SpInfo
             mMenu.findItem(R.id.save_item).setVisible(true);
             mMenu.findItem(R.id.edit_tr_item).setVisible(false);
             mode = ConstantManager.EDIT_SPORTSMAN;
-            //mSectionsPagerAdapter.getItem(mViewPager.getCurrentItem()).
+            switch (mViewPager.getCurrentItem()){
+                case 0:{
+                    ((SpInfoFragment) mSectionsPagerAdapter.getItem(mViewPager.getCurrentItem())).setMode(mode);
+                }
+                case 2: {
+
+                }
+            }
         }
         return true;
     }

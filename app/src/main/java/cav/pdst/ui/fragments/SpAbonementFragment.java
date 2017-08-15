@@ -83,9 +83,13 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_sp_abonement, container, false);
+        if (mListView == null) {
+            mListView = (ListView) rootView.findViewById(R.id.sp_abom_list_view);
+            mListView.setOnItemClickListener(this);
+        }
+        if (mFab == null)
+            mFab = (FloatingActionButton) rootView.findViewById(R.id.frm_abonement_fab);
 
-        mListView = (ListView) rootView.findViewById(R.id.sp_abom_list_view);
-        mFab = (FloatingActionButton) rootView.findViewById(R.id.frm_abonement_fab);
         if (mode != ConstantManager.VIEW_SPORTSMAN) {
             mFab.setOnClickListener(this);
             mListView.setOnItemLongClickListener(this);
@@ -93,7 +97,6 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
             mFab.setEnabled(false);
             mFab.setVisibility(View.GONE);
         }
-        mListView.setOnItemClickListener(this);
         return rootView;
         //return super.onCreateView(inflater, container, savedInstanceState);
     }
@@ -111,6 +114,7 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
         }else {
             mAbonementAdapter.setData(data);
             mAbonementAdapter.notifyDataSetChanged();
+            mListView.setAdapter(mAbonementAdapter);
         }
     }
 

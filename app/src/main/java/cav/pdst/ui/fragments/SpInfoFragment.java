@@ -1,6 +1,6 @@
 package cav.pdst.ui.fragments;
 
-import android.annotation.SuppressLint;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -16,15 +16,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
 
 import cav.pdst.R;
 import cav.pdst.data.models.SportsmanModel;
 import cav.pdst.utils.ConstantManager;
 
-@SuppressLint("ValidFragment")
 public class SpInfoFragment extends Fragment {
 
+    private static final String MODE = "MODE";
+    private static final String MODEL = "MODEL";
     private TextView mFullName;
     private TextView mPhone;
     private TextView mComment;
@@ -37,19 +37,18 @@ public class SpInfoFragment extends Fragment {
     private Callbacks mCallbacks;
     private int mode;
 
+    private static SpInfoFragment sFragment = null;
 
     public static SpInfoFragment newInstance(SportsmanModel model,int mode){
         Bundle args = new Bundle();
-        SpInfoFragment fragment = new SpInfoFragment(model,mode);
-        return  fragment;
-    }
-
-    public SpInfoFragment(SportsmanModel model,int mode) {
-        mSportsmanModel = new SportsmanModel();
-        this.mode = mode;
-        if ((mode == ConstantManager.EDIT_SPORTSMAN) || (mode == ConstantManager.VIEW_SPORTSMAN)){
-            mSportsmanModel = model;
+        args.putInt(MODE,mode);
+        args.putParcelable(MODEL,model);
+        if (sFragment == null) {
+            sFragment = new SpInfoFragment();
+            sFragment.setArguments(args);
         }
+
+        return  sFragment;
     }
 
     @Override
@@ -61,6 +60,11 @@ public class SpInfoFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mode = getArguments().getInt(MODE);
+        mSportsmanModel = new SportsmanModel();
+        if ((mode == ConstantManager.EDIT_SPORTSMAN) || (mode == ConstantManager.VIEW_SPORTSMAN)){
+            mSportsmanModel = getArguments().getParcelable(MODEL);
+        }
     }
 
     @Override
@@ -79,12 +83,7 @@ public class SpInfoFragment extends Fragment {
             mComment.setText(mSportsmanModel.getComment());
         }
         if (mode == ConstantManager.VIEW_SPORTSMAN) {
-            mFullName.setEnabled(false);
-            mPhone.setEnabled(false);
-            mComment.setEnabled(false);
-            mFullName.setFocusable(false);
-            mPhone.setFocusable(false);
-            mComment.setFocusable(false);
+            changeMode(false);
         }else {
 
             mFullName.addTextChangedListener(new TextWatcher() {
@@ -151,6 +150,20 @@ public class SpInfoFragment extends Fragment {
 
         return rootView;
         //return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    public void setMode(int mode){
+        this.mode = mode;
+        changeMode(true);
+    }
+
+    private void changeMode(boolean flg){
+        mFullName.setEnabled(flg);
+        mPhone.setEnabled(flg);
+        mComment.setEnabled(flg);
+        mFullName.setFocusable(flg);
+        mPhone.setFocusable(flg);
+        mComment.setFocusable(flg);
     }
 
     private void updateData(){
