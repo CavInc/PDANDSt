@@ -81,6 +81,12 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
     }
 
     @Override
+    public void onDetach() {
+        super.onDetach();
+        mAbonementCallback = null;
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_sp_abonement, container, false);
         if (mListView == null) {

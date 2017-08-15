@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,29 +38,46 @@ public class SpInfoFragment extends Fragment {
     private Callbacks mCallbacks;
     private int mode;
 
-    private static SpInfoFragment sFragment = null;
+   private static SpInfoFragment sFragment = null;
+    private static boolean oneFrm = false;
 
-    public static SpInfoFragment newInstance(SportsmanModel model,int mode){
+    public static SpInfoFragment newInstance(SportsmanModel model,int mode) {
+        Log.d("SPF", "INSTANCE");
         Bundle args = new Bundle();
-        args.putInt(MODE,mode);
-        args.putParcelable(MODEL,model);
+        args.putInt(MODE, mode);
+        args.putParcelable(MODEL, model);
         if (sFragment == null) {
             sFragment = new SpInfoFragment();
             sFragment.setArguments(args);
+        } else{
+            sFragment.mode = mode;
+            sFragment.mSportsmanModel = model;
+            if (mode == ConstantManager.EDIT_SPORTSMAN) {
+                sFragment.setFieldData();
+                sFragment.changeMode(true);
+            }
         }
-
-        return  sFragment;
+        return sFragment;
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         mCallbacks = (Callbacks) activity;
+        Log.d("SPF","ATTACH");
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallbacks  = null;
+        Log.d("SPF","DETACH");
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("SPF","CREATE");
         mode = getArguments().getInt(MODE);
         mSportsmanModel = new SportsmanModel();
         if ((mode == ConstantManager.EDIT_SPORTSMAN) || (mode == ConstantManager.VIEW_SPORTSMAN)){
@@ -69,6 +87,7 @@ public class SpInfoFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+
         View rootView = inflater.inflate(R.layout.fragment_sp_info, container, false);
 
         mFullName = (TextView) rootView.findViewById(R.id.info_full_name);
@@ -78,9 +97,7 @@ public class SpInfoFragment extends Fragment {
         mPhone.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
 
         if ((mode == ConstantManager.EDIT_SPORTSMAN) || (mode == ConstantManager.VIEW_SPORTSMAN)) {
-            mFullName.setText(mSportsmanModel.getName());
-            mPhone.setText(mSportsmanModel.getTel());
-            mComment.setText(mSportsmanModel.getComment());
+            setFieldData();
         }
         if (mode == ConstantManager.VIEW_SPORTSMAN) {
             changeMode(false);
@@ -93,14 +110,33 @@ public class SpInfoFragment extends Fragment {
 
         mCall.setOnClickListener(mCallListener);
         mSendSMS.setOnClickListener(mSendSMSListener);
+        Log.d("SPF","ON VIEW");
 
         return rootView;
         //return super.onCreateView(inflater, container, savedInstanceState);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d("SPF","ON RESUME");
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        Log.d("SPF","VIEW CREATED");
+    }
+
     public void setMode(int mode){
         this.mode = mode;
+        setFieldData();
         changeMode(true);
+    }
+
+    private void setFieldData(){
+        mFullName.setText(mSportsmanModel.getName());
+        mPhone.setText(mSportsmanModel.getTel());
+        mComment.setText(mSportsmanModel.getComment());
     }
 
     private void changeMode(boolean flg){
