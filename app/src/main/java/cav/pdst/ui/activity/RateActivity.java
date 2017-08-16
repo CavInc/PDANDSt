@@ -146,6 +146,7 @@ public class RateActivity extends AppCompatActivity {
             TableRow row = (TableRow) view;
             Log.d("RARE_AC", (String) ((TextView) row.getVirtualChildAt(2)).getText());
             final int row_id = Integer.valueOf ((String) ((TextView) row.getVirtualChildAt(2)).getText());
+            final String type_name = ((TextView) row.getVirtualChildAt(0)).getText().toString();
 
             EditDeleteDialog dialog = EditDeleteDialog.newInstance();
             dialog.setEditDeleteDialogListener(new EditDeleteDialog.EditDeleteDialogListener() {
@@ -172,11 +173,11 @@ public class RateActivity extends AppCompatActivity {
                         }
                         mDataManager.getDB().close();
 
-                        AddRateDialogFragment dialog = new AddRateDialogFragment();
-                        dialog.setParametr(date_rate,type_rate,summ);
+                        AddRateDialogFragment addDialog = new AddRateDialogFragment();
+                        addDialog.setParametr(date_rate,type_rate,summ,type_name);
 
                        // dialog.setAddRateDialogListener(mAddRateDialogListener);
-                        dialog.show(getSupportFragmentManager(),"ratenew");
+                        addDialog.show(getSupportFragmentManager(),"ratenew");
                     }
                 }
             });

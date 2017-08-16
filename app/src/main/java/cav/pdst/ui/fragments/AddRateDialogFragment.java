@@ -31,10 +31,12 @@ public class AddRateDialogFragment extends DialogFragment implements View.OnClic
     private Spinner mTypeRate;
     private Button mDateButton;
 
-    private int mIdRateType;
+    private int mIdRateType = -1;
 
     private AddRateDialogListener mAddRateDialogListener;
     private Date mCreateDate;
+    private Float mEditSumm = null;
+    private String mTypeName = null;
 
 
     public interface AddRateDialogListener {
@@ -74,6 +76,15 @@ public class AddRateDialogFragment extends DialogFragment implements View.OnClic
             }
         });
 
+        if (mEditSumm !=null ){
+            mSumm.setText(String.valueOf(mEditSumm));
+        }
+        if (mTypeName != null) {
+            ArrayAdapter<RateTypeSpinerModel> apt = (ArrayAdapter<RateTypeSpinerModel>) mTypeRate.getAdapter();
+            int i = apt.getPosition(new RateTypeSpinerModel(mIdRateType,mTypeName));
+
+            mTypeRate.setSelection(i);
+        }
 
 
         AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
@@ -93,12 +104,11 @@ public class AddRateDialogFragment extends DialogFragment implements View.OnClic
         return builder.create();
     }
 
-    public void setParametr(Date date,int type,float summ){
+    public void setParametr(Date date,int type,float summ,String typeName){
         mCreateDate = date;
-        mDateButton.setText(new SimpleDateFormat("E dd.MM.yyyy").format(date));
-        mSumm.setText(String.valueOf(summ));
+        mEditSumm =summ;
         mIdRateType = type;
-
+        mTypeName = typeName;
     }
 
     @Override
