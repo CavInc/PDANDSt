@@ -113,27 +113,34 @@ public class DataBaseConnector {
             value.put("type_link",mx.getMode());
             database.insert(DBHelper.REF_TABLE,null,value);
 
-            if ((mx.getMode() == 0) || (mx.getMode() == 1) || (mx.getMode() == 3) ){
-                value.clear();
-                value.put("type_ref", 2);
-                value.put("id1", recid);
-                value.put("id2", mx.getAbonement());
-                value.put("type_link", mx.getMode());
-                database.insertWithOnConflict(DBHelper.REF_TABLE, null, value, SQLiteDatabase.CONFLICT_REPLACE);
+            value.clear();
+            value.put("type_ref", 2);
+            value.put("id1", recid);
+            value.put("id2", mx.getAbonement());
+            value.put("type_link", mx.getMode());
+            database.insertWithOnConflict(DBHelper.REF_TABLE, null, value, SQLiteDatabase.CONFLICT_REPLACE);
 
+            value.clear();
+            value.put("type_ref", 2);
+            value.put("id1", recid);
+            value.put("id2", mx.getAbonement());
+            value.put("type_link", mx.getMode());
+            database.insertWithOnConflict(DBHelper.REF_TABLE, null, value, SQLiteDatabase.CONFLICT_REPLACE);
+
+            // тренировка и пропуск
+            if ((mx.getMode() == 0) || (mx.getMode() == 1) ){
                 String sql = "update " + DBHelper.ABONEMENT_TABLE + " set used_training=used_training+1 " +
                         "where _id=" + mx.getAbonement();
                 database.execSQL(sql);
             }
+            if (mx.getMode() == 3){
+                String sql = "update " + DBHelper.ABONEMENT_TABLE + " set working=working-1 " +
+                        "where _id=" + mx.getAbonement();
+                database.execSQL(sql);
+            }
+
             // предупреждение
             if (mx.getMode() == 2 ){
-                value.clear();
-                value.put("type_ref", 2);
-                value.put("id1", recid);
-                value.put("id2", mx.getAbonement());
-                value.put("type_link", mx.getMode());
-                database.insertWithOnConflict(DBHelper.REF_TABLE, null, value, SQLiteDatabase.CONFLICT_REPLACE);
-
                 String sql = "update " + DBHelper.ABONEMENT_TABLE + " set warning_count=warning_count+1 " +
                         "where _id=" + mx.getAbonement();
                 database.execSQL(sql);
@@ -169,6 +176,9 @@ public class DataBaseConnector {
             if (cursor.getInt(1) == ConstantManager.SPORTSMAN_MODE_WARNING) {
                 sql = "update " + DBHelper.ABONEMENT_TABLE + " set warning_count=warning_count-1 " +
                         "where _id=" + cursor.getString(0);
+            } else if (cursor.getInt(1) == ConstantManager.SPORTSMAN_MODE_WORKINGOFF){
+                sql = "update " + DBHelper.ABONEMENT_TABLE + " set working=working+1 " +
+                        "where _id=" + cursor.getString(0);
             } else {
                 sql = "update " + DBHelper.ABONEMENT_TABLE + " set used_training=used_training-1 " +
                         "where _id=" + cursor.getString(0);
@@ -196,6 +206,9 @@ public class DataBaseConnector {
             if (mx.getMode() == ConstantManager.SPORTSMAN_MODE_WARNING) {
                 sql = "update " + DBHelper.ABONEMENT_TABLE + " set warning_count=warning_count+1 " +
                         "where _id=" + mx.getAbonement();
+            }else if (mx.getMode() == ConstantManager.SPORTSMAN_MODE_WORKINGOFF){
+                sql = "update " + DBHelper.ABONEMENT_TABLE + " set working=working-1 " +
+                        "where _id=" + mx.getAbonement();
             }else {
                 sql = "update " + DBHelper.ABONEMENT_TABLE + " set used_training=used_training+1 " +
                         "where _id=" + mx.getAbonement();
@@ -210,10 +223,18 @@ public class DataBaseConnector {
         String sql;
         open();
         database.delete(DBHelper.TRAINING_TABLE,"_id="+id,null);
-        Cursor cursor = database.query(DBHelper.REF_TABLE,new String[]{"id2"},"type_ref=2 and id1="+id,null,null,null,null);
+        Cursor cursor = database.query(DBHelper.REF_TABLE,new String[]{"id2","type_link"},"type_ref=2 and id1="+id,null,null,null,null);
         while (cursor.moveToNext()){
-            sql="update "+DBHelper.ABONEMENT_TABLE+" set used_training=used_training-1 "+
-                    "where _id="+cursor.getInt(0);
+            if (cursor.getInt(1) == ConstantManager.SPORTSMAN_MODE_WARNING){
+                sql = "update " + DBHelper.ABONEMENT_TABLE + " set warning_count=warning_count-1 " +
+                        "where _id=" + cursor.getInt(0);
+            }else if (cursor.getInt(1) == ConstantManager.SPORTSMAN_MODE_WORKINGOFF){
+                sql = "update " + DBHelper.ABONEMENT_TABLE + " set working=working-1 " +
+                        "where _id=" + cursor.getInt(0);
+            }else {
+                sql = "update " + DBHelper.ABONEMENT_TABLE + " set used_training=used_training-1 " +
+                        "where _id=" + cursor.getInt(0);
+            }
             database.execSQL(sql);
         }
         database.delete(DBHelper.REF_TABLE,"type_ref=2 and id1="+id,null);
@@ -271,7 +292,7 @@ public class DataBaseConnector {
     }
 
     public Cursor getDateTraining(int sp_id){
-        String sql="select distinct tt.date from TRAINIG_TABLE  tt\n" +
+        String sql="select distinct tt.date,rf.type_link from TRAINIG_TABLE  tt\n" +
                 " join REF_TABLE rf on rf.type_ref=1 and tt._id=rf.id2\n" +
                 " where rf.id1=" +sp_id+" "+
                 "order by tt.date";
