@@ -1,5 +1,6 @@
 package cav.pdst.ui.fragments;
 
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
@@ -27,11 +28,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 
 import cav.pdst.R;
 import cav.pdst.data.managers.DataManager;
 import cav.pdst.data.models.TrainingModel;
+import cav.pdst.data.models.UsedDaysModel;
 import cav.pdst.ui.adapters.SpTrainingAdapter;
 
 
@@ -133,38 +136,73 @@ public class SpTrainingFragment extends Fragment {
     }
 
     private void loadUseDay(){
-        mCalendarDays = new ArrayList<>();
-        for (Date l : mDataManager.getTrainingDay(sp_id)) {
-            mCalendarDays.add(CalendarDay.from(l));
+       // mCalendarDays = new ArrayList<>();
+        /*
+        for (UsedDaysModel l : mDataManager.getTrainingDay(sp_id)) {
+            mCalendarDays.add(CalendarDay.from(l.getDate()));
         }
-        calendarView.addDecorator(new StartDayViewDecorator(mCalendarDays));
+        */
+       // calendarView.addDecorator(new StartDayViewDecorator(mCalendarDays));
+        calendarView.addDecorator(new StartDayViewDecorator(mDataManager.getTrainingDay(sp_id)));
     }
 
     private class StartDayViewDecorator implements DayViewDecorator {
 
-        private final HashSet<CalendarDay> dates;
+        //private final HashSet<CalendarDay> dates;
         private final int color;
+        private HashMap<CalendarDay,Integer> dates;
 
         // передали список дат
+        /*
         public StartDayViewDecorator(Collection<CalendarDay> dates){
             this.color = Color.GREEN;
             this.dates = new HashSet<>(dates);
         }
+        */
 
+        public StartDayViewDecorator(Collection<UsedDaysModel> model){
+            this.color = R.color.app_green;
+            this.dates = new HashMap<>();
+            for (UsedDaysModel l : model){
+                dates.put(CalendarDay.from(l.getDate()),l.getType());
+            }
+        }
+
+        private int type;
         @Override
         public boolean shouldDecorate(CalendarDay day) {
-            return dates.contains(day); // входит ли обрабатываемая дата в диапазон переданых и если да то вызов decorate;
+            if (dates.containsKey(day)){
+                type = dates.get(day);
+                return true;
+            }else {
+                return false;
+            }
+            //return dates.contains(day); // входит ли обрабатываемая дата в диапазон переданых и если да то вызов decorate;
         }
 
         @Override
         public void decorate(DayViewFacade view) {
-            view.addSpan(new ForegroundColorSpan(ContextCompat.getColor(getActivity(),R.color.app_green_dark)));
+            view.addSpan(new ForegroundColorSpan(Color.BLACK));
             //view.addSpan(new DotSpan(5, color));
             //view.addSpan(new ForegroundColorSpan(Color.WHITE));
-            view.setBackgroundDrawable(ContextCompat.getDrawable(getContext(),R.drawable.custom_select_green_background));
+            switch (type){
+                case 0:
+                    view.setBackgroundDrawable(ContextCompat.getDrawable(getContext(),R.drawable.custom_select_green_background));
+                    break;
+                case 1:
+                    view.setBackgroundDrawable(ContextCompat.getDrawable(getContext(),R.drawable.custom_select_red_background));
+                    break;
+                case 2:
+                    view.setBackgroundDrawable(ContextCompat.getDrawable(getContext(),R.drawable.custom_select_blue_background));
+                    break;
+                case 3:
+                    view.setBackgroundDrawable(ContextCompat.getDrawable(getContext(),R.drawable.custom_select_yellow_background));
+                    break;
+            }
+            //view.setBackgroundDrawable(ContextCompat.getDrawable(getContext(),R.drawable.custom_select_green_background));
         }
     }
-
+/*
     private class LoadUseDay extends AsyncTask<Void,Void,Void> {
 
         @Override
@@ -182,6 +220,6 @@ public class SpTrainingFragment extends Fragment {
             calendarView.addDecorator(new StartDayViewDecorator(mCalendarDays));
         }
     }
-
+*/
 
 }
