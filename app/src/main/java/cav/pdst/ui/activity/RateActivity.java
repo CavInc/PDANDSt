@@ -83,8 +83,8 @@ public class RateActivity extends AppCompatActivity {
     AddRateDialogFragment.AddRateDialogListener mAddRateDialogListener = new AddRateDialogFragment.AddRateDialogListener(){
 
         @Override
-        public void OnSelected(int rate_type, String create_date, float summ) {
-            mDataManager.getDB().addUpdateRate(rate_type,create_date,summ);
+        public void OnSelected(int rate_type, String create_date, float summ, int rec_id) {
+            mDataManager.getDB().addUpdateRate(rate_type,create_date,summ,rec_id);
             setupTable();
         }
     };
@@ -174,9 +174,9 @@ public class RateActivity extends AppCompatActivity {
                         mDataManager.getDB().close();
 
                         AddRateDialogFragment addDialog = new AddRateDialogFragment();
-                        addDialog.setParametr(date_rate,type_rate,summ,type_name);
+                        addDialog.setParametr(date_rate,type_rate,summ,type_name,row_id);
 
-                       // dialog.setAddRateDialogListener(mAddRateDialogListener);
+                        addDialog.setAddRateDialogListener(mAddRateDialogListener);
                         addDialog.show(getSupportFragmentManager(),"ratenew");
                     }
                 }

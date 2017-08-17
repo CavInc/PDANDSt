@@ -516,8 +516,11 @@ public class DataBaseConnector {
         return database.query(DBHelper.RATE_TYPE_TABLE,new String[]{"_id","name"},null,null,null,null,null);
     }
 
-    public void addUpdateRate(int rate_type,String date,Float summ){
+    public void addUpdateRate(int rate_type,String date,Float summ,int rec_id){
         ContentValues values = new ContentValues();
+        if (rec_id != -1){
+            values.put("_id",rec_id);
+        }
         values.put("rate_type",rate_type);
         values.put("create_date",date);
         values.put("summ",summ);

@@ -122,6 +122,10 @@ public class AbonementActivity extends AppCompatActivity implements View.OnClick
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.all_save_menu, menu);
+        if (mode == ConstantManager.VIEW_ABONEMENT) {
+            menu.findItem(R.id.save_item).setVisible(false);
+           // menu.findItem(R.id.edit_tr_item).setVisible(true);
+        }
         return true;
     }
 

@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -38,9 +39,11 @@ public class AddRateDialogFragment extends DialogFragment implements View.OnClic
     private Float mEditSumm = null;
     private String mTypeName = null;
 
+    private int rec_id = -1;
+
 
     public interface AddRateDialogListener {
-        public void OnSelected(int rate_type,String create_date,float summ);
+        public void OnSelected(int rate_type,String create_date,float summ,int rec_id);
     }
 
     public AddRateDialogFragment() {
@@ -82,7 +85,6 @@ public class AddRateDialogFragment extends DialogFragment implements View.OnClic
         if (mTypeName != null) {
             ArrayAdapter<RateTypeSpinerModel> apt = (ArrayAdapter<RateTypeSpinerModel>) mTypeRate.getAdapter();
             int i = apt.getPosition(new RateTypeSpinerModel(mIdRateType,mTypeName));
-
             mTypeRate.setSelection(i);
         }
 
@@ -95,20 +97,23 @@ public class AddRateDialogFragment extends DialogFragment implements View.OnClic
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-                        mAddRateDialogListener.OnSelected(mIdRateType,
-                                format.format(mCreateDate),
-                                Float.parseFloat(mSumm.getText().toString()));
+                        if (mAddRateDialogListener!=null) {
+                                mAddRateDialogListener.OnSelected(mIdRateType,
+                                        format.format(mCreateDate),
+                                        Float.parseFloat(mSumm.getText().toString()),rec_id);
+                        }
                     }
                 });
 
         return builder.create();
     }
 
-    public void setParametr(Date date,int type,float summ,String typeName){
+    public void setParametr(Date date,int type,float summ,String typeName,int rec_id){
         mCreateDate = date;
         mEditSumm =summ;
         mIdRateType = type;
         mTypeName = typeName;
+        this.rec_id = rec_id;
     }
 
     @Override

@@ -22,6 +22,7 @@ import cav.pdst.data.models.SportsmanModel;
 import cav.pdst.data.models.SportsmanTrainingModel;
 import cav.pdst.data.models.TrainingGroupModel;
 import cav.pdst.data.models.TrainingModel;
+import cav.pdst.data.models.UsedDaysModel;
 import cav.pdst.utils.ConstantManager;
 import cav.pdst.utils.PdStApplication;
 
@@ -267,16 +268,16 @@ public class DataManager {
         return rec;
     }
 
-    public ArrayList<Date> getTrainingDay(int sp_id){
+    public ArrayList<UsedDaysModel> getTrainingDay(int sp_id){
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        ArrayList<Date> rec= new ArrayList<>();
+        ArrayList<UsedDaysModel> rec= new ArrayList<>();
         //mDB.openRead();
         mDB.open();
         Log.d(TAG," STATUS DB "+String.valueOf(mDB.isOpen()));
         Cursor cursor = mDB.getDateTraining(sp_id);
         while (cursor.moveToNext()){
             try {
-                rec.add(format.parse(cursor.getString(0)));
+                rec.add(new UsedDaysModel(format.parse(cursor.getString(0)),cursor.getInt(1)));
             } catch (ParseException e) {
                 e.printStackTrace();
             }

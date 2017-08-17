@@ -105,12 +105,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         selectedDate = new Date();
 
-        /*
-        ArrayList<TrainingModel> model = new ArrayList<>();
-        model.add(new TrainingModel("Йога", ConstantManager.ONE,0, new Date()));
-        model.add(new TrainingModel("Йога + пробежка", ConstantManager.GROUP,0, new Date()));
-        */
-
         setupToolBar();
         setupDrower();
     }

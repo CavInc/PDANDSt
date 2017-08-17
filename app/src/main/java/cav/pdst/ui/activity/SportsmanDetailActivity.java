@@ -5,6 +5,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -154,7 +155,8 @@ public class SportsmanDetailActivity extends AppCompatActivity implements SpInfo
         mAbonementModel = model;
     }
 
-
+    //
+    // FragmentPagerAdapter   FragmentStatePagerAdapter
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
