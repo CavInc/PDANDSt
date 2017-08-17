@@ -98,6 +98,8 @@ public class DohodActivity extends AppCompatActivity {
             sp.setText(cursor.getString(0));
             TextView pay = new TextView(this);
             pay.setText(String.valueOf(cursor.getFloat(2)));
+            pay.setBackgroundColor(getResources().getColor(R.color.app_green_light));
+            pay.setPadding(4,0,4,0);
             TextView period = new TextView(this);
             try {
                 period.setText(new SimpleDateFormat("dd.MM.yyyy").format(format.parse(cursor.getString(3)))
