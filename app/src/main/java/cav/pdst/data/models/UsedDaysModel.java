@@ -18,4 +18,5 @@ public class UsedDaysModel {
     public int getType() {
         return mType;
     }
+
 }
