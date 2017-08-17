@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -153,11 +154,13 @@ public class SpTrainingFragment extends Fragment {
 
         @Override
         public boolean shouldDecorate(CalendarDay day) {
+            Log.d("TTT","day "+day);
             return dates.contains(day); // входит ли обрабатываемая дата в диапазон переданых и если да то вызов decorate;
         }
 
         @Override
         public void decorate(DayViewFacade view) {
+            Log.d("TTT","DECORATE");
             view.addSpan(new ForegroundColorSpan(ContextCompat.getColor(getActivity(),R.color.app_green_dark)));
             //view.addSpan(new DotSpan(5, color));
             //view.addSpan(new ForegroundColorSpan(Color.WHITE));
