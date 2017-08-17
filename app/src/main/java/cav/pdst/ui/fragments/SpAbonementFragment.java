@@ -78,16 +78,19 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         mAbonementCallback = (AbonementCallback) activity;
+        Log.d("SPA","ATTACH");
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         mAbonementCallback = null;
+        Log.d("SPA","DETACH");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
+        Log.d("SPA","ON CREATE VIRE");
         View rootView = inflater.inflate(R.layout.fragment_sp_abonement, container, false);
         if (mListView == null) {
             mListView = (ListView) rootView.findViewById(R.id.sp_abom_list_view);
@@ -103,6 +106,7 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
             mFab.setEnabled(false);
             mFab.setVisibility(View.GONE);
         }
+        updateUI();
         return rootView;
         //return super.onCreateView(inflater, container, savedInstanceState);
     }
@@ -168,7 +172,7 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
     @Override
     public void onResume() {
         super.onResume();
-        updateUI();
+        //updateUI();
     }
 
     @Override
@@ -217,7 +221,7 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
                     }
 
 
-
+                    updateUI();
                     break;
                 case ConstantManager.EDIT_ABONEMENT:
                     AbonementModel model2= data.getParcelableExtra(ConstantManager.AB_DETAIL_DATA);
@@ -229,6 +233,7 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
                                         + new SimpleDateFormat("dd.MM.yy HH:mm").format(model2.getDebitDate()),
                                 model2.getSpId());
                     }
+                    updateUI();
                     break;
             }
         }
