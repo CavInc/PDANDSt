@@ -36,6 +36,7 @@ import cav.pdst.data.managers.DataManager;
 import cav.pdst.data.models.TrainingModel;
 import cav.pdst.data.models.UsedDaysModel;
 import cav.pdst.ui.adapters.SpTrainingAdapter;
+import cav.pdst.utils.ConstantManager;
 
 
 public class SpTrainingFragment extends Fragment {
@@ -143,14 +144,18 @@ public class SpTrainingFragment extends Fragment {
         }
         */
        // calendarView.addDecorator(new StartDayViewDecorator(mCalendarDays));
-        calendarView.addDecorator(new StartDayViewDecorator(mDataManager.getTrainingDay(sp_id)));
+        ArrayList<UsedDaysModel> data = mDataManager.getTrainingDay(sp_id);
+        calendarView.addDecorator(new StartDayViewDecorator(data, ConstantManager.SPORTSMAN_MODE_TRAINING));
+        calendarView.addDecorator(new StartDayViewDecorator(data,ConstantManager.SPORTSMAN_MODE_PASS));
+        calendarView.addDecorator(new StartDayViewDecorator(data,ConstantManager.SPORTSMAN_MODE_WARNING));
+        calendarView.addDecorator(new StartDayViewDecorator(data,ConstantManager.SPORTSMAN_MODE_WORKINGOFF));
     }
 
     private class StartDayViewDecorator implements DayViewDecorator {
 
         //private final HashSet<CalendarDay> dates;
-        private final int color;
         private HashMap<CalendarDay,Integer> dates;
+        private int color_type;
 
         // передали список дат
         /*
@@ -160,19 +165,17 @@ public class SpTrainingFragment extends Fragment {
         }
         */
 
-        public StartDayViewDecorator(Collection<UsedDaysModel> model){
-            this.color = R.color.app_green;
+        public StartDayViewDecorator(Collection<UsedDaysModel> model,int type){
+            this.color_type = type;
             this.dates = new HashMap<>();
             for (UsedDaysModel l : model){
                 dates.put(CalendarDay.from(l.getDate()),l.getType());
             }
         }
 
-        private int type;
         @Override
         public boolean shouldDecorate(CalendarDay day) {
-            if (dates.containsKey(day)){
-                type = dates.get(day);
+            if ((dates.containsKey(day)) && (color_type == dates.get(day))){
                 return true;
             }else {
                 return false;
@@ -185,7 +188,7 @@ public class SpTrainingFragment extends Fragment {
             view.addSpan(new ForegroundColorSpan(Color.BLACK));
             //view.addSpan(new DotSpan(5, color));
             //view.addSpan(new ForegroundColorSpan(Color.WHITE));
-            switch (type){
+            switch (color_type){
                 case 0:
                     view.setBackgroundDrawable(ContextCompat.getDrawable(getContext(),R.drawable.custom_select_green_background));
                     break;
