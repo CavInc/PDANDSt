@@ -113,13 +113,13 @@ public class SportsmanDetailActivity extends AppCompatActivity implements SpInfo
             mMenu.findItem(R.id.edit_tr_item).setVisible(false);
             mode = ConstantManager.EDIT_SPORTSMAN;
             switch (mViewPager.getCurrentItem()){
-                case 0:{
-                    ((SpInfoFragment) mSectionsPagerAdapter.getItem(mViewPager.getCurrentItem())).setMode(mode);
-                }
-                case 2: {
-
-                }
+                case 0:
+                    //((SpInfoFragment) mSectionsPagerAdapter.getItem(mViewPager.getCurrentItem())).setMode(mode);
+                    break;
+                case 2:
+                    break;
             }
+            return false;
         }
         return true;
     }
@@ -157,7 +157,7 @@ public class SportsmanDetailActivity extends AppCompatActivity implements SpInfo
 
     //
     // FragmentPagerAdapter   FragmentStatePagerAdapter
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
