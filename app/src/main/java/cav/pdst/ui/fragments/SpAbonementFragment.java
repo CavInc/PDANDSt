@@ -96,14 +96,12 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
         Log.d("SPA","ON CREATE VIRE");
         View rootView = inflater.inflate(R.layout.fragment_sp_abonement, container, false);
-        if (mListView == null) {
-            mListView = (ListView) rootView.findViewById(R.id.sp_abom_list_view);
-            mListView.setOnItemClickListener(this);
-        }
-        if (mFab == null) {
-            mFab = (FloatingActionButton) rootView.findViewById(R.id.frm_abonement_fab);
-            mFab.setOnClickListener(this);
-        }
+        mListView = (ListView) rootView.findViewById(R.id.sp_abom_list_view);
+        mListView.setOnItemClickListener(this);
+
+
+        mFab = (FloatingActionButton) rootView.findViewById(R.id.frm_abonement_fab);
+        mFab.setOnClickListener(this);
 
         if (mode != ConstantManager.VIEW_SPORTSMAN) {
             mListView.setOnItemLongClickListener(this);
@@ -129,10 +127,11 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
             case R.id.edit_tr_item:
                 this.mode = ConstantManager.EDIT_SPORTSMAN;
                 mFab.setVisibility(View.VISIBLE);
-                mFab.setOnClickListener(this);
+                mFab.setEnabled(true);
+                //mFab.setOnClickListener(this);
                 mListView.setOnItemLongClickListener(this);
                 //mFab.setFocusableInTouchMode(true);
-                mFab.requestFocus();
+               // mFab.requestFocus();
                 return true;
         }
         return false;
