@@ -97,18 +97,22 @@ public class RateActivity extends AppCompatActivity {
 
 
         TableRow head = new TableRow(this);
-       // TextView h_id = new TextView(this);
+        TextView h_date = new TextView(this);
+        h_date.setText("Дата");
+        h_date.setTextColor(Color.WHITE);
+        h_date.setGravity(Gravity.CENTER);
 
         TextView h_sp = new TextView(this);
         h_sp.setText("Тип расхода");
         h_sp.setTextColor(Color.WHITE);
-        h_sp.setGravity(Gravity.CENTER);
+        //h_sp.setGravity(Gravity.CENTER);
 
         TextView h_sum = new TextView(this);
         h_sum.setText("Сумма");
         h_sum.setTextColor(Color.WHITE);
         h_sum.setGravity(Gravity.CENTER);
 
+        head.addView(h_date);
         head.addView(h_sp);
         head.addView(h_sum);
         //head.addView(h_id);
@@ -121,6 +125,12 @@ public class RateActivity extends AppCompatActivity {
         while (cursor.moveToNext()){
             TableRow row = new TableRow(this);
             row.setPadding(0,8,0,8);
+            TextView dt = new TextView(this);
+            try {
+                dt.setText(new SimpleDateFormat("dd.MM.yy").format(format.parse(cursor.getString(cursor.getColumnIndex("create_date")))));
+            } catch (ParseException e) {
+
+            }
             TextView sp = new TextView(this);
             sp.setText(cursor.getString(cursor.getColumnIndex("name")));
             TextView pay = new TextView(this);
@@ -128,6 +138,7 @@ public class RateActivity extends AppCompatActivity {
             pay.setText(String.valueOf(cursor.getFloat(cursor.getColumnIndex("summ"))));
             TextView id = new TextView(this);
             id.setText(String.valueOf(cursor.getInt(cursor.getColumnIndex("_id"))));
+            row.addView(dt);
             row.addView(sp);
             row.addView(pay);
             row.addView(id);
