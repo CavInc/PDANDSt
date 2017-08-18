@@ -100,11 +100,12 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
             mListView = (ListView) rootView.findViewById(R.id.sp_abom_list_view);
             mListView.setOnItemClickListener(this);
         }
-        if (mFab == null)
+        if (mFab == null) {
             mFab = (FloatingActionButton) rootView.findViewById(R.id.frm_abonement_fab);
+            mFab.setOnClickListener(this);
+        }
 
         if (mode != ConstantManager.VIEW_SPORTSMAN) {
-            mFab.setOnClickListener(this);
             mListView.setOnItemLongClickListener(this);
         }else {
             mFab.setEnabled(false);
@@ -130,7 +131,8 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
                 mFab.setVisibility(View.VISIBLE);
                 mFab.setOnClickListener(this);
                 mListView.setOnItemLongClickListener(this);
-                this.onStart();
+                //mFab.setFocusableInTouchMode(true);
+                mFab.requestFocus();
                 return true;
         }
         return false;

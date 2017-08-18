@@ -219,6 +219,8 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
 
     private void changeEditable(boolean flg) {
         mTraining.setFocusable(flg);
+        mTraining.setFocusableInTouchMode(true);
+        mTraining.requestFocus();
         mTraining.setEnabled(flg);
         mListView.setEnabled(flg);
 

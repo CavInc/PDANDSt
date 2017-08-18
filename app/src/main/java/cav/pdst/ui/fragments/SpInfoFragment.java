@@ -176,6 +176,10 @@ public class SpInfoFragment extends Fragment {
         mFullName.setFocusable(flg);
         mPhone.setFocusable(flg);
         mComment.setFocusable(flg);
+
+        mFullName.setFocusableInTouchMode(flg);
+        mPhone.setFocusableInTouchMode(flg);
+        mComment.setFocusableInTouchMode(flg);
         /*
         if (flg){
             setupListener();
