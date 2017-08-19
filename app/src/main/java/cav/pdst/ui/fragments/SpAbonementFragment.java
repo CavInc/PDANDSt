@@ -9,6 +9,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -72,6 +75,7 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
         this.sp_id = getArguments().getInt(SPORTSMAN_ID);
         this.mode = getArguments().getInt(MODE);
         this.sp_name = getArguments().getString(SPORTSMAN_NAME);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -92,15 +96,14 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
         Log.d("SPA","ON CREATE VIRE");
         View rootView = inflater.inflate(R.layout.fragment_sp_abonement, container, false);
-        if (mListView == null) {
-            mListView = (ListView) rootView.findViewById(R.id.sp_abom_list_view);
-            mListView.setOnItemClickListener(this);
-        }
-        if (mFab == null)
-            mFab = (FloatingActionButton) rootView.findViewById(R.id.frm_abonement_fab);
+        mListView = (ListView) rootView.findViewById(R.id.sp_abom_list_view);
+        mListView.setOnItemClickListener(this);
+
+
+        mFab = (FloatingActionButton) rootView.findViewById(R.id.frm_abonement_fab);
+        mFab.setOnClickListener(this);
 
         if (mode != ConstantManager.VIEW_SPORTSMAN) {
-            mFab.setOnClickListener(this);
             mListView.setOnItemLongClickListener(this);
         }else {
             mFab.setEnabled(false);
@@ -109,6 +112,29 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
         updateUI();
         return rootView;
         //return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.save_item:
+                return false;
+            case R.id.edit_tr_item:
+                this.mode = ConstantManager.EDIT_SPORTSMAN;
+                mFab.setVisibility(View.VISIBLE);
+                mFab.setEnabled(true);
+                //mFab.setOnClickListener(this);
+                mListView.setOnItemLongClickListener(this);
+                //mFab.setFocusableInTouchMode(true);
+               // mFab.requestFocus();
+                return true;
+        }
+        return false;
     }
 
     public void updateUI(){

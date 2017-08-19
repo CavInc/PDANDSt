@@ -12,6 +12,9 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -75,12 +78,13 @@ public class SpInfoFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mCallbacks  = null;
-        Log.d("SPF","DETACH");
+        Log.d("SPF","DETACH INFO");
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         Log.d("SPF","CREATE");
         mode = getArguments().getInt(MODE);
         mSportsmanModel = new SportsmanModel();
@@ -103,11 +107,15 @@ public class SpInfoFragment extends Fragment {
         if ((mode == ConstantManager.EDIT_SPORTSMAN) || (mode == ConstantManager.VIEW_SPORTSMAN)) {
             setFieldData();
         }
+
+        setupListener();
+
         if (mode == ConstantManager.VIEW_SPORTSMAN) {
             changeMode(false);
         }else {
-            setupListener();
+            //setupListener();
         }
+
 
         mCall = (Button) rootView.findViewById(R.id.info_call_button);
         mSendSMS = (Button) rootView.findViewById(R.id.info_send_sms);
@@ -121,15 +129,32 @@ public class SpInfoFragment extends Fragment {
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d("SPF","MENU CLICK");
+        switch (item.getItemId()){
+            case R.id.save_item:
+                return false;
+            case R.id.edit_tr_item:
+                Log.d("SPF","ITEM CLICK");
+                this.mode = ConstantManager.EDIT_SPORTSMAN;
+                setFieldData();
+                changeMode(true);
+                return true;
+        }
+        return false;
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         Log.d("SPF","ON RESUME");
     }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        Log.d("SPF","VIEW CREATED");
-    }
 
     public void setMode(int mode){
         this.mode = mode;
@@ -147,15 +172,23 @@ public class SpInfoFragment extends Fragment {
         mFullName.setEnabled(flg);
         mPhone.setEnabled(flg);
         mComment.setEnabled(flg);
+
         mFullName.setFocusable(flg);
         mPhone.setFocusable(flg);
         mComment.setFocusable(flg);
+
+        mFullName.setFocusableInTouchMode(flg);
+        mPhone.setFocusableInTouchMode(flg);
+        mComment.setFocusableInTouchMode(flg);
+        /*
         if (flg){
             setupListener();
         }
+        */
     }
 
     private void updateData(){
+        Log.d("SPF","UPDATE");
         mCallbacks.updateData(mSportsmanModel);
     }
 
