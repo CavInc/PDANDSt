@@ -59,6 +59,7 @@ public class SportsmanDetailActivity extends AppCompatActivity implements SpInfo
 
         if (mode == ConstantManager.ALARM_SPORTSMAN){
             mSportsmanModel = mDataManager.getSportsman(getIntent().getIntExtra(ConstantManager.ALARM_ID,-1));
+            sp_id = mSportsmanModel.getId();
             mode = ConstantManager.VIEW_SPORTSMAN;
         }
 
