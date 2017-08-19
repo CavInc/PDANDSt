@@ -46,7 +46,7 @@ public class AlarmTaskReciver extends BroadcastReceiver {
         intent.putExtra(ConstantManager.MODE_SP_DETAIL,ConstantManager.ALARM_SPORTSMAN);
         intent.putExtra(ConstantManager.ALARM_ID,mId);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        PendingIntent pi = PendingIntent.getService(context,mId,intent,PendingIntent.FLAG_CANCEL_CURRENT);
+        PendingIntent pi = PendingIntent.getActivity(context,mId,intent,PendingIntent.FLAG_CANCEL_CURRENT);
 
         builder.setContentIntent(pi)
                 .setSmallIcon(R.drawable.icon_alarm_p)

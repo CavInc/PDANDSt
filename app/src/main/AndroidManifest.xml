@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="cav.pdst"
+<manifest package="cav.pdst"
+          xmlns:android="http://schemas.android.com/apk/res/android"
           android:installLocation="auto">
 
     <uses-permission android:name="android.permission.CALL_PHONE"/>
@@ -66,8 +66,8 @@
         <activity
             android:name=".ui.activity.ReportActivity"
             android:label="Статистика"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
             android:name=".ui.activity.DohodActivity"
@@ -83,6 +83,9 @@
             android:enabled="true"
             android:exported="true">
         </receiver>
+
+        <activity android:name=".ui.activity.TestAlarmActivity">
+        </activity>
     </application>
 
 </manifest>
