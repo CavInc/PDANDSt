@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         calendarView.state().edit()
                 .setFirstDayOfWeek(Calendar.MONDAY)
                 .setMinimumDate(CalendarDay.from(2016,12,31))
+                .setMaximumDate(CalendarDay.from(2017,10,30))
                 .setMaximumDate(newYear)
                 .commit();
         calendarView.setCurrentDate(new Date());
