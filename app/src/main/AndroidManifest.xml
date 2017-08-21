@@ -86,6 +86,12 @@
 
         <activity android:name=".ui.activity.TestAlarmActivity">
         </activity>
+
+        <receiver
+            android:name=".services.CheckAndRestartAlarmReciver"
+            android:enabled="true"
+            android:exported="false">
+        </receiver>
     </application>
 
 </manifest>
