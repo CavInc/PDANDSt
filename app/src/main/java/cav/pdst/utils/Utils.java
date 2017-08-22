@@ -14,6 +14,7 @@ import java.util.Date;
 
 import cav.pdst.data.models.AbonementModel;
 import cav.pdst.services.AlarmTaskReciver;
+import cav.pdst.services.CheckAndRestartAlarmReciver;
 
 public class Utils {
     private static final String TAG = "UTILS";
@@ -75,6 +76,18 @@ public class Utils {
         c.setTime(date);
         am.set(AlarmManager.RTC_WAKEUP,c.getTimeInMillis(),pi);
 
+    }
+
+    // перезапускает будильник на следующий день
+    public static void restartAlarm(Context context){
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DATE,1);
+        c.set(Calendar.HOUR_OF_DAY,23);
+        c.set(Calendar.MINUTE,59);
+        AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context,CheckAndRestartAlarmReciver.class);
+        PendingIntent pi= PendingIntent.getBroadcast(context,0, intent,0);
+        am.set(AlarmManager.RTC_WAKEUP,c.getTimeInMillis(),pi);
     }
 }
 

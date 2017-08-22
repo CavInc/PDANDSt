@@ -14,6 +14,7 @@ import java.util.HashMap;
 
 import cav.pdst.data.database.DataBaseConnector;
 import cav.pdst.data.models.AbonementModel;
+import cav.pdst.data.models.AlarmAbonementModel;
 import cav.pdst.data.models.GroupModel;
 import cav.pdst.data.models.ItemSportsmanModel;
 import cav.pdst.data.models.RateTypeSpinerModel;
@@ -23,6 +24,7 @@ import cav.pdst.data.models.SportsmanTrainingModel;
 import cav.pdst.data.models.TrainingGroupModel;
 import cav.pdst.data.models.TrainingModel;
 import cav.pdst.data.models.UsedDaysModel;
+import cav.pdst.ui.fragments.AddRateDialogFragment;
 import cav.pdst.utils.ConstantManager;
 import cav.pdst.utils.PdStApplication;
 
@@ -389,6 +391,22 @@ public class DataManager {
         Cursor cursor = mDB.getRateType();
         while (cursor.moveToNext()){
             rec.add(new RateTypeSpinerModel(cursor.getInt(0),cursor.getString(1)));
+        }
+        mDB.close();
+        return rec;
+    }
+
+    public ArrayList<AlarmAbonementModel> getFutureCloseAbonement(){
+        ArrayList<AlarmAbonementModel> rec = new ArrayList<>();
+        mDB.open();
+        Cursor cursor = mDB.getCloseNotUsedAbonement(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+        while (cursor.moveToNext()){
+            rec.add(new AlarmAbonementModel(cursor.getInt(cursor.getColumnIndex("_id")),
+                    cursor.getInt(cursor.getColumnIndex("sp_id")),
+                    cursor.getInt(cursor.getColumnIndex("pos_id")),
+                    cursor.getString(cursor.getColumnIndex("end_date")),
+                    cursor.getString(cursor.getColumnIndex("sp_name"))));
+
         }
         mDB.close();
         return rec;
