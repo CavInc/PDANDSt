@@ -41,6 +41,7 @@ import cav.pdst.data.models.TrainingModel;
 import cav.pdst.ui.adapters.TraningMainAdapter;
 import cav.pdst.ui.fragments.EditDeleteDialog;
 import cav.pdst.utils.ConstantManager;
+import cav.pdst.utils.Utils;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
         EditDeleteDialog.EditDeleteDialogListener {
@@ -105,6 +106,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         calendarView.setOnDateChangedListener(mDateSelectedListener);
 
         selectedDate = new Date();
+
+        Utils.restartAlarm(this);
 
         setupToolBar();
         setupDrower();
