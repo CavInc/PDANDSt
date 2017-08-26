@@ -9,6 +9,7 @@ import android.util.Log;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -398,6 +399,8 @@ public class DataManager {
 
     public ArrayList<AlarmAbonementModel> getFutureCloseAbonement(){
         ArrayList<AlarmAbonementModel> rec = new ArrayList<>();
+        //Calendar c = Calendar.getInstance();
+       // c.set(2017,7,23);
         mDB.open();
         Cursor cursor = mDB.getCloseNotUsedAbonement(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
         while (cursor.moveToNext()){

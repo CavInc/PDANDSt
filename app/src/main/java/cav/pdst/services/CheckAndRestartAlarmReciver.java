@@ -8,6 +8,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -35,6 +36,8 @@ public class CheckAndRestartAlarmReciver extends BroadcastReceiver {
         model = mDataManager.getFutureCloseAbonement();
         // ставим нотификаторы в соотвествии с тем что вернули в модели
         for (AlarmAbonementModel l :model){
+            Log.d("CAR",l.getSportsmanName());
+            showNotification(context,l);
 
         }
 
@@ -58,7 +61,7 @@ public class CheckAndRestartAlarmReciver extends BroadcastReceiver {
                 .setWhen(System.currentTimeMillis())
                 .setContentTitle("Предупреждение")
                 .setContentText("У спортсмена - "+model.getSportsmanName()+
-                        "заканчивается абонемент № "+model.getPostId()+"- "+model.getDate())
+                        " заканчивается абонемент № "+model.getPostId()+"- "+model.getDate())
                 .setOngoing(true)
                 .setDefaults(Notification.DEFAULT_SOUND)
                 .setAutoCancel(true);
@@ -67,7 +70,9 @@ public class CheckAndRestartAlarmReciver extends BroadcastReceiver {
         if (Build.VERSION.SDK_INT < 16){
             notification = builder.getNotification(); // до API 16
         }else{
-            notification = builder.build();
+            //notification = builder.build();
+            notification = new Notification.BigTextStyle(builder).bigText("У спортсмена - "+model.getSportsmanName()+
+                    " заканчивается абонемент № "+model.getPostId()+"- "+model.getDate()).build();
         }
 
 
