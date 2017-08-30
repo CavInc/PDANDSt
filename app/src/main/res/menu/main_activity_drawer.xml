@@ -17,6 +17,9 @@
             android:id="@+id/drawer_statistic"
             android:icon="@drawable/ic_assessment_black_24dp"
             android:title="Статистика"/>
+        <item
+            android:id="@+id/drawer_setting"
+            android:title="Настройки"/>
 
     </group>
 

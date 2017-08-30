@@ -79,12 +79,13 @@ public class Utils {
     }
 
     // перезапускает будильник на следующий день
-    public static void restartAlarm(Context context){
+    public static void restartAlarm(Context context,int day_offset){
+        Log.d(TAG,"SETALARM");
         Calendar c = Calendar.getInstance();
-        c.add(Calendar.DATE,1);
+        c.add(Calendar.DATE,day_offset);
         //c.set(2017,8,23);
         c.set(Calendar.HOUR_OF_DAY,23);
-        c.set(Calendar.MINUTE,55);
+        c.set(Calendar.MINUTE,8);
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context,CheckAndRestartAlarmReciver.class);
         PendingIntent pi= PendingIntent.getBroadcast(context,0, intent,0);

@@ -1,7 +1,10 @@
 package cav.pdst.ui.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
@@ -37,6 +40,7 @@ import java.util.HashSet;
 
 import cav.pdst.R;
 import cav.pdst.data.managers.DataManager;
+import cav.pdst.data.managers.PreferensManager;
 import cav.pdst.data.models.TrainingModel;
 import cav.pdst.ui.adapters.TraningMainAdapter;
 import cav.pdst.ui.fragments.EditDeleteDialog;
@@ -107,7 +111,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         selectedDate = new Date();
 
-        Utils.restartAlarm(this);
+        SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(this);
+        if (preference!=null) {
+            if (preference.getBoolean("alarm_start_flg",false)){
+                Utils.restartAlarm(this,0);
+            }
+        }else {
+            Utils.restartAlarm(this,0);
+        }
 
         setupToolBar();
         setupDrower();
@@ -168,6 +179,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 intent = new Intent(this,ReportActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.drawer_setting:
+                intent = new Intent(this,Preferences.class);
+                startActivity(intent);
 
         }
         mNavigationDrawer.closeDrawer(GravityCompat.START);

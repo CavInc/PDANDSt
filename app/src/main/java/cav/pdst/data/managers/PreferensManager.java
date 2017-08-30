@@ -15,6 +15,10 @@ public class PreferensManager {
         mSharedPreferences = PdStApplication.getSharedPreferences();
     }
 
+    public SharedPreferences getSharedPreferences() {
+        return mSharedPreferences;
+    }
+
     // сохраняем ссылку на выбранного спортсмена
     public void saveUseSportsman(int id){
         SharedPreferences.Editor editor = mSharedPreferences.edit();

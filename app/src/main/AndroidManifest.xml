@@ -77,6 +77,10 @@
             android:name=".ui.activity.RateActivity"
             android:label="Расход">
         </activity>
+        <activity android:name=".ui.activity.Preferences"
+            android:label="Настройки">
+
+        </activity>
 
         <receiver
             android:name=".services.AlarmTaskReciver"
@@ -84,8 +88,6 @@
             android:exported="true">
         </receiver>
 
-        <activity android:name=".ui.activity.TestAlarmActivity">
-        </activity>
 
         <receiver
             android:name=".services.CheckAndRestartAlarmReciver"
