@@ -5,6 +5,8 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import java.text.ParseException;
@@ -80,16 +82,39 @@ public class Utils {
 
     // перезапускает будильник на следующий день
     public static void restartAlarm(Context context,int day_offset){
+        int hour;
+        int minute;
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        String tm = pref.getString("alarm_time",null);
+        if (tm !=null ){
+            String[] tmx = tm.split(":");
+            hour = Integer.parseInt(tmx[0]);
+            minute = Integer.parseInt(tmx[1]);
+        }else {
+            hour = 23;
+            minute = 8;
+        }
+
         Log.d(TAG,"SETALARM");
         Calendar c = Calendar.getInstance();
         c.add(Calendar.DATE,day_offset);
         //c.set(2017,8,23);
-        c.set(Calendar.HOUR_OF_DAY,23);
-        c.set(Calendar.MINUTE,8);
+        c.set(Calendar.HOUR_OF_DAY,hour);
+        c.set(Calendar.MINUTE,minute);
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context,CheckAndRestartAlarmReciver.class);
         PendingIntent pi= PendingIntent.getBroadcast(context,0, intent,0);
         am.set(AlarmManager.RTC_WAKEUP,c.getTimeInMillis(),pi);
     }
+
+    // собираем строку
+    public static String formatTime(int hour,int minute){
+        String h = String.valueOf(hour);
+        String m = String.valueOf(minute);
+        if (h.length()!=2) h = "0"+h;
+        if (m.length()!=2) m = "0"+m;
+        return h+":"+m;
+    }
+
 }
 

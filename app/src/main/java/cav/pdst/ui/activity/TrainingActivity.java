@@ -105,8 +105,8 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         mDataButton.setOnClickListener(this);
         mTimeButton = (Button) findViewById(R.id.time_button);
         mTimeButton.setOnClickListener(this);
-        mTimeButton.setText(formatTime(hour,minute));
-        mTime = formatTime(hour,minute);
+        mTimeButton.setText(Utils.formatTime(hour,minute));
+        mTime = Utils.formatTime(hour,minute);
 
         if (mode == ConstantManager.EDIT_TRAINING || mode == ConstantManager.VIEW_TRAINING) {
             mTraining.setText(mModel.getName());
@@ -200,7 +200,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
                 new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int hours, int minutes) {
-                        String tm = formatTime(hours,minutes);
+                        String tm = Utils.formatTime(hours,minutes);
                         mTimeButton.setText(tm);
                         mTime = tm;
                     }
@@ -399,13 +399,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         mDate = date;
     }
 
-    private String formatTime(int hour,int minute){
-        String h = String.valueOf(hour);
-        String m = String.valueOf(minute);
-        if (h.length()!=2) h = "0"+h;
-        if (m.length()!=2) m = "0"+m;
-        return h+":"+m;
-    }
+
 
     @Override
     public void OnInfoButtonClick(int button_id) {

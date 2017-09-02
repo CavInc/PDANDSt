@@ -19,6 +19,7 @@
             android:title="Статистика"/>
         <item
             android:id="@+id/drawer_setting"
+            android:icon="@drawable/settings"
             android:title="Настройки"/>
 
     </group>

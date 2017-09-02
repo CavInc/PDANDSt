@@ -7,7 +7,9 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -49,6 +51,8 @@ public class CheckAndRestartAlarmReciver extends BroadcastReceiver {
 
 
     private void showNotification(Context context,AlarmAbonementModel model){
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+
         NotificationManager notificationManager = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
         Notification notification = null;
