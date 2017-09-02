@@ -109,6 +109,10 @@ public class GroupActivity extends AppCompatActivity implements NavigationView.O
                 intent = new Intent(this,ReportActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.drawer_setting:
+                intent = new Intent(this,Preferences.class);
+                startActivity(intent);
+                break;
 
         }
         mNavigationDrawer.closeDrawer(GravityCompat.START);

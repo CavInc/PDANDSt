@@ -179,6 +179,10 @@ public class ReportActivity extends AppCompatActivity implements NavigationView.
                 intent = new Intent(this,GroupActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.drawer_setting:
+                intent = new Intent(this,Preferences.class);
+                startActivity(intent);
+                break;
         }
         mNavigationDrawer.closeDrawer(GravityCompat.START);
         return false;

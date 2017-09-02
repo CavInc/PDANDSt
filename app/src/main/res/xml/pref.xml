@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <RingtonePreference
-        android:key="alarm_ringtone"
-        android:title="Звуковое уведомление"
-        android:ringtoneType="notification"/>
-    <Preference
-        android:key="alarm_time"
-        android:title="Время проверки"/>
-    <CheckBoxPreference
-        android:key="alarm_start_flg"
-        android:title="Выполнять проверку"/>
+    <PreferenceCategory
+        android:title="Уведомления">
+        <RingtonePreference
+            android:key="alarm_ringtone"
+            android:title="Звуковое уведомление"
+            android:ringtoneType="notification"/>
+        <Preference
+            android:key="alarm_time"
+            android:title="Время проверки"/>
+        <CheckBoxPreference
+            android:key="alarm_start_flg"
+            android:title="Выполнять проверку"/>
+    </PreferenceCategory>
+
 </PreferenceScreen>
