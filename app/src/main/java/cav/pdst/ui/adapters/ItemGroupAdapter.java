@@ -15,7 +15,6 @@ import cav.pdst.R;
 import cav.pdst.data.models.ItemSportsmanModel;
 
 public class ItemGroupAdapter extends ArrayAdapter<ItemSportsmanModel> {
-    private static final String TAG = "IGA";
     private LayoutInflater mInflater;
     private int resLayout;
 

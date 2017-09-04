@@ -77,9 +77,9 @@
             android:name=".ui.activity.RateActivity"
             android:label="Расход">
         </activity>
-        <activity android:name=".ui.activity.Preferences"
+        <activity
+            android:name=".ui.activity.Preferences"
             android:label="Настройки">
-
         </activity>
 
         <receiver
@@ -87,13 +87,14 @@
             android:enabled="true"
             android:exported="true">
         </receiver>
-
-
         <receiver
             android:name=".services.CheckAndRestartAlarmReciver"
             android:enabled="true"
             android:exported="false">
         </receiver>
+
+        <activity android:name=".ui.activity.EditRateTypeActivity">
+        </activity>
     </application>
 
 </manifest>

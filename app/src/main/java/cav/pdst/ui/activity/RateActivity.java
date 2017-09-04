@@ -1,5 +1,6 @@
 package cav.pdst.ui.activity;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
@@ -75,6 +76,10 @@ public class RateActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.add_rate_type){
             AddRateTypeDialogFragment dialogFragment = new AddRateTypeDialogFragment();
             dialogFragment.show(getSupportFragmentManager(),"ratetypenew");
+        }
+        if (item.getItemId() == R.id.edit_rate_type){
+            Intent intent = new Intent(this,EditRateTypeActivity.class);
+            startActivity(intent);
         }
         return true;
         //return super.onOptionsItemSelected(item);
