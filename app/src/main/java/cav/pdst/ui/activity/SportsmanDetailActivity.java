@@ -43,6 +43,8 @@ public class SportsmanDetailActivity extends AppCompatActivity implements SpInfo
 
     private Menu mMenu;
 
+    private boolean return_flg = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +60,7 @@ public class SportsmanDetailActivity extends AppCompatActivity implements SpInfo
         }
 
         if (mode == ConstantManager.ALARM_SPORTSMAN){
+            return_flg = true;
             mSportsmanModel = mDataManager.getSportsman(getIntent().getIntExtra(ConstantManager.ALARM_ID,-1));
             sp_id = mSportsmanModel.getId();
             mode = ConstantManager.VIEW_SPORTSMAN;
@@ -130,6 +133,10 @@ public class SportsmanDetailActivity extends AppCompatActivity implements SpInfo
     public void onBackPressed() {
         //saveData();
         super.onBackPressed();
+        if (return_flg) {
+            Intent intent = new Intent(this,SportsmanActivity.class);
+            startActivity(intent);
+        }
     }
 
     @Override
