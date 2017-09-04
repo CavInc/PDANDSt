@@ -1,12 +1,16 @@
 package cav.pdst.ui.activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -122,6 +126,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         setupToolBar();
         setupDrower();
+
     }
 
     private void setupDrower() {
@@ -143,7 +148,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onResume() {
         super.onResume();
+        Log.d(TAG,"RESUME");
         updateUI(0);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(TAG,"START");
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.CALL_PHONE},ConstantManager.REQUEST_PHONE);
+
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == ConstantManager.REQUEST_PHONE) {
+            if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                // недали разрешение
+                mDataManager.getPreferensManager().setNoPhoneGrand(true);
+            }
+
+        }
+
     }
 
     @Override

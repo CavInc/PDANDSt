@@ -69,4 +69,6 @@ public interface ConstantManager {
     String ALARM_ID = "ALARM_ID";
 
 
+    int REQUEST_PHONE = 601;
+    String GRANTED_PHONE = "GRANTED_PHONE";
 }

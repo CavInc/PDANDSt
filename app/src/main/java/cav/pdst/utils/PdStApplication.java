@@ -4,6 +4,7 @@ package cav.pdst.utils;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 public class PdStApplication extends Application {
     public static SharedPreferences sSharedPreferences;
@@ -13,6 +14,7 @@ public class PdStApplication extends Application {
     public void onCreate() {
         super.onCreate();
         sContext = this.getBaseContext();
+        sSharedPreferences = PreferenceManager.getDefaultSharedPreferences(sContext);
     }
 
     public static SharedPreferences getSharedPreferences() {

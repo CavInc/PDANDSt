@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 
 import cav.pdst.R;
+import cav.pdst.data.managers.DataManager;
 import cav.pdst.data.models.SportsmanModel;
 import cav.pdst.utils.ConstantManager;
 
@@ -37,6 +38,7 @@ public class SpInfoFragment extends Fragment {
     private Button mSendSMS;
 
     private SportsmanModel mSportsmanModel;
+    private DataManager mDataManager;
 
     private Callbacks mCallbacks;
     private int mode;
@@ -86,6 +88,7 @@ public class SpInfoFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         Log.d("SPF","CREATE");
+        mDataManager = DataManager.getInstance();
         mode = getArguments().getInt(MODE);
         mSportsmanModel = new SportsmanModel();
         if ((mode == ConstantManager.EDIT_SPORTSMAN) || (mode == ConstantManager.VIEW_SPORTSMAN)){
@@ -123,6 +126,9 @@ public class SpInfoFragment extends Fragment {
         mCall.setOnClickListener(mCallListener);
         mSendSMS.setOnClickListener(mSendSMSListener);
         Log.d("SPF","ON VIEW");
+        if (!mDataManager.getPreferensManager().getPhoneGrand()){
+            mCall.setEnabled(false);
+        }
 
         return rootView;
         //return super.onCreateView(inflater, container, savedInstanceState);

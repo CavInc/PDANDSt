@@ -3,6 +3,7 @@ package cav.pdst.data.managers;
 
 import android.content.SharedPreferences;
 
+import cav.pdst.utils.ConstantManager;
 import cav.pdst.utils.PdStApplication;
 
 public class PreferensManager {
@@ -24,6 +25,16 @@ public class PreferensManager {
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putInt(STORE_SPORTSMAN,id);
         editor.apply();
+    }
+    // устанавливаем флаг отсутствия звонилки
+    public void setNoPhoneGrand(boolean granted){
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putBoolean(ConstantManager.GRANTED_PHONE,granted);
+        editor.apply();
+    }
+
+    public boolean getPhoneGrand(){
+        return mSharedPreferences.getBoolean(ConstantManager.GRANTED_PHONE,false);
     }
 
 
