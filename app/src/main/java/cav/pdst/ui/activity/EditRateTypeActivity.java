@@ -4,6 +4,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -12,13 +14,18 @@ import cav.pdst.R;
 import cav.pdst.data.managers.DataManager;
 import cav.pdst.data.models.RateTypeSpinerModel;
 import cav.pdst.ui.adapters.RateTypeAdapter;
+import cav.pdst.ui.fragments.EditDeleteDialog;
+import cav.pdst.utils.ConstantManager;
 
-public class EditRateTypeActivity extends AppCompatActivity {
+public class EditRateTypeActivity extends AppCompatActivity implements AdapterView.OnItemLongClickListener,
+        EditDeleteDialog.EditDeleteDialogListener{
 
     private DataManager mDataManager;
 
     private ListView mListView;
     private RateTypeAdapter mRateTypeAdapter;
+
+    private RateTypeSpinerModel selModel;
 
 
     @Override
@@ -29,6 +36,7 @@ public class EditRateTypeActivity extends AppCompatActivity {
         mDataManager = DataManager.getInstance();
 
         mListView = (ListView) findViewById(R.id.edit_rate_list);
+        mListView.setOnItemLongClickListener(this);
 
         setupToolBar();
         updateUI();
@@ -58,5 +66,27 @@ public class EditRateTypeActivity extends AppCompatActivity {
             onBackPressed();
         }
         return true;
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+        selModel = (RateTypeSpinerModel) adapterView.getItemAtPosition(position);
+        EditDeleteDialog dialog = new EditDeleteDialog();
+        dialog.setEditDeleteDialogListener(this);
+        dialog.show(getSupportFragmentManager(), ConstantManager.DIALOG_EDIT_DEL);
+        return true;
+    }
+
+    @Override
+    public void onDialogItemClick(int selectItem) {
+        if (selectItem==R.id.dialog_del_item) {
+            // удаляем
+
+            updateUI();
+        }
+        if (selectItem == R.id.dialog_edit_item){
+            // редактируем
+
+        }
     }
 }
