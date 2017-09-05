@@ -14,6 +14,7 @@ import cav.pdst.R;
 import cav.pdst.data.managers.DataManager;
 import cav.pdst.data.models.RateTypeSpinerModel;
 import cav.pdst.ui.adapters.RateTypeAdapter;
+import cav.pdst.ui.fragments.AddRateTypeDialogFragment;
 import cav.pdst.ui.fragments.EditDeleteDialog;
 import cav.pdst.utils.ConstantManager;
 
@@ -80,13 +81,25 @@ public class EditRateTypeActivity extends AppCompatActivity implements AdapterVi
     @Override
     public void onDialogItemClick(int selectItem) {
         if (selectItem==R.id.dialog_del_item) {
+            //TODO поставить проверку на то что используем тип
             // удаляем
-
+            mDataManager.getDB().delRateType(selModel.getId());
             updateUI();
         }
         if (selectItem == R.id.dialog_edit_item){
             // редактируем
+            AddRateTypeDialogFragment dialog = AddRateTypeDialogFragment.newInstance(selModel);
+            dialog.setOnRateTypeChangeListener(mOnRateTypeChangeListener);
+            dialog.show(getSupportFragmentManager(),"ratetypeedit");
 
         }
     }
+
+    AddRateTypeDialogFragment.OnRateTypeChangeListener mOnRateTypeChangeListener = new AddRateTypeDialogFragment.OnRateTypeChangeListener() {
+
+        @Override
+        public void OnRateTypeChange() {
+            updateUI();
+        }
+    };
 }

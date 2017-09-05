@@ -512,6 +512,12 @@ public class DataBaseConnector {
         close();
     }
 
+    public void delRateType(int id){
+        open();
+        database.delete(DBHelper.RATE_TYPE_TABLE,"_id="+id,null);
+        close();
+    }
+
     public Cursor getRateType(){
         return database.query(DBHelper.RATE_TYPE_TABLE,new String[]{"_id","name"},null,null,null,null,null);
     }
