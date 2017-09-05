@@ -177,7 +177,9 @@ public class AbonementActivity extends AppCompatActivity implements View.OnClick
             mAbonementModel.setComment(mComent.getText().toString());
             mAbonementModel.setPay(Float.parseFloat(mPay.getText().toString()));
             mAbonementModel.setDebit(Float.parseFloat(mDebit.getText().toString()));
-            mAbonementModel.setDebitDate(Utils.getSteToDate(mDebitDate.getText().toString(),"dd.MM.yyyy HH:mm"));
+            if (mDebitDate.getText().toString().length()!=0) {
+                mAbonementModel.setDebitDate(Utils.getSteToDate(mDebitDate.getText().toString(), "dd.MM.yyyy HH:mm"));
+            }
             if (mAbonementModel.getUsedTraining()>mAbonementModel.getCountTraining()){
                 //TODO Ругаться !!!!
                 return;

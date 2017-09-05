@@ -1,6 +1,8 @@
 package cav.pdst.ui.fragments;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -157,15 +159,29 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
         final AbonementModel model = (AbonementModel) adapterView.getItemAtPosition(position);
+        int lmode = ConstantManager.VIEW_ABONEMENT;
         Intent intent = new Intent(SpAbonementFragment.this.getContext(), AbonementActivity.class);
-        intent.putExtra(ConstantManager.MODE_ABONEMENT,ConstantManager.VIEW_ABONEMENT);
         intent.putExtra(ConstantManager.AB_DETAIL_DATA,model);
-        startActivity(intent);
+        switch (mode){
+            case ConstantManager.EDIT_SPORTSMAN:
+                lmode = ConstantManager.EDIT_ABONEMENT;
+                intent.putExtra(ConstantManager.MODE_ABONEMENT,ConstantManager.EDIT_ABONEMENT);
+                break;
+            case ConstantManager.VIEW_SPORTSMAN:
+                lmode = ConstantManager.VIEW_ABONEMENT;
+        }
+        intent.putExtra(ConstantManager.MODE_ABONEMENT,lmode);
+        if (lmode == ConstantManager.VIEW_ABONEMENT) {
+            startActivity(intent);
+        }else {
+            startActivityForResult(intent, ConstantManager.EDIT_ABONEMENT);
+        }
     }
 
     @Override
     public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
         final AbonementModel model = (AbonementModel) adapterView.getItemAtPosition(position);
+        /*
         EditDeleteDialog dialog = EditDeleteDialog.newInstance();
         dialog.setEditDeleteDialogListener(new EditDeleteDialog.EditDeleteDialogListener() {
             @Override
@@ -182,9 +198,23 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
                 }
             }
         });
-
         FragmentManager fm = getChildFragmentManager();
         dialog.show(fm,ConstantManager.DIALOG_EDIT_DEL);
+        */
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this.getContext());
+        dialog.setTitle("Удаление").setMessage("Вы уверены что хотите удалить ?");
+        dialog.setIcon(android.R.drawable.ic_dialog_info);
+        dialog.setPositiveButton(R.string.dialog_yes, new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                mDataManager.delAbonememet(model.getId(),model.getSpId());
+                mAbonementAdapter.remove(model);
+            }
+        });
+        dialog.setNegativeButton(R.string.dialog_no, null);
+        //dialog.create();
+        dialog.show();
+
         return true;
     }
 
