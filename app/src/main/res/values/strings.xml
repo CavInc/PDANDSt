@@ -14,6 +14,7 @@
     <string name="menu_save_item">Сохранить</string>
     <string name="last_training_data">Последняя:</string>
     <string name="no_use_abonement">Нет действующих абонементов</string>
+    <string name="training_default_name"><![CDATA[Pole dance & stretching]]></string>
 
 
     <string-array name="training_operation">
