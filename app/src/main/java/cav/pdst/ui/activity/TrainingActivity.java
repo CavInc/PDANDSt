@@ -55,6 +55,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
     private Button mTimeButton;
     private Button mDataButton;
     private Spinner mSpinner;
+    private Spinner mRepeatSpiner;
 
     private DataManager mDataManager;
 
@@ -102,6 +103,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         mTraining = (EditText) findViewById(R.id.training_edit);
         mCountSportsman = (TextView) findViewById(R.id.count_sportsman);
         mSpinner = (Spinner) findViewById(R.id.group_spiner);
+        mRepeatSpiner = (Spinner) findViewById(R.id.repeat_spiner);
 
         mDataButton = (Button) findViewById(R.id.date_button);
         mDataButton.setOnClickListener(this);
@@ -130,6 +132,10 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         ArrayAdapter<TrainingGroupModel> spinnerAdapter = new ArrayAdapter<TrainingGroupModel>(this,android.R.layout.simple_spinner_item,spinnerData);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinner.setAdapter(spinnerAdapter);
+
+        ArrayAdapter<String> repeatAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,repeat_type);
+        repeatAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mRepeatSpiner.setAdapter(repeatAdapter);
 
         setDateButton(mDate);
         setupToolBar();
@@ -270,6 +276,16 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         });
     }
 
+    private void changeCountSportsman(boolean mode){
+        int count = Integer.parseInt(mCountSportsman.getText().toString().split(":")[1].trim());
+        if (mode){
+            count += 1;
+        } else {
+            count -=1;
+        }
+       mCountSportsman.setText(getString(R.string.count_training_sportsman)+" "+count);
+    }
+
     private int selSportspam;
 
     //private LinkSpABTrModel mLinkSpABTrModel;
@@ -327,6 +343,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
                         mAdapter.getItem(position).setCount(mAdapter.getItem(position).getCount()-1);
 
                         mAdapter.notifyDataSetChanged();
+                        changeCountSportsman(true);
                     }
                 });
                 dialog.show(getFragmentManager(),"OPERATIONDIALOG");
@@ -344,6 +361,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
                 ((SportsmanTrainingModel) adapterView.getItemAtPosition(position))
                         .setCount(((SportsmanTrainingModel) adapterView.getItemAtPosition(position)).getCount()+1);
                 mAdapter.notifyDataSetChanged();
+                changeCountSportsman(false);
             }
         }
     };
@@ -376,6 +394,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         }
         return rec;
     }
+
 
     private void saveResult(){
         if (mode == ConstantManager.VIEW_TRAINING) return;
