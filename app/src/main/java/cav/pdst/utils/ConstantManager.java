@@ -2,6 +2,7 @@ package cav.pdst.utils;
 
 
 public interface ConstantManager {
+    int NONE = -1;
     int ONE = 0;
     int GROUP = 1;
 
@@ -71,4 +72,5 @@ public interface ConstantManager {
 
     int REQUEST_PHONE = 601;
     String GRANTED_PHONE = "GRANTED_PHONE";
+
 }

@@ -211,9 +211,12 @@ public class DataManager {
             int type_rec = ConstantManager.ONE;
             if (cursor.getInt(cursor.getColumnIndex("count_item"))>1) {
                 type_rec = ConstantManager.GROUP;
+            } else if (cursor.getInt(cursor.getColumnIndex("count_item")) ==0){
+                type_rec = ConstantManager.NONE;
             } else {
                 type_rec = ConstantManager.ONE;
             }
+
             try {
                 rec.add(new TrainingModel(cursor.getInt(cursor.getColumnIndex("_id")),
                         cursor.getString(cursor.getColumnIndex("training_name")),type_rec,

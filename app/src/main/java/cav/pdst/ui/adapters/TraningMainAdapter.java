@@ -50,9 +50,11 @@ public class TraningMainAdapter extends ArrayAdapter<TrainingModel> {
         if (record.getType()== ConstantManager.ONE){
             holder.mType.setText("Спортсмен");
             holder.mIcon.setImageResource(R.drawable.ic_directions_run_black_24dp);
-        }else {
+        }else if (record.getType() == ConstantManager.GROUP){
             holder.mType.setText("Группа");
             holder.mIcon.setImageResource(R.drawable.ic_group_black_24dp);
+        } else {
+            holder.mType.setText("Черновик");
         }
         holder.mCount.setText(Integer.toString(record.getCount()));
 
