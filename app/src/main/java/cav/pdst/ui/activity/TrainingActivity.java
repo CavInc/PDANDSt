@@ -73,6 +73,8 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
 
     private Menu mMenu;
 
+    private String [] repeat_type = {"нет повторений","ежедневно","еженедельно","ежемесячно"};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

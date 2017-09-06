@@ -44,6 +44,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     "_id integer not null primary key AUTOINCREMENT,"+
                     " training_name text,"+
                     " count_item integer default 0,"+
+                    " repeat_training integer defauly 0"+ //тип повторов.
                     " date text,time text)");
             db.execSQL("CREATE INDEX \"trainint_date_desc\" on trainig_table (date DESC)");
             db.execSQL("CREATE INDEX \"trainint_date_asc\" on trainig_table (date ASC)");
