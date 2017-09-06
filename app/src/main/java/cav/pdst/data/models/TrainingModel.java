@@ -16,18 +16,10 @@ public class TrainingModel implements Parcelable {
     private String mTime;
     private int mAbonentNum;
     private int mTypeTraining = 0;
+    private int mRepeatType = 0;
 
 
     public TrainingModel(String name, int type, int count, Date date, String time) {
-        mName = name;
-        mType = type;
-        mCount = count;
-        mDate = date;
-        mTime = time;
-    }
-
-    public TrainingModel(int id, String name, int type, int count, Date date, String time) {
-        mId = id;
         mName = name;
         mType = type;
         mCount = count;
@@ -56,6 +48,18 @@ public class TrainingModel implements Parcelable {
         mTypeTraining = typeTraining;
     }
 
+    public TrainingModel(int id, String name, int type, int count, Date date, String time, int abonentNum,int typeTraining,int repeatType) {
+        mId = id;
+        mName = name;
+        mType = type;
+        mCount = count;
+        mDate = date;
+        mTime = time;
+        mAbonentNum = abonentNum;
+        mTypeTraining = typeTraining;
+        mRepeatType = repeatType;
+    }
+
     public TrainingModel(Parcel parcel) {
         mId = parcel.readInt();
         mName = parcel.readString();
@@ -65,6 +69,7 @@ public class TrainingModel implements Parcelable {
         mTime = parcel.readString();
         mAbonentNum = parcel.readInt();
         mTypeTraining = parcel.readInt();
+        mRepeatType = parcel.readInt();
     }
 
 
@@ -124,6 +129,14 @@ public class TrainingModel implements Parcelable {
         return mTypeTraining;
     }
 
+    public int getRepeatType() {
+        return mRepeatType;
+    }
+
+    public void setRepeatType(int repeatType) {
+        mRepeatType = repeatType;
+    }
+
     public static final Creator<TrainingModel> CREATOR = new Creator<TrainingModel>() {
         @Override
         public TrainingModel createFromParcel(Parcel parcel) {
@@ -153,5 +166,6 @@ public class TrainingModel implements Parcelable {
         parcel.writeString(getTime());
         parcel.writeInt(mAbonentNum);
         parcel.writeInt(mTypeTraining);
+        parcel.writeInt(mRepeatType);
     }
 }

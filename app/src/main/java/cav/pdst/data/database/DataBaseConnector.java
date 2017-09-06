@@ -102,6 +102,7 @@ public class DataBaseConnector {
         value.put("count_item",data.getCount());
         value.put("date",format.format(data.getDate()));
         value.put("time",data.getTime());
+        value.put("repeat_training",data.getRepeatType());
         //value.put("",data.getType());
         int recid = (int) database.insert(DBHelper.TRAINING_TABLE,null,value);
         for (int i=0;i<selectItem.size();i++) {
@@ -165,6 +166,7 @@ public class DataBaseConnector {
         value.put("count_item",data.getCount());
         value.put("date",format.format(data.getDate()));
         value.put("time",data.getTime());
+        value.put("repeat_training",data.getRepeatType());
         database.update(DBHelper.TRAINING_TABLE,value,"_id="+data.getId(),null); // обновили данные тренировки
         database.delete(DBHelper.REF_TABLE,"type_ref=1 and id2="+data.getId(),null); // удалили связь спортсмен - тренировка
 
@@ -274,11 +276,11 @@ public class DataBaseConnector {
     }
 
     public Cursor getTraining(String selectDate){
-        return database.query(DBHelper.TRAINING_TABLE,new String[]{"_id","training_name","count_item","date","time"},"date='"+selectDate+"'",null,null,null,"time");
+        return database.query(DBHelper.TRAINING_TABLE,new String[]{"_id","training_name","count_item","date","time","repeat_training"},"date='"+selectDate+"'",null,null,null,"time");
     }
 
     public Cursor getTraining(int sp_id,String selectDate){
-        String sql="select tt._id,tt.training_name,tt.count_item,tt.date,tt.time,ab.pos_id as abid,rf.type_link from REF_TABLE  rf\n" +
+        String sql="select tt._id,tt.training_name,tt.count_item,tt.date,tt.time,ab.pos_id as abid,rf.type_link,tt.repeat_training from REF_TABLE  rf\n" +
                 "  join TRAINIG_TABLE tt on rf.id2=tt._id\n" +
                 "  join REF_TABLE rf2 on rf2.type_ref=2 and tt._id=rf2.id1\n" +
                 "  join ABONEMENT ab on rf2.id2=ab._id and ab.sp_id=" +sp_id+

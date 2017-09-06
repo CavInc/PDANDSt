@@ -195,7 +195,62 @@ public class DataManager {
 
 
     public void addTraining(TrainingModel data, ArrayList<SpRefAbModeModel> selectItem){
-        mDB.addTraining(data,selectItem);
+        if (data.getRepeatType() == 0) {
+            mDB.addTraining(data,selectItem);
+        }
+        // ежедневные разворачиваем в текущем месяце
+        if (data.getRepeatType() == 1){
+            Calendar c = Calendar.getInstance();
+            c.setTime(data.getDate());
+            int current_day = c.get(Calendar.DAY_OF_MONTH);
+            int last_day = c.getActualMaximum(Calendar.DAY_OF_MONTH);
+            for (int i = current_day;i<=last_day;i++){
+                c.set(c.get(Calendar.YEAR),c.get(Calendar.MONTH),i);
+                data.setDate(c.getTime());
+                mDB.addTraining(data,selectItem);
+            }
+        }
+        // еженедельные в текщем месяце
+        if (data.getRepeatType() == 2){
+            Calendar c = Calendar.getInstance();
+            c.setTime(data.getDate());
+            int last_day = c.getActualMaximum(Calendar.DAY_OF_MONTH); // полседний день
+            // день недели
+            int day = c.get(Calendar.DAY_OF_WEEK) - 1;
+            if (day == 0 ) day=7;
+            //day -=1;
+            Log.d(TAG,"DAY "+day);
+            /*
+            for (int i=c.get(Calendar.DAY_OF_MONTH);i<=last_day;i++) {
+                data.setDate(c.getTime());
+                mDB.addTraining(data,selectItem);
+                c.add(Calendar.DAY_OF_MONTH, day);
+            }
+            */
+            int cur_mnt = c.get(Calendar.MONTH);
+            while ((c.get(Calendar.DAY_OF_MONTH)<last_day) && (c.get(Calendar.MONTH)==cur_mnt)){
+                data.setDate(c.getTime());
+                mDB.addTraining(data,selectItem);
+                c.add(Calendar.DAY_OF_MONTH, day);
+            }
+        }
+        // ежемесячные в текущем году
+        if (data.getRepeatType() == 3) {
+            Calendar c = Calendar.getInstance();
+            c.setTime(data.getDate());
+            int month = c.get(Calendar.MONTH);
+            for (int i=month;i<=11;i++){
+                data.setDate(c.getTime());
+                mDB.addTraining(data,selectItem);
+                c.add(Calendar.MONTH,1);
+                int last_day = c.getActualMaximum(Calendar.DAY_OF_MONTH);
+                if (c.get(Calendar.DAY_OF_MONTH)>last_day){
+                    c.set(c.get(Calendar.YEAR),c.get(Calendar.MONTH),last_day);
+                }
+            }
+
+        }
+
     }
 
     public void updateTraining(TrainingModel data,ArrayList<SpRefAbModeModel> selectItem){
@@ -222,7 +277,9 @@ public class DataManager {
                         cursor.getString(cursor.getColumnIndex("training_name")),type_rec,
                         cursor.getInt(cursor.getColumnIndex("count_item")),
                         format.parse(cursor.getString(cursor.getColumnIndex("date"))),
-                        cursor.getString(cursor.getColumnIndex("time"))));
+                        cursor.getString(cursor.getColumnIndex("time")),
+                        0,0,
+                        cursor.getInt(cursor.getColumnIndex("repeat_training"))));
             } catch (ParseException e) {
                 e.printStackTrace();
             }

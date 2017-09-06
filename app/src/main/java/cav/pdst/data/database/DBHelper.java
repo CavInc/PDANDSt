@@ -44,7 +44,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     "_id integer not null primary key AUTOINCREMENT,"+
                     " training_name text,"+
                     " count_item integer default 0,"+
-                    " repeat_training integer defauly 0"+ //тип повторов.
+                    " repeat_training integer default 0,"+ //тип повторов.
                     " date text,time text)");
             db.execSQL("CREATE INDEX \"trainint_date_desc\" on trainig_table (date DESC)");
             db.execSQL("CREATE INDEX \"trainint_date_asc\" on trainig_table (date ASC)");
@@ -62,7 +62,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     "phone text,"+"" +
                     "last_date text default '2010-01-01',"+
                     "last_time text default '00:00',"+
-                    "used integer default 1"+ // активный клиент или нет.
+                    "used integer default 1,"+ // активный клиент или нет.
                     "comment text)");
 
             db.execSQL("CREATE INDEX \"SP_NAME_SPORTSMAN\" on sportsman (sp_name ASC)");

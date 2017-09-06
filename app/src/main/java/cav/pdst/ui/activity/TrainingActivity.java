@@ -76,6 +76,8 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
 
     private String [] repeat_type = {"нет повторений","ежедневно","еженедельно","ежемесячно"};
 
+    private int training_repeat=0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,7 +141,11 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
 
         setDateButton(mDate);
         setupToolBar();
+        setRepeatSpinerListener();
         //setSpinerListener();
+        if (mode !=  ConstantManager.NEW_TRAINING) {
+            mRepeatSpiner.setSelection(mModel.getRepeatType());
+        }
     }
 
     private void setupToolBar() {
@@ -237,6 +243,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         mTimeButton.setEnabled(flg);
         mDataButton.setEnabled(flg);
         mSpinner.setEnabled(flg);
+        mRepeatSpiner.setEnabled(flg);
     }
 
 
@@ -262,11 +269,23 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-                Log.d(TAG," SELECT POSITION :"+adapterView.getItemAtPosition(position));
                 TrainingGroupModel model = (TrainingGroupModel) adapterView.getItemAtPosition(position);
-                Log.d(TAG," ID "+model.getId()+" "+model.getName());
                 group_id = model.getId();
                 updateUI();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
+
+    private void setRepeatSpinerListener(){
+        mRepeatSpiner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                training_repeat = position;
             }
 
             @Override
@@ -403,6 +422,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         int type = ConstantManager.ONE;
         if (fm.size()>0) type = ConstantManager.GROUP;
         TrainingModel model = new TrainingModel(mTraining.getText().toString(), type, fm.size(), mDate, mTime);
+        model.setRepeatType(training_repeat);
         if (mode == ConstantManager.NEW_TRAINING) {
             mDataManager.addTraining(model,fm);
         } else {
