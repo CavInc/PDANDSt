@@ -45,7 +45,7 @@ public class RateActivity extends AppCompatActivity {
 
         mTableLayout = (TableLayout) findViewById(R.id.rate_tb_l);
 
-        setupTable();
+
         setupToolBar();
     }
 
@@ -54,6 +54,12 @@ public class RateActivity extends AppCompatActivity {
         if (actionBar!=null){
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setupTable();
     }
 
     @Override
