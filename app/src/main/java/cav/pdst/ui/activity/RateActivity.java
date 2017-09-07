@@ -158,11 +158,9 @@ public class RateActivity extends AppCompatActivity {
     View.OnLongClickListener mRowClickListener = new View.OnLongClickListener() {
         @Override
         public boolean onLongClick(View view) {
-            Log.d("RARE AC"," ROW CLICK");
             TableRow row = (TableRow) view;
-            Log.d("RARE_AC", (String) ((TextView) row.getVirtualChildAt(2)).getText());
-            final int row_id = Integer.valueOf ((String) ((TextView) row.getVirtualChildAt(2)).getText());
-            final String type_name = ((TextView) row.getVirtualChildAt(0)).getText().toString();
+            final int row_id = Integer.valueOf ((String) ((TextView) row.getVirtualChildAt(3)).getText());
+            final String type_name = ((TextView) row.getVirtualChildAt(1)).getText().toString();
 
             EditDeleteDialog dialog = EditDeleteDialog.newInstance();
             dialog.setEditDeleteDialogListener(new EditDeleteDialog.EditDeleteDialogListener() {

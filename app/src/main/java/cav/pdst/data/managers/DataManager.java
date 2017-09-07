@@ -198,6 +198,7 @@ public class DataManager {
         if (data.getRepeatType() == 0) {
             mDB.addTraining(data,selectItem);
         }
+        boolean one = true;
         // ежедневные разворачиваем в текущем месяце
         if (data.getRepeatType() == 1){
             Calendar c = Calendar.getInstance();
@@ -208,6 +209,11 @@ public class DataManager {
                 c.set(c.get(Calendar.YEAR),c.get(Calendar.MONTH),i);
                 data.setDate(c.getTime());
                 mDB.addTraining(data,selectItem);
+                if (one) {
+                    selectItem.clear();
+                    data.setCount(0);
+                    one = false;
+                }
             }
         }
         // еженедельные в текщем месяце
@@ -228,10 +234,15 @@ public class DataManager {
             }
             */
             int cur_mnt = c.get(Calendar.MONTH);
-            while ((c.get(Calendar.DAY_OF_MONTH)<last_day) && (c.get(Calendar.MONTH)==cur_mnt)){
+            while ((c.get(Calendar.DAY_OF_MONTH)<=last_day) && (c.get(Calendar.MONTH)==cur_mnt)){
                 data.setDate(c.getTime());
                 mDB.addTraining(data,selectItem);
-                c.add(Calendar.DAY_OF_MONTH, day);
+                c.add(Calendar.DAY_OF_MONTH, 7);
+                if (one) {
+                    selectItem.clear();
+                    data.setCount(0);
+                    one = false;
+                }
             }
         }
         // ежемесячные в текущем году
@@ -246,6 +257,11 @@ public class DataManager {
                 int last_day = c.getActualMaximum(Calendar.DAY_OF_MONTH);
                 if (c.get(Calendar.DAY_OF_MONTH)>last_day){
                     c.set(c.get(Calendar.YEAR),c.get(Calendar.MONTH),last_day);
+                }
+                if (one) {
+                    selectItem.clear();
+                    data.setCount(0);
+                    one = false;
                 }
             }
 
