@@ -28,6 +28,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="numberDecimal"/>
+    <TextView
+        android:text="Комментарий"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <EditText
+        android:id="@+id/add_rate_comment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:maxLines="6"/>
 
 
 </LinearLayout>

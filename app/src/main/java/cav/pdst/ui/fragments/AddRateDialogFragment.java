@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -31,6 +32,7 @@ public class AddRateDialogFragment extends DialogFragment implements View.OnClic
     private TextView mSumm;
     private Spinner mTypeRate;
     private Button mDateButton;
+    private EditText mComment;
 
     private int mIdRateType = -1;
 
@@ -38,6 +40,7 @@ public class AddRateDialogFragment extends DialogFragment implements View.OnClic
     private Date mCreateDate;
     private Float mEditSumm = null;
     private String mTypeName = null;
+
 
     private int rec_id = -1;
 
@@ -61,6 +64,7 @@ public class AddRateDialogFragment extends DialogFragment implements View.OnClic
 
         mSumm = (TextView) v.findViewById(R.id.add_rate_summ);
         mTypeRate = (Spinner) v.findViewById(R.id.add_rate_spiner);
+        mComment = (EditText) v.findViewById(R.id.add_rate_comment);
 
         ArrayList<RateTypeSpinerModel> model = mDataManager.getRateType();
         ArrayAdapter<RateTypeSpinerModel> adapter = new ArrayAdapter<RateTypeSpinerModel>(getActivity(),android.R.layout.simple_spinner_item,model);
