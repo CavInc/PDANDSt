@@ -40,13 +40,14 @@ public class AddRateDialogFragment extends DialogFragment implements View.OnClic
     private Date mCreateDate;
     private Float mEditSumm = null;
     private String mTypeName = null;
+    private String mEditComment = null;
 
 
     private int rec_id = -1;
 
 
     public interface AddRateDialogListener {
-        public void OnSelected(int rate_type,String create_date,float summ,int rec_id);
+        public void OnSelected(int rate_type,String create_date,float summ,int rec_id,String comment);
     }
 
     public AddRateDialogFragment() {
@@ -91,6 +92,9 @@ public class AddRateDialogFragment extends DialogFragment implements View.OnClic
             int i = apt.getPosition(new RateTypeSpinerModel(mIdRateType,mTypeName));
             mTypeRate.setSelection(i);
         }
+        if (mEditComment !=null){
+            mComment.setText(mEditComment);
+        }
 
 
         AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
@@ -104,7 +108,8 @@ public class AddRateDialogFragment extends DialogFragment implements View.OnClic
                         if (mAddRateDialogListener!=null) {
                                 mAddRateDialogListener.OnSelected(mIdRateType,
                                         format.format(mCreateDate),
-                                        Float.parseFloat(mSumm.getText().toString()),rec_id);
+                                        Float.parseFloat(mSumm.getText().toString()),rec_id,
+                                        mComment.getText().toString());
                         }
                     }
                 });
@@ -112,12 +117,13 @@ public class AddRateDialogFragment extends DialogFragment implements View.OnClic
         return builder.create();
     }
 
-    public void setParametr(Date date,int type,float summ,String typeName,int rec_id){
+    public void setParametr(Date date,int type,float summ,String typeName,int rec_id,String comment){
         mCreateDate = date;
         mEditSumm =summ;
         mIdRateType = type;
         mTypeName = typeName;
         this.rec_id = rec_id;
+        mEditComment = comment;
     }
 
     @Override

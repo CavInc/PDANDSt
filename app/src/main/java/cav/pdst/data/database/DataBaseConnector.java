@@ -490,7 +490,7 @@ public class DataBaseConnector {
     }
 
     public Cursor getRateDetail(String sdate,String edate){
-        String sql="select rt._id,rf.name,rt.create_date,rt.summ,rt.rate_type from RATE rt\n" +
+        String sql="select rt._id,rf.name,rt.create_date,rt.summ,rt.rate_type,rt.comment from RATE rt\n" +
                 " left join rate_type rf on rt.rate_type=rf._id"+
                 " where rt.create_date>='"+sdate+"' and rt.create_date<='"+edate+"'";
         return database.rawQuery(sql,null);
@@ -498,7 +498,7 @@ public class DataBaseConnector {
 
     public Cursor getRateDetailOne(int id){
         return  database.query(DBHelper.RATE_TABLE,
-                new String[]{"_id","rate_type","create_date","summ"},
+                new String[]{"_id","rate_type","create_date","summ","comment"},
                 "_id="+id,null,null,null,null);
     }
 
@@ -524,7 +524,7 @@ public class DataBaseConnector {
         return database.query(DBHelper.RATE_TYPE_TABLE,new String[]{"_id","name"},null,null,null,null,null);
     }
 
-    public void addUpdateRate(int rate_type,String date,Float summ,int rec_id){
+    public void addUpdateRate(int rate_type,String date,Float summ,int rec_id,String coment){
         ContentValues values = new ContentValues();
         if (rec_id != -1){
             values.put("_id",rec_id);
@@ -532,6 +532,7 @@ public class DataBaseConnector {
         values.put("rate_type",rate_type);
         values.put("create_date",date);
         values.put("summ",summ);
+        values.put("comment",coment);
         open();
         database.insertWithOnConflict(DBHelper.RATE_TABLE,null,values,SQLiteDatabase.CONFLICT_REPLACE);
         close();

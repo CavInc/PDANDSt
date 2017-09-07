@@ -16,7 +16,7 @@
             android:id="@+id/rate_tb_l"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:collapseColumns="3">
+            android:collapseColumns="3,4">
 
         </TableLayout>
     </ScrollView>

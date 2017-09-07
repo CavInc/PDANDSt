@@ -94,10 +94,11 @@ public class RateActivity extends AppCompatActivity {
     AddRateDialogFragment.AddRateDialogListener mAddRateDialogListener = new AddRateDialogFragment.AddRateDialogListener(){
 
         @Override
-        public void OnSelected(int rate_type, String create_date, float summ, int rec_id) {
-            mDataManager.getDB().addUpdateRate(rate_type,create_date,summ,rec_id);
+        public void OnSelected(int rate_type, String create_date, float summ, int rec_id, String comment) {
+            mDataManager.getDB().addUpdateRate(rate_type,create_date,summ,rec_id,comment);
             setupTable();
         }
+
     };
 
     private void setupTable(){
@@ -149,10 +150,14 @@ public class RateActivity extends AppCompatActivity {
             pay.setText(String.valueOf(cursor.getFloat(cursor.getColumnIndex("summ"))));
             TextView id = new TextView(this);
             id.setText(String.valueOf(cursor.getInt(cursor.getColumnIndex("_id"))));
+            //TextView comment = new TextView(this);
+            //comment.setText(cursor.getString(cursor.getColumnIndex("comment")));
+
             row.addView(dt);
             row.addView(sp);
             row.addView(pay);
             row.addView(id);
+            //row.addView(comment);
             row.setOnLongClickListener(mRowClickListener);
             mTableLayout.addView(row);
         }
@@ -180,11 +185,13 @@ public class RateActivity extends AppCompatActivity {
                         int type_rate = 0;
                         Date date_rate = null;
                         float summ = 0;
+                        String comment = null;
                         mDataManager.getDB().open();
                         Cursor cursor = mDataManager.getDB().getRateDetailOne(row_id);
                         while (cursor.moveToNext()){
                             type_rate = cursor.getInt(cursor.getColumnIndex("rate_type"));
                             summ = cursor.getFloat(cursor.getColumnIndex("summ"));
+                            comment = cursor.getString(cursor.getColumnIndex("comment"));
                             try {
                                 date_rate = new SimpleDateFormat("yyyy-MM-dd").parse(cursor.getString(cursor.getColumnIndex("create_date")));
                             } catch (ParseException e) {
@@ -194,7 +201,7 @@ public class RateActivity extends AppCompatActivity {
                         mDataManager.getDB().close();
 
                         AddRateDialogFragment addDialog = new AddRateDialogFragment();
-                        addDialog.setParametr(date_rate,type_rate,summ,type_name,row_id);
+                        addDialog.setParametr(date_rate,type_rate,summ,type_name,row_id,comment);
 
                         addDialog.setAddRateDialogListener(mAddRateDialogListener);
                         addDialog.show(getSupportFragmentManager(),"ratenew");
