@@ -94,6 +94,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     "_id integer not null primary key AUTOINCREMENT," +
                     "rate_type integer not null," +
                     "create_date text," +
+                    "comment text,"+
                     "summ numeric default 0)");
 
             db.execSQL("CREATE INDEX \"rate_data_idx\" on rate (create_date ASC)");

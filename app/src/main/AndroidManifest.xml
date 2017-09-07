@@ -54,13 +54,15 @@
             android:label="Спортсмен"
             android:parentActivityName=".ui.activity.SportsmanActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden">
+            android:windowSoftInputMode="adjustPan|stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.activity.SportsmanActivity"/>
         </activity>
         <activity
             android:name=".ui.activity.AbonementActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
             android:label="Абонемент">
         </activity>
         <activity
