@@ -27,6 +27,7 @@ public class CheckAndRestartAlarmReciver extends BroadcastReceiver {
     private DataManager mDataManager;
 
     private ArrayList<AlarmAbonementModel> model;
+    private Context mContext;
 
     public CheckAndRestartAlarmReciver() {
         mDataManager = DataManager.getInstance();
@@ -37,6 +38,7 @@ public class CheckAndRestartAlarmReciver extends BroadcastReceiver {
         // an Intent broadcast.
        // throw new UnsupportedOperationException("Not yet implemented");
         Log.d("CAR","START RESIVER");
+        mContext = context;
         model = mDataManager.getFutureCloseAbonement();
         // ставим нотификаторы в соотвествии с тем что вернули в модели
         for (AlarmAbonementModel l :model){
@@ -60,7 +62,13 @@ public class CheckAndRestartAlarmReciver extends BroadcastReceiver {
         Notification notification = null;
 
         Notification.Builder builder = new Notification.Builder(context);
-        Intent intent = new Intent();
+        //Intent intent = new Intent();
+
+        Intent intent = new Intent(mContext, SportsmanDetailActivity.class);
+        intent.putExtra(ConstantManager.MODE_SP_DETAIL,ConstantManager.ALARM_SPORTSMAN);
+        intent.putExtra(ConstantManager.ALARM_ID,model.getSpId());
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
         PendingIntent pi = PendingIntent.getActivity(context,model.getId(),intent,PendingIntent.FLAG_CANCEL_CURRENT);
         builder.setContentIntent(pi)
                 .setSmallIcon(R.drawable.icon_alarm_p)
