@@ -27,6 +27,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="phone"/>
+    <CheckBox
+        android:id="@+id/info_cb_arhive"
+        android:text="Архивный"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"

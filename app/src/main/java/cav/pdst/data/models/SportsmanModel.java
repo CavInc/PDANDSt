@@ -13,6 +13,7 @@ public class SportsmanModel implements Parcelable {
     private String mComment= null;
     private String mLastDate = null;
     private String mLastTime = null;
+    private boolean mActive = true;
 
 
     public SportsmanModel(int id, String name, String tel, int trainingAll, int traninigWrk, String comment,String lastDate,String lastTime) {
@@ -26,6 +27,18 @@ public class SportsmanModel implements Parcelable {
         mLastTime = lastTime;
     }
 
+    public SportsmanModel(int id, String name, String tel, int trainingAll, int traninigWrk, String comment,String lastDate,String lastTime,boolean active) {
+        mId = id;
+        mName = name;
+        mTel = tel;
+        mTrainingAll = trainingAll;
+        mTraninigWrk = traninigWrk;
+        mComment = comment;
+        mLastDate = lastDate;
+        mLastTime = lastTime;
+        mActive = active;
+    }
+
     public SportsmanModel() {
 
     }
@@ -37,6 +50,7 @@ public class SportsmanModel implements Parcelable {
         mComment = parcel.readString();
         mLastDate = parcel.readString();
         mLastTime = parcel.readString();
+        mActive = (boolean) parcel.readSerializable();
     }
 
     public int getId() {
@@ -95,6 +109,14 @@ public class SportsmanModel implements Parcelable {
         return mLastTime;
     }
 
+    public boolean isActive() {
+        return mActive;
+    }
+
+    public void setActive(boolean active) {
+        mActive = active;
+    }
+
     public static final Creator<SportsmanModel> CREATOR = new Creator<SportsmanModel>() {
         @Override
         public SportsmanModel createFromParcel(Parcel parcel) {
@@ -120,6 +142,6 @@ public class SportsmanModel implements Parcelable {
         parcel.writeString(mComment);
         parcel.writeString(mLastDate);
         parcel.writeString(mLastTime);
-
+        parcel.writeSerializable(mActive);
     }
 }

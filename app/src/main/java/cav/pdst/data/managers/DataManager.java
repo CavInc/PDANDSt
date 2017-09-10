@@ -156,7 +156,8 @@ public class DataManager {
                     cursor.getInt(cursor.getColumnIndex("sm")),
                     cursor.getString(cursor.getColumnIndex("comment")),
                     cursor.getString(cursor.getColumnIndex("last_date")),
-                    cursor.getString(cursor.getColumnIndex("last_time"))));
+                    cursor.getString(cursor.getColumnIndex("last_time")),
+                    (cursor.getInt(cursor.getColumnIndex("used")) == 1 ? true : false)));
         }
         mDB.close();
         return rec;

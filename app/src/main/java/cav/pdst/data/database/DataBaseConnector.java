@@ -318,6 +318,7 @@ public class DataBaseConnector {
         value.put("sp_name",data.getName());
         value.put("phone",data.getTel());
         value.put("comment",data.getComment());
+        value.put("used",(data.isActive() ? 1:0));
         database.update(DBHelper.SPORTSMAN_TABLE,value,"_id="+data.getId(),null);
         close();
     }
@@ -335,7 +336,7 @@ public class DataBaseConnector {
                 "   group by id1) as a on sp._id=a.id1 order by sp.sp_name";
         */
         int m = (mode ? 1:0);
-        String sql="select sp._id,sp.sp_name,sp.phone,sp.comment,a.ci,ab.sm,sp.last_date,sp.last_time from SPORTSMAN sp\n" +
+        String sql="select sp._id,sp.sp_name,sp.phone,sp.comment,a.ci,ab.sm,sp.last_date,sp.last_time,sp.used from SPORTSMAN sp\n" +
                 "  left join (select id1, count(1) as ci from REF_TABLE where type_ref=1   group by id1) as a on sp._id=a.id1 \n" +
                 "  left join (select sp_id,sum((count_training+working)-(used_training+warning_count)) as sm from ABONEMENT "+
                 "where count_training-used_training<>0 group by sp_id) as ab "+

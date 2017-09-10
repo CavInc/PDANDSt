@@ -18,6 +18,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 
@@ -26,7 +28,7 @@ import cav.pdst.data.managers.DataManager;
 import cav.pdst.data.models.SportsmanModel;
 import cav.pdst.utils.ConstantManager;
 
-public class SpInfoFragment extends Fragment {
+public class SpInfoFragment extends Fragment implements CompoundButton.OnCheckedChangeListener {
 
     private static final String MODE = "MODE";
     private static final String MODEL = "MODEL";
@@ -36,6 +38,7 @@ public class SpInfoFragment extends Fragment {
 
     private Button mCall;
     private Button mSendSMS;
+    private CheckBox mCheckBox;
 
     private SportsmanModel mSportsmanModel;
     private DataManager mDataManager;
@@ -104,6 +107,9 @@ public class SpInfoFragment extends Fragment {
         mFullName = (TextView) rootView.findViewById(R.id.info_full_name);
         mPhone = (TextView) rootView.findViewById(R.id.info_phone);
         mComment = (TextView) rootView.findViewById(R.id.info_comment);
+        mCheckBox = (CheckBox) rootView.findViewById(R.id.info_cb_arhive);
+
+        mCheckBox.setOnCheckedChangeListener(this);
 
         mPhone.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
 
@@ -129,6 +135,8 @@ public class SpInfoFragment extends Fragment {
         if (!mDataManager.getPreferensManager().getPhoneGrand()){
             mCall.setEnabled(false);
         }
+
+
 
         return rootView;
         //return super.onCreateView(inflater, container, savedInstanceState);
@@ -172,6 +180,7 @@ public class SpInfoFragment extends Fragment {
         mFullName.setText(mSportsmanModel.getName());
         mPhone.setText(mSportsmanModel.getTel());
         mComment.setText(mSportsmanModel.getComment());
+        mCheckBox.setChecked(!mSportsmanModel.isActive());
     }
 
     private void changeMode(boolean flg){
@@ -186,6 +195,7 @@ public class SpInfoFragment extends Fragment {
         mFullName.setFocusableInTouchMode(flg);
         mPhone.setFocusableInTouchMode(flg);
         mComment.setFocusableInTouchMode(flg);
+        mCheckBox.setEnabled(flg);
         /*
         if (flg){
             setupListener();
@@ -197,6 +207,8 @@ public class SpInfoFragment extends Fragment {
         Log.d("SPF","UPDATE");
         mCallbacks.updateData(mSportsmanModel);
     }
+
+
 
     private void setupListener(){
 
@@ -277,6 +289,11 @@ public class SpInfoFragment extends Fragment {
             }
         }
     };
+
+    @Override
+    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+        mSportsmanModel.setActive(!b);
+    }
 
     public interface Callbacks{
         void updateData(SportsmanModel model);

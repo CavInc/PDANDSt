@@ -54,18 +54,25 @@ public class SportsmanActivity extends AppCompatActivity implements NavigationVi
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mNavigationDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
+        mFab = (FloatingActionButton) findViewById(R.id.main_tr_fab);
+        mFab.setOnClickListener(this);
+
+        mListView = (ListView) findViewById(R.id.sportsman_list_view);
+        mListView.setOnItemLongClickListener(this);
+        mListView.setOnItemClickListener(this);
+
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.addTab(tabLayout.newTab().setText("Активные"));
         tabLayout.addTab(tabLayout.newTab().setText("Архив"));
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(Tab tab) {
-                Log.d("SAA","SELECTED");
-                Log.d("SAA","POS "+tab.getPosition());
                 if (tab.getPosition()==0){
                     viewSP = true;
+                    mFab.setVisibility(View.VISIBLE);
                 }else{
                     viewSP = false;
+                    mFab.setVisibility(View.INVISIBLE);
                 }
                 updateUI(viewSP);
             }
@@ -80,14 +87,6 @@ public class SportsmanActivity extends AppCompatActivity implements NavigationVi
 
             }
         });
-
-        mFab = (FloatingActionButton) findViewById(R.id.main_tr_fab);
-        mFab.setOnClickListener(this);
-
-        mListView = (ListView) findViewById(R.id.sportsman_list_view);
-        mListView.setOnItemLongClickListener(this);
-        mListView.setOnItemClickListener(this);
-
 
         setupToolBar();
         setupDrower();
