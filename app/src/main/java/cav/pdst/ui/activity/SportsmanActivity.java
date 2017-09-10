@@ -3,12 +3,15 @@ package cav.pdst.ui.activity;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
+import android.support.design.widget.TabLayout.Tab;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -39,6 +42,7 @@ public class SportsmanActivity extends AppCompatActivity implements NavigationVi
     private SportsmanModel selModel;
 
     private int selId;
+    private boolean viewSP = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +53,34 @@ public class SportsmanActivity extends AppCompatActivity implements NavigationVi
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mNavigationDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.addTab(tabLayout.newTab().setText("Активные"));
+        tabLayout.addTab(tabLayout.newTab().setText("Архив"));
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(Tab tab) {
+                Log.d("SAA","SELECTED");
+                Log.d("SAA","POS "+tab.getPosition());
+                if (tab.getPosition()==0){
+                    viewSP = true;
+                }else{
+                    viewSP = false;
+                }
+                updateUI(viewSP);
+            }
+
+            @Override
+            public void onTabUnselected(Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(Tab tab) {
+
+            }
+        });
+
         mFab = (FloatingActionButton) findViewById(R.id.main_tr_fab);
         mFab.setOnClickListener(this);
 
@@ -65,7 +97,7 @@ public class SportsmanActivity extends AppCompatActivity implements NavigationVi
     @Override
     protected void onResume() {
         super.onResume();
-        updateUI();
+        updateUI(viewSP);
     }
 
     private void setupDrower() {
@@ -91,8 +123,8 @@ public class SportsmanActivity extends AppCompatActivity implements NavigationVi
         return super.onOptionsItemSelected(item);
     }
 
-    private void updateUI(){
-        ArrayList<SportsmanModel> model= mDataManager.getSportsman();
+    private void updateUI(boolean mode){
+        ArrayList<SportsmanModel> model= mDataManager.getSportsman(mode);
         if (adapter == null ) {
             adapter = new SportsmanAdapter(this, R.layout.sportsman_item, model);
             mListView.setAdapter(adapter);
@@ -170,7 +202,7 @@ public class SportsmanActivity extends AppCompatActivity implements NavigationVi
             // удаляем
             mDataManager.delSportsman(selId);
             //TODO сделать удаление елемента из адаптера не трогая весь
-            updateUI();
+            updateUI(viewSP);
         }
         if (selectItem == R.id.dialog_edit_item){
             // редактируем

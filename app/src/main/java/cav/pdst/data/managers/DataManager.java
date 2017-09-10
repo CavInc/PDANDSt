@@ -143,10 +143,10 @@ public class DataManager {
         mDB.delGroup(id);
     }
 
-    public ArrayList<SportsmanModel> getSportsman(){
+    public ArrayList<SportsmanModel> getSportsman(boolean mode){
         ArrayList<SportsmanModel> rec = new ArrayList<>();
         mDB.open();
-        Cursor cursor = mDB.getSportsman();
+        Cursor cursor = mDB.getSportsman(mode);
         while (cursor.moveToNext()){
             rec.add(new SportsmanModel(
                     cursor.getInt(cursor.getColumnIndex("_id")),

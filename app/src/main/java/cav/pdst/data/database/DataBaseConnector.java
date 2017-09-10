@@ -328,17 +328,19 @@ public class DataBaseConnector {
         close();
     }
 
-    public Cursor getSportsman(){
+    public Cursor getSportsman(boolean mode){
         /*
         String sql="select sp._id,sp.sp_name,sp.phone,sp.comment,a.ci from SPORTSMAN sp\n" +
                 "   left join (select id1, count(1) as ci from REF_TABLE where type_ref=1\n" +
                 "   group by id1) as a on sp._id=a.id1 order by sp.sp_name";
         */
+        int m = (mode ? 1:0);
         String sql="select sp._id,sp.sp_name,sp.phone,sp.comment,a.ci,ab.sm,sp.last_date,sp.last_time from SPORTSMAN sp\n" +
                 "  left join (select id1, count(1) as ci from REF_TABLE where type_ref=1   group by id1) as a on sp._id=a.id1 \n" +
                 "  left join (select sp_id,sum((count_training+working)-(used_training+warning_count)) as sm from ABONEMENT "+
                 "where count_training-used_training<>0 group by sp_id) as ab "+
                 "on sp._id=ab.sp_id\n" +
+                "where used="+m+"\n"+
                 "order by sp.sp_name";
         return database.rawQuery(sql,null);
     }
