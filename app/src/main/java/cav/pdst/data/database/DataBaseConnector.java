@@ -308,6 +308,7 @@ public class DataBaseConnector {
         value.put("sp_name",data.getName());
         value.put("phone",data.getTel());
         value.put("comment",data.getComment());
+        value.put("used",(data.isActive() ? 1:0));
         database.insert(DBHelper.SPORTSMAN_TABLE,null,value);
         close();
     }
