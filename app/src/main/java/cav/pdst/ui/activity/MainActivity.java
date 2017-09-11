@@ -116,8 +116,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         selectedDate = new Date();
 
         SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(this);
+        // если все пустой запускаем с дефолтовыми настройками. если нет то с настройками из
+        // конфига
         if (preference!=null) {
-            if (preference.getBoolean("alarm_start_flg",false)){
+            if (preference.getBoolean("alarm_start_flg",false) && !mDataManager.getPreferensManager().isFirstStart()){
                 Utils.restartAlarm(this,0);
             }
         }else {
@@ -170,7 +172,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 // недали разрешение
                 mDataManager.getPreferensManager().setNoPhoneGrand(true);
             }
-
         }
 
     }

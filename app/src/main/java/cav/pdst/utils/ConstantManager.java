@@ -73,4 +73,5 @@ public interface ConstantManager {
     int REQUEST_PHONE = 601;
     String GRANTED_PHONE = "GRANTED_PHONE";
 
+    String STORE_FIRST_START_ALARM = "STORE_FIRST_START_ALARM";
 }

@@ -44,9 +44,10 @@ public class CheckAndRestartAlarmReciver extends BroadcastReceiver {
         for (AlarmAbonementModel l :model){
             Log.d("CAR",l.getSportsmanName());
             showNotification(context,l);
-
         }
-
+        if (model.size()!=0){
+            mDataManager.getPreferensManager().setFirstStart(true);
+        }
         // запускаем будильник на следующий день
         Utils.restartAlarm(context,1);
     }

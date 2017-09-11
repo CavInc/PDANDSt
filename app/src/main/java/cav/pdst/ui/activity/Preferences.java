@@ -17,11 +17,13 @@ import android.widget.TimePicker;
 import java.util.Calendar;
 
 import cav.pdst.R;
+import cav.pdst.data.managers.DataManager;
 import cav.pdst.utils.Utils;
 
 public class Preferences extends PreferenceActivity {
 
     private Context mContext;
+    private DataManager mDataManager;
 
     private SharedPreferences pref;
 
@@ -31,6 +33,7 @@ public class Preferences extends PreferenceActivity {
         addPreferencesFromResource(R.xml.pref);
 
         mContext = (Context) this;
+        mDataManager = DataManager.getInstance();
 
         Preference opendialog = (Preference) findPreference("alarm_time");
         opendialog.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener(){
@@ -85,6 +88,7 @@ public class Preferences extends PreferenceActivity {
         Log.d("PREF","Stop");
         if (pref!=null) {
             if (pref.getBoolean("alarm_start_flg", false)) {
+                mDataManager.getPreferensManager().setFirstStart(false);
                 Utils.restartAlarm(mContext, 0);
             }
         }

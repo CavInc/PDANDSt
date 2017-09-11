@@ -37,5 +37,17 @@ public class PreferensManager {
         return mSharedPreferences.getBoolean(ConstantManager.GRANTED_PHONE,false);
     }
 
+    // проверяем запустили ли мы уже сегодня уведомления
+    // при переустановки времени в конфиги флаг сбрасывается
+    public void setFirstStart(boolean start){
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putBoolean(ConstantManager.STORE_FIRST_START_ALARM,start);
+        editor.apply();
+    }
+
+    public boolean isFirstStart(){
+        return mSharedPreferences.getBoolean(ConstantManager.STORE_FIRST_START_ALARM,false);
+    }
+
 
 }
