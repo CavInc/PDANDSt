@@ -132,12 +132,20 @@ public class SportsmanActivity extends AppCompatActivity implements NavigationVi
             @Override
             public boolean onQueryTextSubmit(String query) {
                 Log.d("SAA","SUBMIT");
+                adapter.getFilter().filter(query);
                 return  false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
                 return false;
+            }
+        });
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                Log.d("SAA","Close");
+               return true;
             }
         });
 

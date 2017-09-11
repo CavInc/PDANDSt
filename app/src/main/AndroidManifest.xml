@@ -38,6 +38,7 @@
             android:name=".ui.activity.SportsmanActivity"
             android:label="Спортсмены"
             android:launchMode="singleTask"
+            android:windowSoftInputMode="stateHidden"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity

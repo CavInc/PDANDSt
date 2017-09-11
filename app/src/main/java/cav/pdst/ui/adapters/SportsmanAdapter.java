@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import java.text.ParseException;
@@ -74,7 +76,23 @@ public class SportsmanAdapter extends ArrayAdapter<SportsmanModel>{
         this.clear();
         this.addAll(data);
     }
+/*
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                FilterResults results = new FilterResults();
+                return results;
+            }
 
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+
+            }
+        };
+    }
+*/
     private class ViewHolder{
         //TODO добавить елементы после построения модели
         public TextView mName;

@@ -117,6 +117,11 @@ public class SportsmanModel implements Parcelable {
         mActive = active;
     }
 
+    @Override
+    public String toString() {
+        return mName;
+    }
+
     public static final Creator<SportsmanModel> CREATOR = new Creator<SportsmanModel>() {
         @Override
         public SportsmanModel createFromParcel(Parcel parcel) {
