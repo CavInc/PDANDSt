@@ -139,6 +139,7 @@ public class SportsmanActivity extends AppCompatActivity implements NavigationVi
         MenuItem searchItem = menu.findItem(R.id.sp_menu_search);
         SearchView searchView = (SearchView) searchItem.getActionView();
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+
         if(null!=searchManager ) {
             searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         }
