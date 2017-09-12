@@ -8,6 +8,7 @@ import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.TabLayout.Tab;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -19,8 +20,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 import cav.pdst.R;
@@ -121,6 +124,18 @@ public class SportsmanActivity extends AppCompatActivity implements NavigationVi
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.sportsman_menu, menu);
+
+        ImageButton btnToolbarButton = null;
+        try {
+            Field field = mToolbar.getClass().getDeclaredField("mNavButtonView");
+            field.setAccessible(true);
+            btnToolbarButton = (ImageButton) field.get(mToolbar);
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
         MenuItem searchItem = menu.findItem(R.id.sp_menu_search);
         SearchView searchView = (SearchView) searchItem.getActionView();
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
@@ -139,14 +154,25 @@ public class SportsmanActivity extends AppCompatActivity implements NavigationVi
             @Override
             public boolean onQueryTextChange(String newText) {
                 adapter.getFilter().filter(newText);
+                if (newText.length()==0){
+                    Log.d("SAA","Clear");
+                    updateUI(viewSP);
+                }
                 return false;
             }
         });
-        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+
+        MenuItemCompat.setOnActionExpandListener(searchItem, new MenuItemCompat.OnActionExpandListener(){
             @Override
-            public boolean onClose() {
-                Log.d("SAA","Close");
-               return true;
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                Log.d("SAA","EXPOND");
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+                Log.d("SAA","COLLAPSE");
+                return  true;
             }
         });
 
