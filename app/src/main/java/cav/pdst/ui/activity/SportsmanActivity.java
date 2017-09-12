@@ -121,6 +121,7 @@ public class SportsmanActivity extends AppCompatActivity implements NavigationVi
         }
     }
 
+    private MenuItem searchItem;
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.sportsman_menu, menu);
@@ -136,7 +137,7 @@ public class SportsmanActivity extends AppCompatActivity implements NavigationVi
             e.printStackTrace();
         }
 
-        MenuItem searchItem = menu.findItem(R.id.sp_menu_search);
+        searchItem = menu.findItem(R.id.sp_menu_search);
         SearchView searchView = (SearchView) searchItem.getActionView();
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 
@@ -173,6 +174,8 @@ public class SportsmanActivity extends AppCompatActivity implements NavigationVi
             @Override
             public boolean onMenuItemActionCollapse(MenuItem item) {
                 Log.d("SAA","COLLAPSE");
+                adapter.getFilter().filter(null);
+                adapter.notifyDataSetChanged();
                 return  true;
             }
         });
@@ -200,7 +203,13 @@ public class SportsmanActivity extends AppCompatActivity implements NavigationVi
         }
     }
 
-
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (searchItem.isActionViewExpanded()){
+            searchItem.collapseActionView();
+        }
+    }
 
     @Override
     public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
