@@ -33,6 +33,8 @@ import cav.pdst.ui.adapters.SportsmanAdapter;
 import cav.pdst.ui.fragments.EditDeleteDialog;
 import cav.pdst.utils.ConstantManager;
 
+//https://habrahabr.ru/post/256643/
+
 public class SportsmanActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,AdapterView.
         OnItemLongClickListener,View.OnClickListener,EditDeleteDialog.EditDeleteDialogListener,AdapterView.OnItemClickListener {
 

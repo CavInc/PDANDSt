@@ -240,6 +240,12 @@ public class DataBaseConnector {
             database.execSQL(sql);
         }
         //TODO сдесь пеустановка у спортсмена даты последней тренировки.
+        /*
+        select rf.id1,tt.date,tt.time from ref_table rf
+ join trainig_table tt on rf.type_ref=1 and rf.id2=tt._id
+where rf.id2<>5
+order by rf.id1,tt.date desc ,tt.time  desc
+         */
 
         database.delete(DBHelper.REF_TABLE,"type_ref=2 and id1="+id,null);
         database.delete(DBHelper.REF_TABLE,"type_ref=1 and id2="+id,null);
@@ -336,11 +342,6 @@ public class DataBaseConnector {
     }
 
     public Cursor getSportsman(boolean mode){
-        /*
-        String sql="select sp._id,sp.sp_name,sp.phone,sp.comment,a.ci from SPORTSMAN sp\n" +
-                "   left join (select id1, count(1) as ci from REF_TABLE where type_ref=1\n" +
-                "   group by id1) as a on sp._id=a.id1 order by sp.sp_name";
-        */
         int m = (mode ? 1:0);
         String sql="select sp._id,sp.sp_name,sp.phone,sp.comment,a.ci,ab.sm,sp.last_date,sp.last_time,sp.used from SPORTSMAN sp\n" +
                 "  left join (select id1, count(1) as ci from REF_TABLE where type_ref=1   group by id1) as a on sp._id=a.id1 \n" +

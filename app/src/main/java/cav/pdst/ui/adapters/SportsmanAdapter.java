@@ -127,7 +127,6 @@ public class SportsmanAdapter extends ArrayAdapter<SportsmanModel> implements Fi
     */
 
     private class ViewHolder{
-        //TODO добавить елементы после построения модели
         public TextView mName;
         public TextView mPhone;
         public TextView mTraining;
