@@ -239,6 +239,8 @@ public class DataBaseConnector {
             }
             database.execSQL(sql);
         }
+        //TODO сдесь пеустановка у спортсмена даты последней тренировки.
+
         database.delete(DBHelper.REF_TABLE,"type_ref=2 and id1="+id,null);
         database.delete(DBHelper.REF_TABLE,"type_ref=1 and id2="+id,null);
         close();

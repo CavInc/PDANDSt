@@ -304,6 +304,7 @@ public class DataManager {
         mDB.close();
         return rec;
     }
+
     public ArrayList<TrainingModel> getTraining(int sp_id,Date selectedDate){
         ArrayList<TrainingModel> rec = new ArrayList<>();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");

@@ -1,5 +1,6 @@
 package cav.pdst.ui.adapters;
 
+import android.content.ClipData;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
@@ -19,16 +20,24 @@ import java.util.List;
 import cav.pdst.R;
 import cav.pdst.data.models.SportsmanModel;
 
-public class SportsmanAdapter extends ArrayAdapter<SportsmanModel>{
+
+//http://atrios.ru/%D0%B4%D0%BE%D0%B1%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-%D1%84%D0%B8%D0%BB%D1%8C%D1%82%D1%80%D0%B0-%D0%BA-%D0%B0%D0%B4%D0%B0%D0%BF%D1%82%D0%B5%D1%80%D1%83-arrayadapre/
+//https://stackoverflow.com/questions/19122848/custom-getfilter-in-custom-arrayadapter-in-android
+//https://www.survivingwithandroid.com/2012/10/android-listview-custom-filter-and.html
+//https://ru.stackoverflow.com/questions/410657/%D0%A4%D0%B8%D0%BB%D1%8C%D1%82%D1%80%D0%B0%D1%86%D0%B8%D1%8F-%D0%BA%D0%B0%D1%81%D1%82%D0%BE%D0%BC%D0%BD%D0%BE%D0%B3%D0%BE-listview-%D0%B8%D0%B7-searchview
+
+public class SportsmanAdapter extends ArrayAdapter<SportsmanModel> implements Filterable{
     private LayoutInflater mInflater;
     private int resLayout;
     private Context mContext;
+    private List<SportsmanModel> originalData;
 
     public SportsmanAdapter(Context context, int resource, List<SportsmanModel> objects) {
         super(context, resource, objects);
         mContext = context;
         resLayout = resource;
         mInflater = LayoutInflater.from(context);
+        originalData = objects;
     }
 
     @Override
@@ -81,18 +90,42 @@ public class SportsmanAdapter extends ArrayAdapter<SportsmanModel>{
     public Filter getFilter() {
         return new Filter() {
             @Override
-            protected FilterResults performFiltering(CharSequence charSequence) {
+            protected FilterResults performFiltering(CharSequence constraint) {
                 FilterResults results = new FilterResults();
+                // constraint - параметр фильтра переданный через атрибуты
+                if(constraint == null || constraint.length() == 0) {
+                    results.values = originalData;
+                    results.count = originalData.size();
+                } else {
+                    // создаём коллекцию, в которой будут храниться отфильтрованные результаты
+                    List newList = new ArrayList();
+                    // проходимся по коллекции
+                    for(SportsmanModel i : originalData) {
+                        if (i.toString().toUpperCase().startsWith(constraint.toString().toUpperCase())){
+                            newList.add(i);
+                        }
+                    }
+                    // возвращаем новую коллекцию
+                    results.values = newList;
+                    // и количество результатов
+                    results.count = newList.size();
+                }
                 return results;
             }
 
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-
+                if (filterResults != null && filterResults.count > 0) {
+                    originalData = (List<SportsmanModel>) filterResults.values;
+                    notifyDataSetChanged();
+                } else {
+                    notifyDataSetInvalidated();
+                }
             }
         };
     }
-*/
+    */
+
     private class ViewHolder{
         //TODO добавить елементы после построения модели
         public TextView mName;

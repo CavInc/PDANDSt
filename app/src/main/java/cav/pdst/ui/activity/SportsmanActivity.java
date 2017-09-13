@@ -155,26 +155,29 @@ public class SportsmanActivity extends AppCompatActivity implements NavigationVi
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                adapter.getFilter().filter(newText);
                 if (newText.length()==0){
-                    Log.d("SAA","Clear");
-                    updateUI(viewSP);
+                   // adapter.getFilter().filter(null);
+                   // adapter.notifyDataSetChanged();
+                   // adapter.notifyDataSetInvalidated();
+                   adapter = null;
+                   updateUI(viewSP);
+                }else {
+                    adapter.getFilter().filter(newText);
                 }
-                return false;
+                return true;
             }
         });
 
         MenuItemCompat.setOnActionExpandListener(searchItem, new MenuItemCompat.OnActionExpandListener(){
             @Override
             public boolean onMenuItemActionExpand(MenuItem item) {
-                Log.d("SAA","EXPOND");
                 return true;
             }
 
             @Override
             public boolean onMenuItemActionCollapse(MenuItem item) {
                 Log.d("SAA","COLLAPSE");
-                adapter.getFilter().filter(null);
+               // adapter.getFilter().filter(null);
                 adapter.notifyDataSetChanged();
                 return  true;
             }
