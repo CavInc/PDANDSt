@@ -559,7 +559,7 @@ order by rf.id1,tt.date desc ,tt.time  desc
     public Cursor getCloseNotUsedAbonement(String date){
         String sql="select ab._id,ab.sp_id,ab.pos_id,ab.end_date,sp.sp_name from abonement ab\n" +
                 " left join sportsman sp on ab.sp_id=sp._id "+
-                "where  '"+date+"'=date(ab.end_date,'-1 day') and (ab.count_training+ab.working)-(ab.used_training+ab.warning_count)<>0";
+                "where  '"+date+"'in (date(ab.end_date,'-1 day'),ab.end_date) and (ab.count_training+ab.working)-(ab.used_training+ab.warning_count)<>0";
         return  database.rawQuery(sql,null);
     }
 
