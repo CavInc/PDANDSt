@@ -84,19 +84,16 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         mAbonementCallback = (AbonementCallback) activity;
-        Log.d("SPA","ATTACH");
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         mAbonementCallback = null;
-        Log.d("SPA","DETACH");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
-        Log.d("SPA","ON CREATE VIRE");
         View rootView = inflater.inflate(R.layout.fragment_sp_abonement, container, false);
         mListView = (ListView) rootView.findViewById(R.id.sp_abom_list_view);
         mListView.setOnItemClickListener(this);

@@ -150,14 +150,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d(TAG,"RESUME");
         updateUI(0);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d(TAG,"START");
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.CALL_PHONE},ConstantManager.REQUEST_PHONE);

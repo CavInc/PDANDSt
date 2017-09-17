@@ -27,7 +27,6 @@ public class AlarmTaskReciver extends BroadcastReceiver {
         // an Intent broadcast.
         //throw new UnsupportedOperationException("Not yet implemented");
         mContext = context;
-        Log.d("ATR","ESH");
         mMsg = intent.getStringExtra(ConstantManager.ALARM_MSG);
         mId = intent.getIntExtra(ConstantManager.ALARM_ID,0);
         showNotification(context);

@@ -226,7 +226,6 @@ public class DataManager {
             int day = c.get(Calendar.DAY_OF_WEEK) - 1;
             if (day == 0 ) day=7;
             //day -=1;
-            Log.d(TAG,"DAY "+day);
             /*
             for (int i=c.get(Calendar.DAY_OF_MONTH);i<=last_day;i++) {
                 data.setDate(c.getTime());

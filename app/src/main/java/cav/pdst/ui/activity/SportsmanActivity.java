@@ -178,7 +178,6 @@ public class SportsmanActivity extends AppCompatActivity implements NavigationVi
 
             @Override
             public boolean onMenuItemActionCollapse(MenuItem item) {
-                Log.d("SAA","COLLAPSE");
                // adapter.getFilter().filter(null);
                 adapter.notifyDataSetChanged();
                 return  true;

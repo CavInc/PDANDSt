@@ -46,7 +46,6 @@ public class EditDeleteDialog extends DialogFragment implements View.OnClickList
     @Override
     public void onClick(View view) {
         int id= view.getId();
-        Log.d(TAG,String.valueOf(id));
         if (mListener != null) {
             mListener.onDialogItemClick(id);
         }

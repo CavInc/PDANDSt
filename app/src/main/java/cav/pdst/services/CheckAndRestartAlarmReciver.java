@@ -37,12 +37,10 @@ public class CheckAndRestartAlarmReciver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         // an Intent broadcast.
        // throw new UnsupportedOperationException("Not yet implemented");
-        Log.d("CAR","START RESIVER");
         mContext = context;
         model = mDataManager.getFutureCloseAbonement();
         // ставим нотификаторы в соотвествии с тем что вернули в модели
         for (AlarmAbonementModel l :model){
-            Log.d("CAR",l.getSportsmanName());
             showNotification(context,l);
         }
         if (model.size()!=0){

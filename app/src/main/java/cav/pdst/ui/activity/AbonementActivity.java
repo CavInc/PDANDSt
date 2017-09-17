@@ -197,7 +197,6 @@ public class AbonementActivity extends AppCompatActivity implements View.OnClick
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
             // номер позиции равен типу 0- абонемент 1- разовое занятие
-            Log.d(TAG,"POS "+position);
             mAbType = position;
             if (position==1) {
                 mCountTraining.setText("1");

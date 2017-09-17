@@ -50,7 +50,6 @@ public class SpInfoFragment extends Fragment implements CompoundButton.OnChecked
     private static boolean oneFrm = false;
 
     public static SpInfoFragment newInstance(SportsmanModel model,int mode) {
-        Log.d("SPF", "INSTANCE");
         Bundle args = new Bundle();
         args.putInt(MODE, mode);
         args.putParcelable(MODEL, model);
@@ -76,21 +75,18 @@ public class SpInfoFragment extends Fragment implements CompoundButton.OnChecked
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         mCallbacks = (Callbacks) activity;
-        Log.d("SPF","ATTACH");
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         mCallbacks  = null;
-        Log.d("SPF","DETACH INFO");
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        Log.d("SPF","CREATE");
         mDataManager = DataManager.getInstance();
         mode = getArguments().getInt(MODE);
         mSportsmanModel = new SportsmanModel();
@@ -149,24 +145,16 @@ public class SpInfoFragment extends Fragment implements CompoundButton.OnChecked
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Log.d("SPF","MENU CLICK");
         switch (item.getItemId()){
             case R.id.save_item:
                 return false;
             case R.id.edit_tr_item:
-                Log.d("SPF","ITEM CLICK");
                 this.mode = ConstantManager.EDIT_SPORTSMAN;
                 setFieldData();
                 changeMode(true);
                 return true;
         }
         return false;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.d("SPF","ON RESUME");
     }
 
 
@@ -204,7 +192,6 @@ public class SpInfoFragment extends Fragment implements CompoundButton.OnChecked
     }
 
     private void updateData(){
-        Log.d("SPF","UPDATE");
         mCallbacks.updateData(mSportsmanModel);
     }
 

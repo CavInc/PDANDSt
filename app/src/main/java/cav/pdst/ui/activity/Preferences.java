@@ -85,7 +85,6 @@ public class Preferences extends PreferenceActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        Log.d("PREF","Stop");
         if (pref!=null) {
             if (pref.getBoolean("alarm_start_flg", false)) {
                 mDataManager.getPreferensManager().setFirstStart(false);

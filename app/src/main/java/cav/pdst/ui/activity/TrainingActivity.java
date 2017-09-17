@@ -315,7 +315,6 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, final int position, long id) {
             SportsmanTrainingModel mx = (SportsmanTrainingModel) adapterView.getItemAtPosition(position);
-            Log.d(TAG,mx.getId()+" "+mx.getName()+" "+mx.isCheck());
             selSportspam = mx.getId();
             if (mx.getCount() == 0 && (!mx.isCheck())){
                 InfoDialogFragment dialog= new InfoDialogFragment();
@@ -343,7 +342,6 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
                 dialog.setTrainingOperationListener(new TrainigOperationFragment.TrainingOperationListener() {
                     @Override
                     public void onTrainingClickListener(int witch) {
-                        Log.d(TAG," ITEM "+witch);
                         mAdapter.getItem(position).setMode(witch);
 
                         /*

@@ -174,7 +174,6 @@ public class SportsmanDetailActivity extends AppCompatActivity implements SpInfo
 
         @Override
         public Fragment getItem(int position) {
-            Log.d("SPF","COUNT +"+this.getCount());
             switch (position){
                 case 0:
                     return SpInfoFragment.newInstance(mSportsmanModel,mode);

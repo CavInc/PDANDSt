@@ -95,7 +95,6 @@ public class Utils {
             minute = 8;
         }
 
-        Log.d(TAG,"SETALARM");
         Calendar c = Calendar.getInstance();
         c.add(Calendar.DATE,day_offset);
         //c.set(2017,8,23);
