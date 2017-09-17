@@ -225,7 +225,21 @@ public class DataBaseConnector {
         String sql;
         open();
         database.delete(DBHelper.TRAINING_TABLE,"_id="+id,null);
-        Cursor cursor = database.query(DBHelper.REF_TABLE,new String[]{"id2","type_link"},"type_ref=2 and id1="+id,null,null,null,null);
+
+        Cursor cursor = database.query(DBHelper.REF_TABLE,new String[]{"id1"},"type_ref=1 and id2="+id,null,null,null,null);
+        while (cursor.moveToNext()){
+            Cursor rx = database.rawQuery("select rf.id1,tt.date,tt.time from ref_table rf\n" +
+                    " join trainig_table tt on rf.type_ref=1 and rf.id2=tt._id\n" +
+                    "where rf.id2<>"+id+" and rf.id1="+cursor.getInt(0)+"\n" +
+                    "order by rf.id1,tt.date desc ,tt.time  desc\n" +
+                    "limit 1",null);
+            rx.moveToFirst();
+            sql = "update "+DBHelper.SPORTSMAN_TABLE+" set last_date='"+rx.getString(1)+"', last_time='"+rx.getString(2)+"' " +
+                    "where  _id="+rx.getInt(0);
+            database.execSQL(sql);
+        }
+
+        cursor = database.query(DBHelper.REF_TABLE,new String[]{"id2","type_link"},"type_ref=2 and id1="+id,null,null,null,null);
         while (cursor.moveToNext()){
             if (cursor.getInt(1) == ConstantManager.SPORTSMAN_MODE_WARNING){
                 sql = "update " + DBHelper.ABONEMENT_TABLE + " set warning_count=warning_count-1 " +
