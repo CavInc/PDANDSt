@@ -405,6 +405,17 @@ order by rf.id1,tt.date desc ,tt.time  desc
         database.delete(DBHelper.ABONEMENT_TABLE,"sp_id=-1",null);
         close();
     }
+    // проверяем есть ли тренировки на абонементе
+    public boolean isUseAbomenet(int id,int sportsman_id) {
+        String sql="select count(*) as ci from ABONEMENT\n" +
+                "where pos_id="+id+" and sp_id="+sportsman_id+" and used_training<>0";
+        open();
+        Cursor cursor = database.rawQuery(sql,null);
+        cursor.moveToFirst();
+        boolean ret = (cursor.getInt(0) !=0 ? true : false );
+        close();
+        return ret;
+    }
 
     public void addUpdateAbonement(AbonementModel model){
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");

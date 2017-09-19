@@ -204,8 +204,12 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
         dialog.setPositiveButton(R.string.dialog_yes, new DialogInterface.OnClickListener(){
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                mDataManager.delAbonememet(model.getId(),model.getSpId());
-                mAbonementAdapter.remove(model);
+                if (mDataManager.getDB().isUseAbomenet(model.getId(),model.getSpId())) {
+                    showInfoDialog();
+                } else {
+                    mDataManager.delAbonememet(model.getId(), model.getSpId());
+                    mAbonementAdapter.remove(model);
+                }
             }
         });
         dialog.setNegativeButton(R.string.dialog_no, null);
@@ -213,6 +217,15 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
         dialog.show();
 
         return true;
+    }
+
+    private void showInfoDialog(){
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this.getContext());
+        dialog.setTitle("Внимание !")
+                .setMessage("По данному абонементу есть тренировки ! Удаление запрещено !")
+                .setIcon(android.R.drawable.ic_dialog_info)
+                .setPositiveButton(R.string.dialog_yes,null).create();
+        dialog.show();
     }
 
     @Override
