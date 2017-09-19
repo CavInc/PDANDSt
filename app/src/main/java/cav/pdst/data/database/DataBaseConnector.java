@@ -408,7 +408,7 @@ order by rf.id1,tt.date desc ,tt.time  desc
     // проверяем есть ли тренировки на абонементе
     public boolean isUseAbomenet(int id,int sportsman_id) {
         String sql="select count(*) as ci from ABONEMENT\n" +
-                "where pos_id="+id+" and sp_id="+sportsman_id+" and used_training<>0";
+                "where pos_id="+id+" and sp_id="+sportsman_id+" and used_training+warning_count<>0";
         open();
         Cursor cursor = database.rawQuery(sql,null);
         cursor.moveToFirst();
