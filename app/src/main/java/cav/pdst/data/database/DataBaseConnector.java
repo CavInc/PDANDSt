@@ -378,6 +378,17 @@ order by rf.id1,tt.date desc ,tt.time  desc
         return database.rawQuery(sql,null);
     }
 
+    public boolean isUseSportsman(int id){
+        String sql = "select count(*) as ci FROM REF_TABLE rf\n" +
+                "where rf.type_ref=1 and rf.id1="+id;
+        open();
+        Cursor cursor = database.rawQuery(sql,null);
+        cursor.moveToFirst();
+        boolean ret = (cursor.getInt(0) != 0 ? true : false);
+        close();
+        return ret;
+    }
+
     // абонемент
 
     public Cursor getAbonement(int sportsman_id){

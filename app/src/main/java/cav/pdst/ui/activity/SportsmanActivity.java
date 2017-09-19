@@ -1,5 +1,6 @@
 package cav.pdst.ui.activity;
 
+import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -278,10 +279,19 @@ public class SportsmanActivity extends AppCompatActivity implements NavigationVi
     @Override
     public void onDialogItemClick(int selectItem) {
         if (selectItem==R.id.dialog_del_item) {
-            // удаляем
-            mDataManager.delSportsman(selId);
-            //TODO сделать удаление елемента из адаптера не трогая весь
-            updateUI(viewSP);
+            if (mDataManager.getDB().isUseSportsman(selId)) {
+                AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+                dialog.setTitle("Внимание !")
+                        .setMessage("По данному спортсмену есть тренировки ! Удаление запрещено !")
+                        .setIcon(android.R.drawable.ic_dialog_info)
+                        .setPositiveButton(R.string.dialog_yes,null).create();
+                dialog.show();
+            } else {
+                // удаляем
+                mDataManager.delSportsman(selId);
+                //TODO сделать удаление елемента из адаптера не трогая весь
+                updateUI(viewSP);
+            }
         }
         if (selectItem == R.id.dialog_edit_item){
             // редактируем
