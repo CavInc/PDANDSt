@@ -439,18 +439,22 @@ order by rf.id1,tt.date desc ,tt.time  desc
             values.put("_id",model.getAbonementId());
         }
         int ref_id = -1;
-        String sql="select ab._id,ab.warning_count from ABONEMENT ab\n" +
-                " left join (select id1,count(1) as ci from REF_TABLE rf\n" +
-                "      where rf.type_ref=3\n" +
-                "      group by id1) as a on ab.\"_id\"=a.id1 \n" +
-                "where ab.sp_id="+model.getSpId()+" and ab.end_date<'"+model.getEndDate()+"' and (ab.warning_count-COALESCE(a.ci,0,a.ci))<>0\n" +
-                "order by ab.end_date DESC\n" +
-                "limit 1";
-        Cursor cursor =database.rawQuery(sql,null);
-        while (cursor.moveToNext()) {
-            model.setWorking(cursor.getInt(1));
-            ref_id=cursor.getInt(0);
+        //
+        if (model.getAbonementId()==-1) {
+            String sql = "select ab._id,ab.warning_count from ABONEMENT ab\n" +
+                    " left join (select id1,count(1) as ci from REF_TABLE rf\n" +
+                    "      where rf.type_ref=3\n" +
+                    "      group by id1) as a on ab.\"_id\"=a.id1 \n" +
+                    "where ab.sp_id=" + model.getSpId() + " and ab.end_date<'" + model.getEndDate() + "' and (ab.warning_count-COALESCE(a.ci,0,a.ci))<>0\n" +
+                    "order by ab.end_date DESC\n" +
+                    "limit 1";
+            Cursor cursor = database.rawQuery(sql, null);
+            while (cursor.moveToNext()) {
+                model.setWorking(cursor.getInt(1));
+                ref_id = cursor.getInt(0);
+            }
         }
+        //
 
         values.put("sp_id",model.getSpId());
         values.put("pos_id",model.getId());
@@ -470,12 +474,14 @@ order by rf.id1,tt.date desc ,tt.time  desc
         }
         int rec_id = (int) database.insertWithOnConflict(DBHelper.ABONEMENT_TABLE,null,values,SQLiteDatabase.CONFLICT_REPLACE);
 
-        if (model.getWorking()!=0) {
-            values.clear();
-            values.put("type_ref", 3);
-            values.put("id1", ref_id); // откуда
-            values.put("id2", rec_id); // куда
-            database.insert(DBHelper.REF_TABLE,null,values);
+        if (model.getAbonementId()==-1) {
+            if (model.getWorking() != 0) {
+                values.clear();
+                values.put("type_ref", 3);
+                values.put("id1", ref_id); // откуда
+                values.put("id2", rec_id); // куда
+                database.insert(DBHelper.REF_TABLE, null, values);
+            }
         }
         close();
     }
