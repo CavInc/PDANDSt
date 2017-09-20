@@ -62,8 +62,13 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
 
     public static SpAbonementFragment newInstance(SportsmanModel model, int mode){
         Bundle args = new Bundle();
-        args.putSerializable(SPORTSMAN_ID,model.getId());
-        args.putString(SPORTSMAN_NAME,model.getName());
+        if (model != null) {
+            args.putSerializable(SPORTSMAN_ID, model.getId());
+            args.putString(SPORTSMAN_NAME, model.getName());
+        } else {
+            args.putSerializable(SPORTSMAN_ID,-1);
+            args.putString(SPORTSMAN_NAME,"");
+        }
         args.putSerializable(MODE,mode);
         SpAbonementFragment fragment = new SpAbonementFragment();
         fragment.setArguments(args);
