@@ -227,6 +227,7 @@ public class DataBaseConnector {
         database.delete(DBHelper.TRAINING_TABLE,"_id="+id,null);
 
         Cursor cursor = database.query(DBHelper.REF_TABLE,new String[]{"id1"},"type_ref=1 and id2="+id,null,null,null,null);
+
         while (cursor.moveToNext()){
             Cursor rx = database.rawQuery("select rf.id1,tt.date,tt.time from ref_table rf\n" +
                     " join trainig_table tt on rf.type_ref=1 and rf.id2=tt._id\n" +
@@ -234,9 +235,11 @@ public class DataBaseConnector {
                     "order by rf.id1,tt.date desc ,tt.time  desc\n" +
                     "limit 1",null);
             rx.moveToFirst();
-            sql = "update "+DBHelper.SPORTSMAN_TABLE+" set last_date='"+rx.getString(1)+"', last_time='"+rx.getString(2)+"' " +
-                    "where  _id="+rx.getInt(0);
-            database.execSQL(sql);
+            if (rx.getCount()!=0) {
+                sql = "update " + DBHelper.SPORTSMAN_TABLE + " set last_date='" + rx.getString(1) + "', last_time='" + rx.getString(2) + "' " +
+                        "where  _id=" + rx.getInt(0);
+                database.execSQL(sql);
+            }
         }
 
         cursor = database.query(DBHelper.REF_TABLE,new String[]{"id2","type_link"},"type_ref=2 and id1="+id,null,null,null,null);
