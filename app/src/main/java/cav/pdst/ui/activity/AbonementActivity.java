@@ -1,5 +1,6 @@
 package cav.pdst.ui.activity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -181,7 +182,7 @@ public class AbonementActivity extends AppCompatActivity implements View.OnClick
                 mAbonementModel.setDebitDate(Utils.getSteToDate(mDebitDate.getText().toString(), "dd.MM.yyyy HH:mm"));
             }
             if (mAbonementModel.getUsedTraining()>mAbonementModel.getCountTraining()){
-                //TODO Ругаться !!!!
+                showInfoDialog();
                 return;
             }
             answerIntent.putExtra(ConstantManager.AB_DETAIL_DATA, mAbonementModel);
@@ -189,6 +190,16 @@ public class AbonementActivity extends AppCompatActivity implements View.OnClick
         setResult(RESULT_OK,answerIntent);
 
        // mDataManager.getDB().getLastIndex();
+
+    }
+
+    private void showInfoDialog(){
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setTitle("Внимание !")
+                .setMessage("Нельзя поставить количество тренировок меньше использованного")
+                .setIcon(android.R.drawable.ic_dialog_info)
+                .setPositiveButton(R.string.dialog_yes,null);
+        dialog.show();
 
     }
 
