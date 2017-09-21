@@ -70,6 +70,7 @@ public class AbonementActivity extends AppCompatActivity implements View.OnClick
 
         mSpinner = (Spinner) findViewById(R.id.tv_spiner_type);
         ArrayAdapter<String> spinerAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,ab_type);
+        spinerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinner.setAdapter(spinerAdapter);
         mSpinner.setOnItemSelectedListener(mItemSelected);
 
