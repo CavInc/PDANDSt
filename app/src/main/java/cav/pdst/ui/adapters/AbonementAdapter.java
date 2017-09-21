@@ -79,7 +79,14 @@ public class AbonementAdapter extends ArrayAdapter<AbonementModel> {
         }else {
             holder.mAbType.setText("Разовое занятие");
         }
-        holder.mWorking.setText("Отработки : "+record.getWorking());
+
+        if (record.getWorking() != 0) {
+            holder.mWorking.setText("Отработки : " + record.getWorking());
+            holder.mWorking.setVisibility(View.VISIBLE);
+        }else {
+            holder.mWorking.setVisibility(View.GONE);
+        }
+
         if (record.getWarning() != 0){
             holder.mWarning.setText("Предупреждения : "+record.getWarning());
             holder.mWarning.setVisibility(View.VISIBLE);
