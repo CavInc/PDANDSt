@@ -4,6 +4,7 @@ public class TestAbonementModel {
     private int mId;
     private int mWorking; // отработки
 
+
     public TestAbonementModel(int id, int working) {
         mId = id;
         mWorking = working;

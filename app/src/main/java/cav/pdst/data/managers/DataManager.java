@@ -425,7 +425,8 @@ public class DataManager {
                         cursor.getInt(cursor.getColumnIndex("used_training")),
                         cursor.getInt(cursor.getColumnIndex("working")),
                         cursor.getInt(cursor.getColumnIndex("warning_count")),
-                        cursor.getFloat(cursor.getColumnIndex("debt")),ddebit));
+                        cursor.getFloat(cursor.getColumnIndex("debt")),ddebit,
+                        cursor.getInt(cursor.getColumnIndex("used_working"))));
             } catch (ParseException e) {
                 e.printStackTrace();
             }

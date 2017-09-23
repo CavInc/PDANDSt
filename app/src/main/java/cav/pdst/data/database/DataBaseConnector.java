@@ -134,8 +134,9 @@ public class DataBaseConnector {
                         "where _id=" + mx.getAbonement();
                 database.execSQL(sql);
             }
+            // отработка
             if (mx.getMode() == 3){
-                String sql = "update " + DBHelper.ABONEMENT_TABLE + " set working=working-1 " +
+                String sql = "update " + DBHelper.ABONEMENT_TABLE + " set used_working=used_working+1 " +
                         "where _id=" + mx.getAbonement();
                 database.execSQL(sql);
             }
@@ -179,7 +180,7 @@ public class DataBaseConnector {
                 sql = "update " + DBHelper.ABONEMENT_TABLE + " set warning_count=warning_count-1 " +
                         "where _id=" + cursor.getString(0);
             } else if (cursor.getInt(1) == ConstantManager.SPORTSMAN_MODE_WORKINGOFF){
-                sql = "update " + DBHelper.ABONEMENT_TABLE + " set working=working+1 " +
+                sql = "update " + DBHelper.ABONEMENT_TABLE + " set used_working=used_working-1 " +
                         "where _id=" + cursor.getString(0);
             } else {
                 sql = "update " + DBHelper.ABONEMENT_TABLE + " set used_training=used_training-1 " +
@@ -209,7 +210,7 @@ public class DataBaseConnector {
                 sql = "update " + DBHelper.ABONEMENT_TABLE + " set warning_count=warning_count+1 " +
                         "where _id=" + mx.getAbonement();
             }else if (mx.getMode() == ConstantManager.SPORTSMAN_MODE_WORKINGOFF){
-                sql = "update " + DBHelper.ABONEMENT_TABLE + " set working=working-1 " +
+                sql = "update " + DBHelper.ABONEMENT_TABLE + " set used_working=used_working+1 " +
                         "where _id=" + mx.getAbonement();
             }else {
                 sql = "update " + DBHelper.ABONEMENT_TABLE + " set used_training=used_training+1 " +
@@ -248,7 +249,7 @@ public class DataBaseConnector {
                 sql = "update " + DBHelper.ABONEMENT_TABLE + " set warning_count=warning_count-1 " +
                         "where _id=" + cursor.getInt(0);
             }else if (cursor.getInt(1) == ConstantManager.SPORTSMAN_MODE_WORKINGOFF){
-                sql = "update " + DBHelper.ABONEMENT_TABLE + " set working=working-1 " +
+                sql = "update " + DBHelper.ABONEMENT_TABLE + " set used_working=used_working-1 " +
                         "where _id=" + cursor.getInt(0);
             }else {
                 sql = "update " + DBHelper.ABONEMENT_TABLE + " set used_training=used_training-1 " +
@@ -273,12 +274,12 @@ order by rf.id1,tt.date desc ,tt.time  desc
         String sql = null;
         if (group_id == -1) {
             sql = "select sp._id,sp.sp_name,a.ci from SPORTSMAN sp " +
-                    " left join (select sp_id,sum((count_training+working)-(used_training+warning_count)) as ci from ABONEMENT group by sp_id) as a on sp._id= a.sp_id "+
+                    " left join (select sp_id,sum((count_training+(working-used_working))-(used_training+warning_count)) as ci from ABONEMENT group by sp_id) as a on sp._id= a.sp_id "+
                     " where sp.used=1 "+
                     " order by sp.sp_name";
         }else{
             sql="select sp._id,sp.sp_name,a.ci from SPORTSMAN sp \n" +
-                    " left join (select sp_id,sum((count_training+working)-(used_training+warning_count)) as ci from ABONEMENT group by sp_id) as a on sp._id= a.sp_id \n" +
+                    " left join (select sp_id,sum((count_training+(working-used_working))-(used_training+warning_count)) as ci from ABONEMENT group by sp_id) as a on sp._id= a.sp_id \n" +
                     "  join REF_TABLE rf on rf.type_ref=0 and sp._id=rf.id1 \n" +
                     " where rf.id2=" +group_id+" and sp.used=1"+
                     " order by sp.sp_name";
@@ -295,7 +296,7 @@ order by rf.id1,tt.date desc ,tt.time  desc
                     "    left join (select rf.id1,rf.id2,rf.type_link,ab.sp_id from REF_TABLE rf \n" +
                     "                    left join ABONEMENT ab on rf.id2= ab._id\n" +
                     "                    where rf.type_ref=2 and rf.id1="+training_id+") as tb on spt.id2=tb.id1 and spt._id=tb.sp_id\n" +
-                    "    left join (select sp_id,sum((count_training+working)-(used_training+warning_count)) as ci from ABONEMENT group by sp_id) as a on spt._id= a.sp_id\n" +
+                    "    left join (select sp_id,sum((count_training+(working-used_working))-(used_training+warning_count)) as ci from ABONEMENT group by sp_id) as a on spt._id= a.sp_id\n" +
                     " where spt.used=1 "+
                     " order by spt.sp_name";
         }
@@ -362,7 +363,7 @@ order by rf.id1,tt.date desc ,tt.time  desc
         int m = (mode ? 1:0);
         String sql="select sp._id,sp.sp_name,sp.phone,sp.comment,a.ci,ab.sm,sp.last_date,sp.last_time,sp.used from SPORTSMAN sp\n" +
                 "  left join (select id1, count(1) as ci from REF_TABLE where type_ref=1   group by id1) as a on sp._id=a.id1 \n" +
-                "  left join (select sp_id,sum((count_training+working)-(used_training+warning_count)) as sm from ABONEMENT "+
+                "  left join (select sp_id,sum((count_training+(working-used_working))-(used_training+warning_count)) as sm from ABONEMENT "+
                 "where count_training-used_training<>0 group by sp_id) as ab "+
                 "on sp._id=ab.sp_id\n" +
                 "where used="+m+"\n"+
@@ -373,7 +374,7 @@ order by rf.id1,tt.date desc ,tt.time  desc
     public Cursor getSportsman(int id){
         String sql="select sp._id,sp.sp_name,sp.phone,sp.comment,a.ci,ab.sm,sp.last_date,sp.last_time from SPORTSMAN sp\n" +
                 "  left join (select id1, count(1) as ci from REF_TABLE where type_ref=1   group by id1) as a on sp._id=a.id1 \n" +
-                "  left join (select sp_id,sum((count_training+working)-(used_training+warning_count)) as sm from ABONEMENT "+
+                "  left join (select sp_id,sum((count_training+(working-used_working))-(used_training+warning_count)) as sm from ABONEMENT "+
                 "where count_training-used_training<>0 group by sp_id) as ab "+
                 "on sp._id=ab.sp_id\n" +
                 " where _id="+id+" "+
@@ -398,7 +399,7 @@ order by rf.id1,tt.date desc ,tt.time  desc
         return database.query(DBHelper.ABONEMENT_TABLE,
                 new String[]{"_id","sp_id","pos_id","buy_date","start_date","end_date",
                         "type_abonement","pay","count_training","comment","used_training","working"
-                        ,"warning_count","debt","alarm_date"},
+                        ,"warning_count","debt","alarm_date","used_working"},
                 "sp_id="+sportsman_id,null,null,null,"pos_id");
     }
 
@@ -422,7 +423,7 @@ order by rf.id1,tt.date desc ,tt.time  desc
     // проверяем есть ли тренировки на абонементе
     public boolean isUseAbomenet(int id,int sportsman_id) {
         String sql="select count(*) as ci from ABONEMENT\n" +
-                "where pos_id="+id+" and sp_id="+sportsman_id+" and used_training+warning_count<>0";
+                "where pos_id="+id+" and sp_id="+sportsman_id+" and used_training+used_working+warning_count<>0";
         open();
         Cursor cursor = database.rawQuery(sql,null);
         cursor.moveToFirst();
@@ -510,8 +511,8 @@ order by rf.id1,tt.date desc ,tt.time  desc
     }
 
     public Cursor getAbonementInDate(int sp_id,String date){
-        String sql="select _id,working from ABONEMENT \n" +
-                   " where sp_id="+sp_id+" and start_date<='"+date+"' and end_date>='"+date+"' and ((count_training+working)-(used_training+warning_count))<>0"+
+        String sql="select _id,working,used_working from ABONEMENT \n" +
+                   " where sp_id="+sp_id+" and start_date<='"+date+"' and end_date>='"+date+"' and ((count_training+(working-used_working))-(used_training+warning_count))<>0"+
                 " order by pos_id limit 1";
 
         //System.out.println(sql);
@@ -604,7 +605,7 @@ order by rf.id1,tt.date desc ,tt.time  desc
     public Cursor getCloseNotUsedAbonement(String date){
         String sql="select ab._id,ab.sp_id,ab.pos_id,ab.end_date,sp.sp_name from abonement ab\n" +
                 " left join sportsman sp on ab.sp_id=sp._id "+
-                "where  '"+date+"'in (date(ab.end_date,'-1 day'),ab.end_date) and (ab.count_training+ab.working)-(ab.used_training+ab.warning_count)<>0";
+                "where  '"+date+"'in (date(ab.end_date,'-1 day'),ab.end_date) and (ab.count_training+(ab.working-ab.used_working))-(ab.used_training+ab.warning_count)<>0";
         return  database.rawQuery(sql,null);
     }
 

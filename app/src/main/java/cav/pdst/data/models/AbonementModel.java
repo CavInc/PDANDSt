@@ -26,7 +26,7 @@ public class AbonementModel implements Parcelable {
 
     public AbonementModel(int id,int pos_id, int spId, Date createDate, Date startDate, Date endDate,
                           int countTraining, float pay,int type, String comment,
-                          int usedTraining,int working,int warning,float debit,Date debitDate) {
+                          int usedTraining,int working,int warning,float debit,Date debitDate,int usedWorking) {
         mAbonementId = id;
         mId = pos_id;
         mSpId = spId;
@@ -42,6 +42,7 @@ public class AbonementModel implements Parcelable {
         mWarning = warning;
         mDebit = debit;
         mDebitDate =debitDate;
+        mUsedWorking = usedWorking;
     }
 
 
