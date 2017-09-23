@@ -157,8 +157,7 @@ public class RateActivity extends AppCompatActivity {
             pay.setText(String.valueOf(cursor.getFloat(cursor.getColumnIndex("summ"))));
             TextView id = new TextView(this);
             id.setText(String.valueOf(cursor.getInt(cursor.getColumnIndex("_id"))));
-            //TextView comment = new TextView(this);
-            //comment.setText(cursor.getString(cursor.getColumnIndex("comment")));
+
             TextView comment = new TextView(this);
             comment.setText(cursor.getString(cursor.getColumnIndex("comment")));
             comment.setPadding(8,0,0,0);

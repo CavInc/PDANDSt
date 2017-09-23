@@ -66,7 +66,7 @@ public class AbonementAdapter extends ArrayAdapter<AbonementModel> {
         holder.mPay.setText(String.valueOf(record.getPay()));
         holder.mTraining.setText("Использовано: "+record.getUsedTraining()+
                 " из "+record.getCountTraining()+
-                ", Доступно: "+((record.getCountTraining()+record.getWorking())-(record.getUsedTraining()+record.getWarning())));
+                ", Доступно: "+((record.getCountTraining())-(record.getUsedTraining()+record.getWarning())));
 
         if ((record.getCountTraining()+record.getWorking())-(record.getUsedTraining()+record.getWarning())!=0) {
             holder.mPrime.setText("Доступны тренировки");
@@ -81,7 +81,8 @@ public class AbonementAdapter extends ArrayAdapter<AbonementModel> {
         }
 
         if (record.getWorking() != 0) {
-            holder.mWorking.setText("Отработки : " + record.getWorking());
+            holder.mWorking.setText("Отработки : " + record.getWorking()
+                    +" / Использовано :"+record.getUsedWorking());
             holder.mWorking.setVisibility(View.VISIBLE);
         }else {
             holder.mWorking.setVisibility(View.GONE);
