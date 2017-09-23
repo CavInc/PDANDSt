@@ -106,6 +106,7 @@ public class RateActivity extends AppCompatActivity {
         //mTableLayout.setStretchAllColumns(true);
         mTableLayout.setColumnStretchable(0,true);
         mTableLayout.setColumnStretchable(1,true);
+        mTableLayout.setColumnStretchable(3,true);
 
 
         TableRow head = new TableRow(this);
@@ -124,9 +125,15 @@ public class RateActivity extends AppCompatActivity {
         h_sum.setTextColor(Color.WHITE);
         h_sum.setGravity(Gravity.CENTER);
 
+        TextView h_comment = new TextView(this);
+        h_comment.setText("Прим...");
+        h_comment.setTextColor(Color.WHITE);
+        h_comment.setGravity(Gravity.CENTER);
+
         head.addView(h_date);
         head.addView(h_sp);
         head.addView(h_sum);
+        head.addView(h_comment);
         //head.addView(h_id);
         head.setBackgroundColor(ContextCompat.getColor(this,R.color.app_green));
         mTableLayout.addView(head);
@@ -152,10 +159,14 @@ public class RateActivity extends AppCompatActivity {
             id.setText(String.valueOf(cursor.getInt(cursor.getColumnIndex("_id"))));
             //TextView comment = new TextView(this);
             //comment.setText(cursor.getString(cursor.getColumnIndex("comment")));
+            TextView comment = new TextView(this);
+            comment.setText(cursor.getString(cursor.getColumnIndex("comment")));
+            comment.setPadding(8,0,0,0);
 
             row.addView(dt);
             row.addView(sp);
             row.addView(pay);
+            row.addView(comment);
             row.addView(id);
             //row.addView(comment);
             row.setOnLongClickListener(mRowClickListener);

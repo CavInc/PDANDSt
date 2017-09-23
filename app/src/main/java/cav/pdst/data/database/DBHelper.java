@@ -78,7 +78,8 @@ public class DBHelper extends SQLiteOpenHelper {
                     " pay numeric,"+"" +
                     " count_training integer,"+
                     " used_training integer default 0,"+
-                    " working integer default 0,"+
+                    " working integer default 0,"+ // отработки
+                    " used_working integer default 0,"+ // использованные отработки
                     " warning_count integer default 0,"+
                     " debt numeric default 0,"+
                     " alarm_date text,"+
