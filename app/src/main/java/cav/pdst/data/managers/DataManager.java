@@ -152,7 +152,7 @@ public class DataManager {
                     cursor.getInt(cursor.getColumnIndex("_id")),
                     cursor.getString(cursor.getColumnIndex("sp_name")),
                     cursor.getString(cursor.getColumnIndex("phone")),
-                    cursor.getInt(cursor.getColumnIndex("ci")),
+                    cursor.getInt(cursor.getColumnIndex("ci")),  // количество тренировок
                     cursor.getInt(cursor.getColumnIndex("sm")),
                     cursor.getString(cursor.getColumnIndex("comment")),
                     cursor.getString(cursor.getColumnIndex("last_date")),
