@@ -180,7 +180,7 @@ public class RateActivity extends AppCompatActivity {
         @Override
         public boolean onLongClick(View view) {
             TableRow row = (TableRow) view;
-            final int row_id = Integer.valueOf ((String) ((TextView) row.getVirtualChildAt(3)).getText());
+            final int row_id = Integer.valueOf ((String) ((TextView) row.getVirtualChildAt(4)).getText());
             final String type_name = ((TextView) row.getVirtualChildAt(1)).getText().toString();
 
             EditDeleteDialog dialog = EditDeleteDialog.newInstance();
