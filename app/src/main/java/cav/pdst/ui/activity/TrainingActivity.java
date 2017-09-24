@@ -338,7 +338,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
                 }
                 //mLinkSpABTrModel = new LinkSpABTrModel(mx.getId(),ab);
 
-                TrainigOperationFragment dialog = TrainigOperationFragment.newInstance(ab.getWorking());
+                TrainigOperationFragment dialog = TrainigOperationFragment.newInstance(ab.getWorking(),ab.getTraining());
                 dialog.setTrainingOperationListener(new TrainigOperationFragment.TrainingOperationListener() {
                     @Override
                     public void onTrainingClickListener(int witch) {
@@ -389,13 +389,14 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         mDataManager.getDB().open();
         Cursor cursor = mDataManager.getDB().getAbonementInDate(id,format.format(date));
         while (cursor.moveToNext()){
-            rec.add(new TestAbonementModel(cursor.getInt(0),cursor.getInt(1)-cursor.getInt(2)));
+            rec.add(new TestAbonementModel(cursor.getInt(0),cursor.getInt(1)-cursor.getInt(2),
+                    cursor.getInt(3)));
         }
         mDataManager.getDB().close();
         if (rec.size()!=0) {
             return rec.get(0);
         }else {
-            return new TestAbonementModel(-1,0);
+            return new TestAbonementModel(-1,0,0);
         }
     }
 

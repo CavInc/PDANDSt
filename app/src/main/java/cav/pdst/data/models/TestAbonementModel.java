@@ -3,11 +3,13 @@ package cav.pdst.data.models;
 public class TestAbonementModel {
     private int mId;
     private int mWorking; // отработки
+    private int mTraining; // тренировки
 
 
-    public TestAbonementModel(int id, int working) {
+    public TestAbonementModel(int id, int working,int training) {
         mId = id;
         mWorking = working;
+        mTraining = training;
     }
 
     public int getId() {
@@ -16,5 +18,9 @@ public class TestAbonementModel {
 
     public int getWorking() {
         return mWorking;
+    }
+
+    public int getTraining() {
+        return mTraining;
     }
 }

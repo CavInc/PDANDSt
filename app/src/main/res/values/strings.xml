@@ -32,4 +32,10 @@
         <item>Предупреждение</item>
     </string-array>
 
+    <string-array name="training_operation_no_training">
+        <item>Пропуск</item>
+        <item>Предупреждение</item>
+        <item>Отработка</item>
+    </string-array>
+
 </resources>

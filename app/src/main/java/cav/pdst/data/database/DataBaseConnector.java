@@ -511,7 +511,7 @@ order by rf.id1,tt.date desc ,tt.time  desc
     }
 
     public Cursor getAbonementInDate(int sp_id,String date){
-        String sql="select _id,working,used_working from ABONEMENT \n" +
+        String sql="select _id,working,used_working,(count_training)-(used_training+warning_count) as trainint from ABONEMENT \n" +
                    " where sp_id="+sp_id+" and start_date<='"+date+"' and end_date>='"+date+"' and ((count_training+(working-used_working))-(used_training+warning_count))<>0"+
                 " order by pos_id limit 1";
 
