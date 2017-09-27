@@ -129,6 +129,7 @@ public class SportsmanActivity extends AppCompatActivity implements NavigationVi
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.sportsman_menu, menu);
 
+        /*
         ImageButton btnToolbarButton = null;
         try {
             Field field = mToolbar.getClass().getDeclaredField("mNavButtonView");
@@ -139,6 +140,7 @@ public class SportsmanActivity extends AppCompatActivity implements NavigationVi
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
+        */
 
         searchItem = menu.findItem(R.id.sp_menu_search);
         SearchView searchView = (SearchView) searchItem.getActionView();

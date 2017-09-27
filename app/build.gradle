@@ -19,7 +19,7 @@ android {
             versionNameSuffix "-debug"
         }
         release {
-            minifyEnabled true
+            minifyEnabled false
             shrinkResources true
             zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -33,5 +33,4 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
     compile 'com.prolificinteractive:material-calendarview:1.4.3'
-
 }
