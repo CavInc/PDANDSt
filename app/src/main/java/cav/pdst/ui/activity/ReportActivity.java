@@ -30,7 +30,6 @@ import cav.pdst.utils.SwipeTouchListener;
 
 public class ReportActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,View.OnClickListener,
         DatePickerFragment.OnDateGetListener {
-    private static final String TAG = "RA";
     private final int START_DATE = 0;
     private final int END_DATE = 1;
 

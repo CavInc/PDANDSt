@@ -540,7 +540,7 @@ order by rf.id1,tt.date desc ,tt.time  desc
     public Cursor getDohodDetail(String sdate,String edate){
         String sql="select sp.sp_name,ab.comment,ab.pay,ab.start_date,ab.end_date from ABONEMENT ab\n" +
                 " left join SPORTSMAN sp on ab.sp_id=sp._id\n" +
-                "where ab.start_date>='"+sdate+"' and ab.end_date<='"+edate+"'\n" +
+                "where ab.buy_date>='"+sdate+"' and ab.buy_date<='"+edate+"'\n" +
                 "order by sp.sp_name";
         return database.rawQuery(sql,null);
     }
