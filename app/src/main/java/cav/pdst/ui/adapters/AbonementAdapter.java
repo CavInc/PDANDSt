@@ -68,7 +68,7 @@ public class AbonementAdapter extends ArrayAdapter<AbonementModel> {
                 " из "+record.getCountTraining()+
                 ", Доступно: "+((record.getCountTraining())-(record.getUsedTraining()+record.getWarning())));
 
-        if ((record.getCountTraining()+record.getWorking())-(record.getUsedTraining()+record.getWarning())!=0) {
+        if ((record.getCountTraining()+(record.getWorking()-record.getUsedWorking()))-(record.getUsedTraining()+record.getWarning())!=0) {
             holder.mPrime.setText("Доступны тренировки");
             holder.mPrime.setTextColor(ContextCompat.getColor(getContext(),R.color.app_green));
         } else {
