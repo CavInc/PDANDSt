@@ -332,6 +332,34 @@ public class DataManager {
         return rec;
     }
 
+    public ArrayList<TrainingModel> getTraining(int ab_id){
+        ArrayList<TrainingModel> rec = new ArrayList<>();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        mDB.open();
+        Cursor cursor = mDB.getTraining(ab_id);
+        while (cursor.moveToNext()){
+            int type_rec = ConstantManager.ONE;
+            if (cursor.getInt(cursor.getColumnIndex("count_item"))>1) {
+                type_rec = ConstantManager.GROUP;
+            } else {
+                type_rec = ConstantManager.ONE;
+            }
+            try {
+                rec.add(new TrainingModel(cursor.getInt(cursor.getColumnIndex("_id")),
+                        cursor.getString(cursor.getColumnIndex("training_name")),type_rec,
+                        cursor.getInt(cursor.getColumnIndex("count_item")),
+                        format.parse(cursor.getString(cursor.getColumnIndex("date"))),
+                        cursor.getString(cursor.getColumnIndex("time")),
+                        cursor.getInt(cursor.getColumnIndex("abid")),
+                        cursor.getInt(cursor.getColumnIndex("type_link"))));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        mDB.close();
+        return rec;
+    }
+
     public ArrayList<Date> getTrainingDay(){
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         ArrayList<Date> rec= new ArrayList<>();

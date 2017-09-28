@@ -316,6 +316,16 @@ order by rf.id1,tt.date desc ,tt.time  desc
                 " where  rf.type_ref=1 and rf.id1="+sp_id+" and tt.date='"+selectDate+"' order by tt.date desc ,tt.time desc";
         return database.rawQuery(sql,null);
     }
+
+    public Cursor getTraining(int ab_id){
+        String sql="select tt._id,tt.training_name,tt.count_item,tt.date,tt.time,ab.pos_id as abid,rf.type_link,tt.repeat_training from REF_TABLE rf\n" +
+                " left join TRAINIG_TABLE tt on rf.id1=tt.\"_id\"\n" +
+                " join ABONEMENT ab on rf.id2=ab._id\n" +
+                "where rf.type_ref=2 and rf.id2="+ab_id+"\n" +
+                "order by tt.date desc ,tt.time desc";
+        return database.rawQuery(sql,null);
+    }
+
     //TODO возможно следует передавать дату
     public Cursor getDateTraining(){
         String sql="select distinct date from TRAINIG_TABLE order by date;";

@@ -80,9 +80,17 @@
         android:text="Потрачено"
         android:layout_marginBottom="16dp"/>
 
+        <View
+            android:id="@+id/ab_selector"
+            android:layout_below="@id/ab_prime"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/black"
+            android:layout_marginBottom="8dp"/>
+
         <ListView
             android:id="@+id/abonement_info_lv"
-            android:layout_below="@id/ab_prime"
+            android:layout_below="@id/ab_selector"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 

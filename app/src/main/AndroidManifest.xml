@@ -98,7 +98,8 @@
 
         <activity android:name=".ui.activity.EditRateTypeActivity">
         </activity>
-        <activity android:name=".ui.activity.AbonementInfoActivity">
+        <activity android:name=".ui.activity.AbonementInfoActivity"
+            android:label="Информация о абонементе">
         </activity>
     </application>
 
