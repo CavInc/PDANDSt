@@ -60,7 +60,7 @@ public class AbonementAdapter extends ArrayAdapter<AbonementModel> {
         AbonementModel record = getItem(position);
 
         holder.mNum.setText(String.valueOf(record.getId()));
-        holder.mCreateDate.setText(mContext.getString(R.string.create_date)+":"+mFormat.format(record.getCreateDate()));
+        holder.mCreateDate.setText(mContext.getString(R.string.create_date)+": "+mFormat.format(record.getCreateDate()));
         holder.mStartDate.setText(mFormat.format(record.getStartDate()));
         holder.mEndDate.setText(mFormat.format(record.getEndDate()));
         holder.mPay.setText(String.valueOf(record.getPay()));
