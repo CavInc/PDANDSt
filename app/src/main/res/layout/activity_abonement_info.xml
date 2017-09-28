@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="cav.pdst.ui.activity.AbonementInfoActivity">
+
+    <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="16dp">
+    <TextView
+        android:id="@+id/ab_num_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Номер абонемента :"/>
+    <TextView
+        android:id="@+id/ab_num_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="000"
+        android:gravity="right"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/ab_num_text"/>
+    <TextView
+        android:id="@+id/ab_create_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ab_num_text"
+        android:text="@string/create_date"
+        android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/ab_start_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ab_create_date"
+        android:text="начало"/>
+    <TextView
+        android:id="@+id/ab_end_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/ab_create_date"
+        android:text="конец"/>
+    <TextView
+        android:id="@+id/ab_training"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ab_start_date"
+        android:text="Использовано 0 , Доступно 0"/>
+    <TextView
+        android:id="@+id/ab_pay_summ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ab_end_date"
+        android:layout_alignParentRight="true"
+        android:text="99999"/>
+    <TextView
+        android:id="@+id/ab_outworking"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ab_training"/>
+    <TextView
+        android:id="@+id/ab_warning"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ab_outworking"
+        android:visibility="gone"/>
+    <TextView
+        android:id="@+id/ab_prime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ab_warning"
+        android:text="Потрачено"/>
+
+        <ListView
+            android:id="@+id/abonement_info_lv"
+            android:layout_below="@id/ab_prime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </ListView>
+    </RelativeLayout>
+
+
+
+
+
+</android.support.design.widget.CoordinatorLayout>
