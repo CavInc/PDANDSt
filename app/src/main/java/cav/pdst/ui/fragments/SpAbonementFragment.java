@@ -28,6 +28,7 @@ import cav.pdst.data.models.AbonementModel;
 import cav.pdst.data.models.SportsmanModel;
 import cav.pdst.services.AlarmTaskReciver;
 import cav.pdst.ui.activity.AbonementActivity;
+import cav.pdst.ui.activity.AbonementInfoActivity;
 import cav.pdst.ui.adapters.AbonementAdapter;
 import cav.pdst.utils.ConstantManager;
 import cav.pdst.utils.Utils;
@@ -162,17 +163,22 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
         final AbonementModel model = (AbonementModel) adapterView.getItemAtPosition(position);
         int lmode = ConstantManager.VIEW_ABONEMENT;
-        Intent intent = new Intent(SpAbonementFragment.this.getContext(), AbonementActivity.class);
-        intent.putExtra(ConstantManager.AB_DETAIL_DATA,model);
+
+        Intent intent = null;
         switch (mode){
             case ConstantManager.EDIT_SPORTSMAN:
+                intent = new Intent(SpAbonementFragment.this.getContext(), AbonementActivity.class);
+                intent.putExtra(ConstantManager.AB_DETAIL_DATA,model);
                 lmode = ConstantManager.EDIT_ABONEMENT;
                 intent.putExtra(ConstantManager.MODE_ABONEMENT,ConstantManager.EDIT_ABONEMENT);
                 break;
             case ConstantManager.VIEW_SPORTSMAN:
+                intent = new Intent(SpAbonementFragment.this.getContext(), AbonementInfoActivity.class);
+                intent.putExtra(ConstantManager.AB_DETAIL_DATA,model);
                 lmode = ConstantManager.VIEW_ABONEMENT;
         }
         intent.putExtra(ConstantManager.MODE_ABONEMENT,lmode);
+
         if (lmode == ConstantManager.VIEW_ABONEMENT) {
             startActivity(intent);
         }else {

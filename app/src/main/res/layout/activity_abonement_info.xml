@@ -64,7 +64,8 @@
         android:id="@+id/ab_outworking"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ab_training"/>
+        android:layout_below="@+id/ab_training"
+        android:visibility="gone"/>
     <TextView
         android:id="@+id/ab_warning"
         android:layout_width="match_parent"
@@ -76,7 +77,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/ab_warning"
-        android:text="Потрачено"/>
+        android:text="Потрачено"
+        android:layout_marginBottom="16dp"/>
 
         <ListView
             android:id="@+id/abonement_info_lv"
