@@ -68,16 +68,24 @@ public class SportsmanAdapter extends ArrayAdapter<SportsmanModel> implements Fi
             holder.mAbCount.setTextColor(ContextCompat.getColor(getContext(),R.color.app_red));
         }
         holder.mTraining.setText("Тренировки: "+record.getTrainingAll()+" / ");
-        if (!record.getLastDate().equals("2010-01-01")){
-            String l = "";
+
+        String time = record.getLastTime();
+        String l = record.getLastDate();
+
+        if (!l.equals("2010-01-01")){
+            l = "";
             try {
                 l= new SimpleDateFormat("E dd.MM.yyyy").format(new SimpleDateFormat("yyyy-MM-dd").parse(record.getLastDate()));
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-
-            holder.mLastTraining.setText(mContext.getString(R.string.last_training_data)+" "+l+" "+record.getLastTime());
+        } else {
+            l = "";
+            time = "";
         }
+
+        holder.mLastTraining.setText(mContext.getString(R.string.last_training_data)+" "+l+" "+time);
+
         return row;
     }
 
