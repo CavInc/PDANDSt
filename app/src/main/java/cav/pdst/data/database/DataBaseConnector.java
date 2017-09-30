@@ -153,7 +153,8 @@ public class DataBaseConnector {
             value.clear();
             value.put("last_date",cursor.getString(cursor.getColumnIndex("date")));
             value.put("last_time",cursor.getString(cursor.getColumnIndex("time")));
-            database.update(DBHelper.SPORTSMAN_TABLE,value,"_id="+cursor.getInt(0),null);
+            database.update(DBHelper.SPORTSMAN_TABLE,value,
+                    "_id="+cursor.getInt(0),null);
         }
 
        close();
@@ -516,7 +517,7 @@ order by rf.id1,tt.date desc ,tt.time  desc
         String sql="select sp._id,tt.date,tt.time from TRAINIG_TABLE tt\n" +
                 " left join REF_TABLE rf on rf.type_ref=1 and tt._id=rf.id2\n" +
                 " left join SPORTSMAN sp on rf.id1=sp._id\n" +
-                " where tt._id="+trainig+" and (tt.date>sp.last_date) and (tt.time>sp.last_time)";
+                " where tt._id="+trainig+" and ((tt.date>sp.last_date) or (tt.date=sp.last_date and tt.time>sp.last_time))";
         return database.rawQuery(sql,null);
     }
 
