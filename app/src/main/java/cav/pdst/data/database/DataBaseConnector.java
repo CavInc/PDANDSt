@@ -148,6 +148,7 @@ public class DataBaseConnector {
                 database.execSQL(sql);
             }
         }
+        /*
         Cursor cursor = getLastDateTraining(recid);
         while (cursor.moveToNext()){
             value.clear();
@@ -156,9 +157,12 @@ public class DataBaseConnector {
             database.update(DBHelper.SPORTSMAN_TABLE,value,
                     "_id="+cursor.getInt(0),null);
         }
+        */
+        setLastDataTraining(recid);
 
        close();
     }
+
 
     public void updateTraining(TrainingModel data,ArrayList<SpRefAbModeModel> selectItem){
         open();
@@ -219,7 +223,22 @@ public class DataBaseConnector {
             }
             database.execSQL(sql);
         }
+        setLastDataTraining(data.getId());
         close();
+    }
+
+    // устанавливае дату посделней тренировки
+    // база должна быть открыта
+    private void  setLastDataTraining(int recid) {
+        ContentValues value = new ContentValues();
+        Cursor cursor = getLastDateTraining(recid);
+        while (cursor.moveToNext()){
+            value.clear();
+            value.put("last_date",cursor.getString(cursor.getColumnIndex("date")));
+            value.put("last_time",cursor.getString(cursor.getColumnIndex("time")));
+            database.update(DBHelper.SPORTSMAN_TABLE,value,
+                    "_id="+cursor.getInt(0),null);
+        }
     }
 
     //TODO Перенести в тригер
