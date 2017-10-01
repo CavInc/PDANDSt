@@ -40,6 +40,7 @@ public class AbonementInfoAdapter extends ArrayAdapter<TrainingModel> {
             holder.mName = (TextView) row.findViewById(R.id.sptr_item_name);
             holder.mIcon = (ImageView) row.findViewById(R.id.sptr_item_icon);
             holder.mCount = (TextView) row.findViewById(R.id.sptr_item_count);
+            holder.mMode = (TextView) row.findViewById(R.id.sptr_item_trainingmode);
             row.setTag(holder);
         }else{
             holder = (ViewHolder)row.getTag();
@@ -61,15 +62,19 @@ public class AbonementInfoAdapter extends ArrayAdapter<TrainingModel> {
         switch (record.getTypeTraining()){
             case ConstantManager.SPORTSMAN_MODE_TRAINING:
                 holder.mName.setTextColor(ContextCompat.getColor(getContext(),R.color.app_green));
+                holder.mMode.setText("Тренировка");
                 break;
             case ConstantManager.SPORTSMAN_MODE_PASS:
                 holder.mName.setTextColor(ContextCompat.getColor(getContext(),R.color.app_red));
+                holder.mMode.setText("Пропуск");
                 break;
             case ConstantManager.SPORTSMAN_MODE_WARNING:
                 holder.mName.setTextColor(ContextCompat.getColor(getContext(),R.color.app_blue));
+                holder.mMode.setText("Предупреждение");
                 break;
             case ConstantManager.SPORTSMAN_MODE_WORKINGOFF:
                 holder.mName.setTextColor(ContextCompat.getColor(getContext(),R.color.app_yellow));
+                holder.mMode.setText("Отработка");
                 break;
         }
 
@@ -82,5 +87,6 @@ public class AbonementInfoAdapter extends ArrayAdapter<TrainingModel> {
         public TextView mName;
         public ImageView mIcon;
         public TextView mCount;
+        public TextView mMode;
     }
 }

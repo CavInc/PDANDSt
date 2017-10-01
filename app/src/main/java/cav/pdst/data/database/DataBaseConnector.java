@@ -174,6 +174,10 @@ public class DataBaseConnector {
         value.put("time",data.getTime());
         value.put("repeat_training",data.getRepeatType());
         database.update(DBHelper.TRAINING_TABLE,value,"_id="+data.getId(),null); // обновили данные тренировки
+
+        // откат даты для все спортсменов
+        setLastDataOutTraining(data.getId());
+
         database.delete(DBHelper.REF_TABLE,"type_ref=1 and id2="+data.getId(),null); // удалили связь спортсмен - тренировка
 
         //todo сдесь сделать отдачу абонемента обратно
@@ -241,12 +245,36 @@ public class DataBaseConnector {
         }
     }
 
+    // переустанавливает даты у спрострменов за исключением тренировки
+    // из индекса
+    private void setLastDataOutTraining(int recid){
+        String sql;
+        Cursor cursor = database.query(DBHelper.REF_TABLE,new String[]{"id1"},"type_ref=1 and id2="+recid,null,null,null,null);
+
+        while (cursor.moveToNext()){
+            Cursor rx = database.rawQuery("select rf.id1,tt.date,tt.time from ref_table rf\n" +
+                    " join trainig_table tt on rf.type_ref=1 and rf.id2=tt._id\n" +
+                    "where rf.id2<>"+recid+" and rf.id1="+cursor.getInt(0)+"\n" +
+                    "order by rf.id1,tt.date desc ,tt.time  desc\n" +
+                    "limit 1",null);
+            rx.moveToFirst();
+            if (rx.getCount()!=0) {
+                sql = "update " + DBHelper.SPORTSMAN_TABLE + " set last_date='" + rx.getString(1) + "', last_time='" + rx.getString(2) + "' " +
+                        "where  _id=" + rx.getInt(0);
+                database.execSQL(sql);
+            }
+        }
+    }
+
     //TODO Перенести в тригер
     public void delTraining(int id){
         String sql;
         open();
         database.delete(DBHelper.TRAINING_TABLE,"_id="+id,null);
 
+        Cursor cursor;
+
+        /*
         Cursor cursor = database.query(DBHelper.REF_TABLE,new String[]{"id1"},"type_ref=1 and id2="+id,null,null,null,null);
 
         while (cursor.moveToNext()){
@@ -262,6 +290,8 @@ public class DataBaseConnector {
                 database.execSQL(sql);
             }
         }
+        */
+        setLastDataOutTraining(id);
 
         cursor = database.query(DBHelper.REF_TABLE,new String[]{"id2","type_link"},"type_ref=2 and id1="+id,null,null,null,null);
         while (cursor.moveToNext()){
