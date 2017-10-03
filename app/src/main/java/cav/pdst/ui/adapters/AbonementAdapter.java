@@ -99,6 +99,10 @@ public class AbonementAdapter extends ArrayAdapter<AbonementModel> {
             holder.mPrime.setText("Доступны тренировки, но период закрыт");
             holder.mPrime.setTextColor(ContextCompat.getColor(getContext(),R.color.app_red));
         }
+        if (Utils.isBeforeDate(record.getStartDate())) {
+            holder.mPrime.setText("Доступны тренировки, но период закрыт");
+            holder.mPrime.setTextColor(ContextCompat.getColor(getContext(),R.color.app_red));
+        }
 
         //holder.mPrime.setText();
         return row;

@@ -56,7 +56,7 @@ public class Utils {
         if (moth>old_moth) return true;
         return false;
     }
-    //TODO что то рещить с времененем
+
     public static boolean isAfterDate2(Date date){
         Calendar c = Calendar.getInstance();
         c.set(c.get(Calendar.YEAR),c.get(Calendar.MONTH),c.get(Calendar.DAY_OF_MONTH),0,0,0);
@@ -66,6 +66,14 @@ public class Utils {
         if (dt.getTime()>date.getTime()) return true;
         else return false;*/
         return dt.after(date);
+    }
+
+    public static boolean isBeforeDate(Date date){
+        Calendar c = Calendar.getInstance();
+        c.set(c.get(Calendar.YEAR),c.get(Calendar.MONTH),c.get(Calendar.DAY_OF_MONTH),0,0,0);
+        c.set(Calendar.MILLISECOND,0);
+        Date dt = c.getTime();
+        return dt.before(date);
     }
 
     public static void startAlarm(Context context,Date date,String msg,int sp_id){
