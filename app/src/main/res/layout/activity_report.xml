@@ -134,6 +134,15 @@
                 android:textSize="@dimen/font_size_18"
                 android:layout_gravity="right"/>
         </GridLayout>
+        <Button
+            android:layout_below="@+id/r_grid_l"
+            android:id="@+id/end_bt_ab"
+            android:text="Завершающиеся абонементы"
+            android:layout_width="match_parent"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/custom_button_background"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"/>
 
     </RelativeLayout>
     </android.support.design.widget.CoordinatorLayout>

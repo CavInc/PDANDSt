@@ -43,6 +43,7 @@ public class ReportActivity extends AppCompatActivity implements NavigationView.
     private Button mEndDate;
     private Button mDohod;
     private Button mRashod;
+    private Button mEndingAbButton;
     private LinearLayout mMonthLayout;
     private ImageView mLeft;
     private ImageView mRigth;
@@ -72,6 +73,7 @@ public class ReportActivity extends AppCompatActivity implements NavigationView.
         mLeft = (ImageView) findViewById(R.id.r_left_button);
         mRigth = (ImageView) findViewById(R.id.r_rigth_button);
         mMonthLayout = (LinearLayout) findViewById(R.id.r_month_l);
+        mEndingAbButton = (Button) findViewById(R.id.end_bt_ab);
 
         swipeTouchListener = new SwipeTouchListener();
         mMonthLayout.setOnTouchListener(swipeTouchListener);
@@ -85,6 +87,7 @@ public class ReportActivity extends AppCompatActivity implements NavigationView.
         mRashod.setOnClickListener(this);
         mRigth.setOnClickListener(this);
         mLeft.setOnClickListener(this);
+        mEndingAbButton.setOnClickListener(this);
         
         setupCurrentMontData(new Date());
 
@@ -250,6 +253,10 @@ public class ReportActivity extends AppCompatActivity implements NavigationView.
                 break;
             case R.id.r_rigth_button:
                 changeMonth(1);
+                break;
+            case R.id.end_bt_ab:
+                Intent edab = new Intent(this,EndingReportActivity.class);
+                startActivity(edab);
                 break;
         }
     }

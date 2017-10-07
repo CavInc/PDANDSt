@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="cav.pdst"
+<manifest package="cav.pdst"
+          xmlns:android="http://schemas.android.com/apk/res/android"
           android:installLocation="auto">
 
     <uses-permission android:name="android.permission.CALL_PHONE"/>
@@ -98,8 +98,11 @@
 
         <activity android:name=".ui.activity.EditRateTypeActivity">
         </activity>
-        <activity android:name=".ui.activity.AbonementInfoActivity"
+        <activity
+            android:name=".ui.activity.AbonementInfoActivity"
             android:label="Информация о абонементе">
+        </activity>
+        <activity android:name=".ui.activity.EndingReportActivity">
         </activity>
     </application>
 

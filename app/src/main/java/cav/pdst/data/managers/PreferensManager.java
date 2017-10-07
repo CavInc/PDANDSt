@@ -49,5 +49,17 @@ public class PreferensManager {
         return mSharedPreferences.getBoolean(ConstantManager.STORE_FIRST_START_ALARM,false);
     }
 
+    public void setDateEndingReport(String date, String mode){
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putString(mode,date);
+        editor.apply();
+    }
+
+    public String getDateEndingReport(String mode){
+        return mSharedPreferences.getString(mode,null);
+    }
+
+
+
 
 }
