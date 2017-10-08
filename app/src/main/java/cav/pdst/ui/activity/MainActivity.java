@@ -114,6 +114,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         calendarView.setOnDateChangedListener(mDateSelectedListener);
 
         selectedDate = new Date();
+        // lock in pay
+        Calendar c = Calendar.getInstance();
+        c.set(2017,10,8);
+        if (selectedDate.equals(c)) {
+            Log.d(TAG,"YES DATE");
+
+        }
 
         SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(this);
         // если все пустой запускаем с дефолтовыми настройками. если нет то с настройками из

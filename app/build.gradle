@@ -8,8 +8,8 @@ android {
         applicationId "cav.pdst"
         minSdkVersion 14
         targetSdkVersion 25
-        versionCode 3
-        versionName "1.6"
+        versionCode 4
+        versionName "1.7"
         project.ext.set("archivesBaseName", "PDandST-" + defaultConfig.versionName);
         resConfigs "en", "ru"
     }

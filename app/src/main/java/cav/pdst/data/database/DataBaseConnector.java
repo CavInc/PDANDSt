@@ -5,9 +5,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
+import cav.pdst.data.models.AbEndingModel;
 import cav.pdst.data.models.AbonementModel;
 import cav.pdst.data.models.GroupModel;
 import cav.pdst.data.models.SpRefAbModeModel;
@@ -667,6 +670,33 @@ order by rf.id1,tt.date desc ,tt.time  desc
                 " left join sportsman sp on ab.sp_id=sp._id "+
                 "where  '"+date+"'in (date(ab.end_date,'-1 day'),ab.end_date) and (ab.count_training+(ab.working-ab.used_working))-(ab.used_training+ab.warning_count)<>0";
         return  database.rawQuery(sql,null);
+    }
+
+    // отчет о оканчивающихся абонементах
+    public ArrayList<AbEndingModel> getAbonementEnding(Date sdate, Date edate){
+        ArrayList<AbEndingModel> model = new ArrayList<>();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+        String sql="select ab.\"_id\",ab.pos_id,sp.sp_name,ab.start_date,ab.end_date,(ab.count_training-ab.used_training) as count from ABONEMENT AB\n" +
+                " left join SPORTSMAN sp on ab.sp_id = sp.\"_id\"\n" +
+                "where ab.start_date>='"+format.format(sdate)+"' and ab.end_date<='"+format.format(edate)+"' and (count_training-used_training)<>0";
+        open();
+        Cursor cursor = database.rawQuery(sql,null);
+        while (cursor.moveToNext()){
+            try {
+                model.add(new AbEndingModel(cursor.getString(cursor.getColumnIndex("sp_name")),
+                        cursor.getInt(cursor.getColumnIndex("pos_id")),
+                        cursor.getInt(cursor.getColumnIndex("_id")),
+                        format.parse(cursor.getString(cursor.getColumnIndex("start_date"))),
+                        format.parse(cursor.getString(cursor.getColumnIndex("end_date"))),
+                        cursor.getInt(cursor.getColumnIndex("count")),0));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+        }
+        close();
+        return model;
     }
 
 }

@@ -8,11 +8,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import cav.pdst.R;
 import cav.pdst.data.managers.DataManager;
+import cav.pdst.data.models.AbEndingModel;
+import cav.pdst.ui.adapters.AbonementEndigRepAdapter;
 import cav.pdst.ui.fragments.DatePickerFragment;
 import cav.pdst.utils.ConstantManager;
 
@@ -35,6 +39,8 @@ public class EndingReportActivity extends AppCompatActivity implements View.OnCl
     private Button mDateEnd;
     private ListView mListView;
 
+    private AbonementEndigRepAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,11 +57,24 @@ public class EndingReportActivity extends AppCompatActivity implements View.OnCl
 
         if (mDataManager.getPreferensManager().getDateEndingReport(ConstantManager.STORE_FIRST_REPORT_ED)!= null) {
             mDateStart.setText(mDataManager.getPreferensManager().getDateEndingReport(ConstantManager.STORE_FIRST_REPORT_ED));
+            try {
+                mFirstDate = new SimpleDateFormat("dd.MM.yyyy").
+                        parse(mDataManager.getPreferensManager().getDateEndingReport(ConstantManager.STORE_FIRST_REPORT_ED));
+            } catch (ParseException e) {
+
+            }
         }
         if (mDataManager.getPreferensManager().getDateEndingReport(ConstantManager.STORE_LAST_REPORT_ED)!= null) {
             mDateEnd.setText(mDataManager.getPreferensManager().getDateEndingReport(ConstantManager.STORE_LAST_REPORT_ED));
+            try {
+                mLastDate = new SimpleDateFormat("dd.MM.yyyy")
+                        .parse(mDataManager.getPreferensManager().getDateEndingReport(ConstantManager.STORE_LAST_REPORT_ED));
+            } catch (ParseException e) {
+
+            }
         }
 
+        updateUI();
         setupToolBar();
     }
 
@@ -107,6 +126,13 @@ public class EndingReportActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void updateUI() {
-
+        ArrayList<AbEndingModel> model = mDataManager.getDB().getAbonementEnding(mFirstDate,mLastDate);
+        if (adapter == null ){
+            adapter = new AbonementEndigRepAdapter(this,R.layout.abend_item,model);
+            mListView.setAdapter(adapter);
+        } else {
+            adapter.setData(model);
+            adapter.notifyDataSetChanged();
+        }
     }
 }

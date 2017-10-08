@@ -18,7 +18,7 @@ import java.util.GregorianCalendar;
 import cav.pdst.R;
 
 public class DatePickerFragment extends DialogFragment {
-    private static final String TAG = "DP";
+    private static final String SELECT_DATE = "SELECT_DATE";
     private DatePicker mDatePicker;
 
     private OnDateGetListener mOnDateGetListener;
@@ -29,6 +29,13 @@ public class DatePickerFragment extends DialogFragment {
 
     public static DatePickerFragment newInstance(){
         Bundle args = new Bundle();
+        DatePickerFragment fragment = new DatePickerFragment();
+        return fragment;
+    }
+
+    public static DatePickerFragment newInstance(Date initDate){
+        Bundle args = new Bundle();
+        args.putSerializable(SELECT_DATE,initDate);
         DatePickerFragment fragment = new DatePickerFragment();
         return fragment;
     }
@@ -80,6 +87,10 @@ public class DatePickerFragment extends DialogFragment {
 
     public void setOnDateGetListener( OnDateGetListener listener){
         mOnDateGetListener = listener;
+    }
+
+    public void setSelectedDate(Date date){
+
     }
 
 
