@@ -1,6 +1,7 @@
 package cav.pdst.ui.activity;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -15,6 +16,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -35,6 +37,7 @@ import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 import com.prolificinteractive.materialcalendarview.spans.DotSpan;
 
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -115,10 +118,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         selectedDate = new Date();
         // lock in pay
-        Calendar c = Calendar.getInstance();
-        c.set(2017,10,8);
-        if (selectedDate.equals(c)) {
+        if (new SimpleDateFormat("dd.MM.yyy").format(selectedDate).equals("08.11.2017")) {
             Log.d(TAG,"YES DATE");
+            AlertDialog.Builder dialog =  new AlertDialog.Builder(this);
+            dialog.setTitle(R.string.app_name)
+                    .setMessage("Завершение работы демоверсии")
+                    .setPositiveButton("Закрыть", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            finish();
+                        }
+                    })
+                    .create();
+            dialog.show();
 
         }
 
