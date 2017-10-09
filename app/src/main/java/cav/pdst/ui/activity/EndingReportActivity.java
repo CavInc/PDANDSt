@@ -126,13 +126,15 @@ public class EndingReportActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void updateUI() {
-        ArrayList<AbEndingModel> model = mDataManager.getDB().getAbonementEnding(mFirstDate,mLastDate);
-        if (adapter == null ){
-            adapter = new AbonementEndigRepAdapter(this,R.layout.abend_item,model);
-            mListView.setAdapter(adapter);
-        } else {
-            adapter.setData(model);
-            adapter.notifyDataSetChanged();
+        if (mFirstDate != null && mLastDate !=null) {
+            ArrayList<AbEndingModel> model = mDataManager.getDB().getAbonementEnding(mFirstDate, mLastDate);
+            if (adapter == null) {
+                adapter = new AbonementEndigRepAdapter(this, R.layout.abend_item, model);
+                mListView.setAdapter(adapter);
+            } else {
+                adapter.setData(model);
+                adapter.notifyDataSetChanged();
+            }
         }
     }
 }
