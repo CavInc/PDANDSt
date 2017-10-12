@@ -161,9 +161,17 @@ public class AbonementActivity extends AppCompatActivity implements View.OnClick
             answerIntent.putExtra(ConstantManager.AB_CREATEDATE, mCreateDate.getText().toString());
             answerIntent.putExtra(ConstantManager.AB_STARTDATE, mStartDate.getText().toString());
             answerIntent.putExtra(ConstantManager.AB_ENDDATE, mEndDate.getText().toString());
-            answerIntent.putExtra(ConstantManager.AB_COUNT_TR, Integer.parseInt(mCountTraining.getText().toString()));
+            if (mCountTraining.getText().toString().length()!=0 ) {
+                answerIntent.putExtra(ConstantManager.AB_COUNT_TR, Integer.parseInt(mCountTraining.getText().toString()));
+            }  else {
+                answerIntent.putExtra(ConstantManager.AB_COUNT_TR, 0);
+            }
             answerIntent.putExtra(ConstantManager.AB_COMMENT, mComent.getText().toString());
-            answerIntent.putExtra(ConstantManager.AB_PAY, Float.parseFloat(mPay.getText().toString()));
+            if (mPay.getText().toString().length() != 0) {
+                answerIntent.putExtra(ConstantManager.AB_PAY, Float.parseFloat(mPay.getText().toString()));
+            } else {
+                answerIntent.putExtra(ConstantManager.AB_PAY,0.0f);
+            }
             answerIntent.putExtra(ConstantManager.AB_TYPE,mAbType);
             if (mDebit.getText().toString().length()!=0) {
                 answerIntent.putExtra(ConstantManager.AB_DEBIT, Float.parseFloat(mDebit.getText().toString()));
