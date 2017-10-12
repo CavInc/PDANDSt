@@ -47,7 +47,7 @@ public class AbonementEndigRepAdapter extends ArrayAdapter<AbEndingModel> {
 
         holder.mSportsman.setText(record.getSportsman());
         holder.mAbonement.setText("Абонемент № : "+record.getAbonementNum());
-        holder.mCount.setText("Не использованные абонементы : "+record.getNoUseCount());
+        holder.mCount.setText("Неиспользованные тренировки : "+record.getNoUseCount());
         holder.mType.setText(record.getTypeEnding());
 
         holder.mStartDate.setText(mFormat.format(record.getStart()));
