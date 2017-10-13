@@ -466,6 +466,14 @@ order by rf.id1,tt.date desc ,tt.time  desc
                 "sp_id="+sportsman_id,null,null,null,"pos_id");
     }
 
+    public Cursor getAbonementID(int id){
+        return database.query(DBHelper.ABONEMENT_TABLE,
+                new String[]{"_id","sp_id","pos_id","buy_date","start_date","end_date",
+                        "type_abonement","pay","count_training","comment","used_training","working"
+                        ,"warning_count","debt","alarm_date","used_working"},
+                "_id="+id,null,null,null,"pos_id");
+    }
+
     public void delAbonement(int id,int sprotsman_id){
         open();
         database.delete(DBHelper.ABONEMENT_TABLE,"pos_id="+id+" and sp_id="+sprotsman_id,null);

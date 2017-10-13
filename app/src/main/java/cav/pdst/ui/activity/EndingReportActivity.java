@@ -1,5 +1,6 @@
 package cav.pdst.ui.activity;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import java.util.Date;
 import cav.pdst.R;
 import cav.pdst.data.managers.DataManager;
 import cav.pdst.data.models.AbEndingModel;
+import cav.pdst.data.models.AbonementModel;
 import cav.pdst.ui.adapters.AbonementEndigRepAdapter;
 import cav.pdst.ui.fragments.DatePickerFragment;
 import cav.pdst.utils.ConstantManager;
@@ -74,6 +76,8 @@ public class EndingReportActivity extends AppCompatActivity implements View.OnCl
 
             }
         }
+
+        mListView.setOnItemClickListener(this);
 
         updateUI();
         setupToolBar();
@@ -141,7 +145,10 @@ public class EndingReportActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-        AbEndingModel model = (AbEndingModel) adapterView.getItemAtPosition(position);
-
+        AbEndingModel record = (AbEndingModel) adapterView.getItemAtPosition(position);
+        AbonementModel data = mDataManager.getAbonementId(record.getAbonementID());
+        Intent intent = new Intent(this, AbonementInfoActivity.class);
+        intent.putExtra(ConstantManager.AB_DETAIL_DATA,data);
+        startActivity(intent);
     }
 }

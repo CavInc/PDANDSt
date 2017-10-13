@@ -463,6 +463,42 @@ public class DataManager {
         return rec;
     }
 
+    // возвращаем абонемент по номеру
+    public AbonementModel getAbonementId(int id){
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        mDB.open();
+        Cursor cursor = mDB.getAbonementID(id);
+        cursor.moveToFirst();
+        AbonementModel model = null;
+        try {
+            Date ddebit = null;
+            String db= cursor.getString(cursor.getColumnIndex("alarm_date"));
+            if (db != null){
+                ddebit = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(db);
+            }
+
+            model = new AbonementModel(cursor.getInt(cursor.getColumnIndex("_id")),
+                    cursor.getInt(cursor.getColumnIndex("pos_id")),
+                    cursor.getInt(cursor.getColumnIndex("sp_id")),
+                    format.parse(cursor.getString(cursor.getColumnIndex("buy_date"))),
+                    format.parse(cursor.getString(cursor.getColumnIndex("start_date"))),
+                    format.parse(cursor.getString(cursor.getColumnIndex("end_date"))),
+                    cursor.getInt(cursor.getColumnIndex("count_training")),
+                    cursor.getFloat(cursor.getColumnIndex("pay")),
+                    cursor.getInt(cursor.getColumnIndex("type_abonement")),
+                    cursor.getString(cursor.getColumnIndex("comment")),
+                    cursor.getInt(cursor.getColumnIndex("used_training")),
+                    cursor.getInt(cursor.getColumnIndex("working")),
+                    cursor.getInt(cursor.getColumnIndex("warning_count")),
+                    cursor.getFloat(cursor.getColumnIndex("debt")), ddebit,
+                    cursor.getInt(cursor.getColumnIndex("used_working")));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        mDB.close();
+        return model;
+    }
+
     public void addAbonement(AbonementModel data){
 
     }
