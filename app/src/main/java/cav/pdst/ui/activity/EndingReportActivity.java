@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -25,7 +26,7 @@ import cav.pdst.utils.ConstantManager;
  */
 
 public class EndingReportActivity extends AppCompatActivity implements View.OnClickListener,
-        DatePickerFragment.OnDateGetListener {
+        DatePickerFragment.OnDateGetListener,AdapterView.OnItemClickListener {
 
     private final int START_DATE = 0;
     private final int END_DATE = 1;
@@ -136,5 +137,11 @@ public class EndingReportActivity extends AppCompatActivity implements View.OnCl
                 adapter.notifyDataSetChanged();
             }
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+        AbEndingModel model = (AbEndingModel) adapterView.getItemAtPosition(position);
+
     }
 }
