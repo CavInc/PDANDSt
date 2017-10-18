@@ -695,6 +695,13 @@ order by rf.id1,tt.date desc ,tt.time  desc
                 " left join SPORTSMAN sp on ab.sp_id = sp._id\n" +
                 "where ab.start_date>='"+format.format(sdate)+"' and ab.end_date<='"+format.format(edate)+"' and (count_training-used_training)<>0) as a \n" +
                 "where '"+format.format(new Date())+"' in (date(a.end_date,'-2 day'),date(a.end_date,'-1 day'),a.end_date)";
+        /*
+        select ab._id,ab.pos_id,sp.sp_name,ab.start_date,ab.end_date,(ab.count_training-ab.used_training) as count,ab.working,ab.used_working,ab.warning_count from abonement ab
+ left join SPORTSMAN sp on ab.sp_id = sp._id
+where ab.start_date>='2017-10-01' and ab.end_date<='2017-10-25'
+order by ab.end_date
+         */
+
         open();
         Cursor cursor = database.rawQuery(sql,null);
         while (cursor.moveToNext()){
