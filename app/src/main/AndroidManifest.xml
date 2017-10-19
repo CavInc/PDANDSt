@@ -102,7 +102,8 @@
             android:name=".ui.activity.AbonementInfoActivity"
             android:label="Информация о абонементе">
         </activity>
-        <activity android:name=".ui.activity.EndingReportActivity">
+        <activity android:name=".ui.activity.EndingReportActivity"
+            android:label="Отчет по абонементам">
         </activity>
     </application>
 

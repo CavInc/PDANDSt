@@ -23,6 +23,17 @@ public class AbEndingModel {
         mTypeEnding = "Остались тренировки";
     }
 
+    public AbEndingModel(String sportsman, int abonementNum, int abonementID, Date start, Date end, int noUseCount, int noUseWorking, String typeEnding) {
+        mSportsman = sportsman;
+        mAbonementNum = abonementNum;
+        mAbonementID = abonementID;
+        mStart = start;
+        mEnd = end;
+        mNoUseCount = noUseCount;
+        mNoUseWorking = noUseWorking;
+        mTypeEnding = typeEnding;
+    }
+
     public String getSportsman() {
         return mSportsman;
     }

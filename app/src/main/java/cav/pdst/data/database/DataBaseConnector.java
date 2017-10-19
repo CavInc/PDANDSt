@@ -690,31 +690,75 @@ order by rf.id1,tt.date desc ,tt.time  desc
                 " left join SPORTSMAN sp on ab.sp_id = sp.\"_id\"\n" +
                 "where ab.start_date>='"+format.format(sdate)+"' and ab.end_date<='"+format.format(edate)+"' and (count_training-used_training)<>0";
         */
+        /*
         String sql="select * from \n" +
                 "(select ab._id,ab.pos_id,sp.sp_name,ab.start_date,ab.end_date,(ab.count_training-ab.used_training) as count from ABONEMENT AB\n" +
                 " left join SPORTSMAN sp on ab.sp_id = sp._id\n" +
                 "where ab.start_date>='"+format.format(sdate)+"' and ab.end_date<='"+format.format(edate)+"' and (count_training-used_training)<>0) as a \n" +
                 "where '"+format.format(new Date())+"' in (date(a.end_date,'-2 day'),date(a.end_date,'-1 day'),a.end_date)";
+        */
         /*
-        select ab._id,ab.pos_id,sp.sp_name,ab.start_date,ab.end_date,(ab.count_training-ab.used_training) as count,ab.working,ab.used_working,ab.warning_count from abonement ab
+        select ab._id,ab.pos_id,sp.sp_name,ab.start_date,ab.end_date,(ab.count_training-ab.used_training) as count,ab.working,ab.used_working,ab.warning_count,julianday(ab.end_date) - julianday(ab.start_date)  as rdate
+  ,(julianday(ab.end_date) - julianday("2017-10-19")) as rnowdate from abonement ab
  left join SPORTSMAN sp on ab.sp_id = sp._id
-where ab.start_date>='2017-10-01' and ab.end_date<='2017-10-25'
+where ab.start_date>='2017-10-01' and ab.end_date<='2017-10-25' and (julianday(ab.end_date) - julianday(ab.start_date)<>0) and ((julianday(ab.end_date) - julianday("2017-10-19"))>2)
 order by ab.end_date
          */
+
+        String sql ="select ab._id,ab.pos_id,sp.sp_name,ab.start_date,ab.end_date,(ab.count_training-ab.used_training) as count,ab.working,ab.used_working,ab.warning_count\n" +
+                "  ,(julianday(ab.end_date) - julianday('"+format.format(new Date())+"')) as rnowdate from abonement ab\n" +
+                " left join SPORTSMAN sp on ab.sp_id = sp._id\n" +
+                "where ab.start_date>='"+format.format(sdate)+"' and ab.end_date<='"+format.format(edate)+"' and (julianday(ab.end_date) - julianday(ab.start_date)<>0) \n" +
+                " and ((julianday(ab.end_date) - julianday('"+format.format(new Date())+"'))>=0) \n"+
+                "order by ab.end_date";
 
         open();
         Cursor cursor = database.rawQuery(sql,null);
         while (cursor.moveToNext()){
+            Date sd = null;
+            Date ed = null;
             try {
+                sd = format.parse(cursor.getString(cursor.getColumnIndex("start_date")));
+                ed = format.parse(cursor.getString(cursor.getColumnIndex("end_date")));
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+                return model;
+            }
+            int countTraining = cursor.getInt(cursor.getColumnIndex("count"));
+            int diffDate = cursor.getInt(cursor.getColumnIndex("rnowdate"));
+
+            // тренировки кончились но срок абонемента еще больше 2 дней от текущей
+            if (countTraining == 0 && diffDate> 2 ) {
                 model.add(new AbEndingModel(cursor.getString(cursor.getColumnIndex("sp_name")),
+                        cursor.getInt(cursor.getColumnIndex("pos_id")),
+                        cursor.getInt(cursor.getColumnIndex("_id")),
+                        sd,ed,cursor.getInt(cursor.getColumnIndex("count")),0,"Абонемент исчерпал тренировки но дата не кончилась"));
+
+            }
+            // подходит срок абонемента
+            if (countTraining !=0 && (diffDate == 0 || diffDate == 1 || diffDate == 2)){
+                model.add(new AbEndingModel(cursor.getString(cursor.getColumnIndex("sp_name")),
+                        cursor.getInt(cursor.getColumnIndex("pos_id")),
+                        cursor.getInt(cursor.getColumnIndex("_id")),
+                        sd,ed,cursor.getInt(cursor.getColumnIndex("count")),0,"Подходящий срок абонемента"));
+            }
+            // тренировки еще есть
+            if (countTraining !=0 && diffDate>2) {
+                model.add(new AbEndingModel(cursor.getString(cursor.getColumnIndex("sp_name")),
+                        cursor.getInt(cursor.getColumnIndex("pos_id")),
+                        cursor.getInt(cursor.getColumnIndex("_id")),
+                        sd,ed,cursor.getInt(cursor.getColumnIndex("count")),0));
+            }
+
+            /*
+                           model.add(new AbEndingModel(cursor.getString(cursor.getColumnIndex("sp_name")),
                         cursor.getInt(cursor.getColumnIndex("pos_id")),
                         cursor.getInt(cursor.getColumnIndex("_id")),
                         format.parse(cursor.getString(cursor.getColumnIndex("start_date"))),
                         format.parse(cursor.getString(cursor.getColumnIndex("end_date"))),
                         cursor.getInt(cursor.getColumnIndex("count")),0));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+             */
 
         }
         close();
