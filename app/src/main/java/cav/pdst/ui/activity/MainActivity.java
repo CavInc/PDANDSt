@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         selectedDate = new Date();
         // lock in pay
-        if (new SimpleDateFormat("dd.MM.yyy").format(selectedDate).equals("08.11.2017")) {
+        if (new SimpleDateFormat("dd.MM.yyy").format(selectedDate).equals("15.11.2017")) {
             Log.d(TAG,"YES DATE");
             AlertDialog.Builder dialog =  new AlertDialog.Builder(this);
             dialog.setTitle(R.string.app_name)

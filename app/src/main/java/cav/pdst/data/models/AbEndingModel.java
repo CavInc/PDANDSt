@@ -11,9 +11,11 @@ public class AbEndingModel {
     private int mNoUseCount;
     private int mNoUseWorking;
     private String mTypeEnding;
+    private int mSpId;
 
-    public AbEndingModel(String sportsman, int abonementNum, int abonementID, Date start, Date end, int noUseCount, int noUseWorking) {
+    public AbEndingModel(String sportsman,int spId, int abonementNum, int abonementID, Date start, Date end, int noUseCount, int noUseWorking) {
         mSportsman = sportsman;
+        mSpId = spId;
         mAbonementNum = abonementNum;
         mAbonementID = abonementID;
         mStart = start;
@@ -23,8 +25,9 @@ public class AbEndingModel {
         mTypeEnding = "Остались тренировки";
     }
 
-    public AbEndingModel(String sportsman, int abonementNum, int abonementID, Date start, Date end, int noUseCount, int noUseWorking, String typeEnding) {
+    public AbEndingModel(String sportsman,int spId, int abonementNum, int abonementID, Date start, Date end, int noUseCount, int noUseWorking, String typeEnding) {
         mSportsman = sportsman;
+        mSpId = spId;
         mAbonementNum = abonementNum;
         mAbonementID = abonementID;
         mStart = start;
@@ -60,5 +63,9 @@ public class AbEndingModel {
 
     public String getTypeEnding() {
         return mTypeEnding;
+    }
+
+    public int getSpId() {
+        return mSpId;
     }
 }

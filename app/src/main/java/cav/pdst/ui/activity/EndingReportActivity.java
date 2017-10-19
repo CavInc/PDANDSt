@@ -146,9 +146,18 @@ public class EndingReportActivity extends AppCompatActivity implements View.OnCl
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
         AbEndingModel record = (AbEndingModel) adapterView.getItemAtPosition(position);
+        Intent intent = new Intent(this, SportsmanDetailActivity.class);
+        intent.putExtra(ConstantManager.ALARM_ID,record.getSpId());
+        intent.putExtra(ConstantManager.MODE_SP_DETAIL,ConstantManager.ALARM_SPORTSMAN);
+        startActivity(intent);
+
+       /*
+        AbEndingModel record = (AbEndingModel) adapterView.getItemAtPosition(position);
         AbonementModel data = mDataManager.getAbonementId(record.getAbonementID());
         Intent intent = new Intent(this, AbonementInfoActivity.class);
         intent.putExtra(ConstantManager.AB_DETAIL_DATA,data);
         startActivity(intent);
+        */
+
     }
 }

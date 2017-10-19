@@ -705,7 +705,7 @@ where ab.start_date>='2017-10-01' and ab.end_date<='2017-10-25' and (julianday(a
 order by ab.end_date
          */
 
-        String sql ="select ab._id,ab.pos_id,sp.sp_name,ab.start_date,ab.end_date,(ab.count_training-ab.used_training) as count,ab.working,ab.used_working,ab.warning_count\n" +
+        String sql ="select ab._id,ab.pos_id,ab.sp_id,sp.sp_name,ab.start_date,ab.end_date,(ab.count_training-ab.used_training) as count,ab.working,ab.used_working,ab.warning_count\n" +
                 "  ,(julianday(ab.end_date) - julianday('"+format.format(new Date())+"')) as rnowdate from abonement ab\n" +
                 " left join SPORTSMAN sp on ab.sp_id = sp._id\n" +
                 "where ab.start_date>='"+format.format(sdate)+"' and ab.end_date<='"+format.format(edate)+"' and (julianday(ab.end_date) - julianday(ab.start_date)<>0) \n" +
@@ -731,6 +731,7 @@ order by ab.end_date
             // тренировки кончились но срок абонемента еще больше 2 дней от текущей
             if (countTraining == 0 && diffDate> 2 ) {
                 model.add(new AbEndingModel(cursor.getString(cursor.getColumnIndex("sp_name")),
+                        cursor.getInt(cursor.getColumnIndex("sp_id")),
                         cursor.getInt(cursor.getColumnIndex("pos_id")),
                         cursor.getInt(cursor.getColumnIndex("_id")),
                         sd,ed,cursor.getInt(cursor.getColumnIndex("count")),0,"Абонемент исчерпал тренировки но дата не кончилась"));
@@ -739,6 +740,7 @@ order by ab.end_date
             // подходит срок абонемента
             if (countTraining !=0 && (diffDate == 0 || diffDate == 1 || diffDate == 2)){
                 model.add(new AbEndingModel(cursor.getString(cursor.getColumnIndex("sp_name")),
+                        cursor.getInt(cursor.getColumnIndex("sp_id")),
                         cursor.getInt(cursor.getColumnIndex("pos_id")),
                         cursor.getInt(cursor.getColumnIndex("_id")),
                         sd,ed,cursor.getInt(cursor.getColumnIndex("count")),0,"Подходящий срок абонемента"));
@@ -746,6 +748,7 @@ order by ab.end_date
             // тренировки еще есть
             if (countTraining !=0 && diffDate>2) {
                 model.add(new AbEndingModel(cursor.getString(cursor.getColumnIndex("sp_name")),
+                        cursor.getInt(cursor.getColumnIndex("sp_id")),
                         cursor.getInt(cursor.getColumnIndex("pos_id")),
                         cursor.getInt(cursor.getColumnIndex("_id")),
                         sd,ed,cursor.getInt(cursor.getColumnIndex("count")),0));
