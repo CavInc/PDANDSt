@@ -101,14 +101,21 @@ public class EndingReportActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     public void onClick(View view) {
-        DatePickerFragment dialog = DatePickerFragment.newInstance();
+        DatePickerFragment dialog;
         switch (view.getId()){
             case R.id.er_bt_start:
                 dialogMode = START_DATE;
+                if (mFirstDate != null) {
+                    dialog = DatePickerFragment.newInstance(mFirstDate);
+                } else {
+                    dialog = DatePickerFragment.newInstance();
+                }
                 dialog.show(getSupportFragmentManager(), ConstantManager.DIALOG_DATE);
+
                 break;
             case R.id.er_bt_end:
                 dialogMode = END_DATE;
+                dialog = DatePickerFragment.newInstance();
                 dialog.show(getSupportFragmentManager(), ConstantManager.DIALOG_DATE);
                 break;
         }
