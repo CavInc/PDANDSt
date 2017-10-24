@@ -712,6 +712,8 @@ order by ab.end_date
                 " and ((julianday(ab.end_date) - julianday('"+format.format(new Date())+"'))>=0) \n"+
                 "order by ab.end_date";
 
+
+
         open();
         Cursor cursor = database.rawQuery(sql,null);
         while (cursor.moveToNext()){
@@ -754,14 +756,6 @@ order by ab.end_date
                         sd,ed,cursor.getInt(cursor.getColumnIndex("count")),0));
             }
 
-            /*
-                           model.add(new AbEndingModel(cursor.getString(cursor.getColumnIndex("sp_name")),
-                        cursor.getInt(cursor.getColumnIndex("pos_id")),
-                        cursor.getInt(cursor.getColumnIndex("_id")),
-                        format.parse(cursor.getString(cursor.getColumnIndex("start_date"))),
-                        format.parse(cursor.getString(cursor.getColumnIndex("end_date"))),
-                        cursor.getInt(cursor.getColumnIndex("count")),0));
-             */
 
         }
         close();

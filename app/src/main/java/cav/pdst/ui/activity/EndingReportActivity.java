@@ -28,7 +28,7 @@ import cav.pdst.utils.ConstantManager;
  */
 
 public class EndingReportActivity extends AppCompatActivity implements View.OnClickListener,
-        DatePickerFragment.OnDateGetListener,AdapterView.OnItemClickListener {
+        AdapterView.OnItemClickListener {
 
     private final int START_DATE = 0;
     private final int END_DATE = 1;
@@ -38,8 +38,6 @@ public class EndingReportActivity extends AppCompatActivity implements View.OnCl
     private Date mFirstDate;
     private Date mLastDate;
 
-    private Button mDateStart;
-    private Button mDateEnd;
     private ListView mListView;
 
     private AbonementEndigRepAdapter adapter;
@@ -51,31 +49,10 @@ public class EndingReportActivity extends AppCompatActivity implements View.OnCl
 
         mDataManager = DataManager.getInstance();
 
-        mDateStart = (Button) findViewById(R.id.er_bt_start);
-        mDateEnd = (Button) findViewById(R.id.er_bt_end);
+
         mListView = (ListView) findViewById(R.id.er_lv);
 
-        mDateStart.setOnClickListener(this);
-        mDateEnd.setOnClickListener(this);
 
-        if (mDataManager.getPreferensManager().getDateEndingReport(ConstantManager.STORE_FIRST_REPORT_ED)!= null) {
-            mDateStart.setText(mDataManager.getPreferensManager().getDateEndingReport(ConstantManager.STORE_FIRST_REPORT_ED));
-            try {
-                mFirstDate = new SimpleDateFormat("dd.MM.yyyy").
-                        parse(mDataManager.getPreferensManager().getDateEndingReport(ConstantManager.STORE_FIRST_REPORT_ED));
-            } catch (ParseException e) {
-
-            }
-        }
-        if (mDataManager.getPreferensManager().getDateEndingReport(ConstantManager.STORE_LAST_REPORT_ED)!= null) {
-            mDateEnd.setText(mDataManager.getPreferensManager().getDateEndingReport(ConstantManager.STORE_LAST_REPORT_ED));
-            try {
-                mLastDate = new SimpleDateFormat("dd.MM.yyyy")
-                        .parse(mDataManager.getPreferensManager().getDateEndingReport(ConstantManager.STORE_LAST_REPORT_ED));
-            } catch (ParseException e) {
-
-            }
-        }
 
         mListView.setOnItemClickListener(this);
 
@@ -101,40 +78,7 @@ public class EndingReportActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     public void onClick(View view) {
-        DatePickerFragment dialog;
-        switch (view.getId()){
-            case R.id.er_bt_start:
-                dialogMode = START_DATE;
-                if (mFirstDate != null) {
-                    dialog = DatePickerFragment.newInstance(mFirstDate);
-                } else {
-                    dialog = DatePickerFragment.newInstance();
-                }
-                dialog.show(getSupportFragmentManager(), ConstantManager.DIALOG_DATE);
 
-                break;
-            case R.id.er_bt_end:
-                dialogMode = END_DATE;
-                dialog = DatePickerFragment.newInstance();
-                dialog.show(getSupportFragmentManager(), ConstantManager.DIALOG_DATE);
-                break;
-        }
-    }
-
-    @Override
-    public void OnDateGet(Date date) {
-        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
-        if (dialogMode == START_DATE){
-            mFirstDate = date;
-            mDateStart.setText(format.format(date));
-            mDataManager.getPreferensManager().setDateEndingReport(format.format(date),ConstantManager.STORE_FIRST_REPORT_ED);
-        }
-        if (dialogMode == END_DATE){
-            mLastDate = date;
-            mDateEnd.setText(format.format(date));
-            mDataManager.getPreferensManager().setDateEndingReport(format.format(date),ConstantManager.STORE_LAST_REPORT_ED);
-        }
-        updateUI();
     }
 
     private void updateUI() {
