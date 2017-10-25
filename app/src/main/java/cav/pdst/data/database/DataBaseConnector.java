@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -783,31 +784,35 @@ order by ab.end_date
 
         cursor = database.rawQuery(sql,null);
         while (cursor.moveToNext()){
-            Date sd = null;
-            Date ed = null;
-            try {
-                sd = format.parse(cursor.getString(cursor.getColumnIndex("start_date")));
-                ed = format.parse(cursor.getString(cursor.getColumnIndex("end_date")));
+            //    Log.d("DBCON ", String.valueOf((model.contains(new AbEndingModel(cursor.getString(cursor.getColumnIndex("sp_name")),0,0,0,new Date(),new Date(),0,0))))+" "+cursor.getString(cursor.getColumnIndex("sp_name")));
+            if (!model.contains(new AbEndingModel(cursor.getString(cursor.getColumnIndex("sp_name")),0,0,0,new Date(),new Date(),0,0))) {
 
-            } catch (ParseException e) {
-                e.printStackTrace();
-                return model;
-            }
-            int countTraining = cursor.getInt(cursor.getColumnIndex("count"));
+                Date sd = null;
+                Date ed = null;
+                try {
+                    sd = format.parse(cursor.getString(cursor.getColumnIndex("start_date")));
+                    ed = format.parse(cursor.getString(cursor.getColumnIndex("end_date")));
 
-            if (countTraining == 0 ){
-                model.add(new AbEndingModel(cursor.getString(cursor.getColumnIndex("sp_name")),
-                        cursor.getInt(cursor.getColumnIndex("sp_id")),
-                        cursor.getInt(cursor.getColumnIndex("pos_id")),
-                        cursor.getInt(cursor.getColumnIndex("_id")),
-                        sd,ed,cursor.getInt(cursor.getColumnIndex("count")),0,"Тренировки закончились"));
-            }
-            if (countTraining !=0){
-                model.add(new AbEndingModel(cursor.getString(cursor.getColumnIndex("sp_name")),
-                        cursor.getInt(cursor.getColumnIndex("sp_id")),
-                        cursor.getInt(cursor.getColumnIndex("pos_id")),
-                        cursor.getInt(cursor.getColumnIndex("_id")),
-                        sd,ed,cursor.getInt(cursor.getColumnIndex("count")),0,"Абонемент в закрытом периоде но есть тренировки"));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    return model;
+                }
+                int countTraining = cursor.getInt(cursor.getColumnIndex("count"));
+
+                if (countTraining == 0) {
+                    model.add(new AbEndingModel(cursor.getString(cursor.getColumnIndex("sp_name")),
+                            cursor.getInt(cursor.getColumnIndex("sp_id")),
+                            cursor.getInt(cursor.getColumnIndex("pos_id")),
+                            cursor.getInt(cursor.getColumnIndex("_id")),
+                            sd, ed, cursor.getInt(cursor.getColumnIndex("count")), 0, "Тренировки закончились"));
+                }
+                if (countTraining != 0) {
+                    model.add(new AbEndingModel(cursor.getString(cursor.getColumnIndex("sp_name")),
+                            cursor.getInt(cursor.getColumnIndex("sp_id")),
+                            cursor.getInt(cursor.getColumnIndex("pos_id")),
+                            cursor.getInt(cursor.getColumnIndex("_id")),
+                            sd, ed, cursor.getInt(cursor.getColumnIndex("count")), 0, "Абонемент в закрытом периоде но есть тренировки"));
+                }
             }
         }
 

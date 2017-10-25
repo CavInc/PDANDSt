@@ -1,5 +1,6 @@
 package cav.pdst.data.models;
 
+
 import java.util.Date;
 
 public class AbEndingModel {
@@ -67,5 +68,29 @@ public class AbEndingModel {
 
     public int getSpId() {
         return mSpId;
+    }
+
+    // проверяем только по имени спортсмена остальное нафиг
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == this)
+            return true;
+        if(obj == null)
+            return false;
+        /* Удостоверимся, что ссылки имеют тот же самый тип */
+        if(!(getClass() == obj.getClass())) {
+            return false;
+        }else {
+            AbEndingModel tmp = (AbEndingModel) obj;
+            if (tmp.getSportsman().equals(this.mSportsman)) return true;
+            else return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        int result = mAbonementID;
+        result = 41 * result + mSportsman.hashCode();
+        return result;
     }
 }
