@@ -729,7 +729,6 @@ order by ab.end_date
                 "order by ab.end_date";
 
 
-
         open();
         Cursor cursor = database.rawQuery(sql,null);
         while (cursor.moveToNext()){
@@ -747,7 +746,7 @@ order by ab.end_date
             int diffDate = cursor.getInt(cursor.getColumnIndex("rnowdate"));
 
             // тренировки кончились но срок абонемента еще больше 2 дней от текущей
-            if (countTraining == 0 && diffDate> 2 ) {
+            if (countTraining == 0 && (diffDate> 2 || diffDate == 2 || diffDate ==1 || diffDate == 0) ) {
                 model.add(new AbEndingModel(cursor.getString(cursor.getColumnIndex("sp_name")),
                         cursor.getInt(cursor.getColumnIndex("sp_id")),
                         cursor.getInt(cursor.getColumnIndex("pos_id")),
@@ -769,11 +768,49 @@ order by ab.end_date
                         cursor.getInt(cursor.getColumnIndex("sp_id")),
                         cursor.getInt(cursor.getColumnIndex("pos_id")),
                         cursor.getInt(cursor.getColumnIndex("_id")),
-                        sd,ed,cursor.getInt(cursor.getColumnIndex("count")),0));
+                        sd,ed,cursor.getInt(cursor.getColumnIndex("count")),0,"Оканчивающиеся тренировки"));
             }
-
-
         }
+
+        // заполняем данными из прошедшего периода
+        sql="select ab._id,ab.pos_id,ab.sp_id,sp.sp_name,ab.start_date,ab.end_date,(ab.count_training-ab.used_training) as count,ab.working,ab.used_working,ab.warning_count from\n" +
+                "(select  sp_id,max(end_date),max(pos_id) as pos_id from abonement\n" +
+                "where end_date<'"+format.format(new Date())+"' \n" +
+                "group by sp_id) as am\n" +
+                " join sportsman sp on sp.used=1 and am.sp_id=sp._id\n" +
+                " left join abonement ab on am.sp_id=ab.sp_id and am.pos_id=ab.pos_id\n" +
+                "where  ab.type_abonement=0";
+
+        cursor = database.rawQuery(sql,null);
+        while (cursor.moveToNext()){
+            Date sd = null;
+            Date ed = null;
+            try {
+                sd = format.parse(cursor.getString(cursor.getColumnIndex("start_date")));
+                ed = format.parse(cursor.getString(cursor.getColumnIndex("end_date")));
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+                return model;
+            }
+            int countTraining = cursor.getInt(cursor.getColumnIndex("count"));
+
+            if (countTraining == 0 ){
+                model.add(new AbEndingModel(cursor.getString(cursor.getColumnIndex("sp_name")),
+                        cursor.getInt(cursor.getColumnIndex("sp_id")),
+                        cursor.getInt(cursor.getColumnIndex("pos_id")),
+                        cursor.getInt(cursor.getColumnIndex("_id")),
+                        sd,ed,cursor.getInt(cursor.getColumnIndex("count")),0,"Тренировки закончились"));
+            }
+            if (countTraining !=0){
+                model.add(new AbEndingModel(cursor.getString(cursor.getColumnIndex("sp_name")),
+                        cursor.getInt(cursor.getColumnIndex("sp_id")),
+                        cursor.getInt(cursor.getColumnIndex("pos_id")),
+                        cursor.getInt(cursor.getColumnIndex("_id")),
+                        sd,ed,cursor.getInt(cursor.getColumnIndex("count")),0,"Абонемент в закрытом периоде но есть тренировки"));
+            }
+        }
+
         close();
         return model;
     }
