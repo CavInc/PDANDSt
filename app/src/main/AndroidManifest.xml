@@ -103,6 +103,7 @@
             android:label="Информация о абонементе">
         </activity>
         <activity android:name=".ui.activity.EndingReportActivity"
+            android:launchMode="singleTask"
             android:label="Отчет по абонементам">
         </activity>
     </application>

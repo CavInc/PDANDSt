@@ -82,7 +82,8 @@ public class AbEndingModel {
             return false;
         }else {
             AbEndingModel tmp = (AbEndingModel) obj;
-            if (tmp.getSportsman().equals(this.mSportsman)) return true;
+            //if (tmp.getSportsman().equals(this.mSportsman)) return true;
+            if (tmp.getSpId() == this.mSpId) return true;
             else return false;
         }
     }

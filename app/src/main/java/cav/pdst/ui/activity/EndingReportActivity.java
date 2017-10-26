@@ -98,6 +98,7 @@ public class EndingReportActivity extends AppCompatActivity implements View.OnCl
         Intent intent = new Intent(this, SportsmanDetailActivity.class);
         intent.putExtra(ConstantManager.ALARM_ID,record.getSpId());
         intent.putExtra(ConstantManager.MODE_SP_DETAIL,ConstantManager.ALARM_SPORTSMAN);
+        intent.putExtra(ConstantManager.MODE_RETURN_SP,ConstantManager.RETURN_IN_BACK);
         startActivity(intent);
 
        /*

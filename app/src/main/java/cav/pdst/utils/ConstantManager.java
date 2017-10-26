@@ -76,4 +76,7 @@ public interface ConstantManager {
     String STORE_FIRST_START_ALARM = "STORE_FIRST_START_ALARM";
     String STORE_FIRST_REPORT_ED = "STORE_FRED";
     String STORE_LAST_REPORT_ED = "STORE_LRED";
+    String MODE_RETURN_SP = "RETURN_SP";
+
+    int RETURN_IN_BACK = 100;
 }

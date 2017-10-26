@@ -726,7 +726,7 @@ order by ab.end_date
         String sql="select ab._id,ab.pos_id,ab.sp_id,sp.sp_name,ab.start_date,ab.end_date,(ab.count_training-ab.used_training) as count,ab.working,ab.used_working,ab.warning_count\n" +
                 " ,(julianday(ab.end_date) - julianday('"+format.format(new Date())+"')) as rnowdate from abonement ab\n" +
                 "   left join SPORTSMAN sp on ab.sp_id = sp._id\n" +
-                "where  (julianday(ab.end_date) - julianday(ab.start_date)<>0) and sp.used=1 and (ab.end_date>='"+format.format(new Date())+"')\n" +
+                "where  ab.type_abonement=0 and sp.used=1 and (ab.end_date>='"+format.format(new Date())+"')\n" +
                 "order by ab.end_date";
 
 
@@ -764,7 +764,7 @@ order by ab.end_date
                         sd,ed,cursor.getInt(cursor.getColumnIndex("count")),0,"Подходящий срок абонемента"));
             }
             // тренировки еще есть
-            if (countTraining <4 && diffDate>2) {
+            if ((countTraining>0 && countTraining < 3) && diffDate>2) {
                 model.add(new AbEndingModel(cursor.getString(cursor.getColumnIndex("sp_name")),
                         cursor.getInt(cursor.getColumnIndex("sp_id")),
                         cursor.getInt(cursor.getColumnIndex("pos_id")),
@@ -780,12 +780,13 @@ order by ab.end_date
                 "group by sp_id) as am\n" +
                 " join sportsman sp on sp.used=1 and am.sp_id=sp._id\n" +
                 " left join abonement ab on am.sp_id=ab.sp_id and am.pos_id=ab.pos_id\n" +
-                "where  ab.type_abonement=0";
+                "where  ab.type_abonement=0 order by ab.end_date";
 
         cursor = database.rawQuery(sql,null);
         while (cursor.moveToNext()){
             //    Log.d("DBCON ", String.valueOf((model.contains(new AbEndingModel(cursor.getString(cursor.getColumnIndex("sp_name")),0,0,0,new Date(),new Date(),0,0))))+" "+cursor.getString(cursor.getColumnIndex("sp_name")));
-            if (!model.contains(new AbEndingModel(cursor.getString(cursor.getColumnIndex("sp_name")),0,0,0,new Date(),new Date(),0,0))) {
+            if (!model.contains(new AbEndingModel(cursor.getString(cursor.getColumnIndex("sp_name")),
+                    cursor.getInt(cursor.getColumnIndex("sp_id")),0,0,new Date(),new Date(),0,0))) {
 
                 Date sd = null;
                 Date ed = null;
