@@ -755,8 +755,17 @@ order by ab.end_date
                         sd,ed,cursor.getInt(cursor.getColumnIndex("count")),0,"Абонемент исчерпал тренировки но дата не кончилась"));
 
             }
+
+            AbEndingModel md = new AbEndingModel(cursor.getString(cursor.getColumnIndex("sp_name")),
+                    cursor.getInt(cursor.getColumnIndex("sp_id")),0,cursor.getInt(cursor.getColumnIndex("_id")),new Date(),new Date(),0,0);
+            int l = model.indexOf(md);
+           // Log.d("DBCON", String.valueOf(l));
+
             // подходит срок абонемента
-            if (countTraining !=0 && (diffDate == 0 || diffDate == 1 || diffDate == 2)){
+            if ((countTraining>0 && countTraining < 3) && (diffDate == 0 || diffDate == 1 || diffDate == 2)){
+                if (l!=-1) {
+                    model.remove(l);
+                }
                 model.add(new AbEndingModel(cursor.getString(cursor.getColumnIndex("sp_name")),
                         cursor.getInt(cursor.getColumnIndex("sp_id")),
                         cursor.getInt(cursor.getColumnIndex("pos_id")),
@@ -765,6 +774,9 @@ order by ab.end_date
             }
             // тренировки еще есть
             if ((countTraining>0 && countTraining < 3) && diffDate>2) {
+                if (l!=-1) {
+                    model.remove(l);
+                }
                 model.add(new AbEndingModel(cursor.getString(cursor.getColumnIndex("sp_name")),
                         cursor.getInt(cursor.getColumnIndex("sp_id")),
                         cursor.getInt(cursor.getColumnIndex("pos_id")),

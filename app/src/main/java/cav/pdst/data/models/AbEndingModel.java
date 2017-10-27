@@ -1,6 +1,8 @@
 package cav.pdst.data.models;
 
 
+import android.util.Log;
+
 import java.util.Date;
 
 public class AbEndingModel {
@@ -83,15 +85,19 @@ public class AbEndingModel {
         }else {
             AbEndingModel tmp = (AbEndingModel) obj;
             //if (tmp.getSportsman().equals(this.mSportsman)) return true;
-            if (tmp.getSpId() == this.mSpId) return true;
+            if (tmp.getSpId() == this.mSpId){
+                //Log.d("ABE","True "+this.mSpId+" "+tmp.mSpId);
+                return true;
+            }
             else return false;
         }
     }
 
+
     @Override
     public int hashCode() {
-        int result = mAbonementID;
-        result = 41 * result + mSportsman.hashCode();
+        int result = 1;
+        result = 31 * result + mSpId;
         return result;
     }
 }

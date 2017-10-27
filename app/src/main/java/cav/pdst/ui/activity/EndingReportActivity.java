@@ -56,7 +56,7 @@ public class EndingReportActivity extends AppCompatActivity implements View.OnCl
 
         mListView.setOnItemClickListener(this);
 
-        updateUI();
+        //updateUI();
         setupToolBar();
     }
 
@@ -74,6 +74,12 @@ public class EndingReportActivity extends AppCompatActivity implements View.OnCl
             return true;
         }
         return true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateUI();
     }
 
     @Override
