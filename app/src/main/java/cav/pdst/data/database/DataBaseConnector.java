@@ -762,7 +762,7 @@ order by ab.end_date
            // Log.d("DBCON", String.valueOf(l));
 
             // подходит срок абонемента
-            if ((countTraining>0 && countTraining < 3) && (diffDate == 0 || diffDate == 1 || diffDate == 2)){
+            if (countTraining != 0 && (diffDate == 0 || diffDate == 1 || diffDate == 2)){
                 if (l!=-1) {
                     model.remove(l);
                 }
