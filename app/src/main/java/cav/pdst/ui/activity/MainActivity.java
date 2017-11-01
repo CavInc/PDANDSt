@@ -118,6 +118,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         selectedDate = new Date();
         // lock in pay
+        /*
         if (new SimpleDateFormat("dd.MM.yyy").format(selectedDate).equals("15.11.2017")) {
             Log.d(TAG,"YES DATE");
             AlertDialog.Builder dialog =  new AlertDialog.Builder(this);
@@ -133,6 +134,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             dialog.show();
 
         }
+        */
 
         SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(this);
         // если все пустой запускаем с дефолтовыми настройками. если нет то с настройками из
