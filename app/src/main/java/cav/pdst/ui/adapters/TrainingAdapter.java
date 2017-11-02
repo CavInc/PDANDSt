@@ -42,26 +42,14 @@ public class TrainingAdapter extends ArrayAdapter<SportsmanTrainingModel> {
             row = mInflater.inflate(resLayout,parent,false);
             holder = new ViewHolder();
             holder.mName = (CheckedTextView) row.findViewById(R.id.checkBox);
-/*
-            holder.mName.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    Log.d(TAG,"POSITION: "+position+" "+b);
-                    getItem(position).setCheck(b);
-                }
-            });
-            */
-
             holder.mCount = (TextView) row.findViewById(R.id.tr_item_count_item);
             row.setTag(holder);
         }else{
             holder = (ViewHolder) row.getTag();
         }
-        //holder.mName.setChecked(false);
         SportsmanTrainingModel record = getItem(position);
         holder.mCount.setText(String.valueOf(record.getCount()));
         holder.mName.setText(record.getName());
-        //holder.mName.setBackgroundColor(Color.TRANSPARENT);
         row.setBackgroundColor(Color.TRANSPARENT);
 
         if (record.getCount()!=0){

@@ -8,13 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -60,7 +57,6 @@ public class DohodActivity extends AppCompatActivity {
             onBackPressed();
         }
         return true;
-        //return super.onOptionsItemSelected(item);
     }
 
     private void setupTable(){

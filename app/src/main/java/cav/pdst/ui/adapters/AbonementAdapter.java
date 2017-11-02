@@ -1,11 +1,9 @@
 package cav.pdst.ui.adapters;
 
 
-import android.app.Activity;
+
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +13,6 @@ import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import cav.pdst.R;
@@ -104,7 +101,6 @@ public class AbonementAdapter extends ArrayAdapter<AbonementModel> {
             holder.mPrime.setTextColor(ContextCompat.getColor(getContext(),R.color.app_red));
         }
 
-        //holder.mPrime.setText();
         return row;
     }
 
