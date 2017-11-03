@@ -238,6 +238,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         mTraining.requestFocus();
         mTraining.setEnabled(flg);
         mListView.setEnabled(flg);
+        //mListView.setClickable(flg);
 
         mTimeButton.setEnabled(flg);
         mDataButton.setEnabled(flg);

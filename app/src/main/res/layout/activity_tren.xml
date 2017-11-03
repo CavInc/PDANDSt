@@ -77,13 +77,12 @@
         android:layout_below="@+id/count_sportsman"
         android:layout_toRightOf="@+id/repeat_txt">
     </Spinner>
+
     <ListView
-        android:id="@+id/training_list_view"
-        android:choiceMode="multipleChoice"
-        android:layout_below="@id/repeat_txt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
+            android:id="@+id/training_list_view"
+            android:layout_below="@id/repeat_txt"
+            android:choiceMode="multipleChoice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
     </ListView>
-
 </RelativeLayout>
