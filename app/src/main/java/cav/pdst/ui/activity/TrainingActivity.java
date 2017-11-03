@@ -78,6 +78,8 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
 
     private int training_repeat=0;
 
+    private boolean noSelected = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -238,12 +240,14 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         mTraining.setFocusableInTouchMode(true);
         mTraining.requestFocus();
         mTraining.setEnabled(flg);
-        mListView.setEnabled(flg);
+        //mListView.setEnabled(flg);
+        mListView.setClickable(flg);
 
         mTimeButton.setEnabled(flg);
         mDataButton.setEnabled(flg);
         mSpinner.setEnabled(flg);
         mRepeatSpiner.setEnabled(flg);
+        noSelected = !flg;
     }
 
 
@@ -314,6 +318,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
 
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, final int position, long id) {
+            if (noSelected) return;
             SportsmanTrainingModel mx = (SportsmanTrainingModel) adapterView.getItemAtPosition(position);
             selSportspam = mx.getId();
             if (mx.getCount() == 0 && (!mx.isCheck())){

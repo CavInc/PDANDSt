@@ -734,7 +734,7 @@ order by rf.id1,tt.date desc ,tt.time  desc
 
 
 
-        sql="select ab._id,ab.pos_id,ab.sp_id,sp.sp_name,ab.start_date,ab.end_date,(ab.count_training-ab.used_training) as count,ab.working,ab.used_working,ab.warning_count\n" +
+        sql="select ab._id,ab.pos_id,ab.sp_id,sp.sp_name,ab.start_date,ab.end_date,(ab.count_training-(ab.used_training+ab.warning_count)) as count,ab.working,ab.used_working,ab.warning_count\n" +
                 " ,(julianday(ab.end_date) - julianday('"+format.format(new Date())+"')) as rnowdate from abonement ab\n" +
                 "   left join SPORTSMAN sp on ab.sp_id = sp._id\n" +
                 "where  ab.type_abonement=0 and sp.used=1 and (ab.end_date>='"+format.format(new Date())+"')\n" +
