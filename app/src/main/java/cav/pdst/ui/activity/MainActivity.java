@@ -1,12 +1,10 @@
 package cav.pdst.ui.activity;
 
 import android.Manifest;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -16,16 +14,13 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
@@ -47,7 +42,6 @@ import java.util.HashSet;
 
 import cav.pdst.R;
 import cav.pdst.data.managers.DataManager;
-import cav.pdst.data.managers.PreferensManager;
 import cav.pdst.data.models.TrainingModel;
 import cav.pdst.ui.adapters.TraningMainAdapter;
 import cav.pdst.ui.fragments.EditDeleteDialog;

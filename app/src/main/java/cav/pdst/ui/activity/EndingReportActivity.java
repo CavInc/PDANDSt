@@ -107,13 +107,5 @@ public class EndingReportActivity extends AppCompatActivity implements View.OnCl
         intent.putExtra(ConstantManager.MODE_RETURN_SP,ConstantManager.RETURN_IN_BACK);
         startActivity(intent);
 
-       /*
-        AbEndingModel record = (AbEndingModel) adapterView.getItemAtPosition(position);
-        AbonementModel data = mDataManager.getAbonementId(record.getAbonementID());
-        Intent intent = new Intent(this, AbonementInfoActivity.class);
-        intent.putExtra(ConstantManager.AB_DETAIL_DATA,data);
-        startActivity(intent);
-        */
-
     }
 }

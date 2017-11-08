@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -152,16 +151,6 @@ public class DataBaseConnector {
                 database.execSQL(sql);
             }
         }
-        /*
-        Cursor cursor = getLastDateTraining(recid);
-        while (cursor.moveToNext()){
-            value.clear();
-            value.put("last_date",cursor.getString(cursor.getColumnIndex("date")));
-            value.put("last_time",cursor.getString(cursor.getColumnIndex("time")));
-            database.update(DBHelper.SPORTSMAN_TABLE,value,
-                    "_id="+cursor.getInt(0),null);
-        }
-        */
         setLastDataTraining(recid);
 
        close();
@@ -278,23 +267,7 @@ public class DataBaseConnector {
 
         Cursor cursor;
 
-        /*
-        Cursor cursor = database.query(DBHelper.REF_TABLE,new String[]{"id1"},"type_ref=1 and id2="+id,null,null,null,null);
 
-        while (cursor.moveToNext()){
-            Cursor rx = database.rawQuery("select rf.id1,tt.date,tt.time from ref_table rf\n" +
-                    " join trainig_table tt on rf.type_ref=1 and rf.id2=tt._id\n" +
-                    "where rf.id2<>"+id+" and rf.id1="+cursor.getInt(0)+"\n" +
-                    "order by rf.id1,tt.date desc ,tt.time  desc\n" +
-                    "limit 1",null);
-            rx.moveToFirst();
-            if (rx.getCount()!=0) {
-                sql = "update " + DBHelper.SPORTSMAN_TABLE + " set last_date='" + rx.getString(1) + "', last_time='" + rx.getString(2) + "' " +
-                        "where  _id=" + rx.getInt(0);
-                database.execSQL(sql);
-            }
-        }
-        */
         setLastDataOutTraining(id);
 
         cursor = database.query(DBHelper.REF_TABLE,new String[]{"id2","type_link"},"type_ref=2 and id1="+id,null,null,null,null);
@@ -311,13 +284,6 @@ public class DataBaseConnector {
             }
             database.execSQL(sql);
         }
-        //TODO сдесь пеустановка у спортсмена даты последней тренировки.
-        /*
-        select rf.id1,tt.date,tt.time from ref_table rf
- join trainig_table tt on rf.type_ref=1 and rf.id2=tt._id
-where rf.id2<>5
-order by rf.id1,tt.date desc ,tt.time  desc
-         */
 
         database.delete(DBHelper.REF_TABLE,"type_ref=2 and id1="+id,null);
         database.delete(DBHelper.REF_TABLE,"type_ref=1 and id2="+id,null);
@@ -587,17 +553,10 @@ order by rf.id1,tt.date desc ,tt.time  desc
                    " where sp_id="+sp_id+" and start_date<='"+date+"' and end_date>='"+date+"' and ((count_training+(working-used_working))-(used_training+warning_count))<>0"+
                 " order by pos_id limit 1";
 
-        //System.out.println(sql);
         return database.rawQuery(sql,null);
     }
 
     public Cursor getDohod(String sdate, String edate){
-        /*
-        String sql="select sp.sp_name,ab.pay,(ab.start_date||' - '||ab.end_date) as period from ABONEMENT ab\n" +
-                "  join SPORTSMAN sp on ab.sp_id=sp._id\n" +
-                "where ab.start_date>='"+sdate+"' and ab.end_date<='"+edate+"'\n" +
-                "order by sp.sp_name,ab.start_date";
-        */
         String sql="select sum(ab.pay) as sm from ABONEMENT ab\n" +
                 "  join SPORTSMAN sp on ab.sp_id=sp._id\n" +
                 "where ab.buy_date>='"+sdate+"' and ab.buy_date<='"+edate+"'";
@@ -698,11 +657,7 @@ order by rf.id1,tt.date desc ,tt.time  desc
 
         Cursor cursor = database.rawQuery(sql,null);
         while (cursor.moveToNext()){
-            //    Log.d("DBCON ", String.valueOf((model.contains(new AbEndingModel(cursor.getString(cursor.getColumnIndex("sp_name")),0,0,0,new Date(),new Date(),0,0))))+" "+cursor.getString(cursor.getColumnIndex("sp_name")));
-           /* if (!model.contains(new AbEndingModel(cursor.getString(cursor.getColumnIndex("sp_name")),
-                    cursor.getInt(cursor.getColumnIndex("sp_id")),0,0,new Date(),new Date(),0,0))) */{
-
-
+            {
                 Date sd = null;
                 Date ed = null;
                 try {

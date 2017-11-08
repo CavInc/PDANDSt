@@ -1,6 +1,5 @@
 package cav.pdst.services;
 
-import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -11,10 +10,8 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import cav.pdst.R;
 import cav.pdst.data.managers.DataManager;

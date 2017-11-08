@@ -44,7 +44,6 @@ public class TraningMainAdapter extends ArrayAdapter<TrainingModel> {
             holder = (ViewHolder)row.getTag();
         }
         TrainingModel record = getItem(position);
-        //holder.mTime.setText(record.getTitle());
         holder.mName.setText(record.getName());
         holder.mTime.setText(record.getTime());
         if (record.getType()== ConstantManager.ONE){

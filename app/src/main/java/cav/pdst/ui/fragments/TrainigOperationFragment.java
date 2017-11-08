@@ -1,6 +1,6 @@
 package cav.pdst.ui.fragments;
 
-import android.app.Activity;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -8,7 +8,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 
 import cav.pdst.R;
-import cav.pdst.data.models.TestAbonementModel;
+
 
 public class TrainigOperationFragment extends DialogFragment{
 

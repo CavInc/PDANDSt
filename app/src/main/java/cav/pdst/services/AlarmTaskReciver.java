@@ -7,7 +7,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.util.Log;
 
 import cav.pdst.R;
 import cav.pdst.ui.activity.SportsmanDetailActivity;

@@ -93,46 +93,6 @@ public class SportsmanAdapter extends ArrayAdapter<SportsmanModel> implements Fi
         this.clear();
         this.addAll(data);
     }
-/*
-    @Override
-    public Filter getFilter() {
-        return new Filter() {
-            @Override
-            protected FilterResults performFiltering(CharSequence constraint) {
-                FilterResults results = new FilterResults();
-                // constraint - параметр фильтра переданный через атрибуты
-                if(constraint == null || constraint.length() == 0) {
-                    results.values = originalData;
-                    results.count = originalData.size();
-                } else {
-                    // создаём коллекцию, в которой будут храниться отфильтрованные результаты
-                    List newList = new ArrayList();
-                    // проходимся по коллекции
-                    for(SportsmanModel i : originalData) {
-                        if (i.toString().toUpperCase().startsWith(constraint.toString().toUpperCase())){
-                            newList.add(i);
-                        }
-                    }
-                    // возвращаем новую коллекцию
-                    results.values = newList;
-                    // и количество результатов
-                    results.count = newList.size();
-                }
-                return results;
-            }
-
-            @Override
-            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                if (filterResults != null && filterResults.count > 0) {
-                    originalData = (List<SportsmanModel>) filterResults.values;
-                    notifyDataSetChanged();
-                } else {
-                    notifyDataSetInvalidated();
-                }
-            }
-        };
-    }
-    */
 
     private class ViewHolder{
         public TextView mName;

@@ -16,15 +16,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageButton;
 import android.widget.ListView;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 import cav.pdst.R;
@@ -34,7 +31,7 @@ import cav.pdst.ui.adapters.SportsmanAdapter;
 import cav.pdst.ui.fragments.EditDeleteDialog;
 import cav.pdst.utils.ConstantManager;
 
-//https://habrahabr.ru/post/256643/
+
 
 public class SportsmanActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,AdapterView.
         OnItemLongClickListener,View.OnClickListener,EditDeleteDialog.EditDeleteDialogListener,AdapterView.OnItemClickListener {
