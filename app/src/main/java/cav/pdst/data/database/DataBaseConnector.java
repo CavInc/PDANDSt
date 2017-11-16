@@ -319,6 +319,17 @@ public class DataBaseConnector {
                     "    left join (select sp_id,sum((count_training+(working-used_working))-(used_training+warning_count)) as ci from ABONEMENT group by sp_id) as a on spt._id= a.sp_id\n" +
                     " where spt.used=1 "+
                     " order by spt.sp_name";
+        }else {
+            sql="select spt._id as _id,spt.sp_name as sp_name,a.ci as ci,tb.type_link as type_link,tb.id2 as ab from\n" +
+                    "                (select sp._id,sp.sp_name,rf.id2,sp.used from  SPORTSMAN sp\n" +
+                    "                        left join REF_TABLE rf on rf.type_ref=1 and sp._id = rf.id1 and rf.id2="+training_id+") as spt\n" +
+                    "    left join (select rf.id1,rf.id2,rf.type_link,ab.sp_id from REF_TABLE rf \n" +
+                    "                    left join ABONEMENT ab on rf.id2= ab._id\n" +
+                    "                    where rf.type_ref=2 and rf.id1="+training_id+") as tb on spt.id2=tb.id1 and spt._id=tb.sp_id\n" +
+                    "    left join (select sp_id,sum((count_training+(working-used_working))-(used_training+warning_count)) as ci from ABONEMENT group by sp_id) as a on spt._id= a.sp_id\n" +
+                    "   LEFT join REF_TABLE rfx on rfx.type_ref=0 and spt._id=rfx.id1 \n"+
+                    " where rfx.id2= 2 and spt.used=1 "+
+                    " order by spt.sp_name";
         }
 
         return database.rawQuery(sql,null);
