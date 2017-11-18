@@ -267,9 +267,20 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
             Log.d(TAG,"UPDATE NEW ");
             setChekItems(model);
         }else {
+            // -- тут заполнить модель из checkItems
+            setChesketModel(model);
             mAdapter.setData(model);
             mAdapter.notifyDataSetChanged();
             Log.d(TAG,"UPDATE OLD");
+        }
+    }
+
+    private void setChesketModel(ArrayList<SportsmanTrainingModel> model) {
+        for (SpRefAbModeModel l : chekItems){
+            int pos = model.indexOf(new SportsmanTrainingModel(l.getSpId(),l.getAbonement(),l.getMode()));
+            if (pos !=-1){
+                model.get(pos).setCheck(true);
+            }
         }
     }
 

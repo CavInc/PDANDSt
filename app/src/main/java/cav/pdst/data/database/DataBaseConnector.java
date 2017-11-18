@@ -328,7 +328,7 @@ public class DataBaseConnector {
                     "                    where rf.type_ref=2 and rf.id1="+training_id+") as tb on spt.id2=tb.id1 and spt._id=tb.sp_id\n" +
                     "    left join (select sp_id,sum((count_training+(working-used_working))-(used_training+warning_count)) as ci from ABONEMENT group by sp_id) as a on spt._id= a.sp_id\n" +
                     "   LEFT join REF_TABLE rfx on rfx.type_ref=0 and spt._id=rfx.id1 \n"+
-                    " where rfx.id2= 2 and spt.used=1 "+
+                    " where rfx.id2= "+group_id+" and spt.used=1 "+
                     " order by spt.sp_name";
         }
 
