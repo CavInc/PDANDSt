@@ -253,7 +253,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
 
 
     private void updateUI(){
-        Log.d(TAG,"UPDATE");
+       // Log.d(TAG,"UPDATE");
         // все спортсмены у указанием количества абонементов
         ArrayList<SportsmanTrainingModel> model = null;
         if (mode == ConstantManager.NEW_TRAINING) {
@@ -264,14 +264,14 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         if (mAdapter == null){
             mAdapter = new TrainingAdapter(this,R.layout.training_item,model);
             mListView.setAdapter(mAdapter);
-            Log.d(TAG,"UPDATE NEW ");
+           // Log.d(TAG,"UPDATE NEW ");
             setChekItems(model);
         }else {
             // -- тут заполнить модель из checkItems
             setChesketModel(model);
             mAdapter.setData(model);
             mAdapter.notifyDataSetChanged();
-            Log.d(TAG,"UPDATE OLD");
+            //Log.d(TAG,"UPDATE OLD");
         }
     }
 
