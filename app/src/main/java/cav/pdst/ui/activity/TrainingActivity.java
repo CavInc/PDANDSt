@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -77,6 +78,9 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
 
     private int training_repeat=0;
 
+    private boolean noSelected = false;
+
+    private ArrayList<SpRefAbModeModel> chekItems; // сохраняем выделенные элементы.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,8 +97,8 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
             String[] tm = mModel.getTime().split(":");
             hour = Integer.parseInt(tm[0]);
             minute = Integer.parseInt(tm[1]);
-
         }
+
 
         Bundle buingle = getIntent().getExtras();
         mDate = (Date) buingle.get(ConstantManager.TRAINING_DATE);
@@ -237,17 +241,24 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         mTraining.setFocusableInTouchMode(true);
         mTraining.requestFocus();
         mTraining.setEnabled(flg);
+<<<<<<< HEAD
         mListView.setEnabled(flg);
         //mListView.setClickable(flg);
+=======
+        //mListView.setEnabled(flg);
+        mListView.setClickable(flg);
+>>>>>>> 1560cc424583f277516b97be546580073ea2aeb2
 
         mTimeButton.setEnabled(flg);
         mDataButton.setEnabled(flg);
         mSpinner.setEnabled(flg);
         mRepeatSpiner.setEnabled(flg);
+        noSelected = !flg;
     }
 
 
     private void updateUI(){
+       // Log.d(TAG,"UPDATE");
         // все спортсмены у указанием количества абонементов
         ArrayList<SportsmanTrainingModel> model = null;
         if (mode == ConstantManager.NEW_TRAINING) {
@@ -258,11 +269,40 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         if (mAdapter == null){
             mAdapter = new TrainingAdapter(this,R.layout.training_item,model);
             mListView.setAdapter(mAdapter);
+           // Log.d(TAG,"UPDATE NEW ");
+            setChekItems(model);
         }else {
+            // -- тут заполнить модель из checkItems
+            setChesketModel(model);
             mAdapter.setData(model);
             mAdapter.notifyDataSetChanged();
+            //Log.d(TAG,"UPDATE OLD");
         }
+    }
 
+    private void setChesketModel(ArrayList<SportsmanTrainingModel> model) {
+        for (SpRefAbModeModel l : chekItems){
+            int pos = model.indexOf(new SportsmanTrainingModel(l.getSpId(),l.getAbonement(),l.getMode()));
+            if (pos !=-1){
+                model.get(pos).setCheck(true);
+            }
+        }
+    }
+
+    // устанавливает отмеченные елементы
+    private void setChekItems(ArrayList<SportsmanTrainingModel> model){
+        if (chekItems == null) {
+            chekItems = new ArrayList<>();
+        }
+        for (SportsmanTrainingModel l:model){
+            if (l.isCheck()) {
+                chekItems.add(new SpRefAbModeModel(
+                        l.getId(),
+                        l.getLinkAbonement(),
+                        l.getMode()
+                ));
+            }
+        }
     }
 
     private void setSpinerListener(){
@@ -314,6 +354,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
 
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, final int position, long id) {
+            if (noSelected) return;
             SportsmanTrainingModel mx = (SportsmanTrainingModel) adapterView.getItemAtPosition(position);
             selSportspam = mx.getId();
             if (mx.getCount() == 0 && (!mx.isCheck())){
@@ -344,40 +385,43 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
                     public void onTrainingClickListener(int witch) {
                         mAdapter.getItem(position).setMode(witch);
 
-                        /*
-                        if ((witch == ConstantManager.SPORTSMAN_MODE_TRAINING) || (witch == ConstantManager.SPORTSMAN_MODE_PASS)) {
-                            //mSpAB.add(mLinkSpABTrModel);
-                            mAdapter.getItem(position).setLinkAbonement(ab.getId());
-                        }
-                        if (witch == ConstantManager.SPORTSMAN_MODE_WARNING) {
-                            mAdapter.getItem(position).setLinkAbonement(ab.getId());
-                        }
-                        */
-
                         mAdapter.getItem(position).setLinkAbonement(ab.getId());
 
                         mAdapter.getItem(position).setCheck(true);
                         mAdapter.getItem(position).setCount(mAdapter.getItem(position).getCount()-1);
-
                         mAdapter.notifyDataSetChanged();
+                        // установили метку
+                        chekItems.add(new SpRefAbModeModel(
+                                mAdapter.getItem(position).getId(),
+                                mAdapter.getItem(position).getLinkAbonement(),
+                                mAdapter.getItem(position).getMode()));
+
                         changeCountSportsman(true);
                     }
                 });
                 dialog.show(getFragmentManager(),"OPERATIONDIALOG");
             } else {
+                // сняли метку
+                int ir = chekItems.indexOf(new SpRefAbModeModel(
+                        mAdapter.getItem(position).getId(),
+                        mAdapter.getItem(position).getLinkAbonement(),
+                        mAdapter.getItem(position).getMode()));
+
+                Log.d(TAG, String.valueOf(ir));
+
+                chekItems.remove(new SpRefAbModeModel(
+                        mAdapter.getItem(position).getId(),
+                        mAdapter.getItem(position).getLinkAbonement(),
+                        mAdapter.getItem(position).getMode()));
+
                 //снятие абонемента
-                /*
-                if (mLinkSpABTrModel != null) {
-                    mSpAB.remove(mLinkSpABTrModel);
-                    mLinkSpABTrModel = null;
-                }
-                */
                 mAdapter.getItem(position).setLinkAbonement(-1);
                 ((SportsmanTrainingModel) adapterView.getItemAtPosition(position)).setCheck(! mx.isCheck());
                 ((SportsmanTrainingModel) adapterView.getItemAtPosition(position)).setMode(-1);
                 ((SportsmanTrainingModel) adapterView.getItemAtPosition(position))
                         .setCount(((SportsmanTrainingModel) adapterView.getItemAtPosition(position)).getCount()+1);
                 mAdapter.notifyDataSetChanged();
+
                 changeCountSportsman(false);
             }
         }
@@ -400,8 +444,9 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-
+    // выделенные элементы
     private ArrayList<SpRefAbModeModel> getCheckElement(){
+        /*
         ArrayList<SpRefAbModeModel> rec = new ArrayList<>();
         for (int i=0;i<mAdapter.getCount();i++){
             if (mAdapter.getItem(i).isCheck()) {
@@ -411,9 +456,11 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
             }
         }
         return rec;
+        */
+        return chekItems;
     }
 
-
+    // сохраняем данных о тренировки и спрортсменах
     private void saveResult(){
         if (mode == ConstantManager.VIEW_TRAINING) return;
 

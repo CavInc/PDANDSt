@@ -28,6 +28,12 @@ public class SportsmanTrainingModel {
         }
     }
 
+    public SportsmanTrainingModel(int id, int linkAbonement, int mode) {
+        mId = id;
+        mLinkAbonement = linkAbonement;
+        mMode = mode;
+    }
+
     public int getId() {
         return mId;
     }
@@ -68,4 +74,24 @@ public class SportsmanTrainingModel {
         mLinkAbonement = linkAbonement;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == this)
+            return true;
+        if(obj == null)
+            return false;
+                /* Удостоверимся, что ссылки имеют тот же самый тип */
+        if(!(getClass() == obj.getClass())) {
+            return false;
+        }else {
+            SportsmanTrainingModel tmp = (SportsmanTrainingModel) obj;
+            if (tmp.getId() == this.mId){
+                return true;
+            } else {
+                return false;
+            }
+
+        }
+
+    }
 }

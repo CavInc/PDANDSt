@@ -23,4 +23,31 @@ public class SpRefAbModeModel {
     public int getMode() {
         return mMode;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == this)
+            return true;
+        if(obj == null)
+            return false;
+        /* Удостоверимся, что ссылки имеют тот же самый тип */
+        if(!(getClass() == obj.getClass())) {
+            return false;
+        }else {
+            SpRefAbModeModel tmp = (SpRefAbModeModel) obj;
+            if (tmp.getSpId() == this.getSpId()) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 1;
+        result = 31 * result + mSpId+mAbonement;
+        return result;
+    }
+
 }
