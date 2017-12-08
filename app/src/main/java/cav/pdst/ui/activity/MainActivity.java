@@ -144,6 +144,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setupToolBar();
         setupDrower();
 
+        // автоматическая коррекция количества
+        mDataManager.getDB().checketCount();
+
     }
 
     private void setupDrower() {

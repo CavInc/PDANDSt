@@ -51,7 +51,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
             db.execSQL("create table "+REF_TABLE+"("+
                     "type_ref integer not null,"+ // 0 -spman - group 1- traning-spman 2- тренировка - абонемент 3- абонемент - абонемент
-                    "id1 integer not null,"+ // spanam
+                    "id1 integer not null,"+ // spanam - при TR = 1/0  тренировка при TR = 2
                     "id2 integer not null,"+ // otner
                     "type_link integer default -1,"+ // для связи тренировка абонемент указан тип связи
                     "primary key(type_ref,id1,id2))");

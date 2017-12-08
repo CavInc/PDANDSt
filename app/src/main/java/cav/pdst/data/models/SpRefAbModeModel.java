@@ -5,11 +5,19 @@ public class SpRefAbModeModel {
     private int mSpId;
     private int mAbonement;
     private int mMode;
+    private int mCount;
 
     public SpRefAbModeModel(int spId, int abonement, int mode) {
         mSpId = spId;
         mAbonement = abonement;
         mMode = mode;
+    }
+
+    public SpRefAbModeModel(int spId, int abonement, int mode, int count) {
+        mSpId = spId;
+        mAbonement = abonement;
+        mMode = mode;
+        mCount = count;
     }
 
     public int getSpId() {
@@ -22,6 +30,10 @@ public class SpRefAbModeModel {
 
     public int getMode() {
         return mMode;
+    }
+
+    public int getCount() {
+        return mCount;
     }
 
     @Override

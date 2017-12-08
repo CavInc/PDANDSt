@@ -772,4 +772,20 @@ public class DataBaseConnector {
         return model;
     }
 
+    // проверяет и справляет количество в тренировках
+    public void checketCount(){
+        String sql = "select tr._id,tr.count_item,a.ci from trainig_table tr \n" +
+                " join (select rf.id2,count(rf.id2) as ci from ref_table rf where type_ref=1 \n" +
+                "group by rf.id2) as a on tr._id=a.id2 and tr.count_item<>a.ci";
+        ContentValues values = new ContentValues();
+        open();
+        Cursor cursor = database.rawQuery(sql,null);
+        while (cursor.moveToNext()){
+            values.clear();
+            values.put("count_item",cursor.getInt(cursor.getColumnIndex("ci")));
+            database.update(DBHelper.TRAINING_TABLE,values,"_id="+cursor.getString(cursor.getColumnIndex("_id")),null);
+        }
+        close();
+    }
+
 }

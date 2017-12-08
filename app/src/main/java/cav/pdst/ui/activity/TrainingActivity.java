@@ -213,9 +213,6 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
                 dialog.show(manager, ConstantManager.DIALOG_DATE);
                 break;
             case R.id.time_button:
-                //final Calendar c = Calendar.getInstance();
-                //final int hour = c.get(Calendar.HOUR_OF_DAY);
-                //int minute = c.get(Calendar.MINUTE);
                 new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int hours, int minutes) {
@@ -269,10 +266,17 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
             setChekItems(model);
         }else {
             // -- тут заполнить модель из checkItems
+            clearCheck(model);
             setChesketModel(model);
             mAdapter.setData(model);
             mAdapter.notifyDataSetChanged();
             //Log.d(TAG,"UPDATE OLD");
+        }
+    }
+
+    private void clearCheck(ArrayList<SportsmanTrainingModel> model) {
+        for (SportsmanTrainingModel l :model){
+            l.setCheck(false);
         }
     }
 
@@ -281,6 +285,7 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
             int pos = model.indexOf(new SportsmanTrainingModel(l.getSpId(),l.getAbonement(),l.getMode()));
             if (pos !=-1){
                 model.get(pos).setCheck(true);
+                model.get(pos).setCount(l.getCount());
             }
         }
     }
@@ -295,7 +300,8 @@ public class TrainingActivity extends AppCompatActivity implements View.OnClickL
                 chekItems.add(new SpRefAbModeModel(
                         l.getId(),
                         l.getLinkAbonement(),
-                        l.getMode()
+                        l.getMode(),
+                        l.getCount()
                 ));
             }
         }
