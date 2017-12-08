@@ -186,26 +186,7 @@ public class SpAbonementFragment extends Fragment implements View.OnClickListene
     @Override
     public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
         final AbonementModel model = (AbonementModel) adapterView.getItemAtPosition(position);
-        /*
-        EditDeleteDialog dialog = EditDeleteDialog.newInstance();
-        dialog.setEditDeleteDialogListener(new EditDeleteDialog.EditDeleteDialogListener() {
-            @Override
-            public void onDialogItemClick(int selectItem) {
-                if (selectItem==R.id.dialog_del_item) {
-                    mDataManager.delAbonememet(model.getId(),model.getSpId());
-                    mAbonementAdapter.remove(model);
-                }
-                if (selectItem == R.id.dialog_edit_item){
-                    Intent intent = new Intent(SpAbonementFragment.this.getContext(), AbonementActivity.class);
-                    intent.putExtra(ConstantManager.MODE_ABONEMENT,ConstantManager.EDIT_ABONEMENT);
-                    intent.putExtra(ConstantManager.AB_DETAIL_DATA,model);
-                    startActivityForResult(intent,ConstantManager.EDIT_ABONEMENT);
-                }
-            }
-        });
-        FragmentManager fm = getChildFragmentManager();
-        dialog.show(fm,ConstantManager.DIALOG_EDIT_DEL);
-        */
+
         AlertDialog.Builder dialog = new AlertDialog.Builder(this.getContext());
         dialog.setTitle("Удаление").setMessage("Вы уверены что хотите удалить ?");
         dialog.setIcon(android.R.drawable.ic_dialog_info);

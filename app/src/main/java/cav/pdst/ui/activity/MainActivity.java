@@ -146,6 +146,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // автоматическая коррекция количества
         mDataManager.getDB().checketCount();
+        mDataManager.getDB().checkDelTraining();
 
     }
 

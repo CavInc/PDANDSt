@@ -788,4 +788,20 @@ public class DataBaseConnector {
         close();
     }
 
+    // проверяем и удаляем записи в ref для которые нет тренировко
+    public void checkDelTraining(){
+        String sql="select rt.type_ref,rt.id1,rt.id2 from ref_table  rt \n" +
+                "   left join trainig_table tt on rt.id1=tt._id \n" +
+                "where  rt.type_ref = 2 and tt._id is null ";
+        open();
+        Cursor cursor = database.rawQuery(sql,null);
+        while (cursor.moveToNext()){
+            database.delete(DBHelper.REF_TABLE,
+                    "type_ref="+cursor.getString(cursor.getColumnIndex("type_ref"))
+                            +" and id1="+cursor.getString(cursor.getColumnIndex("id1"))
+                            +" and id2="+cursor.getString(cursor.getColumnIndex("id2")),null);
+        }
+        close();
+    }
+
 }

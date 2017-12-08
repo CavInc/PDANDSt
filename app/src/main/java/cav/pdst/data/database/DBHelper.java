@@ -77,10 +77,10 @@ public class DBHelper extends SQLiteOpenHelper {
                     " type_abonement integer default 0,"+ // 0 -абонемент 1- разовое
                     " pay numeric,"+"" +
                     " count_training integer,"+
-                    " used_training integer default 0,"+
+                    " used_training integer default 0,"+ // тренировки
                     " working integer default 0,"+ // отработки
                     " used_working integer default 0,"+ // использованные отработки
-                    " warning_count integer default 0,"+
+                    " warning_count integer default 0,"+ // предупреждения
                     " debt numeric default 0,"+
                     " alarm_date text,"+
                     " comment text)");
