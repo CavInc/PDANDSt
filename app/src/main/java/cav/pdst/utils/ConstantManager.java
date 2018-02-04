@@ -79,4 +79,5 @@ public interface ConstantManager {
     String MODE_RETURN_SP = "RETURN_SP";
 
     int RETURN_IN_BACK = 100;
+    int REQUEST_EXTERNAL_STORAGE = 602;
 }

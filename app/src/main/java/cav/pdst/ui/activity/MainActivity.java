@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -18,11 +19,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.DayViewDecorator;
@@ -32,6 +35,12 @@ import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 import com.prolificinteractive.materialcalendarview.spans.DotSpan;
 
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -41,6 +50,7 @@ import java.util.HashSet;
 
 
 import cav.pdst.R;
+import cav.pdst.data.database.DBHelper;
 import cav.pdst.data.managers.DataManager;
 import cav.pdst.data.models.TrainingModel;
 import cav.pdst.ui.adapters.TraningMainAdapter;
@@ -180,6 +190,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     new String[]{Manifest.permission.CALL_PHONE},ConstantManager.REQUEST_PHONE);
 
         }
+        if (ContextCompat.checkSelfPermission(this,Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},ConstantManager.REQUEST_EXTERNAL_STORAGE);
+        }
     }
 
     @Override
@@ -188,6 +202,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
                 // недали разрешение
                 mDataManager.getPreferensManager().setNoPhoneGrand(true);
+            }
+        }
+        if (requestCode == ConstantManager.REQUEST_EXTERNAL_STORAGE) {
+            if (grantResults[0] != PackageManager.PERMISSION_GRANTED){
+                // обругать что не дали разрешение.
             }
         }
 
@@ -230,11 +249,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 intent = new Intent(this,Preferences.class);
                 startActivity(intent);
                 break;
+            case R.id.drawer_send_sd:
+                sendSD();
+                break;
 
         }
         mNavigationDrawer.closeDrawer(GravityCompat.START);
         return false;
     }
+
+
 
     View.OnClickListener mClickListener = new View.OnClickListener() {
         @Override
@@ -360,6 +384,51 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
           //  view.addSpan(new DotSpan(5, color));
           //  view.addSpan(new ForegroundColorSpan(ContextCompat.getColor(MainActivity.this,R.color.app_green_dark)));
             view.setBackgroundDrawable(ContextCompat.getDrawable(MainActivity.this,R.drawable.custom_select_green_background));
+        }
+    }
+
+    // перенос базы на SD
+    private void sendSD() {
+        if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
+            Toast.makeText(getApplicationContext(),
+                    "SD-карта не доступна: " + Environment.getExternalStorageState(),
+                    Toast.LENGTH_LONG).show();
+        } else {
+            // получаем путь к SD
+            File path = new File (Environment.getExternalStorageDirectory(), "PDANDST");
+            if (! path.exists()) {
+                if (!path.mkdirs()){
+                    Toast.makeText(getApplicationContext(),
+                            "Каталог не создан: " + path.getAbsolutePath(),
+                            Toast.LENGTH_LONG).show();
+                    return ;
+                }
+                Log.d(TAG,getDatabasePath(DBHelper.DATABASE_NAME).getAbsolutePath());
+
+                // in
+                File fin = new File (getDatabasePath(DBHelper.DATABASE_NAME).getAbsolutePath());
+
+                // выходной файл
+                File fOut = new File(path, "CH_PDT"+".db3");
+
+                try {
+                    InputStream in = new FileInputStream(fin);
+                    OutputStream out = new FileOutputStream(fOut);
+                    byte[] buf = new byte[1024];
+                    int len;
+                    while ((len = in.read(buf)) > 0) {
+                        out.write(buf, 0, len);
+                    }
+                    // Закрываем потоки
+                    in.close();
+                    out.close();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+
+                }
+            }
+
         }
     }
 }
