@@ -21,9 +21,6 @@
             android:id="@+id/drawer_setting"
             android:icon="@drawable/settings"
             android:title="Настройки"/>
-        <item
-            android:id="@+id/drawer_send_sd"
-            android:title="Перенос базы на SD"/>
 
     </group>
 

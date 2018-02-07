@@ -805,4 +805,21 @@ public class DataBaseConnector {
         close();
     }
 
+    // проверяем и корректируем расхождеине между данными в абонементе и в тренировках
+    public void checkAndCorrectAbonement(){
+        String sql="select ab._id,count(rf.id2) as ci from abonement ab\n" +
+                " left join ref_table rf on rf.type_ref=2 and ab._id=rf.id2 \n" +
+                "where ab.working<>0 and ab.used_working=0 and rf.type_link=3\n" +
+                "group by ab._id";
+        ContentValues values = new ContentValues();
+        open();
+        Cursor cursor = database.rawQuery(sql,null);
+        while (cursor.moveToNext()){
+            values.clear();
+            values.put("used_working",cursor.getInt(1));
+            database.update(DBHelper.ABONEMENT_TABLE,values,"_id="+cursor.getString(cursor.getColumnIndex("_id")),null);
+        }
+        close();
+    }
+
 }

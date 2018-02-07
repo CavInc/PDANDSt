@@ -381,7 +381,7 @@ public class DataManager {
         ArrayList<UsedDaysModel> rec= new ArrayList<>();
         //mDB.openRead();
         mDB.open();
-        Log.d(TAG," STATUS DB "+String.valueOf(mDB.isOpen()));
+        //Log.d(TAG," STATUS DB "+String.valueOf(mDB.isOpen()));
         Cursor cursor = mDB.getDateTraining(sp_id);
         while (cursor.moveToNext()){
             try {

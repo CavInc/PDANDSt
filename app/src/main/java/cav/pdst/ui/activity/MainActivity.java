@@ -158,6 +158,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mDataManager.getDB().checketCount();
         mDataManager.getDB().checkDelTraining();
 
+        mDataManager.getDB().checkAndCorrectAbonement();
+
     }
 
     private void setupDrower() {
@@ -249,9 +251,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 intent = new Intent(this,Preferences.class);
                 startActivity(intent);
                 break;
+            /*
             case R.id.drawer_send_sd:
                 sendSD();
                 break;
+                */
 
         }
         mNavigationDrawer.closeDrawer(GravityCompat.START);
