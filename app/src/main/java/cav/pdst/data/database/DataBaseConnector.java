@@ -517,6 +517,7 @@ public class DataBaseConnector {
         values.put("type_abonement",model.getType());
         values.put("used_training",model.getUsedTraining());
         values.put("working",model.getWorking());
+        values.put("used_working",model.getUsedWorking());
         values.put("warning_count",model.getWarning());
         values.put("debt",model.getDebit());
         if (model.getDebitDate() != null){
