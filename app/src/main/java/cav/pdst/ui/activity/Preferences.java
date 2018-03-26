@@ -3,7 +3,10 @@ package cav.pdst.ui.activity;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
@@ -13,10 +16,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Calendar;
 
 import cav.pdst.R;
+import cav.pdst.data.database.DBHelper;
 import cav.pdst.data.managers.DataManager;
 import cav.pdst.utils.Utils;
 
@@ -26,6 +36,9 @@ public class Preferences extends PreferenceActivity {
     private DataManager mDataManager;
 
     private SharedPreferences pref;
+
+    private Preference mSaveSD;
+    private Preference mRestoreSD;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +79,11 @@ public class Preferences extends PreferenceActivity {
             }
         });
 
+        mSaveSD = findPreference("save_sd");
+        mSaveSD.setOnPreferenceClickListener(saveSDListener);
+
+        mRestoreSD = findPreference("restore_sd");
+
     }
 
     @Override
@@ -73,6 +91,7 @@ public class Preferences extends PreferenceActivity {
         super.onPostCreate(savedInstanceState);
         LinearLayout root = (LinearLayout)findViewById(android.R.id.list).getParent().getParent().getParent();
         Toolbar bar = (Toolbar) LayoutInflater.from(this).inflate(R.layout.settings_toolbar, root, false);
+        bar.getNavigationIcon().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
         root.addView(bar, 0); // insert at top
         bar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,4 +111,57 @@ public class Preferences extends PreferenceActivity {
             }
         }
     }
+
+    Preference.OnPreferenceClickListener saveSDListener = new Preference.OnPreferenceClickListener(){
+
+        @Override
+        public boolean onPreferenceClick(Preference preference) {
+
+            if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
+                Toast.makeText(getApplicationContext(),
+                        "SD-карта не доступна: " + Environment.getExternalStorageState(),
+                        Toast.LENGTH_LONG).show();
+            } else {
+                // получаем путь к SD
+                File path = new File (Environment.getExternalStorageDirectory(), "PDANDST");
+                if (! path.exists()) {
+                    if (!path.mkdirs()){
+                        Toast.makeText(getApplicationContext(),
+                                "Каталог не создан: " + path.getAbsolutePath(),
+                                Toast.LENGTH_LONG).show();
+                        return true;
+                    }
+
+                    // in
+                    File fin = new File (getDatabasePath(DBHelper.DATABASE_NAME).getAbsolutePath());
+
+                    // выходной файл
+                    File fOut = new File(path, "CH_PDT"+".db3");
+
+                    try {
+                        InputStream in = new FileInputStream(fin);
+                        OutputStream out = new FileOutputStream(fOut);
+                        byte[] buf = new byte[1024];
+                        int len;
+                        while ((len = in.read(buf)) > 0) {
+                            out.write(buf, 0, len);
+                        }
+                        // Закрываем потоки
+                        in.close();
+                        out.close();
+                        Toast.makeText(getApplicationContext(),
+                                "База сохранена : " + path.getAbsolutePath(),
+                                Toast.LENGTH_LONG).show();
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+
+                    }
+                }
+
+            }
+
+            return true;
+        }
+    };
 }
