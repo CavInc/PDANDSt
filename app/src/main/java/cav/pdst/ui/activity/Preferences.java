@@ -125,20 +125,20 @@ public class Preferences extends PreferenceActivity {
                 // получаем путь к SD
                 File path = new File (Environment.getExternalStorageDirectory(), "PDANDST");
                 if (! path.exists()) {
-                    if (!path.mkdirs()){
+                    if (!path.mkdirs()) {
                         Toast.makeText(getApplicationContext(),
                                 "Каталог не создан: " + path.getAbsolutePath(),
                                 Toast.LENGTH_LONG).show();
                         return true;
                     }
+                }
 
-                    // in
-                    File fin = new File (getDatabasePath(DBHelper.DATABASE_NAME).getAbsolutePath());
+                // in
+                File fin = new File (getDatabasePath(DBHelper.DATABASE_NAME).getAbsolutePath());
 
-                    // выходной файл
-                    File fOut = new File(path, "CH_PDT"+".db3");
-
-                    try {
+                // выходной файл
+                File fOut = new File(path, "CH_PDT"+".db3");
+                try {
                         InputStream in = new FileInputStream(fin);
                         OutputStream out = new FileOutputStream(fOut);
                         byte[] buf = new byte[1024];
@@ -150,15 +150,12 @@ public class Preferences extends PreferenceActivity {
                         in.close();
                         out.close();
                         Toast.makeText(getApplicationContext(),
-                                "База сохранена : " + path.getAbsolutePath(),
+                                "База сохранена : " + fOut.getAbsolutePath(),
                                 Toast.LENGTH_LONG).show();
 
-                    } catch (Exception e) {
-                        e.printStackTrace();
-
-                    }
+                } catch (Exception e) {
+                  e.printStackTrace();
                 }
-
             }
 
             return true;
