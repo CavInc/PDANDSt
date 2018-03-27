@@ -157,8 +157,16 @@ public class Preferences extends PreferenceActivity {
                   e.printStackTrace();
                 }
             }
-
             return true;
         }
     };
+
+    Preference.OnPreferenceClickListener loadSD = new Preference.OnPreferenceClickListener(){
+
+        @Override
+        public boolean onPreferenceClick(Preference preference) {
+            return true;
+        }
+    };
+
 }
