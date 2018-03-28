@@ -13,5 +13,14 @@
             android:key="alarm_start_flg"
             android:title="Выполнять проверку"/>
     </PreferenceCategory>
+    <PreferenceCategory
+        android:title="Работа с базой">
+        <Preference
+            android:key="save_sd"
+            android:title="Сохранить базу на SD"/>
+        <Preference
+            android:key="restore_sd"
+            android:title="Загрузить базу с SD"/>
+    </PreferenceCategory>
 
 </PreferenceScreen>
