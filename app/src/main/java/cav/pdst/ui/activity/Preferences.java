@@ -23,11 +23,14 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import cav.pdst.R;
 import cav.pdst.data.database.DBHelper;
 import cav.pdst.data.managers.DataManager;
+import cav.pdst.ui.fragments.SelectStoreFileDialog;
 import cav.pdst.utils.Utils;
 
 public class Preferences extends PreferenceActivity {
@@ -83,6 +86,7 @@ public class Preferences extends PreferenceActivity {
         mSaveSD.setOnPreferenceClickListener(saveSDListener);
 
         mRestoreSD = findPreference("restore_sd");
+        mRestoreSD.setOnPreferenceClickListener(loadSDListener);
 
     }
 
@@ -132,12 +136,15 @@ public class Preferences extends PreferenceActivity {
                         return true;
                     }
                 }
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd_HHmm");
+                String dt = format.format(new Date());
+
 
                 // in
                 File fin = new File (getDatabasePath(DBHelper.DATABASE_NAME).getAbsolutePath());
 
                 // выходной файл
-                File fOut = new File(path, "CH_PDT"+".db3");
+                File fOut = new File(path, "CH_PDT"+dt+".db3");
                 try {
                         InputStream in = new FileInputStream(fin);
                         OutputStream out = new FileOutputStream(fOut);
@@ -161,10 +168,37 @@ public class Preferences extends PreferenceActivity {
         }
     };
 
-    Preference.OnPreferenceClickListener loadSD = new Preference.OnPreferenceClickListener(){
+    Preference.OnPreferenceClickListener loadSDListener = new Preference.OnPreferenceClickListener(){
 
         @Override
         public boolean onPreferenceClick(Preference preference) {
+            if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
+                Toast.makeText(getApplicationContext(),
+                        "SD-карта не доступна: " + Environment.getExternalStorageState(),
+                        Toast.LENGTH_LONG).show();
+            } else {
+                // получаем путь к SD
+                File path = new File (Environment.getExternalStorageDirectory(), "PDANDST");
+                if (! path.exists()) {
+                    if (!path.mkdirs()) {
+                        Toast.makeText(getApplicationContext(),
+                                "Каталог не создан: " + path.getAbsolutePath(),
+                                Toast.LENGTH_LONG).show();
+                        return true;
+                    }
+                }
+                File[] listF = path.listFiles();
+                if (listF.length!= 0) {
+
+                    //SelectStoreFileDialog dialog = SelectStoreFileDialog.newInctance(listF);
+                    //dialog.show(getFragmentManager(),"SSD");
+
+                    for (File f : listF){
+                        Log.d("PF",f.getName());
+                    }
+
+                }
+            }
             return true;
         }
     };
