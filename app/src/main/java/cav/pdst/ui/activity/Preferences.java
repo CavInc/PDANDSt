@@ -191,7 +191,7 @@ public class Preferences extends PreferenceActivity {
                 if (listF.length!= 0) {
 
                     //SelectStoreFileDialog dialog = SelectStoreFileDialog.newInctance(listF);
-                    //dialog.show(getFragmentManager(),"SSD");
+                   // dialog.show(getFragmentManager(),"SSD");
 
                     for (File f : listF){
                         Log.d("PF",f.getName());
