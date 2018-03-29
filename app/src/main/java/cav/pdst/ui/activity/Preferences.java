@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
@@ -42,6 +43,7 @@ public class Preferences extends PreferenceActivity {
 
     private Preference mSaveSD;
     private Preference mRestoreSD;
+    private ListPreference mRestoreSDLP;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,10 +87,26 @@ public class Preferences extends PreferenceActivity {
         mSaveSD = findPreference("save_sd");
         mSaveSD.setOnPreferenceClickListener(saveSDListener);
 
-        mRestoreSD = findPreference("restore_sd");
-        mRestoreSD.setOnPreferenceClickListener(loadSDListener);
+        //mRestoreSD = findPreference("restore_sd");
+        //mRestoreSD.setOnPreferenceClickListener(loadSDListener);
+        mRestoreSDLP = (ListPreference) findPreference("restore_sd");
+
+        mRestoreSDLP.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object o) {
+                Log.d("PF","Change");
+                loadDB((String) o);
+
+                return true;
+            }
+        });
+
+        setupResoreSD();
 
     }
+
+
+
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
@@ -168,39 +186,70 @@ public class Preferences extends PreferenceActivity {
         }
     };
 
-    Preference.OnPreferenceClickListener loadSDListener = new Preference.OnPreferenceClickListener(){
 
-        @Override
-        public boolean onPreferenceClick(Preference preference) {
-            if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
-                Toast.makeText(getApplicationContext(),
-                        "SD-карта не доступна: " + Environment.getExternalStorageState(),
-                        Toast.LENGTH_LONG).show();
-            } else {
-                // получаем путь к SD
-                File path = new File (Environment.getExternalStorageDirectory(), "PDANDST");
-                if (! path.exists()) {
-                    if (!path.mkdirs()) {
-                        Toast.makeText(getApplicationContext(),
-                                "Каталог не создан: " + path.getAbsolutePath(),
-                                Toast.LENGTH_LONG).show();
-                        return true;
-                    }
-                }
-                File[] listF = path.listFiles();
-                if (listF.length!= 0) {
-
-                    //SelectStoreFileDialog dialog = SelectStoreFileDialog.newInctance(listF);
-                   // dialog.show(getFragmentManager(),"SSD");
-
-                    for (File f : listF){
-                        Log.d("PF",f.getName());
-                    }
-
+    private void setupResoreSD() {
+        if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
+            Toast.makeText(getApplicationContext(),
+                    "SD-карта не доступна: " + Environment.getExternalStorageState(),
+                    Toast.LENGTH_LONG).show();
+        } else {
+            // получаем путь к SD
+            File path = new File (Environment.getExternalStorageDirectory(), "PDANDST");
+            if (! path.exists()) {
+                if (!path.mkdirs()) {
+                    Toast.makeText(getApplicationContext(),
+                            "Каталог не создан: " + path.getAbsolutePath(),
+                            Toast.LENGTH_LONG).show();
+                    return;
                 }
             }
-            return true;
+            File[] listF = path.listFiles();
+
+            if (listF.length!= 0){
+                CharSequence[] entries = new CharSequence[listF.length];
+                CharSequence[] entryValues = new CharSequence[listF.length];
+                int i = 0;
+                for (File f : listF){
+                    Log.d("PF",f.getName());
+                    entries[i] = f.getName();
+                    entryValues[i]= f.getName();
+                    i++;
+                }
+                mRestoreSDLP.setEntries(entries);
+                mRestoreSDLP.setEntryValues(entryValues);
+            } else {
+                mRestoreSDLP.setEnabled(false);
+            }
         }
-    };
+
+    }
+
+    private void loadDB(String fname) {
+        // получаем путь к SD
+        File path = new File (Environment.getExternalStorageDirectory(), "PDANDST");
+        File fIn = new File(path, fname);
+
+        File fOut = new File (getDatabasePath(DBHelper.DATABASE_NAME).getAbsolutePath());
+        try {
+            InputStream in = new FileInputStream(fIn);
+            OutputStream out = new FileOutputStream(fOut);
+            byte[] buf = new byte[1024];
+            int len;
+            while ((len = in.read(buf)) > 0) {
+                out.write(buf, 0, len);
+            }
+            // Закрываем потоки
+            in.close();
+            out.close();
+            Toast.makeText(getApplicationContext(),
+                    "База востанновлена : ",
+                    Toast.LENGTH_LONG).show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
 }

@@ -18,7 +18,7 @@
         <Preference
             android:key="save_sd"
             android:title="Сохранить базу на SD"/>
-        <Preference
+        <ListPreference
             android:key="restore_sd"
             android:title="Загрузить базу с SD"/>
     </PreferenceCategory>
