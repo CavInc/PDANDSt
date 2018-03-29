@@ -181,6 +181,7 @@ public class AbonementActivity extends AppCompatActivity implements View.OnClick
         if (mode == ConstantManager.EDIT_ABONEMENT) {
             mAbonementModel.setStartDate(Utils.getSteToDate(mStartDate.getText().toString(),"E dd.MM.yyyy"));
             mAbonementModel.setEndDate(Utils.getSteToDate(mEndDate.getText().toString(),"E dd.MM.yyyy"));
+            mAbonementModel.setCreateDate(Utils.getSteToDate(mCreateDate.getText().toString(),"E dd.MM.yyyy"));// дата создания
             mAbonementModel.setCountTraining(Integer.parseInt(mCountTraining.getText().toString()));
             mAbonementModel.setComment(mComent.getText().toString());
             mAbonementModel.setPay(Float.parseFloat(mPay.getText().toString()));
